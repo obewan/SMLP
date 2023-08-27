@@ -4,7 +4,7 @@ set(PROJECT_NAME smlp)
 set(SOURCE_DIR src)
 set(SOURCE ${SOURCE_DIR}/SimpleMLP.cpp)
 set(LIBRARIES_DIR libs)
-set(LIBRARIES libsmlp)
+set(LIBRARIES libsmlp csv-parser)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

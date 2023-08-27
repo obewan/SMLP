@@ -47,7 +47,7 @@ public:
            Optimizer *optimizer);
 
   // Method that trains the network using online training
-  void Train(int num_epochs);
+  int Train(int num_epochs);
 
 private:
   Network *network_;

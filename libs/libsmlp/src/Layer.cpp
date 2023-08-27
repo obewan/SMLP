@@ -8,12 +8,15 @@ Layer::Layer(size_t num_units, ActivationFunction *activation_function,
              Layer *previous_layer)
     : num_units_(num_units), activation_function_(activation_function),
       previous_layer_(previous_layer) {
+  unit_values_.resize(num_units_);
+  biases_.resize(num_units_);
+  gradients_.resize(num_units_);
   error_signals_.resize(num_units_);
 }
 
 Layer::~Layer(){};
 
-size_t Layer::NumUnits() const { return unit_values_.size(); }
+size_t Layer::NumUnits() const { return num_units_; }
 
 float Layer::GetUnitValue(int unit_index) const {
   return unit_values_.at(unit_index);
