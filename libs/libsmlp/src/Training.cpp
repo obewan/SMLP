@@ -38,23 +38,26 @@ int Training::Train(int num_epochs) {
     int line_number = 0;
     while (std::getline(data_file, line)) {
       // Parse input and output values from the line
-      std::string_view data = line;
+      std::string_view data(line);
       line_number++;
+
       try {
         parser.parseTo(data, cell_refs);
       } catch (Csv::ParseError &ex) {
-        std::cerr << "CSV parse error at line " << line_number << ": "
+        std::cerr << "[ERROR] CSV parse error at line " << line_number << ": "
                   << ex.what() << std::endl;
         code = EXIT_FAILURE;
         continue;
       }
+
       if (cell_refs.empty()) {
         continue;
       }
-      if (cell_refs[0].size() !=
+
+      if (cell_refs.size() !=
           network_->GetInputSize() + network_->GetOutputSize()) {
-        std::cerr << "Invalid columns at line " << line_number << ": found "
-                  << cell_refs[0].size() << " columns instead of "
+        std::cerr << "[ERROR] Invalid columns at line " << line_number
+                  << ": found " << cell_refs.size() << " columns instead of "
                   << network_->GetInputSize() + network_->GetOutputSize()
                   << std::endl;
         code = EXIT_FAILURE;
@@ -62,20 +65,18 @@ int Training::Train(int num_epochs) {
       }
 
       // Get values
-      auto getValue = [](Csv::CellReference const &cell) {
-        return (float)cell.getDouble().value();
+      auto getValue = [](std::vector<Csv::CellReference> const &cells) {
+        return (float)cells[0].getDouble().value();
       };
       for (auto const &value :
-           std::ranges::subrange(cell_refs[0].begin(),
-                                 cell_refs[0].begin() +
-                                     network_->GetInputSize()) |
+           std::ranges::subrange(cell_refs.begin(),
+                                 cell_refs.begin() + network_->GetInputSize()) |
                std::views::transform(getValue)) {
         input.push_back(value);
       }
       for (auto const &value :
-           std::ranges::subrange(cell_refs[0].begin() +
-                                     network_->GetInputSize() + 1,
-                                 cell_refs[0].end()) |
+           std::ranges::subrange(cell_refs.begin() + network_->GetInputSize(),
+                                 cell_refs.end()) |
                std::views::transform(getValue)) {
         output.push_back(value);
       }
@@ -99,7 +100,7 @@ int Training::Train(int num_epochs) {
       output.clear();
     }
     if (line_number == 0) {
-      std::cerr << "Empty file" << std::endl;
+      std::cerr << "[ERROR] Empty file" << std::endl;
       code = EXIT_FAILURE;
       break;
     }

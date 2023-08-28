@@ -76,8 +76,6 @@ protected:
   // Pointer to the previous layer
   Layer *previous_layer_;
 
-  virtual void InitializeWeights();
-
   // Array that stores the error signals for each unit in the layer
   std::vector<float> error_signals_;
 

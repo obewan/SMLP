@@ -9,20 +9,20 @@
  */
 #pragma once
 #include "ActivationType.h"
-class ActivationFunction
-{
+class ActivationFunction {
 public:
-	ActivationFunction();
+  ActivationFunction();
 
-	// Constructor that takes the type of the activation function as an argument
-	ActivationFunction(ActivationType type);
+  // Constructor that takes the type of the activation function as an argument
+  explicit ActivationFunction(ActivationType type);
 
-	// Method that computes the output of the activation function given an input value
-	float ComputeOutput(float input);
+  // Method that computes the output of the activation function given an input
+  // value
+  float ComputeOutput(float input);
 
-	float ComputeDerivative(float input);
+  float ComputeDerivative(float input);
 
 private:
-	// Member variable that stores the type of the activation function
-	ActivationType type_;
+  // Member variable that stores the type of the activation function
+  ActivationType type_;
 };

@@ -5,8 +5,7 @@
 OutputLayer::OutputLayer(int num_units, ActivationFunction *activation_function,
                          Layer *previous_layer)
     : Layer(num_units, activation_function, previous_layer) {
-  // Initialize the delta values to zero
-  error_signals_.resize(num_units, 0.0f);
+  target_outputs_.resize(num_units);
 }
 
 void OutputLayer::ComputeOutput() {

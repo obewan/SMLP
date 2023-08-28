@@ -35,7 +35,7 @@ measures that legally restrict others from doing anything the license permits.
 
 int main() {
   // Create instances of Network, Optimizer, and TrainingData
-  size_t input_size = 1;
+  size_t input_size = 2;
   size_t hidden_size = 1;
   size_t output_size = 1;
   float learning_rate = 1;

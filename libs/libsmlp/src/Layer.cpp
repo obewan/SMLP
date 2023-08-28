@@ -105,13 +105,3 @@ void Layer::ClearGradients() {
   std::ranges::fill(gradients_, 0.0);
   std::ranges::fill(biases_, 0.0);
 }
-
-void Layer::InitializeWeights() {
-  // Initialize weights with random values between -1 and 1
-  for (Connection &connection : connections_) {
-    connection.SetWeight((float)(rand()) / (float)(RAND_MAX)*2.0f - 1.0f);
-  }
-
-  // Initialize biases with zeros
-  std::ranges::fill(biases_, 0.0);
-}

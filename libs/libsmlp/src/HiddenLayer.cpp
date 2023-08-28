@@ -5,24 +5,7 @@
 HiddenLayer::HiddenLayer(size_t num_units,
                          ActivationFunction *activation_function,
                          Layer *previous_layer)
-    : Layer(num_units, activation_function, previous_layer) {
-  // Initialize the weights for the connections between the previous layer and
-  // this hidden layer
-  InitializeWeights();
-};
-
-void HiddenLayer::InitializeWeights() {
-  // Initialize the weights for the connections using a random distribution
-  std::default_random_engine generator;
-  std::normal_distribution<float> distribution(0.0, 1.0);
-
-  for (size_t i = 0; i < num_units_; i++) {
-    for (size_t j = 0; j < previous_layer_->NumUnits(); j++) {
-      float weight = distribution(generator);
-      connections_.emplace_back(j, i, weight);
-    }
-  }
-}
+    : Layer(num_units, activation_function, previous_layer){};
 
 void HiddenLayer::ComputeOutput() {
   // Compute the output values of this layer based on the connections and
