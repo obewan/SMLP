@@ -30,6 +30,7 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "AdamOptimizer.h"
 #include "Network.h"
+#include "Testing.h"
 #include "Training.h"
 #include <string>
 
@@ -51,6 +52,9 @@ int main() {
 
   // Train the network using online training
   training.Train(3);
+
+  Testing testing(&network, "../test/training_data.txt");
+  testing.Test();
 
   return 0;
 }

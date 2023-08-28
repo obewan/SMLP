@@ -29,7 +29,7 @@ int Training::Train(int num_epochs) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
   std::vector<float> input;
-  std::vector<float> output;
+  std::vector<float> expected_output;
   int code = EXIT_SUCCESS;
   for (int epoch = 0; epoch < num_epochs; epoch++) {
     // Reset the file pointer to the beginning of the file for each epoch
@@ -78,7 +78,7 @@ int Training::Train(int num_epochs) {
            std::ranges::subrange(cell_refs.begin() + network_->GetInputSize(),
                                  cell_refs.end()) |
                std::views::transform(getValue)) {
-        output.push_back(value);
+        expected_output.push_back(value);
       }
 
       // Perform forward propagation and backward propagation for the
@@ -86,7 +86,7 @@ int Training::Train(int num_epochs) {
       network_->Forward(input);
 
       // Store the parsed output values in the network's output layer
-      network_->GetOutputLayer()->SetOutputTargetValues(output);
+      network_->GetOutputLayer()->SetExpectedOutputValues(expected_output);
 
       // Compare the predicted output values with the sample output values and
       // compute the loss.
@@ -97,7 +97,7 @@ int Training::Train(int num_epochs) {
 
       // Cleaning
       input.clear();
-      output.clear();
+      expected_output.clear();
     }
     if (line_number == 0) {
       std::cerr << "[ERROR] Empty file" << std::endl;
