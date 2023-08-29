@@ -14,7 +14,7 @@ Layer::Layer(size_t num_units, ActivationFunction *activation_function,
   error_signals_.resize(num_units_);
 }
 
-Layer::~Layer(){};
+Layer::~Layer() = default;
 
 size_t Layer::NumUnits() const { return num_units_; }
 

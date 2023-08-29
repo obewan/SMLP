@@ -8,16 +8,17 @@
  *
  */
 #pragma once
-#include <vector>
 #include "Layer.h"
+#include <vector>
 
-class InputLayer : public Layer
-{
+
+class InputLayer : public Layer {
 public:
-	InputLayer(size_t num_units, ActivationFunction *activation_function);
+  InputLayer(size_t num_units, ActivationFunction *activation_function);
 
-	void ComputeOutput() override;
+  void ComputeOutput() override;
 
-	// Method that accepts an array of input values and stores them in the input layer
-	void SetInput(std::vector<float> input_values);
+  // Method that accepts an array of input values and stores them in the input
+  // layer
+  void SetInput(std::vector<float> input_values);
 };

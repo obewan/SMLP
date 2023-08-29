@@ -10,9 +10,10 @@
 #pragma once
 class Layer;
 
-class Optimizer
-{
+class Optimizer {
 public:
-	// Pure virtual method that updates the weights and biases of the network given the gradients of the loss with respect to the weights and biases
-	virtual void UpdateWeightsAndBiases(Layer *layer, float learning_rate) = 0;
+  virtual ~Optimizer();
+  // Pure virtual method that updates the weights and biases of the network
+  // given the gradients of the loss with respect to the weights and biases
+  virtual void UpdateWeightsAndBiases(Layer *layer, float learning_rate) = 0;
 };

@@ -32,17 +32,24 @@ measures that legally restrict others from doing anything the license permits.
 #include "Network.h"
 #include "Testing.h"
 #include "Training.h"
+#include <cstddef>
 #include <string>
 
 int main() {
   // Create instances of Network, Optimizer, and TrainingData
-  size_t input_size = 2;
-  size_t hidden_size = 1;
+  size_t input_size = 20;
+  size_t hidden_size = 10;
   size_t output_size = 1;
   float learning_rate = 1;
   float beta1 = 1;
   float beta2 = 1;
-  const std::string data_file_path = "../test/training_data.txt";
+  int num_epochs = 3;
+  size_t training_from_line = 0;
+  size_t training_to_line = 40000;
+  size_t testing_from_line = 40000;
+  size_t testing_to_line = 0;
+  bool output_at_end = false;
+  const std::string data_file_path = "../test/mushroom_data.csv";
 
   Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
   Network network(input_size, hidden_size, output_size, optimizer,
@@ -51,10 +58,11 @@ int main() {
   Training training(&network, data_file_path, optimizer);
 
   // Train the network using online training
-  training.Train(3);
+  training.Train(num_epochs, output_at_end, training_from_line,
+                 training_to_line);
 
-  Testing testing(&network, "../test/training_data.txt");
-  testing.Test();
+  Testing testing(&network, data_file_path);
+  testing.Test(output_at_end, testing_from_line, testing_to_line);
 
   return 0;
 }

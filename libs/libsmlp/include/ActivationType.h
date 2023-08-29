@@ -9,14 +9,10 @@
  */
 #pragma once
 /**
- * The ActivationType enum defines a set of constants that represent the different types of activation functions that are available.
- * For example, the kSigmoid constant might represent the sigmoid activation function,
- * while the kReLU constant might represent the rectified linear unit(ReLU) activation function.
+ * The ActivationType enum defines a set of constants that represent the
+ * different types of activation functions that are available. For example, the
+ * kSigmoid constant might represent the sigmoid activation function, while the
+ * kReLU constant might represent the rectified linear unit(ReLU) activation
+ * function.
  */
-enum ActivationType
-{
-	kSigmoid,
-	kTanh,
-	kReLU,
-	kLeakyReLU
-};
+enum class ActivationType { kSigmoid, kTanh, kReLU, kLeakyReLU };

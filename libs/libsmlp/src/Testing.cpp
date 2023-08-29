@@ -1,6 +1,7 @@
 #include "Testing.h"
 #include "../../csv-parser/include/csv_parser.h"
 #include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -8,7 +9,12 @@
 
 using namespace std::string_view_literals;
 
-int Testing::Test() {
+int Testing::Test(bool output_at_end, size_t from_line, size_t to_line) {
+  // Checking parameters
+  if (from_line > to_line && to_line > 0) {
+    std::cerr << "[ERROR] from_line is greater than to_line." << std::endl;
+  }
+
   // Load test data from the file
   std::ifstream test_data_file(test_data_file_path_);
   if (!test_data_file.is_open()) {
@@ -27,11 +33,15 @@ int Testing::Test() {
   std::vector<float> input;
   std::vector<float> expected_output;
   int code = EXIT_SUCCESS;
-  int line_number = 0;
-  while (std::getline(test_data_file, line)) {
+  size_t line_number = 0;
+  while (std::getline(test_data_file, line) &&
+         (line_number <= to_line || to_line == 0)) {
+    line_number++;
+    if (line_number < from_line) {
+      continue;
+    }
     // Parse input and output values from the line
     std::string_view data(line);
-    line_number++;
 
     // Parse input and expected output values from the line
     try {
@@ -61,17 +71,33 @@ int Testing::Test() {
     auto getValue = [](std::vector<Csv::CellReference> const &cells) {
       return (float)cells[0].getDouble().value();
     };
-    for (auto const &value :
-         std::ranges::subrange(cell_refs.begin(),
-                               cell_refs.begin() + network_->GetInputSize()) |
-             std::views::transform(getValue)) {
-      input.push_back(value);
-    }
-    for (auto const &value :
-         std::ranges::subrange(cell_refs.begin() + network_->GetInputSize(),
-                               cell_refs.end()) |
-             std::views::transform(getValue)) {
-      expected_output.push_back(value);
+    if (output_at_end) {
+      for (auto const &value :
+           std::ranges::subrange(cell_refs.begin(),
+                                 cell_refs.begin() + network_->GetInputSize()) |
+               std::views::transform(getValue)) {
+        input.push_back(value);
+      }
+      for (auto const &value :
+           std::ranges::subrange(cell_refs.begin() + network_->GetInputSize(),
+                                 cell_refs.end()) |
+               std::views::transform(getValue)) {
+        expected_output.push_back(value);
+      }
+    } else {
+      for (auto const &value :
+           std::ranges::subrange(cell_refs.begin(),
+                                 cell_refs.begin() +
+                                     network_->GetOutputSize()) |
+               std::views::transform(getValue)) {
+        expected_output.push_back(value);
+      }
+      for (auto const &value :
+           std::ranges::subrange(cell_refs.begin() + network_->GetOutputSize(),
+                                 cell_refs.end()) |
+               std::views::transform(getValue)) {
+        input.push_back(value);
+      }
     }
 
     // Forward pass through the network to get predicted output

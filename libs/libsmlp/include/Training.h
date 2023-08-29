@@ -10,6 +10,7 @@
 #pragma once
 #include "Network.h"
 #include "Optimizer.h"
+#include <cstddef>
 #include <string>
 
 /**
@@ -46,8 +47,21 @@ public:
   Training(Network *network, const std::string &data_file_path,
            Optimizer *optimizer);
 
-  // Method that trains the network using online training
-  int Train(int num_epochs);
+  /**
+   * @brief Method that trains the network using online training
+   *
+   * @param num_epochs number of file data retraining
+   * @param ouput_at_end if true the output value must be at end of record, else
+   * at start.
+   * @param from_line start training from this line, must be lesser than
+   * total lines.
+   * @param to_line end training at this line (including), must be greater than
+   * from_line or equal to 0 for end of file. Useful to keep other lines for
+   * testing.
+   * @return int EXIT_SUCCESS (0) if no error, else EXIT_FAILURE (1)
+   */
+  int Train(int num_epochs, bool output_at_end = true, size_t from_line = 0,
+            size_t to_line = 0);
 
 private:
   Network *network_;
