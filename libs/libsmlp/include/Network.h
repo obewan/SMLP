@@ -51,14 +51,16 @@ public:
   // Method that returns a pointer to the specified layer in the network
   InputLayer *GetInputLayer() { return input_layer_; };
 
-  HiddenLayer *GetHiddenLayer(int index) { return hidden_layers_.at(index); };
+  HiddenLayer *GetHiddenLayer(size_t index) {
+    return hidden_layers_.at(index);
+  };
 
   OutputLayer *GetOutputLayer() { return output_layer_; };
 
   size_t GetInputSize() const { return input_layer_->NumUnits(); }
   size_t GetOutputSize() const { return output_layer_->NumUnits(); }
 
-  void AddHiddenLayer(int num_units, ActivationFunction *activation_function,
+  void AddHiddenLayer(size_t num_units, ActivationFunction *activation_function,
                       Layer *previous_layer);
 
   float *Forward(std::vector<float> &input_values);
@@ -67,11 +69,11 @@ public:
 
   void ClearGradient();
 
-  float GetHiddenWeight(int index) const;
-  void SetHiddenWeight(int index, float value);
+  float GetHiddenWeight(size_t index) const;
+  void SetHiddenWeight(size_t index, float value);
 
-  float GetBias(int index) const;
-  void SetBias(int index, float value);
+  float GetBias(size_t index) const;
+  void SetBias(size_t index, float value);
 
   void UpdateWeightsAndBiases();
 

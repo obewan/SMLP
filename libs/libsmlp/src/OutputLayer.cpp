@@ -11,7 +11,7 @@ OutputLayer::OutputLayer(int num_units, ActivationFunction *activation_function,
 void OutputLayer::ComputeOutput() {
   // Compute the output values of this layer based on the connections and
   // weights with the previous layer's output values
-  for (int i = 0; i < num_units_; i++) {
+  for (size_t i = 0; i < num_units_; i++) {
     float sum = 0.0;
     for (const Connection &connection : connections_) {
       if (connection.GetDestinationUnit() == i) {
@@ -34,7 +34,7 @@ void OutputLayer::ComputeGradients() {
   gradients_.resize(num_units_);
 
   // Compute the gradients for each unit in the layer
-  for (int i = 0; i < num_units_; i++) {
+  for (size_t i = 0; i < num_units_; i++) {
     // Compute the gradient of the activation function for the unit
     float gradient = activation_function_->ComputeDerivative(unit_values_[i]);
 
@@ -45,10 +45,10 @@ void OutputLayer::ComputeGradients() {
     float unit_gradient = error_signal * previous_layer_->GetUnitValue(i);
 
     // Add the unit gradient to the gradients for the layer
-    gradients_[i] += unit_gradient;
+    gradients_[i] = unit_gradient;
 
     // Add the error signal to the error signals for the layer
-    error_signals_[i] += error_signal;
+    error_signals_[i] = error_signal;
   }
 }
 

@@ -44,7 +44,7 @@ measures that legally restrict others from doing anything the license permits.
  * @param argv table of arguments: 1:input_size 2:hidden_size
  * @code {.bash}
  * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -s 20 -o 1 -e 10
- * -l 40000 -x false
+ * -l 40000 -z false
  * @endcode
  *
  * @return int
@@ -54,10 +54,13 @@ int main(int argc, char *argv[]) {
   CLI::App app{"SMLP"};
   std::string data_file = "";
   size_t input_size = 0;
-  size_t hidden_size = 0;
-  size_t output_size = 0;
-  size_t num_epochs = 0;
+  size_t hidden_size = 10;
+  size_t output_size = 1;
+  size_t num_epochs = 3;
   size_t to_line = 0;
+  float learning_rate = 0.001f;
+  float beta1 = 0.1f;
+  float beta2 = 0.1f;
   bool output_at_end = false;
 
   app.add_option("-f,--file_input", data_file,
@@ -69,35 +72,40 @@ int main(int argc, char *argv[]) {
       ->check(CLI::PositiveNumber);
   app.add_option("-s,--hidden_size", hidden_size,
                  "the numbers of hidden neurons")
-      ->default_val(10)
+      ->default_val(hidden_size)
       ->check(CLI::PositiveNumber);
   app.add_option("-o,--output_size", output_size,
                  "the numbers of output neurons")
-      ->default_val(1)
+      ->default_val(output_size)
       ->check(CLI::PositiveNumber);
   app.add_option("-e,--epochs", num_epochs, "the numbers of epochs retraining")
-      ->default_val(10)
+      ->default_val(num_epochs)
       ->check(CLI::PositiveNumber);
   app.add_option(
          "-l,--line_to", to_line,
          "the line number until the training will complete and testing will "
          "start, or 0 to use the entire file")
-      ->default_val(0)
+      ->default_val(to_line)
       ->check(CLI::NonNegativeNumber);
+  app.add_option("-w,--learning_rate", learning_rate, "optimizer learning rate")
+      ->default_val(learning_rate)
+      ->check(CLI::TypeValidator<float>());
+  app.add_option("-x,--beta1", beta1, "optimizer beta1")
+      ->default_val(beta1)
+      ->check(CLI::TypeValidator<float>());
+  app.add_option("-y,--beta2", "optimizer beta2")
+      ->default_val(beta2)
+      ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-x,--output_ends", output_at_end,
+         "-z,--output_ends", output_at_end,
          "indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
-      ->default_val(false)
+      ->default_val(output_at_end)
       ->check(CLI::TypeValidator<bool>());
 
   CLI11_PARSE(app, argc, argv);
 
   // Create instances of Network, Optimizer, and TrainingData
-  float learning_rate = 1;
-  float beta1 = 1;
-  float beta2 = 1;
-
   Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
   Network network(input_size, hidden_size, output_size, optimizer,
                   learning_rate);
