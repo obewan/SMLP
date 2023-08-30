@@ -8,9 +8,11 @@
  *
  */
 #pragma once
+#include "../../csv-parser/include/csv_parser.h"
 #include "Network.h"
 #include "Optimizer.h"
 #include <cstddef>
+#include <fstream>
 #include <string>
 
 /**
@@ -58,13 +60,31 @@ public:
    * @param to_line end training at this line (including), must be greater than
    * from_line or equal to 0 for end of file. Useful to keep other lines for
    * testing.
-   * @return int EXIT_SUCCESS (0) if no error, else EXIT_FAILURE (1)
+   * @return bool success
    */
-  int Train(size_t num_epochs, bool output_at_end = true, size_t from_line = 0,
-            size_t to_line = 0);
+  bool Train(size_t num_epochs, bool output_at_end = true, size_t from_line = 0,
+             size_t to_line = 0);
 
 private:
   Network *network_;
   std::string data_file_path_;
+  std::ifstream data_file_;
   Optimizer *optimizer_;
+
+  bool OpenDataFile();
+  bool ProcessEpoch(const Csv::Parser &parser, size_t from_line, size_t to_line,
+                    bool output_at_end);
+  bool ProcessLine(const Csv::Parser &parser, const std::string &line,
+                   size_t line_number, bool output_at_end);
+  void ProcessOutputFirst(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+      std::vector<float> &input, std::vector<float> &expected_output,
+      const std::function<float(std::vector<Csv::CellReference> const &)>
+          &getValue) const;
+
+  void ProcessInputFirst(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+      std::vector<float> &input, std::vector<float> &expected_output,
+      const std::function<float(std::vector<Csv::CellReference> const &)>
+          &getValue) const;
 };

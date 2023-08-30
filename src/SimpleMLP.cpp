@@ -34,6 +34,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "Training.h"
 #include "include/CLI11.hpp"
 #include <cstddef>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
@@ -111,8 +112,11 @@ int main(int argc, char *argv[]) {
                   learning_rate);
 
   std::cout << "Training..." << std::endl;
-  Training training(&network, data_file, optimizer);
-  training.Train(num_epochs, output_at_end, 0, to_line);
+  if (Training training(&network, data_file, optimizer);
+      !training.Train(num_epochs, output_at_end, 0, to_line)) {
+    std::cerr << "[ERROR] Training error. Exiting." << std::endl;
+    return EXIT_FAILURE;
+  }
 
   std::cout << "Testing..." << std::endl;
   Testing testing(&network, data_file);
