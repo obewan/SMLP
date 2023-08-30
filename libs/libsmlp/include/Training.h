@@ -60,7 +60,7 @@ public:
    * testing.
    * @return int EXIT_SUCCESS (0) if no error, else EXIT_FAILURE (1)
    */
-  int Train(int num_epochs, bool output_at_end = true, size_t from_line = 0,
+  int Train(size_t num_epochs, bool output_at_end = true, size_t from_line = 0,
             size_t to_line = 0);
 
 private:

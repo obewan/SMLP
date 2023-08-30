@@ -16,7 +16,7 @@ Training::Training(Network *network, const std::string &data_file_path,
     : network_(network), data_file_path_(data_file_path),
       optimizer_(optimizer){};
 
-int Training::Train(int num_epochs, bool output_at_end, size_t from_line,
+int Training::Train(size_t num_epochs, bool output_at_end, size_t from_line,
                     size_t to_line) {
   // Checking parameters
   if (from_line > to_line && to_line > 0) {
@@ -37,7 +37,7 @@ int Training::Train(int num_epochs, bool output_at_end, size_t from_line,
   std::vector<float> input;
   std::vector<float> expected_output;
   int code = EXIT_SUCCESS;
-  for (int epoch = 0; epoch < num_epochs; epoch++) {
+  for (size_t epoch = 0; epoch < num_epochs; epoch++) {
     // Reset the file pointer to the beginning of the file for each epoch
     data_file.clear();
     data_file.seekg(0, std::ios::beg);

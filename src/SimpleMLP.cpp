@@ -32,38 +32,83 @@ measures that legally restrict others from doing anything the license permits.
 #include "Network.h"
 #include "Testing.h"
 #include "Training.h"
+#include "include/CLI11.hpp"
 #include <cstddef>
 #include <iostream>
 #include <string>
 
-int main() {
+/**
+ * @brief main function
+ *
+ * @param argc numbers of arguments
+ * @param argv table of arguments: 1:input_size 2:hidden_size
+ * @code {.bash}
+ * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -s 20 -o 1 -e 10
+ * -l 40000 -x false
+ * @endcode
+ *
+ * @return int
+ */
+int main(int argc, char *argv[]) {
+  // Parsing arguments
+  CLI::App app{"SMLP"};
+  std::string data_file = "";
+  size_t input_size = 0;
+  size_t hidden_size = 0;
+  size_t output_size = 0;
+  size_t num_epochs = 0;
+  size_t to_line = 0;
+  bool output_at_end = false;
+
+  app.add_option("-f,--file_input", data_file,
+                 "the data file to use for training and testing")
+      ->mandatory()
+      ->check(CLI::ExistingPath);
+  app.add_option("-i,--input_size", input_size, "the numbers of input neurons")
+      ->mandatory()
+      ->check(CLI::PositiveNumber);
+  app.add_option("-s,--hidden_size", hidden_size,
+                 "the numbers of hidden neurons")
+      ->default_val(10)
+      ->check(CLI::PositiveNumber);
+  app.add_option("-o,--output_size", output_size,
+                 "the numbers of output neurons")
+      ->default_val(1)
+      ->check(CLI::PositiveNumber);
+  app.add_option("-e,--epochs", num_epochs, "the numbers of epochs retraining")
+      ->default_val(10)
+      ->check(CLI::PositiveNumber);
+  app.add_option(
+         "-l,--line_to", to_line,
+         "the line number until the training will complete and testing will "
+         "start, or 0 to use the entire file")
+      ->default_val(0)
+      ->check(CLI::NonNegativeNumber);
+  app.add_option(
+         "-x,--output_ends", output_at_end,
+         "indicate if the output data is at the end of the record (1) or at "
+         "the beginning (0)")
+      ->default_val(false)
+      ->check(CLI::TypeValidator<bool>());
+
+  CLI11_PARSE(app, argc, argv);
+
   // Create instances of Network, Optimizer, and TrainingData
-  size_t input_size = 20;
-  size_t hidden_size = 20;
-  size_t output_size = 1;
   float learning_rate = 1;
   float beta1 = 1;
   float beta2 = 1;
-  int num_epochs = 3;
-  size_t training_from_line = 0;
-  size_t training_to_line = 40000;
-  size_t testing_from_line = 40000;
-  size_t testing_to_line = 0;
-  bool output_at_end = false;
-  const std::string data_file_path = "../test/mushroom_data.csv";
 
   Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
   Network network(input_size, hidden_size, output_size, optimizer,
                   learning_rate);
 
   std::cout << "Training..." << std::endl;
-  Training training(&network, data_file_path, optimizer);
-  training.Train(num_epochs, output_at_end, training_from_line,
-                 training_to_line);
+  Training training(&network, data_file, optimizer);
+  training.Train(num_epochs, output_at_end, 0, to_line);
 
   std::cout << "Testing..." << std::endl;
-  Testing testing(&network, data_file_path);
-  testing.Test(output_at_end, testing_from_line, testing_to_line);
+  Testing testing(&network, data_file);
+  testing.Test(output_at_end, to_line, 0);
 
   return 0;
 }
