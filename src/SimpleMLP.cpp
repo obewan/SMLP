@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
   app.add_option("-x,--beta1", beta1, "optimizer beta1")
       ->default_val(beta1)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-y,--beta2", "optimizer beta2")
+  app.add_option("-y,--beta2", beta2, "optimizer beta2")
       ->default_val(beta2)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
