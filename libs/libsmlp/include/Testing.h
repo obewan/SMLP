@@ -8,14 +8,13 @@
  *
  */
 #pragma once
+#include "FileParser.h"
 #include "Network.h"
-#include <cstddef>
-#include <string>
 
-class Testing {
+class Testing : public FileParser {
 public:
-  Testing(Network *network, const std::string &test_data_file_path)
-      : network_(network), test_data_file_path_(test_data_file_path) {}
+  Testing(Network *network, const std::string &file_path)
+      : FileParser(file_path), network_(network) {}
 
   /**
    * @brief Test the neural network with some data
@@ -26,11 +25,11 @@ public:
    * lines.
    * @param to_line end train at this line (including), must be greater than
    * from_line or equal to 0 for end of file.
-   * @return int EXIT_SUCCESS (0) if no error, else EXIT_FAILURE (1)
+   * @return bool true if success
    */
-  int Test(bool output_at_end = true, size_t from_line = 0, size_t to_line = 0);
+  bool Test(bool output_at_end = true, size_t from_line = 0,
+            size_t to_line = 0);
 
 private:
   Network *network_;
-  std::string test_data_file_path_;
 };

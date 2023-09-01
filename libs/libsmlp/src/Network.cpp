@@ -100,7 +100,7 @@ void Network::SetBias(size_t index, float value) {
   hidden_layers_[layer_index + 1]->SetBias(bias_index, value);
 }
 
-float *Network::Forward(std::vector<float> &input_values) {
+float *Network::Forward(const std::vector<float> &input_values) {
   // Set the input values of the input layer
   input_layer_->SetInput(input_values);
 
@@ -152,7 +152,7 @@ void Network::ClearGradient() {
   }
 }
 
-std::vector<float> Network::Predict(std::vector<float> &input) {
+std::vector<float> Network::Predict(const std::vector<float> &input) {
   // Set the input layer activations
   input_layer_->SetInput(input);
 

@@ -8,12 +8,9 @@
  *
  */
 #pragma once
-#include "../../csv-parser/include/csv_parser.h"
+#include "FileParser.h"
 #include "Network.h"
 #include "Optimizer.h"
-#include <cstddef>
-#include <fstream>
-#include <string>
 
 /**
  * Here's a high-level overview of the process:
@@ -42,12 +39,12 @@ predict the correct outputs for the given inputs.
  *
  */
 
-class Training {
+class Training : public FileParser {
 public:
   // Constructor that takes a pointer to the network and the file path to
   // training data as arguments
-  Training(Network *network, const std::string &data_file_path,
-           Optimizer *optimizer);
+  Training(Network *network, const std::string &file_path, Optimizer *optimizer)
+      : FileParser(file_path), network_(network), optimizer_(optimizer) {}
 
   /**
    * @brief Method that trains the network using online training
@@ -67,24 +64,7 @@ public:
 
 private:
   Network *network_;
-  std::string data_file_path_;
-  std::ifstream data_file_;
   Optimizer *optimizer_;
 
-  bool OpenDataFile();
-  bool ProcessEpoch(const Csv::Parser &parser, size_t from_line, size_t to_line,
-                    bool output_at_end);
-  bool ProcessLine(const Csv::Parser &parser, const std::string &line,
-                   size_t line_number, bool output_at_end);
-  void ProcessOutputFirst(
-      const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      std::vector<float> &input, std::vector<float> &expected_output,
-      const std::function<float(std::vector<Csv::CellReference> const &)>
-          &getValue) const;
-
-  void ProcessInputFirst(
-      const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      std::vector<float> &input, std::vector<float> &expected_output,
-      const std::function<float(std::vector<Csv::CellReference> const &)>
-          &getValue) const;
+  bool ProcessEpoch(size_t from_line, size_t to_line, bool output_at_end);
 };

@@ -63,7 +63,7 @@ public:
   void AddHiddenLayer(size_t num_units, ActivationFunction *activation_function,
                       Layer *previous_layer);
 
-  float *Forward(std::vector<float> &input_values);
+  float *Forward(const std::vector<float> &input_values);
 
   void Backward();
 
@@ -77,7 +77,7 @@ public:
 
   void UpdateWeightsAndBiases();
 
-  std::vector<float> Predict(std::vector<float> &input);
+  std::vector<float> Predict(const std::vector<float> &input);
 
 private:
   InputLayer *input_layer_;
