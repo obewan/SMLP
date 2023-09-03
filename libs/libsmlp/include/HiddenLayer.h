@@ -12,17 +12,12 @@
 #include "Layer.h"
 #include <vector>
 
-
 class HiddenLayer : public Layer {
 public:
   // Constructor that takes the number of units in the hidden layer and the
   // activation function as arguments
   HiddenLayer(size_t num_units, ActivationFunction *activation_function,
               Layer *previous_layer);
-
-  // Method that accepts an array of input values and computes the output of the
-  // hidden layer
-  void ComputeOutput() override;
 
   void ComputeGradients() override;
 };

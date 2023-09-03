@@ -19,10 +19,6 @@ public:
   OutputLayer(int num_units, ActivationFunction *activation_function,
               Layer *previous_layer);
 
-  // Method that accepts an array of input values and computes the output of the
-  // output layer
-  void ComputeOutput() override;
-
   void ComputeGradients() override;
 
   void SetExpectedOutputValues(const std::vector<float> &target_outputs);

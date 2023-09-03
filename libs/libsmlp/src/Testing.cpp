@@ -30,7 +30,7 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line) {
         auto predicted = network->Predict(record.first);
         for (size_t i = 0; i < predicted.size(); i++) {
           std::cout << "Expected:" << record.second[i]
-                    << " predicted:" << predicted[i] << std::endl;
+                    << " Predicted:" << predicted[i] << std::endl;
           if (predicted[i] == record.second[i]) {
             correct_predictions++;
           }
@@ -50,8 +50,11 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line) {
     return false;
   }
 
-  float accuracy =
-      static_cast<float>(correct_predictions) / (float)total_samples * 100.0f;
+  float accuracy = 0;
+  if (total_samples > 0) {
+    accuracy =
+        static_cast<float>(correct_predictions) / (float)total_samples * 100.0f;
+  }
   std::cout << "Accuracy: " << accuracy << "%" << std::endl;
 
   CloseFile();

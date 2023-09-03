@@ -57,6 +57,6 @@ void AdamOptimizer::UpdateWeightsAndBiases(Layer *layer, float learning_rate) {
   // Update t_ and check if it needs to be reset
   t_++;
   if (t_ >= reset_iterations_) {
-    t_ = 0;
+    //  t_ = 0;
   }
 }

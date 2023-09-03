@@ -9,28 +9,29 @@
  *
  */
 #pragma once
+#include <stddef.h>
+
 class Connection {
 public:
-  Connection(int source_unit, int destination_unit, float weight,
+  Connection(size_t source_unit, size_t destination_unit,
              float min_weight = 0.0f, float max_weight = 1.0f,
              float mean_weight = 0.5f, float std_dev_weight = 0.2f)
-      : source_unit_(source_unit), destination_unit_(destination_unit),
-        weight_(weight) {
+      : source_unit_(source_unit), destination_unit_(destination_unit) {
     weight_ = RandomFloat(min_weight, max_weight, mean_weight, std_dev_weight);
   }
 
   // Source unit in the layer n
-  int GetSourceUnit() const { return source_unit_; }
+  size_t GetSourceUnit() const { return source_unit_; }
 
   // Destination unit in the layer n+1
-  int GetDestinationUnit() const { return destination_unit_; }
+  size_t GetDestinationUnit() const { return destination_unit_; }
 
   float GetWeight() const { return weight_; }
   void SetWeight(float weight) { weight_ = weight; }
 
 private:
-  int source_unit_;
-  int destination_unit_;
+  size_t source_unit_;
+  size_t destination_unit_;
   float weight_;
 
   // Function to generate a random float within a specified range

@@ -10,19 +10,17 @@ Network::Network(size_t input_size, size_t hidden_size, size_t output_size,
                  Optimizer *optimizer, float learning_rate)
     : optimizer_(optimizer), learning_rate_(learning_rate) {
   // Initialize the input layer
-  input_layer_ = new InputLayer(
-      input_size, new ActivationFunction(ActivationType::kSigmoid));
+  input_layer_ =
+      new InputLayer(input_size, new ActivationFunction(ActivationType::kTanh));
 
   // Initialize the hidden layer
   auto hidden_layer = new HiddenLayer(
-      hidden_size, new ActivationFunction(ActivationType::kSigmoid),
-      input_layer_);
+      hidden_size, new ActivationFunction(ActivationType::kTanh), input_layer_);
   hidden_layers_.push_back(hidden_layer);
 
   // Initialize the output layer
   output_layer_ = new OutputLayer(
-      output_size, new ActivationFunction(ActivationType::kSigmoid),
-      hidden_layer);
+      output_size, new ActivationFunction(ActivationType::kTanh), hidden_layer);
 
   // Connect the layers
   input_layer_->ConnectTo(hidden_layer);

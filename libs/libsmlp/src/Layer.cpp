@@ -1,6 +1,7 @@
 #include "Layer.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
+#include <iostream>
 #include <stdexcept>
 #include <vector>
 
@@ -18,22 +19,22 @@ Layer::~Layer() = default;
 
 size_t Layer::NumUnits() const { return num_units_; }
 
-float Layer::GetUnitValue(int unit_index) const {
+float Layer::GetUnitValue(size_t unit_index) const {
   return unit_values_.at(unit_index);
 }
 
 std::vector<float> Layer::GetUnitValues() const { return unit_values_; }
 
-float Layer::GetBias(int index) const {
-  if (index < 0 || index >= biases_.size()) {
+float Layer::GetBias(size_t index) const {
+  if (index >= biases_.size()) {
     // Handle index out of range error
     throw std::out_of_range("Invalid index for GetBias");
   }
   return biases_[index];
 }
 
-void Layer::SetBias(int index, float value) {
-  if (index < 0 || index >= biases_.size()) {
+void Layer::SetBias(size_t index, float value) {
+  if (index >= biases_.size()) {
     // Handle index out of range error
     throw std::out_of_range("Invalid index for SetBias");
   }
@@ -43,12 +44,11 @@ void Layer::SetBias(int index, float value) {
 void Layer::ConnectTo(const Layer *next_layer) {
   // Create the connections between the units in the current layer and the units
   // in the specified layer
-  for (int i = 0; i < num_units_; i++) {
-    for (int j = 0; j < next_layer->NumUnits(); j++) {
+  for (size_t i = 0; i < num_units_; i++) {
+    for (size_t j = 0; j < next_layer->NumUnits(); j++) {
       // Create a connection between the current unit and the unit in the
       // specified layer
-      Connection connection(this->GetUnitValue(i), next_layer->GetUnitValue(j),
-                            0);
+      Connection connection(i, j);
 
       // Add the connection to the list of connections in the current layer
       connections_.push_back(connection);
@@ -56,19 +56,19 @@ void Layer::ConnectTo(const Layer *next_layer) {
   }
 }
 
-void Layer::ConnectTo(const Layer *next_layer,
-                      const std::vector<float> &weights) {
-  int num_units_next_layer = next_layer->NumUnits();
-  connections_.clear();
-
-  // Create connections from each unit in this layer to each unit in the next
-  // layer
-  for (int i = 0; i < num_units_; i++) {
-    for (int j = 0; j < num_units_next_layer; j++) {
-      int connection_index = i * num_units_next_layer + j;
-      Connection connection(i, j, weights[connection_index]);
-      connections_.push_back(connection);
+void Layer::ComputeOutput() {
+  // Compute the output values of this layer based on the connections and
+  // weights with the previous layer's output values
+  for (size_t i = 0; i < num_units_; i++) {
+    float sum = 0.0;
+    for (const Connection &connection : previous_layer_->Connections()) {
+      if (connection.GetDestinationUnit() == i) {
+        size_t source_unit = connection.GetSourceUnit();
+        float weight = connection.GetWeight();
+        sum += previous_layer_->GetUnitValue(source_unit) * weight;
+      }
     }
+    unit_values_[i] = activation_function_->ComputeOutput(sum);
   }
 }
 
@@ -82,7 +82,7 @@ void Layer::ComputeGradients() {
   gradients_.resize(num_units_);
 
   // Compute the gradients for each unit in the layer
-  for (int i = 0; i < num_units_; i++) {
+  for (size_t i = 0; i < num_units_; i++) {
     // Compute the gradient of the activation function for the unit
     float gradient = activation_function_->ComputeDerivative(unit_values_[i]);
 

@@ -8,22 +8,6 @@ OutputLayer::OutputLayer(int num_units, ActivationFunction *activation_function,
   expected_outputs_.resize(num_units);
 }
 
-void OutputLayer::ComputeOutput() {
-  // Compute the output values of this layer based on the connections and
-  // weights with the previous layer's output values
-  for (size_t i = 0; i < num_units_; i++) {
-    float sum = 0.0;
-    for (const Connection &connection : connections_) {
-      if (connection.GetDestinationUnit() == i) {
-        int source_unit = connection.GetSourceUnit();
-        float weight = connection.GetWeight();
-        sum += previous_layer_->GetUnitValue(source_unit) * weight;
-      }
-    }
-    unit_values_[i] = activation_function_->ComputeOutput(sum);
-  }
-}
-
 void OutputLayer::ComputeGradients() {
   // Clear the error signals and gradients for this layer
   error_signals_.clear();

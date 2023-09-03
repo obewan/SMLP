@@ -11,7 +11,6 @@
 #include "Layer.h"
 #include <vector>
 
-
 class InputLayer : public Layer {
 public:
   InputLayer(size_t num_units, ActivationFunction *activation_function);
@@ -20,5 +19,5 @@ public:
 
   // Method that accepts an array of input values and stores them in the input
   // layer
-  void SetInput(std::vector<float> input_values);
+  void SetInput(const std::vector<float> &input_values);
 };

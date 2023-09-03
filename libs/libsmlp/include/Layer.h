@@ -21,15 +21,15 @@ public:
 
   // Pure virtual method that computes the output of the layer given an array of
   // input values
-  virtual void ComputeOutput() = 0;
+  virtual void ComputeOutput();
 
   virtual void ComputeGradients();
 
   // Accessor method for the error signals (gradients) of the layer
-  float ErrorSignal(size_t pos) { return error_signals_.at(pos); }
+  float ErrorSignal(size_t index) { return error_signals_.at(index); }
 
-  void SetErrorSignal(size_t pos, float value) {
-    error_signals_.at(pos) = value;
+  void SetErrorSignal(size_t index, float value) {
+    error_signals_.at(index) = value;
   };
 
   // non const accessor (for update)
@@ -44,15 +44,14 @@ public:
   size_t NumUnits() const;
 
   // Method that returns the value of a specific unit in the layer
-  float GetUnitValue(int unit_index) const;
+  float GetUnitValue(size_t unit_index) const;
 
   std::vector<float> GetUnitValues() const;
 
-  float GetBias(int index) const;
-  void SetBias(int index, float value);
+  float GetBias(size_t index) const;
+  void SetBias(size_t index, float value);
 
   void ConnectTo(const Layer *next_layer);
-  void ConnectTo(const Layer *next_layer, const std::vector<float> &weights);
 
   void ClearGradients();
 
