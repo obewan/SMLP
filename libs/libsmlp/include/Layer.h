@@ -46,7 +46,7 @@ public:
   // Method that returns the value of a specific unit in the layer
   float GetUnitValue(size_t unit_index) const;
 
-  std::vector<float> GetUnitValues() const;
+  std::vector<float> &GetUnitValues();
 
   float GetBias(size_t index) const;
   void SetBias(size_t index, float value);

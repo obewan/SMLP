@@ -15,7 +15,7 @@ class Connection {
 public:
   Connection(size_t source_unit, size_t destination_unit,
              float min_weight = 0.0f, float max_weight = 1.0f,
-             float mean_weight = 0.5f, float std_dev_weight = 0.2f)
+             float mean_weight = 0.1f, float std_dev_weight = 0.01f)
       : source_unit_(source_unit), destination_unit_(destination_unit) {
     weight_ = RandomFloat(min_weight, max_weight, mean_weight, std_dev_weight);
   }

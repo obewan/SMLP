@@ -23,7 +23,7 @@ float Layer::GetUnitValue(size_t unit_index) const {
   return unit_values_.at(unit_index);
 }
 
-std::vector<float> Layer::GetUnitValues() const { return unit_values_; }
+std::vector<float> &Layer::GetUnitValues() { return unit_values_; }
 
 float Layer::GetBias(size_t index) const {
   if (index >= biases_.size()) {

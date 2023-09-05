@@ -7,4 +7,5 @@ formater=mushroom_formater.awk
 
 echo "Formatting $src to $dest, please wait..."
 tail -n +2 $src | awk -f $formater > $dest
+shuf $dest -o $dest
 echo "done."
