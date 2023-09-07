@@ -77,7 +77,7 @@ public:
 
   void UpdateWeightsAndBiases();
 
-  std::vector<float> Predict(const std::vector<float> &input);
+  std::vector<float> &Predict(const std::vector<float> &input) const;
 
 private:
   InputLayer *input_layer_;

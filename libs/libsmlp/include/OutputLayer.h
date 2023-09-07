@@ -10,13 +10,14 @@
 #pragma once
 #include "ActivationFunction.h"
 #include "Layer.h"
+#include <cstddef>
 #include <vector>
 
 class OutputLayer : public Layer {
 public:
   // Constructor that takes the number of units in the output layer and the
   // activation function as arguments
-  OutputLayer(int num_units, ActivationFunction *activation_function,
+  OutputLayer(size_t num_units, ActivationFunction *activation_function,
               Layer *previous_layer);
 
   void ComputeGradients() override;

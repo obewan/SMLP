@@ -48,7 +48,6 @@ bool Training::ProcessEpoch(size_t from_line, size_t to_line,
         network->Forward(record.first);
         network->GetOutputLayer()->SetExpectedOutputValues(record.second);
         network->Backward();
-        network->UpdateWeightsAndBiases();
       };
 
   try {

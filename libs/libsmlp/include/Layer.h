@@ -10,6 +10,7 @@
 #pragma once
 #include "ActivationFunction.h"
 #include "Connection.h"
+#include <cstddef>
 #include <vector>
 class Layer {
 public:
@@ -32,6 +33,9 @@ public:
     error_signals_.at(index) = value;
   };
 
+  Layer *PreviousLayer() { return previous_layer_; }
+  Layer *NextLayer() { return next_layer_; }
+
   // non const accessor (for update)
   std::vector<float> &Biases() { return biases_; }
 
@@ -39,6 +43,8 @@ public:
 
   // non const accessor (for update)
   std::vector<Connection> &Connections() { return connections_; }
+  float GetWeight(size_t index);
+  void SetWeight(size_t index, float value);
 
   // Method that returns the number of units in the layer
   size_t NumUnits() const;
@@ -46,12 +52,12 @@ public:
   // Method that returns the value of a specific unit in the layer
   float GetUnitValue(size_t unit_index) const;
 
-  std::vector<float> &GetUnitValues();
+  std::vector<float> &GetUnitValues() { return unit_values_; };
 
   float GetBias(size_t index) const;
   void SetBias(size_t index, float value);
 
-  void ConnectTo(const Layer *next_layer);
+  void ConnectTo(Layer *next_layer);
 
   void ClearGradients();
 
@@ -73,7 +79,10 @@ protected:
   std::vector<Connection> connections_;
 
   // Pointer to the previous layer
-  Layer *previous_layer_;
+  Layer *previous_layer_ = nullptr;
+
+  // Pointer to the next layer
+  Layer *next_layer_ = nullptr;
 
   // Array that stores the error signals for each unit in the layer
   std::vector<float> error_signals_;

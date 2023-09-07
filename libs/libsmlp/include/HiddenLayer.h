@@ -18,6 +18,4 @@ public:
   // activation function as arguments
   HiddenLayer(size_t num_units, ActivationFunction *activation_function,
               Layer *previous_layer);
-
-  void ComputeGradients() override;
 };

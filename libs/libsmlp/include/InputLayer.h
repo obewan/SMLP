@@ -15,8 +15,6 @@ class InputLayer : public Layer {
 public:
   InputLayer(size_t num_units, ActivationFunction *activation_function);
 
-  void ComputeOutput() override;
-
   // Method that accepts an array of input values and stores them in the input
   // layer
   void SetInput(const std::vector<float> &input_values);

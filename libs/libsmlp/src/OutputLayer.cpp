@@ -1,8 +1,10 @@
 #include "OutputLayer.h"
 #include "Layer.h"
+#include <cstddef>
 #include <stdexcept>
 
-OutputLayer::OutputLayer(int num_units, ActivationFunction *activation_function,
+OutputLayer::OutputLayer(size_t num_units,
+                         ActivationFunction *activation_function,
                          Layer *previous_layer)
     : Layer(num_units, activation_function, previous_layer) {
   expected_outputs_.resize(num_units);
@@ -23,16 +25,10 @@ void OutputLayer::ComputeGradients() {
     float gradient = activation_function_->ComputeDerivative(unit_values_[i]);
 
     // Compute the error signal for the unit
-    float error_signal = gradient * (expected_outputs_[i] - unit_values_[i]);
+    error_signals_[i] = gradient * (expected_outputs_[i] - unit_values_[i]);
 
     // Compute the gradient for the unit
-    float unit_gradient = error_signal * previous_layer_->GetUnitValue(i);
-
-    // Add the unit gradient to the gradients for the layer
-    gradients_[i] = unit_gradient;
-
-    // Add the error signal to the error signals for the layer
-    error_signals_[i] = error_signal;
+    gradients_[i] = error_signals_[i] * previous_layer_->GetUnitValue(i);
   }
 }
 

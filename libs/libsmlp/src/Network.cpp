@@ -150,7 +150,7 @@ void Network::ClearGradient() {
   }
 }
 
-std::vector<float> Network::Predict(const std::vector<float> &input) {
+std::vector<float> &Network::Predict(const std::vector<float> &input) const {
   // Set the input layer activations
   input_layer_->SetInput(input);
 
@@ -159,6 +159,8 @@ std::vector<float> Network::Predict(const std::vector<float> &input) {
     // Compute the activations of the neurons in the layer
     layer->ComputeOutput();
   }
+
+  output_layer_->ComputeOutput();
 
   // Return the activations of the output layer
   return output_layer_->GetUnitValues();

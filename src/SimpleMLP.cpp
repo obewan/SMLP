@@ -59,9 +59,9 @@ int main(int argc, char *argv[]) {
   size_t output_size = 1;
   size_t num_epochs = 3;
   size_t to_line = 0;
-  float learning_rate = 0.001f;
-  float beta1 = 0.1f;
-  float beta2 = 0.1f;
+  float learning_rate = 1e-3f;
+  float beta1 = 0.9f;
+  float beta2 = 0.99f;
   bool output_at_end = false;
 
   app.add_option("-f,--file_input", data_file,
@@ -108,18 +108,18 @@ int main(int argc, char *argv[]) {
 
   // Create instances of Network, Optimizer, and TrainingData
   Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
-  Network network(input_size, hidden_size, output_size, optimizer,
-                  learning_rate);
+  auto network = new Network(input_size, hidden_size, output_size, optimizer,
+                             learning_rate);
 
   std::cout << "Training..." << std::endl;
-  if (Training training(&network, data_file, optimizer);
-      !training.Train(num_epochs, output_at_end, 0, to_line)) {
+  Training training(network, data_file, optimizer);
+  if (!training.Train(num_epochs, output_at_end, 0, to_line)) {
     std::cerr << "[ERROR] Training error. Exiting." << std::endl;
     return EXIT_FAILURE;
   }
 
   std::cout << "Testing..." << std::endl;
-  Testing testing(&network, data_file);
+  Testing testing(network, data_file);
   testing.Test(output_at_end, to_line, 0);
 
   return 0;

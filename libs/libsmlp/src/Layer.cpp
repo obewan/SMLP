@@ -1,6 +1,7 @@
 #include "Layer.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
+#include <cstddef>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -23,7 +24,19 @@ float Layer::GetUnitValue(size_t unit_index) const {
   return unit_values_.at(unit_index);
 }
 
-std::vector<float> &Layer::GetUnitValues() { return unit_values_; }
+float Layer::GetWeight(size_t index) {
+  if (index >= connections_.size()) {
+    throw std::out_of_range("Invalid index for GetWeight");
+  }
+  return connections_.at(index).GetWeight();
+}
+
+void Layer::SetWeight(size_t index, float value) {
+  if (index >= connections_.size()) {
+    throw std::out_of_range("Invalid index for SetWeight");
+  }
+  connections_.at(index).SetWeight(value);
+}
 
 float Layer::GetBias(size_t index) const {
   if (index >= biases_.size()) {
@@ -41,7 +54,9 @@ void Layer::SetBias(size_t index, float value) {
   biases_[index] = value;
 }
 
-void Layer::ConnectTo(const Layer *next_layer) {
+void Layer::ConnectTo(Layer *next_layer) {
+  next_layer_ = next_layer;
+
   // Create the connections between the units in the current layer and the units
   // in the specified layer
   for (size_t i = 0; i < num_units_; i++) {
@@ -57,6 +72,9 @@ void Layer::ConnectTo(const Layer *next_layer) {
 }
 
 void Layer::ComputeOutput() {
+  if (previous_layer_ == nullptr) {
+    return;
+  }
   // Compute the output values of this layer based on the connections and
   // weights with the previous layer's output values
   for (size_t i = 0; i < num_units_; i++) {
@@ -73,30 +91,35 @@ void Layer::ComputeOutput() {
 }
 
 void Layer::ComputeGradients() {
-  // Clear the error signals and gradients for this layer
-  error_signals_.clear();
-  gradients_.clear();
-
-  // Resize the error signals and gradients to the size of the layer
-  error_signals_.resize(num_units_);
-  gradients_.resize(num_units_);
-
-  // Compute the gradients for each unit in the layer
+  if (next_layer_ == nullptr) {
+    return;
+  }
+  // Calculate the gradients of the weights and biases using the error signals
+  // and unit values
   for (size_t i = 0; i < num_units_; i++) {
-    // Compute the gradient of the activation function for the unit
-    float gradient = activation_function_->ComputeDerivative(unit_values_[i]);
+    gradients_[i] = 0.0f;
 
-    // Compute the error signal for the unit
-    float error_signal = gradient * error_signals_[i];
+    // Calculate the gradients for the weights using the error signals and the
+    // previous layer's unit values
+    for (const Connection &connection : connections_) {
+      if (connection.GetSourceUnit() == i) {
+        auto destination_index = connection.GetDestinationUnit();
+        auto destination_error_signal =
+            next_layer_->ErrorSignal(destination_index);
 
-    // Compute the gradient for the unit
-    float unit_gradient = error_signal * previous_layer_->GetUnitValue(i);
+        // Calculate the gradient for the bias
+        gradients_[i] +=
+            destination_error_signal *
+            activation_function_->ComputeDerivative(unit_values_[i]) *
+            previous_layer_->GetUnitValue(i);
 
-    // Add the unit gradient to the gradients for the layer
-    gradients_[i] += unit_gradient;
-
-    // Add the error signal to the error signals for the layer
-    error_signals_[i] += error_signal;
+        // Calculate the error_signal of this layer
+        error_signals_[i] +=
+            destination_error_signal *
+            activation_function_->ComputeDerivative(unit_values_[i]) *
+            connection.GetWeight();
+      }
+    }
   }
 }
 
