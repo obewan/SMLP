@@ -7,7 +7,7 @@ OutputLayer::OutputLayer(size_t num_units,
                          ActivationFunction *activation_function,
                          Layer *previous_layer)
     : Layer(num_units, activation_function, previous_layer) {
-  expected_outputs_.resize(num_units);
+  expected_values_.resize(num_units);
 }
 
 void OutputLayer::ComputeGradients() {
@@ -25,17 +25,17 @@ void OutputLayer::ComputeGradients() {
     float gradient = activation_function_->ComputeDerivative(unit_values_[i]);
 
     // Compute the error signal for the unit
-    error_signals_[i] = gradient * (expected_outputs_[i] - unit_values_[i]);
+    error_signals_[i] = gradient * (expected_values_[i] - unit_values_[i]);
 
     // Compute the gradient for the unit
     gradients_[i] = error_signals_[i] * previous_layer_->GetUnitValue(i);
   }
 }
 
-void OutputLayer::SetExpectedOutputValues(
+void OutputLayer::SetExpectedValues(
     const std::vector<float> &expected_outputs) {
   if (expected_outputs.size() != num_units_) {
     throw std::invalid_argument("Invalid number of output values");
   }
-  expected_outputs_ = expected_outputs;
+  expected_values_ = expected_outputs;
 };

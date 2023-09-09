@@ -1,5 +1,6 @@
 #include "Network.h"
 #include "InputLayer.h"
+#include "OutputLayer.h"
 #include <algorithm>
 #include <cstddef>
 #include <stdexcept>
@@ -7,8 +8,8 @@
 using namespace std;
 
 Network::Network(size_t input_size, size_t hidden_size, size_t output_size,
-                 Optimizer *optimizer, float learning_rate)
-    : optimizer_(optimizer), learning_rate_(learning_rate) {
+                 Optimizer *optimizer, float learning_rate, Monitor *monitor)
+    : optimizer_(optimizer), monitor_(monitor), learning_rate_(learning_rate) {
   // Initialize the input layer
   input_layer_ =
       new InputLayer(input_size, new ActivationFunction(ActivationType::kTanh));
@@ -98,27 +99,31 @@ void Network::SetBias(size_t index, float value) {
   hidden_layers_[layer_index + 1]->SetBias(bias_index, value);
 }
 
-float *Network::Forward(const std::vector<float> &input_values) {
+void Network::Forward(const std::vector<float> &input_values) {
   // Set the input values of the input layer
   input_layer_->SetInput(input_values);
+  for (auto c : input_layer_->Connections()) {
+    monitor_->log(c.GetWeight());
+  }
 
   // Compute the output values of each layer in the network
   for (auto hidden_layer : hidden_layers_) {
     hidden_layer->ComputeOutput();
+    for (auto c : hidden_layer->Connections()) {
+      monitor_->log(c.GetWeight());
+    }
   }
   output_layer_->ComputeOutput();
 
-  // Return a pointer to the output values
-  return output_layer_->GetUnitValues().data();
-}
+  for (auto v : output_layer_->GetUnitValues()) {
+    monitor_->log(v);
+  }
 
-void Network::AddHiddenLayer(size_t num_units,
-                             ActivationFunction *activation_function,
-                             Layer *previous_layer) {
-  auto hidden_layer =
-      new HiddenLayer(num_units, activation_function, previous_layer);
-  hidden_layers_.push_back(hidden_layer);
-  // TODO:disconnect/connect
+  size_t expected_size = output_layer_->GetExpectedValues().size();
+  for (size_t i = 0; i < expected_size; i++) {
+    auto value = output_layer_->GetExpectedValues().at(i);
+    monitor_->log(value, i == expected_size - 1);
+  }
 }
 
 void Network::Backward() {
@@ -135,12 +140,29 @@ void Network::Backward() {
   // Update the weights and biases using the computed gradients
   optimizer_->UpdateWeightsAndBiases(input_layer_, learning_rate_);
   input_layer_->ClearGradients();
-  for (auto layer : hidden_layers_) {
-    optimizer_->UpdateWeightsAndBiases(layer, learning_rate_);
-    layer->ClearGradients();
+  for (auto c : input_layer_->Connections()) {
+    monitor_->log(c.GetWeight());
+  }
+
+  for (auto hidden_layer : hidden_layers_) {
+    optimizer_->UpdateWeightsAndBiases(hidden_layer, learning_rate_);
+    hidden_layer->ClearGradients();
+    for (auto c : hidden_layer->Connections()) {
+      monitor_->log(c.GetWeight());
+    }
   }
   optimizer_->UpdateWeightsAndBiases(output_layer_, learning_rate_);
   output_layer_->ClearGradients();
+
+  for (auto v : output_layer_->GetUnitValues()) {
+    monitor_->log(v);
+  }
+
+  size_t expected_size = output_layer_->GetExpectedValues().size();
+  for (size_t i = 0; i < expected_size; i++) {
+    auto value = output_layer_->GetExpectedValues().at(i);
+    monitor_->log(value, i == expected_size - 1);
+  }
 }
 
 void Network::ClearGradient() {

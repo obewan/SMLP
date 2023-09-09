@@ -1,4 +1,5 @@
 #include "Training.h"
+#include "Monitor.h"
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
@@ -45,8 +46,8 @@ bool Training::ProcessEpoch(size_t from_line, size_t to_line,
   RecordFunction recordFunction =
       [&network = network_](
           std::pair<std::vector<float>, std::vector<float>> const &record) {
+        network->GetOutputLayer()->SetExpectedValues(record.second);
         network->Forward(record.first);
-        network->GetOutputLayer()->SetExpectedOutputValues(record.second);
         network->Backward();
       };
 

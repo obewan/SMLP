@@ -12,6 +12,7 @@
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "Layer.h"
+#include "Monitor.h"
 #include "Optimizer.h"
 #include "OutputLayer.h"
 #include <cstddef>
@@ -40,7 +41,7 @@ public:
   // Constructor that takes the sizes of the input, hidden, and output layers as
   // arguments
   Network(size_t input_size, size_t hidden_size, size_t output_size,
-          Optimizer *optimizer, float learning_rate);
+          Optimizer *optimizer, float learning_rate, Monitor *monitor);
 
   // Method that returns the total number of weights in the network
   size_t NumWeights() const;
@@ -50,20 +51,18 @@ public:
 
   // Method that returns a pointer to the specified layer in the network
   InputLayer *GetInputLayer() { return input_layer_; };
-
+  std::vector<HiddenLayer *> &GetHiddenLayers() { return hidden_layers_; }
   HiddenLayer *GetHiddenLayer(size_t index) {
     return hidden_layers_.at(index);
   };
-
   OutputLayer *GetOutputLayer() { return output_layer_; };
+
+  Monitor *GetMonitor() { return monitor_; }
 
   size_t GetInputSize() const { return input_layer_->NumUnits(); }
   size_t GetOutputSize() const { return output_layer_->NumUnits(); }
 
-  void AddHiddenLayer(size_t num_units, ActivationFunction *activation_function,
-                      Layer *previous_layer);
-
-  float *Forward(const std::vector<float> &input_values);
+  void Forward(const std::vector<float> &input_values);
 
   void Backward();
 
@@ -84,6 +83,7 @@ private:
   std::vector<HiddenLayer *> hidden_layers_;
   OutputLayer *output_layer_;
   Optimizer *optimizer_;
+  Monitor *monitor_;
   float learning_rate_;
 
   // A vector of connection layers weights

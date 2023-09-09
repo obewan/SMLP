@@ -9,7 +9,6 @@
  */
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
-#include "Network.h"
 #include <cstddef>
 #include <fstream>
 

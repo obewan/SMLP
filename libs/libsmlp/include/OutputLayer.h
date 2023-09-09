@@ -22,9 +22,10 @@ public:
 
   void ComputeGradients() override;
 
-  void SetExpectedOutputValues(const std::vector<float> &target_outputs);
+  void SetExpectedValues(const std::vector<float> &expected_values);
+  std::vector<float> &GetExpectedValues() { return expected_values_; }
 
 private:
   // vector of sample outputs, to compare with predicted outputs
-  std::vector<float> expected_outputs_;
+  std::vector<float> expected_values_;
 };

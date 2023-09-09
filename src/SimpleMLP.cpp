@@ -29,6 +29,7 @@ measures that legally restrict others from doing anything the license permits.
  */
 
 #include "AdamOptimizer.h"
+#include "Monitor.h"
 #include "Network.h"
 #include "Testing.h"
 #include "Training.h"
@@ -36,6 +37,7 @@ measures that legally restrict others from doing anything the license permits.
 #include <cstddef>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 /**
@@ -108,8 +110,51 @@ int main(int argc, char *argv[]) {
 
   // Create instances of Network, Optimizer, and TrainingData
   Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
+
+  // Get timestamp for monitor file name
+  auto time = std::time(nullptr);
+  std::stringstream ss;
+  ss << std::put_time(std::localtime(&time),
+                      "%F_%T"); // ISO 8601 without timezone information.
+  auto dateTime = ss.str();
+  std::erase(dateTime, ':');
+  std::erase(dateTime, '-');
+  ss.str("");
+  ss.clear();
+  Monitor *monitor = new Monitor("monitor_" + dateTime + ".csv");
   auto network = new Network(input_size, hidden_size, output_size, optimizer,
-                             learning_rate);
+                             learning_rate, monitor);
+
+  // Add header line to monitor file
+  for (auto const &con : network->GetInputLayer()->Connections()) {
+    ss << "ic" << con.GetSourceUnit() << "-" << con.GetDestinationUnit();
+    monitor->log(ss.str());
+    ss.str("");
+    ss.clear();
+  }
+  size_t h = 0;
+  for (auto const &hidden : network->GetHiddenLayers()) {
+    h++;
+    for (auto const &con : hidden->Connections()) {
+      ss << "h" << h << "c" << con.GetSourceUnit() << "-"
+         << con.GetDestinationUnit();
+      monitor->log(ss.str());
+      ss.str("");
+      ss.clear();
+    }
+  }
+  for (size_t i = 0; i < output_size; i++) {
+    ss << "op" << i + 1;
+    monitor->log(ss.str());
+    ss.str("");
+    ss.clear();
+  }
+  for (size_t i = 0; i < output_size; i++) {
+    ss << "oe" << i + 1;
+    monitor->log(ss.str(), i == output_size - 1);
+    ss.str("");
+    ss.clear();
+  }
 
   std::cout << "Training..." << std::endl;
   Training training(network, data_file, optimizer);
