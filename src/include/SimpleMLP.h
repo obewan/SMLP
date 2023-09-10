@@ -12,20 +12,35 @@
 #include "Network.h"
 #include <string>
 
-struct Parameters {
-  std::string title;
-  std::string data_file;
-  size_t input_size;
-  size_t hidden_size;
-  size_t output_size;
-  size_t num_epochs;
-  size_t to_line;
-  float learning_rate;
-  float beta1;
-  float beta2;
-  bool output_at_end;
+class SimpleMLP {
+public:
+  bool init(int argc, char **argv, bool withMonitoring = true);
+  bool train();
+  bool test();
+
+private:
+  // default parameters
+  struct Parameters {
+    std::string title;
+    std::string data_file;
+    size_t input_size = 0;
+    size_t hidden_size = 10;
+    size_t output_size = 1;
+    size_t num_epochs = 3;
+    size_t to_line = 0;
+    float learning_rate = 1e-3f;
+    float beta1 = 0.9f;
+    float beta2 = 0.99f;
+    bool output_at_end = false;
+  };
+
+  Parameters params_ = {
+      .title = "SMLP",
+      .data_file = "",
+  };
+
+  int parseArgs(int argc, char **argv);
+  Monitor *buildMonitor(Network *network);
+  Optimizer *optimizer_ = nullptr;
+  Network *network_ = nullptr;
 };
-
-int parseArgs(int argc, char *argv[], Parameters &params);
-
-Monitor *buildMonitor(Network *network);

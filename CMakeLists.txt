@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 set(PROJECT_NAME smlp)
 set(SOURCE_DIR src)
-set(SOURCE ${SOURCE_DIR}/SimpleMLP.cpp)
+set(SOURCE ${SOURCE_DIR}/SimpleMLP.cpp ${SOURCE_DIR}/Main.cpp)
 set(LIBRARIES_DIR libs)
 set(LIBRARIES libsmlp csv-parser)
 

@@ -41,111 +41,94 @@ measures that legally restrict others from doing anything the license permits.
 #include <sstream>
 #include <string>
 
-/**
- * @brief main function
- *
- * @param argc numbers of arguments
- * @param argv table of arguments: 1:input_size 2:hidden_size
- * @code {.bash}
- * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -s 20 -o 1 -e 10
- * -l 40000 -z false
- * @endcode
- *
- * @return int
- */
-int main(int argc, char *argv[]) {
-  // Parsing arguments
-  Parameters params = {.title = "SMLP",
-                       .data_file = "",
-                       .input_size = 0,
-                       .hidden_size = 10,
-                       .output_size = 1,
-                       .num_epochs = 3,
-                       .to_line = 0,
-                       .learning_rate = 1e-3f,
-                       .beta1 = 0.9f,
-                       .beta2 = 0.99f,
-                       .output_at_end = false};
+bool SimpleMLP::init(int argc, char **argv, bool withMonitoring) {
+  try {
+    if (parseArgs(argc, argv) != EXIT_SUCCESS) {
+      return false;
+    }
 
-  parseArgs(argc, argv, params);
+    optimizer_ =
+        new AdamOptimizer(params_.learning_rate, params_.beta1, params_.beta2);
+    network_ =
+        new Network(params_.input_size, params_.hidden_size,
+                    params_.output_size, optimizer_, params_.learning_rate);
+    if (withMonitoring) {
+      auto monitor = buildMonitor(network_);
+      network_->SetMonitor(monitor);
+    }
+    return true;
 
-  // Create instances of Network, Optimizer, and TrainingData
-  Optimizer *optimizer =
-      new AdamOptimizer(params.learning_rate, params.beta1, params.beta2);
-
-  auto network =
-      new Network(params.input_size, params.hidden_size, params.output_size,
-                  optimizer, params.learning_rate);
-  auto monitor = buildMonitor(network);
-  network->SetMonitor(monitor);
-
-  std::cout << "Training..." << std::endl;
-  Training training(network, params.data_file, optimizer);
-  if (!training.Train(params.num_epochs, params.output_at_end, 0,
-                      params.to_line)) {
-    std::cerr << "[ERROR] Training error. Exiting." << std::endl;
-    return EXIT_FAILURE;
+  } catch (std::exception &ex) {
+    std::cerr << "[ERROR] " << ex.what() << std::endl;
+    return false;
   }
-
-  std::cout << "Testing..." << std::endl;
-  Testing testing(network, params.data_file);
-  testing.Test(params.output_at_end, params.to_line, 0);
-
-  return 0;
 }
 
-int parseArgs(int argc, char *argv[], Parameters &params) {
+bool SimpleMLP::train() {
+  std::cout << "Training, using file " << params_.data_file << std::endl;
+  Training training(network_, params_.data_file, optimizer_);
+  return training.Train(params_.num_epochs, params_.output_at_end, 0,
+                        params_.to_line);
+}
 
-  CLI::App app{params.title};
+bool SimpleMLP::test() {
+  std::cout << "Testing, using file " << params_.data_file << std::endl;
+  Testing testing(network_, params_.data_file);
+  return testing.Test(params_.output_at_end, params_.to_line, 0);
+}
 
-  app.add_option("-f,--file_input", params.data_file,
+int SimpleMLP::parseArgs(int argc, char **argv) {
+
+  CLI::App app{params_.title};
+
+  app.add_option("-f,--file_input", params_.data_file,
                  "the data file to use for training and testing")
       ->mandatory()
       ->check(CLI::ExistingPath);
-  app.add_option("-i,--input_size", params.input_size,
+  app.add_option("-i,--input_size", params_.input_size,
                  "the numbers of input neurons")
       ->mandatory()
       ->check(CLI::PositiveNumber);
-  app.add_option("-s,--hidden_size", params.hidden_size,
+  app.add_option("-s,--hidden_size", params_.hidden_size,
                  "the numbers of hidden neurons")
-      ->default_val(params.hidden_size)
+      ->default_val(params_.hidden_size)
       ->check(CLI::PositiveNumber);
-  app.add_option("-o,--output_size", params.output_size,
+  app.add_option("-o,--output_size", params_.output_size,
                  "the numbers of output neurons")
-      ->default_val(params.output_size)
+      ->default_val(params_.output_size)
       ->check(CLI::PositiveNumber);
-  app.add_option("-e,--epochs", params.num_epochs,
+  app.add_option("-e,--epochs", params_.num_epochs,
                  "the numbers of epochs retraining")
-      ->default_val(params.num_epochs)
+      ->default_val(params_.num_epochs)
       ->check(CLI::PositiveNumber);
   app.add_option(
-         "-l,--line_to", params.to_line,
+         "-l,--line_to", params_.to_line,
          "the line number until the training will complete and testing will "
          "start, or 0 to use the entire file")
-      ->default_val(params.to_line)
+      ->default_val(params_.to_line)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-w,--learning_rate", params.learning_rate,
+  app.add_option("-w,--learning_rate", params_.learning_rate,
                  "optimizer learning rate")
-      ->default_val(params.learning_rate)
+      ->default_val(params_.learning_rate)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-x,--beta1", params.beta1, "optimizer beta1")
-      ->default_val(params.beta1)
+  app.add_option("-x,--beta1", params_.beta1, "optimizer beta1")
+      ->default_val(params_.beta1)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-y,--beta2", params.beta2, "optimizer beta2")
-      ->default_val(params.beta2)
+  app.add_option("-y,--beta2", params_.beta2, "optimizer beta2")
+      ->default_val(params_.beta2)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-z,--output_ends", params.output_at_end,
+         "-z,--output_ends", params_.output_at_end,
          "indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
-      ->default_val(params.output_at_end)
+      ->default_val(params_.output_at_end)
       ->check(CLI::TypeValidator<bool>());
 
   CLI11_PARSE(app, argc, argv)
   return EXIT_SUCCESS;
 }
 
-Monitor *buildMonitor(Network *network) {
+Monitor *SimpleMLP::buildMonitor(Network *network) {
   // Get timestamp for monitor file name
   auto time = std::time(nullptr);
   std::stringstream ss;
