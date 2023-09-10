@@ -8,12 +8,15 @@
  *
  */
 #pragma once
+#include <chrono>
 #include <cstddef>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
+
+using time_point_t = std::chrono::time_point<std::chrono::system_clock>;
 
 class Monitor {
 public:
@@ -31,55 +34,13 @@ public:
     }
   }
 
-  void eol() {
-    if (logFile_.is_open()) {
-      logFile_ << std::endl;
-    }
-  }
-
-  void log(const std::string &value, bool isLast = false) {
-    if (logFile_.is_open()) {
-      logFile_ << value;
-      if (!isLast) {
-        logFile_ << ",";
-      } else {
-        logFile_ << std::endl;
-      }
-    }
-  }
-
-  void log(size_t value, bool isLast = false) {
-    if (logFile_.is_open()) {
-      logFile_ << value;
-      if (!isLast) {
-        logFile_ << ",";
-      } else {
-        logFile_ << std::endl;
-      }
-    }
-  }
-
-  void log(int value, bool isLast = false) {
-    if (logFile_.is_open()) {
-      logFile_ << value;
-      if (!isLast) {
-        logFile_ << ",";
-      } else {
-        logFile_ << std::endl;
-      }
-    }
-  }
-
-  void log(float value, bool isLast = false) {
-    if (logFile_.is_open()) {
-      logFile_ << std::setprecision(2) << value;
-      if (!isLast) {
-        logFile_ << ",";
-      } else {
-        logFile_ << std::endl;
-      }
-    }
-  }
+  void eol();
+  void date(time_point_t timepoint = std::chrono::system_clock::now(),
+            bool isLast = false);
+  void log(const std::string &value, bool isLast = false);
+  void log(size_t value, bool isLast = false);
+  void log(int value, bool isLast = false);
+  void log(float value, bool isLast = false);
 
 private:
   std::ofstream logFile_;

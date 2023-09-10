@@ -28,6 +28,7 @@ distribute your contributions under the same license as the original.
 measures that legally restrict others from doing anything the license permits.
  */
 
+#include "include/SimpleMLP.h"
 #include "AdamOptimizer.h"
 #include "Monitor.h"
 #include "Network.h"
@@ -54,63 +55,97 @@ measures that legally restrict others from doing anything the license permits.
  */
 int main(int argc, char *argv[]) {
   // Parsing arguments
-  CLI::App app{"SMLP"};
-  std::string data_file = "";
-  size_t input_size = 0;
-  size_t hidden_size = 10;
-  size_t output_size = 1;
-  size_t num_epochs = 3;
-  size_t to_line = 0;
-  float learning_rate = 1e-3f;
-  float beta1 = 0.9f;
-  float beta2 = 0.99f;
-  bool output_at_end = false;
+  Parameters params = {.title = "SMLP",
+                       .data_file = "",
+                       .input_size = 0,
+                       .hidden_size = 10,
+                       .output_size = 1,
+                       .num_epochs = 3,
+                       .to_line = 0,
+                       .learning_rate = 1e-3f,
+                       .beta1 = 0.9f,
+                       .beta2 = 0.99f,
+                       .output_at_end = false};
 
-  app.add_option("-f,--file_input", data_file,
+  parseArgs(argc, argv, params);
+
+  // Create instances of Network, Optimizer, and TrainingData
+  Optimizer *optimizer =
+      new AdamOptimizer(params.learning_rate, params.beta1, params.beta2);
+
+  auto network =
+      new Network(params.input_size, params.hidden_size, params.output_size,
+                  optimizer, params.learning_rate);
+  auto monitor = buildMonitor(network);
+  network->SetMonitor(monitor);
+
+  std::cout << "Training..." << std::endl;
+  Training training(network, params.data_file, optimizer);
+  if (!training.Train(params.num_epochs, params.output_at_end, 0,
+                      params.to_line)) {
+    std::cerr << "[ERROR] Training error. Exiting." << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  std::cout << "Testing..." << std::endl;
+  Testing testing(network, params.data_file);
+  testing.Test(params.output_at_end, params.to_line, 0);
+
+  return 0;
+}
+
+int parseArgs(int argc, char *argv[], Parameters &params) {
+
+  CLI::App app{params.title};
+
+  app.add_option("-f,--file_input", params.data_file,
                  "the data file to use for training and testing")
       ->mandatory()
       ->check(CLI::ExistingPath);
-  app.add_option("-i,--input_size", input_size, "the numbers of input neurons")
+  app.add_option("-i,--input_size", params.input_size,
+                 "the numbers of input neurons")
       ->mandatory()
       ->check(CLI::PositiveNumber);
-  app.add_option("-s,--hidden_size", hidden_size,
+  app.add_option("-s,--hidden_size", params.hidden_size,
                  "the numbers of hidden neurons")
-      ->default_val(hidden_size)
+      ->default_val(params.hidden_size)
       ->check(CLI::PositiveNumber);
-  app.add_option("-o,--output_size", output_size,
+  app.add_option("-o,--output_size", params.output_size,
                  "the numbers of output neurons")
-      ->default_val(output_size)
+      ->default_val(params.output_size)
       ->check(CLI::PositiveNumber);
-  app.add_option("-e,--epochs", num_epochs, "the numbers of epochs retraining")
-      ->default_val(num_epochs)
+  app.add_option("-e,--epochs", params.num_epochs,
+                 "the numbers of epochs retraining")
+      ->default_val(params.num_epochs)
       ->check(CLI::PositiveNumber);
   app.add_option(
-         "-l,--line_to", to_line,
+         "-l,--line_to", params.to_line,
          "the line number until the training will complete and testing will "
          "start, or 0 to use the entire file")
-      ->default_val(to_line)
+      ->default_val(params.to_line)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-w,--learning_rate", learning_rate, "optimizer learning rate")
-      ->default_val(learning_rate)
+  app.add_option("-w,--learning_rate", params.learning_rate,
+                 "optimizer learning rate")
+      ->default_val(params.learning_rate)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-x,--beta1", beta1, "optimizer beta1")
-      ->default_val(beta1)
+  app.add_option("-x,--beta1", params.beta1, "optimizer beta1")
+      ->default_val(params.beta1)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-y,--beta2", beta2, "optimizer beta2")
-      ->default_val(beta2)
+  app.add_option("-y,--beta2", params.beta2, "optimizer beta2")
+      ->default_val(params.beta2)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-z,--output_ends", output_at_end,
+         "-z,--output_ends", params.output_at_end,
          "indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
-      ->default_val(output_at_end)
+      ->default_val(params.output_at_end)
       ->check(CLI::TypeValidator<bool>());
 
-  CLI11_PARSE(app, argc, argv);
+  CLI11_PARSE(app, argc, argv)
+  return EXIT_SUCCESS;
+}
 
-  // Create instances of Network, Optimizer, and TrainingData
-  Optimizer *optimizer = new AdamOptimizer(learning_rate, beta1, beta2);
-
+Monitor *buildMonitor(Network *network) {
   // Get timestamp for monitor file name
   auto time = std::time(nullptr);
   std::stringstream ss;
@@ -121,28 +156,30 @@ int main(int argc, char *argv[]) {
   std::erase(dateTime, '-');
   ss.str("");
   ss.clear();
-  Monitor *monitor = new Monitor("monitor_" + dateTime + ".csv");
-  auto network = new Network(input_size, hidden_size, output_size, optimizer,
-                             learning_rate, monitor);
+  std::string filename = "monitor_" + dateTime + ".csv";
+  auto *monitor = new Monitor(filename);
+  std::cout << "Monitoring to file " << filename << std::endl;
 
   // Add header line to monitor file
+  monitor->log("date");
   for (auto const &con : network->GetInputLayer()->Connections()) {
     ss << "ic" << con.GetSourceUnit() << "-" << con.GetDestinationUnit();
     monitor->log(ss.str());
     ss.str("");
     ss.clear();
   }
-  size_t h = 0;
+  size_t hs = 0;
   for (auto const &hidden : network->GetHiddenLayers()) {
-    h++;
+    hs++;
     for (auto const &con : hidden->Connections()) {
-      ss << "h" << h << "c" << con.GetSourceUnit() << "-"
+      ss << "h" << hs << "c" << con.GetSourceUnit() << "-"
          << con.GetDestinationUnit();
       monitor->log(ss.str());
       ss.str("");
       ss.clear();
     }
   }
+  size_t output_size = network->GetOutputSize();
   for (size_t i = 0; i < output_size; i++) {
     ss << "op" << i + 1;
     monitor->log(ss.str());
@@ -156,16 +193,5 @@ int main(int argc, char *argv[]) {
     ss.clear();
   }
 
-  std::cout << "Training..." << std::endl;
-  Training training(network, data_file, optimizer);
-  if (!training.Train(num_epochs, output_at_end, 0, to_line)) {
-    std::cerr << "[ERROR] Training error. Exiting." << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  std::cout << "Testing..." << std::endl;
-  Testing testing(network, data_file);
-  testing.Test(output_at_end, to_line, 0);
-
-  return 0;
+  return monitor;
 }

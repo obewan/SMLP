@@ -41,7 +41,7 @@ public:
   // Constructor that takes the sizes of the input, hidden, and output layers as
   // arguments
   Network(size_t input_size, size_t hidden_size, size_t output_size,
-          Optimizer *optimizer, float learning_rate, Monitor *monitor);
+          Optimizer *optimizer, float learning_rate);
 
   // Method that returns the total number of weights in the network
   size_t NumWeights() const;
@@ -57,6 +57,7 @@ public:
   };
   OutputLayer *GetOutputLayer() { return output_layer_; };
 
+  void SetMonitor(Monitor *monitor) { monitor_ = monitor; }
   Monitor *GetMonitor() { return monitor_; }
 
   size_t GetInputSize() const { return input_layer_->NumUnits(); }
@@ -83,7 +84,7 @@ private:
   std::vector<HiddenLayer *> hidden_layers_;
   OutputLayer *output_layer_;
   Optimizer *optimizer_;
-  Monitor *monitor_;
+  Monitor *monitor_ = nullptr;
   float learning_rate_;
 
   // A vector of connection layers weights
