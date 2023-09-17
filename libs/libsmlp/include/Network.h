@@ -43,12 +43,6 @@ public:
   Network(size_t input_size, size_t hidden_size, size_t output_size,
           Optimizer *optimizer, float learning_rate);
 
-  // Method that returns the total number of weights in the network
-  size_t NumWeights() const;
-
-  // Method that returns the total number of biases in the network
-  size_t NumBiases() const;
-
   // Method that returns a pointer to the specified layer in the network
   InputLayer *GetInputLayer() { return input_layer_; };
   std::vector<HiddenLayer *> &GetHiddenLayers() { return hidden_layers_; }
@@ -60,24 +54,14 @@ public:
   void SetMonitor(Monitor *monitor) { monitor_ = monitor; }
   Monitor *GetMonitor() { return monitor_; }
 
-  size_t GetInputSize() const { return input_layer_->NumUnits(); }
-  size_t GetOutputSize() const { return output_layer_->NumUnits(); }
+  size_t GetInputSize() const { return input_layer_->Size(); }
+  size_t GetOutputSize() const { return output_layer_->Size(); }
 
   void Forward(const std::vector<float> &input_values);
-
   void Backward();
-
-  void ClearGradient();
-
-  float GetHiddenWeight(size_t index) const;
-  void SetHiddenWeight(size_t index, float value);
-
-  float GetBias(size_t index) const;
-  void SetBias(size_t index, float value);
+  std::vector<float> Predict(const std::vector<float> &input) const;
 
   void UpdateWeightsAndBiases();
-
-  std::vector<float> &Predict(const std::vector<float> &input) const;
 
 private:
   InputLayer *input_layer_;
@@ -86,7 +70,4 @@ private:
   Optimizer *optimizer_;
   Monitor *monitor_ = nullptr;
   float learning_rate_;
-
-  // A vector of connection layers weights
-  std::vector<double> connections_;
 };

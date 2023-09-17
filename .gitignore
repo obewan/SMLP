@@ -38,6 +38,7 @@ doc/latex
 # build output
 build
 bin
+monitor*.csv
 
 # CMake
 CMakeFiles
@@ -46,3 +47,4 @@ CMakeCache.txt
 # VSCode
 .vscode
 .cache
+

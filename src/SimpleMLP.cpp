@@ -145,8 +145,8 @@ Monitor *SimpleMLP::buildMonitor(Network *network) {
 
   // Add header line to monitor file
   monitor->log("date");
-  for (auto const &con : network->GetInputLayer()->Connections()) {
-    ss << "ic" << con.GetSourceUnit() << "-" << con.GetDestinationUnit();
+  for (auto connection : network->GetInputLayer()->connections) {
+    ss << "ic" << connection->from->id << "-" << connection->to->id;
     monitor->log(ss.str());
     ss.str("");
     ss.clear();
@@ -154,9 +154,8 @@ Monitor *SimpleMLP::buildMonitor(Network *network) {
   size_t hs = 0;
   for (auto const &hidden : network->GetHiddenLayers()) {
     hs++;
-    for (auto const &con : hidden->Connections()) {
-      ss << "h" << hs << "c" << con.GetSourceUnit() << "-"
-         << con.GetDestinationUnit();
+    for (auto const &con : hidden->connections) {
+      ss << "h" << hs << "c" << con->from->id << "-" << con->to->id;
       monitor->log(ss.str());
       ss.str("");
       ss.clear();

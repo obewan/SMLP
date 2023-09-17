@@ -9,7 +9,6 @@
  */
 #pragma once
 #include "Layer.h"
-#include "Network.h"
 #include "Optimizer.h"
 
 /**
@@ -42,9 +41,13 @@ private:
   float learning_rate_;
   float beta1_;
   float beta2_;
+  float beta1t_ = 0.0f;
+  float beta2t_ = 0.0f;
 
   // Member variable that stores the time step
   size_t t_ = 1;
+  size_t t_weights_ = 1;
+  size_t t_biases_ = 1;
 
   // Member variable that specifies the number of iterations after which t_ will
   // be reset to zero

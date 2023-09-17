@@ -16,6 +16,6 @@ class HiddenLayer : public Layer {
 public:
   // Constructor that takes the number of units in the hidden layer and the
   // activation function as arguments
-  HiddenLayer(size_t num_units, ActivationFunction *activation_function,
+  HiddenLayer(size_t num_units, ActivationType activationType,
               Layer *previous_layer);
 };

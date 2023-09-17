@@ -1,5 +1,10 @@
 #include "Connection.h"
+#include "Neuron.h"
 #include <random>
+
+Connection::Connection(Neuron *from, Neuron *to) : from(from), to(to) {
+  weight = RandomFloat(0.0f, 1.0f, 0.1f, 0.01f);
+}
 
 float Connection::RandomFloat(float min, float max, float mean_weight,
                               float std_dev_weight) const {
