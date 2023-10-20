@@ -48,3 +48,6 @@ CMakeCache.txt
 .vscode
 .cache
 
+# Others
+test/ai/
+
