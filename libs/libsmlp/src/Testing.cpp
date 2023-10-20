@@ -19,19 +19,19 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line) {
   }
 
   // Loop through the test data and evaluate the network's performance
-  size_t input_size = network_->GetInputSize();
-  size_t ouput_size = network_->GetOutputSize();
+  size_t input_size = network_->inputLayer.neurons.size();
+  size_t ouput_size = network_->outputLayer.neurons.size();
   int correct_predictions = 0;
   int total_samples = 0;
 
   RecordFunction recordFunction =
       [&network = network_, &correct_predictions, &total_samples](
           std::pair<std::vector<float>, std::vector<float>> const &record) {
-        auto predicted = network->Predict(record.first);
-        for (size_t i = 0; i < predicted.size(); i++) {
+        auto predicteds = network->forwardPropagation(record.first);
+        for (size_t i = 0; i < predicteds.size(); i++) {
           std::cout << "Expected:" << record.second[i]
-                    << " Predicted:" << predicted[i] << std::endl;
-          if (predicted[i] == record.second[i]) {
+                    << " Predicted:" << predicteds[i] << std::endl;
+          if (predicteds[i] == record.second[i]) {
             correct_predictions++;
           }
         }

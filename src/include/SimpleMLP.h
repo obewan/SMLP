@@ -26,11 +26,10 @@ private:
     size_t input_size = 0;
     size_t hidden_size = 10;
     size_t output_size = 1;
+    size_t hiddens_count = 1;
     size_t num_epochs = 3;
     size_t to_line = 0;
     float learning_rate = 1e-3f;
-    float beta1 = 0.9f;
-    float beta2 = 0.99f;
     bool output_at_end = false;
   };
 
@@ -41,6 +40,5 @@ private:
 
   int parseArgs(int argc, char **argv);
   Monitor *buildMonitor(Network *network);
-  Optimizer *optimizer_ = nullptr;
   Network *network_ = nullptr;
 };

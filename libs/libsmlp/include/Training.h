@@ -43,8 +43,8 @@ class Training : public FileParser {
 public:
   // Constructor that takes a pointer to the network and the file path to
   // training data as arguments
-  Training(Network *network, const std::string &file_path, Optimizer *optimizer)
-      : FileParser(file_path), network_(network), optimizer_(optimizer) {}
+  Training(Network *network, const std::string &file_path)
+      : FileParser(file_path), network_(network) {}
 
   /**
    * @brief Method that trains the network using online training
@@ -59,12 +59,12 @@ public:
    * testing.
    * @return bool success
    */
-  bool Train(size_t num_epochs, bool output_at_end = true, size_t from_line = 0,
-             size_t to_line = 0);
+  bool Train(size_t num_epochs, float learning_rate, bool output_at_end = true,
+             size_t from_line = 0, size_t to_line = 0);
 
 private:
   Network *network_;
-  Optimizer *optimizer_;
 
-  bool ProcessEpoch(size_t from_line, size_t to_line, bool output_at_end);
+  bool ProcessEpoch(float learning_rate, size_t from_line, size_t to_line,
+                    bool output_at_end);
 };

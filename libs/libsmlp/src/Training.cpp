@@ -11,8 +11,8 @@
 
 using namespace std::string_view_literals;
 
-bool Training::Train(size_t num_epochs, bool output_at_end, size_t from_line,
-                     size_t to_line) {
+bool Training::Train(size_t num_epochs, float learning_rate, bool output_at_end,
+                     size_t from_line, size_t to_line) {
   if (from_line > to_line && to_line > 0) {
     std::cerr << "[ERROR] from_line is greater than to_line." << std::endl;
     return false;
@@ -26,7 +26,7 @@ bool Training::Train(size_t num_epochs, bool output_at_end, size_t from_line,
   for (size_t epoch = 0; epoch < num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
               << std::endl;
-    if (!ProcessEpoch(from_line, to_line, output_at_end)) {
+    if (!ProcessEpoch(learning_rate, from_line, to_line, output_at_end)) {
       isSuccess = false;
       break;
     }
@@ -37,18 +37,18 @@ bool Training::Train(size_t num_epochs, bool output_at_end, size_t from_line,
   return isSuccess;
 }
 
-bool Training::ProcessEpoch(size_t from_line, size_t to_line,
-                            bool output_at_end) {
+bool Training::ProcessEpoch(float learning_rate, size_t from_line,
+                            size_t to_line, bool output_at_end) {
   ResetPos();
-  size_t input_size = network_->GetInputSize();
-  size_t ouput_size = network_->GetOutputSize();
-
+  size_t input_size = network_->inputLayer.neurons.size();
+  size_t ouput_size = network_->outputLayer.neurons.size();
+  network_->learningRate = learning_rate;
   RecordFunction recordFunction =
       [&network = network_](
           std::pair<std::vector<float>, std::vector<float>> const &record) {
-        network->GetOutputLayer()->SetExpectedValues(record.second);
-        network->Forward(record.first);
-        network->Backward();
+        network->forwardPropagation(record.first);
+        network->backwardPropagation(record.second);
+        network->updateWeights();
       };
 
   try {

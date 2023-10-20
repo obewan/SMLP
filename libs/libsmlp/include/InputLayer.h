@@ -9,12 +9,33 @@
  */
 #pragma once
 #include "Layer.h"
-#include <vector>
 
 class InputLayer : public Layer {
 public:
-  InputLayer(size_t num_units, ActivationType activationType);
+  void forwardPropagation(Layer &prevLayer) override {
+    // No need to implement for input layer
+  }
 
-  void forward() override;
-  void forward(const std::vector<float> &input_values);
+  void backwardPropagation(Layer &nextLayer) override {
+    // Implement backward propagation for input layer
+    for (size_t i = 0; i < neurons.size(); ++i) {
+      neurons[i].error = 0.0;
+      for (Neuron &n : nextLayer.neurons)
+        neurons[i].error += n.weights[i] * n.error;
+      neurons[i].error *= neurons[i].value * (1 - neurons[i].value);
+    }
+  }
+
+  void updateWeights(Layer &prevLayer, float learningRate) override {
+    // No need to implement for input layer (no weights of input layer)
+  }
+
+  void setInputValues(const std::vector<float> &inputValues) {
+    if (inputValues.size() != neurons.size()) {
+      throw std::invalid_argument("Invalid number of input values");
+    }
+    for (size_t i = 0; i < neurons.size(); i++) {
+      neurons.at(i).value = inputValues.at(i);
+    }
+  }
 };

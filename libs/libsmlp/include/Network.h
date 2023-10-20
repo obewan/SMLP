@@ -11,12 +11,8 @@
 #pragma once
 #include "HiddenLayer.h"
 #include "InputLayer.h"
-#include "Layer.h"
-#include "Monitor.h"
-#include "Optimizer.h"
 #include "OutputLayer.h"
 #include <cstddef>
-#include <vector>
 
 /**
  The methods for getting and setting weights and biases are also necessary
@@ -38,36 +34,81 @@ network to make predictions on new input data.
 
 class Network {
 public:
-  // Constructor that takes the sizes of the input, hidden, and output layers as
-  // arguments
-  Network(size_t input_size, size_t hidden_size, size_t output_size,
-          Optimizer *optimizer, float learning_rate);
+  InputLayer inputLayer;
+  OutputLayer outputLayer;
+  std::vector<HiddenLayer> hiddenLayers;
+  float learningRate;
 
-  // Method that returns a pointer to the specified layer in the network
-  InputLayer *GetInputLayer() { return input_layer_; };
-  std::vector<HiddenLayer *> &GetHiddenLayers() { return hidden_layers_; }
-  HiddenLayer *GetHiddenLayer(size_t index) {
-    return hidden_layers_.at(index);
-  };
-  OutputLayer *GetOutputLayer() { return output_layer_; };
+  Network(size_t inputSize, size_t hiddenLayerSize, size_t outputLayerSize,
+          size_t totalHiddenLayers) {
+    // setting layers
+    inputLayer.neurons.resize(inputSize);
+    hiddenLayers.resize(totalHiddenLayers);
+    for (auto &hl : hiddenLayers) {
+      hl.neurons.resize(hiddenLayerSize);
+    }
+    outputLayer.neurons.resize(outputLayerSize);
 
-  void SetMonitor(Monitor *monitor) { monitor_ = monitor; }
-  Monitor *GetMonitor() { return monitor_; }
+    // setting neurons weights with previous layer size
+    if (hiddenLayerSize > 0) {
+      for (size_t i = 0; i < totalHiddenLayers; i++) {
+        for (auto &n : hiddenLayers.at(i).neurons) {
+          n.initWeights(i == 0 ? inputSize : hiddenLayerSize);
+        }
+      }
+      for (auto &n : outputLayer.neurons) {
+        n.initWeights(hiddenLayerSize);
+      }
+    } else {
+      for (auto &n : outputLayer.neurons) {
+        n.initWeights(inputSize);
+      }
+    }
+  }
 
-  size_t GetInputSize() const { return input_layer_->Size(); }
-  size_t GetOutputSize() const { return output_layer_->Size(); }
+  std::vector<float> forwardPropagation(const std::vector<float> &inputValues) {
+    inputLayer.setInputValues(inputValues);
 
-  void Forward(const std::vector<float> &input_values);
-  void Backward();
-  std::vector<float> Predict(const std::vector<float> &input) const;
+    // Implement forward propagation for network
+    if (hiddenLayers.empty()) {
+      outputLayer.forwardPropagation(inputLayer);
+    } else {
+      hiddenLayers.front().forwardPropagation(inputLayer);
+      if (hiddenLayers.size() > 1) {
+        for (size_t i = 1; i < hiddenLayers.size(); i++)
+          hiddenLayers.at(i).forwardPropagation(hiddenLayers.at(i - 1));
+      }
+      outputLayer.forwardPropagation(hiddenLayers.back());
+    }
+    return outputLayer.getOutputValues();
+  }
 
-  void UpdateWeightsAndBiases();
+  void backwardPropagation(const std::vector<float> &expectedValues) {
+    outputLayer.computeErrors(expectedValues);
+    // Implement backward propagation for network
+    if (hiddenLayers.empty()) {
+      inputLayer.backwardPropagation(outputLayer);
+    } else {
+      if (hiddenLayers.size() > 1) {
+        for (int i = (int)hiddenLayers.size() - 2; i >= 0; --i)
+          hiddenLayers[i].backwardPropagation(hiddenLayers[i + 1]);
+      }
+      inputLayer.backwardPropagation(hiddenLayers.front());
+    }
+  }
 
-private:
-  InputLayer *input_layer_;
-  std::vector<HiddenLayer *> hidden_layers_;
-  OutputLayer *output_layer_;
-  Optimizer *optimizer_;
-  Monitor *monitor_ = nullptr;
-  float learning_rate_;
+  void updateWeights() {
+    // Implement update weights for network
+    if (hiddenLayers.empty()) {
+      outputLayer.updateWeights(inputLayer, learningRate);
+    } else {
+      hiddenLayers.front().updateWeights(inputLayer, learningRate);
+      if (hiddenLayers.size() > 1) {
+        for (size_t i = 1; i < hiddenLayers.size(); i++)
+          hiddenLayers.at(i).updateWeights(hiddenLayers.at(i - 1),
+                                           learningRate);
+      }
+      outputLayer.updateWeights(hiddenLayers.back(), learningRate);
+    }
+  }
 };

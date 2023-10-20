@@ -8,31 +8,57 @@
  *
  */
 #pragma once
-#include "ActivationFunction.h"
 #include "Layer.h"
-#include <cstddef>
+#include "Neuron.h"
 #include <ranges>
 #include <vector>
 
+// note:
+// n.value = 1 / (1 + exp(-n.value));
+// is optimized: see
+// https://stackoverflow.com/questions/10732027/fast-sigmoid-algorithm
+
 class OutputLayer : public Layer {
 public:
-  // Constructor that takes the number of units in the output layer and the
-  // activation function as arguments
-  OutputLayer(size_t num_units, ActivationType activationType,
-              Layer *previous_layer);
+  void forwardPropagation(Layer &prevLayer) override {
+    // Implement forward propagation for output layer
+    for (auto &n : neurons) {
+      n.value = 0;
+      for (size_t i = 0; i < prevLayer.neurons.size(); i++) {
+        auto const &prev_n = prevLayer.neurons.at(i);
+        n.value += prev_n.value * n.weights.at(i);
+      }
+      n.value = n.value / (1 + abs(n.value));
+    }
+  }
 
-  void backward(float learning_rate) override;
+  void backwardPropagation(Layer &nextLayer) override {
+    // No need to implement for output layer
+  }
 
-  std::vector<float> GetOutputValues() {
-    auto neuronOutput = [](const Neuron *n) { return n->output; };
+  void updateWeights(Layer &prevLayer, float learningRate) override {
+    for (Neuron &n : neurons) {
+      for (size_t j = 0; j < n.weights.size(); ++j) {
+        // Gradient descent
+        float dE_dw = prevLayer.neurons[j].value * n.error;
+        // Update weights
+        n.weights[j] -= learningRate * dE_dw;
+      }
+    }
+  }
+
+  void computeErrors(std::vector<float> const &expectedValues) {
+    if (expectedValues.size() != neurons.size()) {
+      throw std::invalid_argument("Invalid expected output size");
+    }
+    for (size_t i = 0; i < neurons.size(); i++) {
+      neurons[i].error = neurons[i].value - expectedValues[i];
+    }
+  }
+
+  std::vector<float> getOutputValues() {
+    auto neuronOutput = [](const Neuron &n) { return n.value; };
     auto neuronOutputs = neurons | std::views::transform(neuronOutput);
     return std::vector<float>{neuronOutputs.begin(), neuronOutputs.end()};
   }
-
-  void SetExpectedValues(const std::vector<float> &expected_values);
-  std::vector<float> &GetExpectedValues() { return expected_values_; }
-
-private:
-  // vector of sample outputs, to compare with predicted outputs
-  std::vector<float> expected_values_;
 };

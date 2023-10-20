@@ -29,7 +29,6 @@ measures that legally restrict others from doing anything the license permits.
  */
 
 #include "include/SimpleMLP.h"
-#include "AdamOptimizer.h"
 #include "Monitor.h"
 #include "Network.h"
 #include "Testing.h"
@@ -41,21 +40,16 @@ measures that legally restrict others from doing anything the license permits.
 #include <sstream>
 #include <string>
 
-bool SimpleMLP::init(int argc, char **argv, bool withMonitoring) {
+bool SimpleMLP::init(int argc, char **argv,
+                     [[maybe_unused]] bool withMonitoring) {
   try {
     if (parseArgs(argc, argv) != EXIT_SUCCESS) {
       return false;
     }
 
-    optimizer_ =
-        new AdamOptimizer(params_.learning_rate, params_.beta1, params_.beta2);
-    network_ =
-        new Network(params_.input_size, params_.hidden_size,
-                    params_.output_size, optimizer_, params_.learning_rate);
-    if (withMonitoring) {
-      auto monitor = buildMonitor(network_);
-      network_->SetMonitor(monitor);
-    }
+    network_ = new Network(params_.input_size, params_.hidden_size,
+                           params_.output_size, params_.hiddens_count);
+
     return true;
 
   } catch (std::exception &ex) {
@@ -66,9 +60,9 @@ bool SimpleMLP::init(int argc, char **argv, bool withMonitoring) {
 
 bool SimpleMLP::train() {
   std::cout << "Training, using file " << params_.data_file << std::endl;
-  Training training(network_, params_.data_file, optimizer_);
-  return training.Train(params_.num_epochs, params_.output_at_end, 0,
-                        params_.to_line);
+  Training training(network_, params_.data_file);
+  return training.Train(params_.num_epochs, params_.learning_rate,
+                        params_.output_at_end, 0, params_.to_line);
 }
 
 bool SimpleMLP::test() {
@@ -89,13 +83,17 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
                  "the numbers of input neurons")
       ->mandatory()
       ->check(CLI::PositiveNumber);
-  app.add_option("-s,--hidden_size", params_.hidden_size,
-                 "the numbers of hidden neurons")
-      ->default_val(params_.hidden_size)
-      ->check(CLI::PositiveNumber);
   app.add_option("-o,--output_size", params_.output_size,
                  "the numbers of output neurons")
       ->default_val(params_.output_size)
+      ->check(CLI::PositiveNumber);
+  app.add_option("-d,--hidden_size", params_.hidden_size,
+                 "the numbers of hidden neurons per hidden layer")
+      ->default_val(params_.hidden_size)
+      ->check(CLI::PositiveNumber);
+  app.add_option("-c,--hiddens_count", params_.hiddens_count,
+                 "the count of hidden layers")
+      ->default_val(params_.hiddens_count)
       ->check(CLI::PositiveNumber);
   app.add_option("-e,--epochs", params_.num_epochs,
                  "the numbers of epochs retraining")
@@ -107,15 +105,9 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
          "start, or 0 to use the entire file")
       ->default_val(params_.to_line)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-w,--learning_rate", params_.learning_rate,
+  app.add_option("-r,--learning_rate", params_.learning_rate,
                  "optimizer learning rate")
       ->default_val(params_.learning_rate)
-      ->check(CLI::TypeValidator<float>());
-  app.add_option("-x,--beta1", params_.beta1, "optimizer beta1")
-      ->default_val(params_.beta1)
-      ->check(CLI::TypeValidator<float>());
-  app.add_option("-y,--beta2", params_.beta2, "optimizer beta2")
-      ->default_val(params_.beta2)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
          "-z,--output_ends", params_.output_at_end,
@@ -126,54 +118,4 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
 
   CLI11_PARSE(app, argc, argv)
   return EXIT_SUCCESS;
-}
-
-Monitor *SimpleMLP::buildMonitor(Network *network) {
-  // Get timestamp for monitor file name
-  auto time = std::time(nullptr);
-  std::stringstream ss;
-  ss << std::put_time(std::localtime(&time),
-                      "%F_%T"); // ISO 8601 without timezone information.
-  auto dateTime = ss.str();
-  std::erase(dateTime, ':');
-  std::erase(dateTime, '-');
-  ss.str("");
-  ss.clear();
-  std::string filename = "monitor_" + dateTime + ".csv";
-  auto *monitor = new Monitor(filename);
-  std::cout << "Monitoring to file " << filename << std::endl;
-
-  // Add header line to monitor file
-  monitor->log("date");
-  for (auto connection : network->GetInputLayer()->connections) {
-    ss << "ic" << connection->from->id << "-" << connection->to->id;
-    monitor->log(ss.str());
-    ss.str("");
-    ss.clear();
-  }
-  size_t hs = 0;
-  for (auto const &hidden : network->GetHiddenLayers()) {
-    hs++;
-    for (auto const &con : hidden->connections) {
-      ss << "h" << hs << "c" << con->from->id << "-" << con->to->id;
-      monitor->log(ss.str());
-      ss.str("");
-      ss.clear();
-    }
-  }
-  size_t output_size = network->GetOutputSize();
-  for (size_t i = 0; i < output_size; i++) {
-    ss << "op" << i + 1;
-    monitor->log(ss.str());
-    ss.str("");
-    ss.clear();
-  }
-  for (size_t i = 0; i < output_size; i++) {
-    ss << "oe" << i + 1;
-    monitor->log(ss.str(), i == output_size - 1);
-    ss.str("");
-    ss.clear();
-  }
-
-  return monitor;
 }
