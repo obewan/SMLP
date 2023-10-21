@@ -1,38 +1,39 @@
 # SMLP
 
-A Simple Multi-Layer Perceptron, by [dams](https://dams-labs.net/).  
+A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
 Each neurons of a previous layer is connected with each neurons of its next layer.  
-The neural network will use a sigmoid activation function currently.
+The neural network currently uses a sigmoid activation function.
 
 # Features
 
-- Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for better maintainance and performance, for compliance with best software development practices (low complexity, KISS principle). Also it can be used as base for more complexe projects.
-- Performance, using C++ for best performance, and less cpu and memory usage.
-- CSV parsing (using CLI11 lib), dataset learning on the flow line by line (instead of putting all the dataset in memory), so low memory usage.
-- Cmake compilation, tested on Linux, but should be portable on other systems
-- Doxygen documentation
-- Include a mushrooms edibility dataset example
+- Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
+- Functionality: operational, including forward propagation, backward propagation and weight update.
+- Performance: Uses C++ for optimal performance, and less CPU and memory usage.
+- CSV parsing (using CLI11 lib), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
+- Cmake compilation, tested on Linux, but should be portable to other systems.
+- Doxygen documentation.
+- Includes a mushroom edibility dataset example
 
 # Roadmap
 
-- add unit-tests (with code coverage) and continuous integration
-- add import/export of the model
-- add training/testing modes
-- add an auto training feature (searching for the best parameters)
-- add more activation functions that can be selected
-- add a GUI (but probably on a more advanced project)
-- add a CUDA support (but probably on a more advanced project)
+- Add unit-tests (with code coverage) and continuous integration.
+- Add import/export of the model.
+- Add training/testing modes.
+- Add an auto-training feature (searching for the best parameters).
+- Add more activation functions that can be selected.
+- Add a GUI (but probably on a more advanced project).
+- Add a CUDA support (but probably on a more advanced project).
 
 # Usage
 
-- Prepare a dataset into a csv format with only float numbers from range 0 to 1 (example in test/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv)
-- build and run smlp (should be in build directory then)
-- to get command line help: `smlp -h`
-- the `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset, and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
-- `epochs` (`-e` paramater) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-- the `line_to` number delimiter (`-l` parameter) is the line number from which smlp will use the remain dataset lines for test and not for train, so the first part is used for training and the second part of the file for testing. It should be a valid number, and be at around 70% of the datafile
-- the `learning_rate` (`-r` parameter) should be small enought to have a fine training but big enought to be efficient, a value of 0.01 is recommanded with the mushroom example.
-- increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will goes slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
+1. Prepare a dataset in CSV format with coma separation and with only float numbers ranging from 0 to 1 (example in test/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
+2. Build and run smlp (should be in build directory then).
+3. To get command line help: `smlp -h`
+4. The `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
+5. `epochs` (`-e` paramater) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
+6. The `line_to` number delimiter (`-l` parameter) is the line number from which smlp will use the remaining dataset lines for test and not for train, so the first part is used for training and the second part of the file for testing. It should be a valid number, and be at around 70% of the datafile.
+7. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
+8. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 
 # Example
 
