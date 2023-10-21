@@ -1,4 +1,5 @@
 #include "Training.h"
+#include <chrono>
 #include <cstddef>
 #include <cstdlib>
 #include <exception>
@@ -21,6 +22,7 @@ bool Training::Train(size_t num_epochs, float learning_rate, bool output_at_end,
     return false;
   }
 
+  const auto start{std::chrono::steady_clock::now()};
   bool isSuccess = true;
   for (size_t epoch = 0; epoch < num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
@@ -31,6 +33,10 @@ bool Training::Train(size_t num_epochs, float learning_rate, bool output_at_end,
       break;
     }
   }
+
+  const auto end{std::chrono::steady_clock::now()};
+  const std::chrono::duration<double> elapsed_seconds{end - start};
+  std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
 
   CloseFile();
 
@@ -49,6 +55,7 @@ bool Training::TrainAndTest(Testing &testing, size_t num_epochs,
     return false;
   }
 
+  const auto start{std::chrono::steady_clock::now()};
   bool isSuccess = true;
   for (size_t epoch = 0; epoch < num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
@@ -63,6 +70,10 @@ bool Training::TrainAndTest(Testing &testing, size_t num_epochs,
     testing.showResultsLine();
     std::cout << std::endl;
   }
+
+  const auto end{std::chrono::steady_clock::now()};
+  const std::chrono::duration<double> elapsed_seconds{end - start};
+  std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
 
   CloseFile();
 
