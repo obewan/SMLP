@@ -8,11 +8,11 @@ The neural network currently uses a sigmoid activation function.
 
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
 - Functionality: operational, including forward propagation, backward propagation and weight update.
-- Performance: Uses C++ for optimal performance, and less CPU and memory usage.
+- Performance: uses C++ for optimal performance, and less CPU and memory usage.
 - CSV parsing (using CLI11 lib), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
 - Cmake compilation, tested on Linux, but should be portable to other systems.
 - Doxygen documentation.
-- Includes a mushroom edibility dataset example
+- Includes a mushroom edibility dataset example.
 
 # Roadmap
 
@@ -26,7 +26,7 @@ The neural network currently uses a sigmoid activation function.
 
 # Usage
 
-1. Prepare a dataset in CSV format with coma separation and with only float numbers ranging from 0 to 1 (example in test/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
+1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in test/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
 2. Build and run smlp (should be in build directory then).
 3. To get command line help: `smlp -h`
 4. The `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
