@@ -1,6 +1,17 @@
 # SMLP
 
-A Simple Multi-Layer Perceptron
+A Simple Multi-Layer Perceptron.
+Each neurons of a previous layer is connected with each neurons of a next layer.
+The neural network will use a sigmoid activation function currently.
+
+# Roadmap
+
+- add unit-tests (with code coverage) and continuous integration
+- add import/export of the model
+- add training/testing modes
+- add an auto training (searching for best parameters)
+- add more activation functions that can be selected
+- add a GUI (but probably on a more advanced project)
 
 # Usage
 
@@ -11,6 +22,7 @@ A Simple Multi-Layer Perceptron
 - `epochs` (`-e` paramater) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
 - the line_to number delimiter (`-l` parameter) is the line number from which smlp will use the remain dataset lines for test and not for train, so the first part is used for training and the second part of the file for testing. It should be a valid number, and be at around 70% of the datafile
 - the `learning_rate` (`-r` parameter) should be small enought to have a fine training but big enought to be efficient, a value of 0.01 is recommanded with the mushroom example.
+- increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will goes slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 
 # Example
 
