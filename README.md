@@ -21,6 +21,7 @@ The neural network currently uses a sigmoid activation function.
 - Add training/testing modes.
 - Add an auto-training feature (searching for the best parameters).
 - Add more activation functions that can be selected.
+- Add interactive testing.
 - Add a GUI (but probably on a more advanced project).
 - Add a CUDA support (but probably on a more advanced project).
 
