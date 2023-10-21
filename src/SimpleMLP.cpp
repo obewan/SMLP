@@ -29,7 +29,6 @@ measures that legally restrict others from doing anything the license permits.
  */
 
 #include "include/SimpleMLP.h"
-#include "Monitor.h"
 #include "Network.h"
 #include "Testing.h"
 #include "Training.h"
@@ -58,17 +57,28 @@ bool SimpleMLP::init(int argc, char **argv,
   }
 }
 
-bool SimpleMLP::train() {
+void SimpleMLP::train() {
   std::cout << "Training, using file " << params_.data_file << std::endl;
   Training training(network_, params_.data_file);
-  return training.Train(params_.num_epochs, params_.learning_rate,
-                        params_.output_at_end, 0, params_.to_line);
+  training.Train(params_.num_epochs, params_.learning_rate,
+                 params_.output_at_end, 0, params_.to_line);
 }
 
-bool SimpleMLP::test() {
+void SimpleMLP::test() {
   std::cout << "Testing, using file " << params_.data_file << std::endl;
   Testing testing(network_, params_.data_file);
-  return testing.Test(params_.output_at_end, params_.to_line, 0);
+  testing.Test(params_.output_at_end, params_.to_line, 0);
+  testing.showResults();
+}
+
+void SimpleMLP::trainAndTest() {
+  std::cout << "Train and testing, using file " << params_.data_file
+            << std::endl;
+  Testing testing(network_, params_.data_file);
+  Training training(network_, params_.data_file);
+  training.TrainAndTest(testing, params_.num_epochs, params_.learning_rate,
+                        params_.output_at_end, 0, params_.to_line);
+  testing.showResults();
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {

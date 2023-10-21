@@ -12,8 +12,8 @@
 #include <cstddef>
 #include <fstream>
 
-using RecordFunction =
-    std::function<void(std::pair<std::vector<float>, std::vector<float>>)>;
+using RecordFunction = std::function<void(
+    size_t, size_t, std::pair<std::vector<float>, std::vector<float>>)>;
 
 class FileParser {
 public:
@@ -22,10 +22,10 @@ public:
   bool OpenFile();
   void CloseFile();
   void ResetPos();
-  bool ProcessFile(size_t from_line, size_t to_line, size_t input_size,
-                   size_t output_size, bool output_at_end,
+  bool ProcessFile(size_t epoch, size_t from_line, size_t to_line,
+                   size_t input_size, size_t output_size, bool output_at_end,
                    const RecordFunction &processRecord);
-  bool ProcessLine(const std::string &line, size_t line_number,
+  bool ProcessLine(size_t epoch, const std::string &line, size_t line_number,
                    size_t input_size, size_t output_size, bool output_at_end,
                    const RecordFunction &processRecord) const;
 

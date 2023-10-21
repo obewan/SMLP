@@ -8,15 +8,15 @@
  *
  */
 #pragma once
-#include "Monitor.h"
 #include "Network.h"
 #include <string>
 
 class SimpleMLP {
 public:
   bool init(int argc, char **argv, bool withMonitoring = true);
-  bool train();
-  bool test();
+  void train();
+  void test();
+  void trainAndTest();
 
 private:
   // default parameters
@@ -39,6 +39,5 @@ private:
   };
 
   int parseArgs(int argc, char **argv);
-  Monitor *buildMonitor(Network *network);
   Network *network_ = nullptr;
 };

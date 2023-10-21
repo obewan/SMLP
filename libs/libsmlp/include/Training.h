@@ -10,7 +10,7 @@
 #pragma once
 #include "FileParser.h"
 #include "Network.h"
-#include "Optimizer.h"
+#include "Testing.h"
 
 /**
  * Here's a high-level overview of the process:
@@ -62,9 +62,13 @@ public:
   bool Train(size_t num_epochs, float learning_rate, bool output_at_end = true,
              size_t from_line = 0, size_t to_line = 0);
 
+  bool TrainAndTest(Testing &testing, size_t num_epochs, float learning_rate,
+                    bool output_at_end = true, size_t from_line = 0,
+                    size_t to_line = 0);
+
 private:
   Network *network_;
 
-  bool ProcessEpoch(float learning_rate, size_t from_line, size_t to_line,
-                    bool output_at_end);
+  bool ProcessEpoch(size_t epoch, float learning_rate, size_t from_line,
+                    size_t to_line, bool output_at_end);
 };

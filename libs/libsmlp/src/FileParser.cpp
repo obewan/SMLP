@@ -27,7 +27,7 @@ void FileParser::ResetPos() {
   file_.seekg(0, std::ios::beg);
 }
 
-bool FileParser::ProcessFile(size_t from_line, size_t to_line,
+bool FileParser::ProcessFile(size_t epoch, size_t from_line, size_t to_line,
                              size_t input_size, size_t output_size,
                              bool output_at_end,
                              const RecordFunction &processRecord) {
@@ -39,8 +39,8 @@ bool FileParser::ProcessFile(size_t from_line, size_t to_line,
     if (line_number < from_line) {
       continue;
     }
-    if (!ProcessLine(line, line_number, input_size, output_size, output_at_end,
-                     processRecord)) {
+    if (!ProcessLine(epoch, line, line_number, input_size, output_size,
+                     output_at_end, processRecord)) {
       return false;
     }
   }
@@ -53,9 +53,9 @@ bool FileParser::ProcessFile(size_t from_line, size_t to_line,
   return true;
 }
 
-bool FileParser::ProcessLine(const std::string &line, size_t line_number,
-                             size_t input_size, size_t output_size,
-                             bool output_at_end,
+bool FileParser::ProcessLine(size_t epoch, const std::string &line,
+                             size_t line_number, size_t input_size,
+                             size_t output_size, bool output_at_end,
                              const RecordFunction &processRecord) const {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   size_t total_columns = input_size + output_size;
@@ -83,7 +83,7 @@ bool FileParser::ProcessLine(const std::string &line, size_t line_number,
     record = ProcessOutputFirst(cell_refs, output_size);
   }
 
-  processRecord(record);
+  processRecord(epoch, line_number, record);
 
   return true;
 }

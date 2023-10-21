@@ -1,5 +1,6 @@
 #include "include/SimpleMLP.h"
 #include <cstdlib>
+#include <iostream>
 
 /**
  * @brief main function
@@ -21,15 +22,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (!smlp->train()) {
-    std::cerr << "[ERROR] Training error. Exiting." << std::endl;
-    return EXIT_FAILURE;
-  }
-
-  if (!smlp->test()) {
-    std::cerr << "[ERROR] Testing error. Exiting." << std::endl;
-    return EXIT_FAILURE;
-  }
+  smlp->trainAndTest();
 
   return EXIT_SUCCESS;
 }

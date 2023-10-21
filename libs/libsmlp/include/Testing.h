@@ -10,6 +10,8 @@
 #pragma once
 #include "FileParser.h"
 #include "Network.h"
+#include <cstddef>
+#include <map>
 
 class Testing : public FileParser {
 public:
@@ -27,9 +29,31 @@ public:
    * from_line or equal to 0 for end of file.
    * @return bool true if success
    */
-  bool Test(bool output_at_end = true, size_t from_line = 0,
-            size_t to_line = 0);
+  bool Test(bool output_at_end = true, size_t from_line = 0, size_t to_line = 0,
+            size_t epoch = 0);
+
+  struct TestResults {
+    int epoch;
+    int line;
+    float expected;
+    float output;
+  };
+
+  struct TestResultsExt {
+    int epoch;
+    int line;
+    float expected;
+    float output;
+    std::vector<float> progress;
+  };
+
+  std::vector<TestResultsExt> testResultExts;
+  std::map<int, std::vector<float>> progress;
+
+  void showResults();
 
 private:
   Network *network_;
+  std::vector<TestResults> lastEpochTestResultTemp_;
+  size_t last_epoch_ = 0;
 };
