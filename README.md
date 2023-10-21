@@ -1,7 +1,7 @@
 # SMLP
 
-A Simple Multi-Layer Perceptron.
-Each neurons of a previous layer is connected with each neurons of a next layer.
+A Simple Multi-Layer Perceptron.  
+Each neurons of a previous layer is connected with each neurons of its next layer.  
 The neural network will use a sigmoid activation function currently.
 
 # Roadmap
