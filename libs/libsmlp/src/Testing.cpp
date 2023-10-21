@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <cstddef>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
-#include <ostream>
 #include <ranges>
 
 using namespace std::string_view_literals;
@@ -82,7 +82,8 @@ void Testing::showResults() {
     for (auto &progres : result.progress) {
       std::cout << progres << " ";
     }
-    std::cout << "]" << std::endl;
+    std::cout << "] (" << result.progress.back() - result.progress.front()
+              << ")" << std::endl;
 
     if (result.expected == 1) {
       total_expected_one++;
@@ -122,13 +123,17 @@ void Testing::showResults() {
   }
 
   std::cout << std::endl;
-  std::cout << "Accuracy: " << accuracy << "%" << std::endl;
-  std::cout << "Good convergence toward zero: " << convergence_zero << "% ("
+  std::cout << std::setprecision(3) << "Accuracy: " << accuracy << "%"
+            << std::endl;
+  std::cout << std::setprecision(3)
+            << "Good convergence toward zero: " << convergence_zero << "% ("
             << good_convergence_zero << "/" << total_expected_zero << ")"
             << std::endl;
-  std::cout << "Good convergence toward one: " << convergence_one << "%  ("
+  std::cout << std::setprecision(3)
+            << "Good convergence toward one: " << convergence_one << "%  ("
             << good_convergence_one << "/" << total_expected_one << ")"
             << std::endl;
-  std::cout << "Good convergence total: " << convergence << "% ("
-            << good_convergence << "/" << total_samples << ")" << std::endl;
+  std::cout << std::setprecision(3) << "Good convergence total: " << convergence
+            << "% (" << good_convergence << "/" << total_samples << ")"
+            << std::endl;
 }
