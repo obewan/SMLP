@@ -22,6 +22,8 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
+  // can also use just smlp->train() and/or smlp->test()
+  // but trainAndTest() will log the progress as it will test at each epoch.
   smlp->trainAndTest();
 
   return EXIT_SUCCESS;
