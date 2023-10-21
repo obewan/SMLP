@@ -33,15 +33,15 @@ public:
             size_t epoch = 0);
 
   struct TestResults {
-    int epoch;
-    int line;
+    size_t epoch;
+    size_t line;
     float expected;
     float output;
   };
 
   struct TestResultsExt {
-    int epoch;
-    int line;
+    size_t epoch;
+    size_t line;
     float expected;
     float output;
     std::vector<float> progress;

@@ -74,7 +74,8 @@ bool Training::ProcessEpoch(size_t epoch, float learning_rate, size_t from_line,
   network_->learningRate = learning_rate;
   RecordFunction recordFunction =
       [&network = network_](
-          size_t epoch, size_t line_number,
+          [[maybe_unused]] size_t stepoch,
+          [[maybe_unused]] size_t stline_number,
           std::pair<std::vector<float>, std::vector<float>> const &record) {
         network->forwardPropagation(record.first);
         network->backwardPropagation(record.second);

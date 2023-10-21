@@ -26,10 +26,11 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line,
 
   RecordFunction recordFunction =
       [&network = network_, &testResults](
-          int epoch, int line,
+          size_t stepoch, size_t stline,
           std::pair<std::vector<float>, std::vector<float>> const &record) {
         auto predicteds = network->forwardPropagation(record.first);
-        testResults.push_back({epoch, line, record.second[0], predicteds[0]});
+        testResults.emplace_back(stepoch, stline, record.second[0],
+                                 predicteds[0]);
       };
 
   try {
