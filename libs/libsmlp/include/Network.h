@@ -86,14 +86,14 @@ public:
   void backwardPropagation(const std::vector<float> &expectedValues) {
     outputLayer.computeErrors(expectedValues);
     // Implement backward propagation for network
-    if (hiddenLayers.empty()) {
-      inputLayer.backwardPropagation(outputLayer);
-    } else {
-      if (hiddenLayers.size() > 1) {
-        for (int i = (int)hiddenLayers.size() - 2; i >= 0; --i)
+    if (!hiddenLayers.empty()) {
+      for (int i = (int)hiddenLayers.size() - 1; i >= 0; --i) {
+        if (i == (int)hiddenLayers.size() - 1) {
+          hiddenLayers[i].backwardPropagation(outputLayer);
+        } else {
           hiddenLayers[i].backwardPropagation(hiddenLayers[i + 1]);
+        }
       }
-      inputLayer.backwardPropagation(hiddenLayers.front());
     }
   }
 

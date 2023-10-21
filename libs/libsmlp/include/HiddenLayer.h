@@ -26,7 +26,8 @@ public:
         auto const &prev_n = prevLayer.neurons.at(i);
         n.value += prev_n.value * n.weights.at(i);
       }
-      n.value = n.value / (1 + abs(n.value));
+      // Use sigmoid activation function
+      n.value = 1.0f / (1.0f + exp(-n.value));
     }
   }
 

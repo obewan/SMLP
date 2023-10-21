@@ -17,13 +17,7 @@ public:
   }
 
   void backwardPropagation(Layer &nextLayer) override {
-    // Implement backward propagation for input layer
-    for (size_t i = 0; i < neurons.size(); ++i) {
-      neurons[i].error = 0.0;
-      for (Neuron &n : nextLayer.neurons)
-        neurons[i].error += n.weights[i] * n.error;
-      neurons[i].error *= neurons[i].value * (1 - neurons[i].value);
-    }
+    // No need to implement for input layer (no weights of input layer)
   }
 
   void updateWeights(Layer &prevLayer, float learningRate) override {

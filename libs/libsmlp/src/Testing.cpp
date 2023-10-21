@@ -69,7 +69,9 @@ void Testing::showResults() {
   }
 
   size_t total_samples = testResultExts.size();
+  size_t correct_predictions_low = 0;
   size_t correct_predictions = 0;
+  size_t correct_predictions_high = 0;
   size_t good_convergence = 0;
   size_t good_convergence_zero = 0;
   size_t good_convergence_one = 0;
@@ -102,18 +104,30 @@ void Testing::showResults() {
         good_convergence++;
       }
     }
-
-    if (abs(result.expected - result.output) < 0.1) {
+    if (abs(result.expected - result.output) < 0.30) {
+      correct_predictions_low++;
+    }
+    if (abs(result.expected - result.output) < 0.20) {
       correct_predictions++;
     }
+    if (abs(result.expected - result.output) < 0.10) {
+      correct_predictions_high++;
+    }
   }
+
   float accuracy = 0;
+  float accuracy_low = 0;
+  float accuracy_high = 0;
   float convergence = 0;
   float convergence_zero = 0;
   float convergence_one = 0;
   if (total_samples > 0) {
     accuracy =
         static_cast<float>(correct_predictions) / (float)total_samples * 100.0f;
+    accuracy_low = static_cast<float>(correct_predictions_low) /
+                   (float)total_samples * 100.0f;
+    accuracy_high = static_cast<float>(correct_predictions_high) /
+                    (float)total_samples * 100.0f;
     convergence =
         static_cast<float>(good_convergence) / (float)total_samples * 100.0f;
     convergence_zero = static_cast<float>(good_convergence_zero) /
@@ -123,7 +137,14 @@ void Testing::showResults() {
   }
 
   std::cout << std::endl;
-  std::cout << std::setprecision(3) << "Accuracy: " << accuracy << "%"
+  std::cout << std::setprecision(3)
+            << "Low accuracy (correct at 70%): " << accuracy_low << "%"
+            << std::endl;
+  std::cout << std::setprecision(3)
+            << "Avg accuracy (correct at 80%): " << accuracy << "%"
+            << std::endl;
+  std::cout << std::setprecision(3)
+            << "High accuracy (correct at 90%): " << accuracy_high << "%"
             << std::endl;
   std::cout << std::setprecision(3)
             << "Good convergence toward zero: " << convergence_zero << "% ("
