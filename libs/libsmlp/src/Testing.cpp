@@ -63,6 +63,11 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line,
 }
 
 void Testing::showResults() {
+  for (auto const &result : lastEpochTestResultTemp_) {
+    testResultExts.push_back({result.epoch, result.line, result.expected,
+                              result.output, progress.at(result.line)});
+  }
+
   size_t total_samples = testResultExts.size();
   size_t correct_predictions = 0;
   size_t good_convergence = 0;
@@ -70,11 +75,6 @@ void Testing::showResults() {
   size_t good_convergence_one = 0;
   size_t total_expected_zero = 0;
   size_t total_expected_one = 0;
-
-  for (auto const &result : lastEpochTestResultTemp_) {
-    testResultExts.push_back({result.epoch, result.line, result.expected,
-                              result.output, progress.at(result.line)});
-  }
 
   for (auto const &result : testResultExts) {
     std::cout << "Expected:" << result.expected
@@ -123,9 +123,12 @@ void Testing::showResults() {
 
   std::cout << std::endl;
   std::cout << "Accuracy: " << accuracy << "%" << std::endl;
-  std::cout << "Good convergence toward zero: " << convergence_zero << "%"
+  std::cout << "Good convergence toward zero: " << convergence_zero << "% ("
+            << good_convergence_zero << "/" << total_expected_zero << ")"
             << std::endl;
-  std::cout << "Good convergence toward one: " << convergence_one << "%"
+  std::cout << "Good convergence toward one: " << convergence_one << "%  ("
+            << good_convergence_one << "/" << total_expected_one << ")"
             << std::endl;
-  std::cout << "Good convergence total: " << convergence << "%" << std::endl;
+  std::cout << "Good convergence total: " << convergence << "% ("
+            << good_convergence << "/" << total_samples << ")" << std::endl;
 }
