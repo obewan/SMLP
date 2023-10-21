@@ -30,3 +30,24 @@
 *.exe
 *.out
 *.app
+
+# Doxygen output
+doc/html
+doc/latex
+
+# build output
+build
+bin
+monitor*.csv
+
+# CMake
+CMakeFiles
+CMakeCache.txt
+
+# VSCode
+.vscode
+.cache
+
+# Others
+test/ai/
+
