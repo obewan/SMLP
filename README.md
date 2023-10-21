@@ -1,8 +1,17 @@
 # SMLP
 
-A Simple Multi-Layer Perceptron.  
+A Simple Multi-Layer Perceptron, by [dams](https://dams-labs.net/).  
 Each neurons of a previous layer is connected with each neurons of its next layer.  
 The neural network will use a sigmoid activation function currently.
+
+# Features
+
+- Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for better maintainance and performance, for compliance with best software development practices (low complexity, KISS principle). Also it can be used as base for more complexe projects.
+- Performance, using C++ for best performance, and less cpu and memory usage.
+- CSV parsing (using CLI11 lib), dataset learning on the flow line by line (instead of putting all the dataset in memory), so low memory usage.
+- Cmake compilation, tested on Linux, but should be portable on other systems
+- Doxygen documentation
+- Include a mushrooms edibility dataset example
 
 # Roadmap
 
@@ -12,6 +21,7 @@ The neural network will use a sigmoid activation function currently.
 - add an auto training feature (searching for the best parameters)
 - add more activation functions that can be selected
 - add a GUI (but probably on a more advanced project)
+- add a CUDA support (but probably on a more advanced project)
 
 # Usage
 
