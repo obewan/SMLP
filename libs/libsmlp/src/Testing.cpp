@@ -62,99 +62,109 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line,
   return true;
 }
 
-void Testing::showResults() {
+Testing::Stat Testing::calcStats() {
+  testResultExts.clear();
   for (auto const &result : lastEpochTestResultTemp_) {
     testResultExts.push_back({result.epoch, result.line, result.expected,
                               result.output, progress.at(result.line)});
   }
-
-  size_t total_samples = testResultExts.size();
-  size_t correct_predictions_low = 0;
-  size_t correct_predictions = 0;
-  size_t correct_predictions_high = 0;
-  size_t good_convergence = 0;
-  size_t good_convergence_zero = 0;
-  size_t good_convergence_one = 0;
-  size_t total_expected_zero = 0;
-  size_t total_expected_one = 0;
-
+  Testing::Stat stats;
+  stats.total_samples = testResultExts.size();
   for (auto const &result : testResultExts) {
-    std::cout << "Expected:" << result.expected
-              << " Predicted:" << result.output << " [ ";
-    for (auto &progres : result.progress) {
-      std::cout << progres << " ";
-    }
-    std::cout << "] (" << result.progress.back() - result.progress.front()
-              << ")" << std::endl;
-
     if (result.expected == 1) {
-      total_expected_one++;
+      stats.total_expected_one++;
     } else {
-      total_expected_zero++;
+      stats.total_expected_zero++;
     }
 
     if (result.progress.size() > 1) {
       if (result.expected == 1 &&
           result.progress.back() > result.progress.front()) {
-        good_convergence_one++;
-        good_convergence++;
+        stats.good_convergence_one++;
+        stats.good_convergence++;
       } else if (result.expected == 0 &&
                  result.progress.back() < result.progress.front()) {
-        good_convergence_zero++;
-        good_convergence++;
+        stats.good_convergence_zero++;
+        stats.good_convergence++;
       }
     }
     if (abs(result.expected - result.output) < 0.30) {
-      correct_predictions_low++;
+      stats.correct_predictions_low++;
     }
     if (abs(result.expected - result.output) < 0.20) {
-      correct_predictions++;
+      stats.correct_predictions++;
     }
     if (abs(result.expected - result.output) < 0.10) {
-      correct_predictions_high++;
+      stats.correct_predictions_high++;
     }
   }
 
-  float accuracy = 0;
-  float accuracy_low = 0;
-  float accuracy_high = 0;
-  float convergence = 0;
-  float convergence_zero = 0;
-  float convergence_one = 0;
-  if (total_samples > 0) {
-    accuracy =
-        static_cast<float>(correct_predictions) / (float)total_samples * 100.0f;
-    accuracy_low = static_cast<float>(correct_predictions_low) /
-                   (float)total_samples * 100.0f;
-    accuracy_high = static_cast<float>(correct_predictions_high) /
-                    (float)total_samples * 100.0f;
-    convergence =
-        static_cast<float>(good_convergence) / (float)total_samples * 100.0f;
-    convergence_zero = static_cast<float>(good_convergence_zero) /
-                       (float)total_expected_zero * 100.0f;
-    convergence_one = static_cast<float>(good_convergence_one) /
-                      (float)total_expected_one * 100.0f;
+  if (stats.total_samples > 0) {
+    stats.accuracy = static_cast<float>(stats.correct_predictions) /
+                     (float)stats.total_samples * 100.0f;
+    stats.accuracy_low = static_cast<float>(stats.correct_predictions_low) /
+                         (float)stats.total_samples * 100.0f;
+    stats.accuracy_high = static_cast<float>(stats.correct_predictions_high) /
+                          (float)stats.total_samples * 100.0f;
+    stats.convergence = static_cast<float>(stats.good_convergence) /
+                        (float)stats.total_samples * 100.0f;
+    stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /
+                             (float)stats.total_expected_zero * 100.0f;
+    stats.convergence_one = static_cast<float>(stats.good_convergence_one) /
+                            (float)stats.total_expected_one * 100.0f;
+  }
+  return stats;
+}
+
+void Testing::showResultsLine() {
+  auto stats = calcStats();
+  const auto default_precision{std::cout.precision()};
+
+  std::cout << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
+            << stats.accuracy << " " << stats.accuracy_high << "] ";
+  std::cout << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero
+            << " " << stats.convergence_one << " " << stats.convergence << "]";
+
+  std::cout << std::setprecision((int)default_precision); // restore defaults
+}
+
+void Testing::showResults(bool verbose) {
+  auto stats = calcStats();
+
+  if (verbose) {
+    for (auto const &result : testResultExts) {
+      std::cout << "Expected:" << result.expected
+                << " Predicted:" << result.output << " [ ";
+      for (auto &progres : result.progress) {
+        std::cout << progres << " ";
+      }
+      std::cout << "] (" << result.progress.back() - result.progress.front()
+                << ")" << std::endl;
+    }
+    std::cout << std::endl;
   }
 
-  std::cout << std::endl;
+  const auto default_precision{std::cout.precision()};
   std::cout << std::setprecision(3)
-            << "Low accuracy (correct at 70%): " << accuracy_low << "%"
-            << std::endl;
-  std::cout << std::setprecision(3)
-            << "Avg accuracy (correct at 80%): " << accuracy << "%"
+            << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
             << std::endl;
   std::cout << std::setprecision(3)
-            << "High accuracy (correct at 90%): " << accuracy_high << "%"
+            << "Avg accuracy (correct at 80%): " << stats.accuracy << "%"
             << std::endl;
   std::cout << std::setprecision(3)
-            << "Good convergence toward zero: " << convergence_zero << "% ("
-            << good_convergence_zero << "/" << total_expected_zero << ")"
+            << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
             << std::endl;
   std::cout << std::setprecision(3)
-            << "Good convergence toward one: " << convergence_one << "%  ("
-            << good_convergence_one << "/" << total_expected_one << ")"
+            << "Good convergence toward zero: " << stats.convergence_zero
+            << "% (" << stats.good_convergence_zero << "/"
+            << stats.total_expected_zero << ")" << std::endl;
+  std::cout << std::setprecision(3)
+            << "Good convergence toward one: " << stats.convergence_one
+            << "%  (" << stats.good_convergence_one << "/"
+            << stats.total_expected_one << ")" << std::endl;
+  std::cout << std::setprecision(3)
+            << "Good convergence total: " << stats.convergence << "% ("
+            << stats.good_convergence << "/" << stats.total_samples << ")"
             << std::endl;
-  std::cout << std::setprecision(3) << "Good convergence total: " << convergence
-            << "% (" << good_convergence << "/" << total_samples << ")"
-            << std::endl;
+  std::cout << std::setprecision((int)default_precision); // restore defaults
 }

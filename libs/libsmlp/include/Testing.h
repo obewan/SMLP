@@ -33,24 +33,45 @@ public:
             size_t epoch = 0);
 
   struct TestResults {
-    size_t epoch;
-    size_t line;
-    float expected;
-    float output;
+    size_t epoch = 0;
+    size_t line = 0;
+    float expected = 0.0f;
+    float output = 0.0f;
   };
 
   struct TestResultsExt {
-    size_t epoch;
-    size_t line;
-    float expected;
-    float output;
+    size_t epoch = 0;
+    size_t line = 0;
+    float expected = 0.0f;
+    float output = 0.0f;
     std::vector<float> progress;
   };
 
   std::vector<TestResultsExt> testResultExts;
   std::map<int, std::vector<float>> progress;
 
-  void showResults();
+  struct Stat {
+    size_t total_samples = 0;
+    size_t correct_predictions_low = 0;
+    size_t correct_predictions = 0;
+    size_t correct_predictions_high = 0;
+    size_t good_convergence = 0;
+    size_t good_convergence_zero = 0;
+    size_t good_convergence_one = 0;
+    size_t total_expected_zero = 0;
+    size_t total_expected_one = 0;
+
+    float accuracy = 0.0f;
+    float accuracy_low = 0.0f;
+    float accuracy_high = 0.0f;
+    float convergence = 0.0f;
+    float convergence_zero = 0.0f;
+    float convergence_one = 0.0f;
+  };
+
+  void showResultsLine();
+  void showResults(bool verbose = false);
+  Stat calcStats();
 
 private:
   Network *network_;

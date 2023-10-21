@@ -31,6 +31,7 @@ private:
     size_t to_line = 0;
     float learning_rate = 1e-3f;
     bool output_at_end = false;
+    bool verbose = false;
   };
 
   Parameters params_ = {

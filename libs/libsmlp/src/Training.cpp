@@ -52,13 +52,16 @@ bool Training::TrainAndTest(Testing &testing, size_t num_epochs,
   bool isSuccess = true;
   for (size_t epoch = 0; epoch < num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
-              << std::endl;
+              << "... ";
     if (!ProcessEpoch(epoch, learning_rate, from_line, to_line,
                       output_at_end)) {
       isSuccess = false;
       break;
     }
+    std::cout << "testing... ";
     testing.Test(output_at_end, from_line, to_line, epoch);
+    testing.showResultsLine();
+    std::cout << std::endl;
   }
 
   CloseFile();

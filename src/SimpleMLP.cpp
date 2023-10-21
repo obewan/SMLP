@@ -59,6 +59,15 @@ bool SimpleMLP::init(int argc, char **argv,
 
 void SimpleMLP::train() {
   std::cout << "Training, using file " << params_.data_file << std::endl;
+  std::cout << "InputSize:" << params_.input_size
+            << " OutputSize:" << params_.output_size
+            << " HiddenSize:" << params_.hidden_size
+            << " HiddenLayers:" << params_.hiddens_count
+            << " Epochs:" << params_.num_epochs
+            << " LearningRate: " << params_.learning_rate
+            << " LineToStartTest:" << params_.to_line
+            << " Verbose:" << params_.verbose << std::endl;
+
   Training training(network_, params_.data_file);
   training.Train(params_.num_epochs, params_.learning_rate,
                  params_.output_at_end, 0, params_.to_line);
@@ -74,6 +83,15 @@ void SimpleMLP::test() {
 void SimpleMLP::trainAndTest() {
   std::cout << "Train and testing, using file " << params_.data_file
             << std::endl;
+  std::cout << "InputSize:" << params_.input_size
+            << " OutputSize:" << params_.output_size
+            << " HiddenSize:" << params_.hidden_size
+            << " HiddenLayers:" << params_.hiddens_count
+            << " Epochs:" << params_.num_epochs
+            << " LearningRate: " << params_.learning_rate
+            << " LineToStartTest:" << params_.to_line
+            << " Verbose:" << params_.verbose << std::endl;
+
   Testing testing(network_, params_.data_file);
   Training training(network_, params_.data_file);
   training.TrainAndTest(testing, params_.num_epochs, params_.learning_rate,
@@ -124,6 +142,9 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
          "indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
       ->default_val(params_.output_at_end)
+      ->check(CLI::TypeValidator<bool>());
+  app.add_option("-v,--verbose", params_.verbose, "verbose logs")
+      ->default_val(params_.verbose)
       ->check(CLI::TypeValidator<bool>());
 
   CLI11_PARSE(app, argc, argv)
