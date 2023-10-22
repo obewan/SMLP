@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
+#include "Common.h"
 #include <cstddef>
 #include <fstream>
 
@@ -28,6 +29,9 @@ public:
   bool ProcessLine(size_t epoch, const std::string &line, size_t line_number,
                    size_t input_size, size_t output_size, bool output_at_end,
                    const RecordFunction &processRecord) const;
+  RecordResult ProcessLine(const Parameters &params);
+
+  size_t line_number;
 
 private:
   std::pair<std::vector<float>, std::vector<float>> ProcessInputFirst(

@@ -11,11 +11,6 @@
 #include "Layer.h"
 #include <cstddef>
 
-// note:
-// n.value = 1 / (1 + exp(-n.value));
-// is optimized: see
-// https://stackoverflow.com/questions/10732027/fast-sigmoid-algorithm
-
 class HiddenLayer : public Layer {
 public:
   void forwardPropagation(Layer &prevLayer) override {

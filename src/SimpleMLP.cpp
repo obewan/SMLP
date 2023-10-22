@@ -69,14 +69,13 @@ void SimpleMLP::train() {
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
-  training.Train(params_.num_epochs, params_.learning_rate,
-                 params_.output_at_end, 0, params_.to_line);
+  training.train(params_);
 }
 
 void SimpleMLP::test() {
   std::cout << "Testing, using file " << params_.data_file << std::endl;
   Testing testing(network_, params_.data_file);
-  testing.Test(params_.output_at_end, params_.to_line, 0);
+  testing.test(params_, 0);
   testing.showResults();
 }
 
@@ -92,11 +91,8 @@ void SimpleMLP::trainAndTest() {
             << " LineToStartTest:" << params_.to_line
             << " Verbose:" << params_.verbose << std::endl;
 
-  Testing testing(network_, params_.data_file);
   Training training(network_, params_.data_file);
-  training.TrainAndTest(testing, params_.num_epochs, params_.learning_rate,
-                        params_.output_at_end, 0, params_.to_line);
-  testing.showResults();
+  training.trainAndTest(params_);
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {

@@ -1,5 +1,9 @@
 #include "FileParser.h"
+#include "Common.h"
 #include <iostream>
+#include <pthread.h>
+#include <sstream>
+#include <stdexcept>
 
 FileParser::~FileParser() {
   if (file_.is_open()) {
@@ -13,6 +17,7 @@ bool FileParser::OpenFile() {
     std::cerr << "Failed to open file: " << path_ << std::endl;
     return false;
   }
+  line_number = 0;
   return true;
 }
 
@@ -25,6 +30,7 @@ void FileParser::CloseFile() {
 void FileParser::ResetPos() {
   file_.clear();
   file_.seekg(0, std::ios::beg);
+  line_number = 0;
 }
 
 bool FileParser::ProcessFile(size_t epoch, size_t from_line, size_t to_line,
@@ -76,7 +82,8 @@ bool FileParser::ProcessLine(size_t epoch, const std::string &line,
     return false;
   }
 
-  std::pair<std::vector<float>, std::vector<float>> record;
+  std::pair<std::vector<float>, std::vector<float>>
+      record; // pair of <inputs, outputs>
   if (output_at_end) {
     record = ProcessInputFirst(cell_refs, input_size);
   } else {
@@ -88,7 +95,47 @@ bool FileParser::ProcessLine(size_t epoch, const std::string &line,
   return true;
 }
 
-std::pair<std::vector<float>, std::vector<float>> FileParser::ProcessInputFirst(
+RecordResult FileParser::ProcessLine(const Parameters &params) {
+  std::vector<std::vector<Csv::CellReference>> cell_refs;
+  std::string line;
+  line_number++;
+
+  // Skipping lines until from_line
+  for (; line_number < params.from_line; ++line_number) {
+    if (!std::getline(file_, line)) {
+      return {.isSuccess = false, .isEndOfFile = true};
+    }
+  }
+
+  if (!std::getline(file_, line)) {
+    return {.isSuccess = false, .isEndOfFile = true};
+  }
+
+  try {
+    std::string_view data(line);
+    parser_.parseTo(data, cell_refs);
+  } catch (Csv::ParseError &ex) {
+    std::stringstream sstr;
+    sstr << "CSV parsing error at line " << line_number << ": " << ex.what();
+    throw std::runtime_error(sstr.str());
+  }
+
+  if (cell_refs.empty() ||
+      cell_refs.size() != params.input_size + params.output_size) {
+    std::stringstream sstr;
+    sstr << "Invalid columns at line " << line_number << ": found "
+         << cell_refs.size() << " columns instead of "
+         << params.input_size + params.output_size;
+    throw std::runtime_error(sstr.str());
+  }
+
+  Record record = params.output_at_end
+                      ? ProcessInputFirst(cell_refs, params.input_size)
+                      : ProcessOutputFirst(cell_refs, params.output_size);
+  return {.isSuccess = true, .record = record};
+}
+
+Record FileParser::ProcessInputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
   std::vector<float> input;
@@ -111,8 +158,7 @@ std::pair<std::vector<float>, std::vector<float>> FileParser::ProcessInputFirst(
   return std::make_pair(input, expected_output);
 }
 
-std::pair<std::vector<float>, std::vector<float>>
-FileParser::ProcessOutputFirst(
+Record FileParser::ProcessOutputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t output_size) const {
   std::vector<float> input;

@@ -1,112 +1,73 @@
 #include "Training.h"
+#include "Common.h"
 #include <chrono>
 #include <cstddef>
 #include <cstdlib>
-#include <exception>
 #include <iostream>
-#include <ostream>
 #include <ranges>
 #include <string>
 #include <vector>
 
 using namespace std::string_view_literals;
 
-bool Training::Train(size_t num_epochs, float learning_rate, bool output_at_end,
-                     size_t from_line, size_t to_line) {
-  if (from_line > to_line && to_line > 0) {
-    std::cerr << "[ERROR] from_line is greater than to_line." << std::endl;
-    return false;
+void Training::train(const Parameters &params) {
+  if (params.from_line > params.to_line && params.to_line > 0) {
+    throw std::invalid_argument("from_line is greater than to_line.");
   }
-
-  if (!OpenFile()) {
-    return false;
+  if (!fileParser_.OpenFile()) {
+    throw std::runtime_error("invalid file");
   }
+  network_->learningRate = params.learning_rate;
 
-  const auto start{std::chrono::steady_clock::now()};
-  bool isSuccess = true;
-  for (size_t epoch = 0; epoch < num_epochs; epoch++) {
-    std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
-              << std::endl;
-    if (!ProcessEpoch(epoch, learning_rate, from_line, to_line,
-                      output_at_end)) {
-      isSuccess = false;
-      break;
+  for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
+    std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
+              << params.num_epochs << "... " << std::endl;
+    fileParser_.ResetPos();
+    for (size_t i = params.from_line; i < params.to_line; i++) {
+      RecordResult result = fileParser_.ProcessLine(params);
+      if (result.isSuccess) {
+        network_->forwardPropagation(result.record.first);
+        network_->backwardPropagation(result.record.second);
+        network_->updateWeights();
+      }
     }
   }
-
-  const auto end{std::chrono::steady_clock::now()};
-  const std::chrono::duration<double> elapsed_seconds{end - start};
-  std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
-
-  CloseFile();
-
-  return isSuccess;
+  fileParser_.CloseFile();
 }
 
-bool Training::TrainAndTest(Testing &testing, size_t num_epochs,
-                            float learning_rate, bool output_at_end,
-                            size_t from_line, size_t to_line) {
-  if (from_line > to_line && to_line > 0) {
-    std::cerr << "[ERROR] from_line is greater than to_line." << std::endl;
-    return false;
+void Training::trainAndTest(const Parameters &params) {
+  if (params.from_line > params.to_line && params.to_line > 0) {
+    throw std::invalid_argument("from_line is greater than to_line.");
   }
-
-  if (!OpenFile()) {
-    return false;
+  if (!fileParser_.OpenFile()) {
+    throw std::runtime_error("invalid file");
   }
+  Testing testing(network_, params.data_file);
+  network_->learningRate = params.learning_rate;
 
   const auto start{std::chrono::steady_clock::now()};
-  bool isSuccess = true;
-  for (size_t epoch = 0; epoch < num_epochs; epoch++) {
-    std::cout << "[INFO] Training epoch " << epoch + 1 << "/" << num_epochs
-              << "... ";
-    if (!ProcessEpoch(epoch, learning_rate, from_line, to_line,
-                      output_at_end)) {
-      isSuccess = false;
-      break;
+  for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
+    std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
+              << params.num_epochs << "... ";
+    fileParser_.ResetPos();
+    for (size_t i = params.from_line; i < params.to_line; i++) {
+      RecordResult result = fileParser_.ProcessLine(params);
+      if (result.isSuccess) {
+        network_->forwardPropagation(result.record.first);
+        network_->backwardPropagation(result.record.second);
+        network_->updateWeights();
+      }
     }
+
     std::cout << "testing... ";
-    testing.Test(output_at_end, from_line, to_line, epoch);
+    testing.test(params, epoch);
     testing.showResultsLine();
     std::cout << std::endl;
   }
+  fileParser_.CloseFile();
 
   const auto end{std::chrono::steady_clock::now()};
   const std::chrono::duration<double> elapsed_seconds{end - start};
   std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
-
-  CloseFile();
-
-  return isSuccess;
-}
-
-bool Training::ProcessEpoch(size_t epoch, float learning_rate, size_t from_line,
-                            size_t to_line, bool output_at_end) {
-  ResetPos();
-  size_t input_size = network_->inputLayer.neurons.size();
-  size_t ouput_size = network_->outputLayer.neurons.size();
-  network_->learningRate = learning_rate;
-  RecordFunction recordFunction =
-      [&network = network_](
-          [[maybe_unused]] size_t stepoch,
-          [[maybe_unused]] size_t stline_number,
-          std::pair<std::vector<float>, std::vector<float>> const &record) {
-        network->forwardPropagation(record.first);
-        network->backwardPropagation(record.second);
-        network->updateWeights();
-      };
-
-  try {
-    if (!ProcessFile(epoch, from_line, to_line, input_size, ouput_size,
-                     output_at_end, recordFunction)) {
-      std::cerr << "[ERROR] Error during file processing." << std::endl;
-      return false;
-    }
-  } catch (std::exception &ex) {
-    std::cerr << "[ERROR] Exception during file processing: " << ex.what()
-              << std::endl;
-    return false;
-  }
-
-  return true;
+  testing.showResults(params.verbose);
 }

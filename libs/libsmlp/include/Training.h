@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include "Common.h"
 #include "FileParser.h"
 #include "Network.h"
 #include "Testing.h"
@@ -39,36 +40,17 @@ predict the correct outputs for the given inputs.
  *
  */
 
-class Training : public FileParser {
+class Training {
 public:
   // Constructor that takes a pointer to the network and the file path to
   // training data as arguments
   Training(Network *network, const std::string &file_path)
-      : FileParser(file_path), network_(network) {}
+      : network_(network), fileParser_(file_path) {}
 
-  /**
-   * @brief Method that trains the network using online training
-   *
-   * @param num_epochs number of file data retraining
-   * @param ouput_at_end if true the output value must be at end of record, else
-   * at start.
-   * @param from_line start training from this line, must be lesser than
-   * total lines.
-   * @param to_line end training at this line (including), must be greater than
-   * from_line or equal to 0 for end of file. Useful to keep other lines for
-   * testing.
-   * @return bool success
-   */
-  bool Train(size_t num_epochs, float learning_rate, bool output_at_end = true,
-             size_t from_line = 0, size_t to_line = 0);
-
-  bool TrainAndTest(Testing &testing, size_t num_epochs, float learning_rate,
-                    bool output_at_end = true, size_t from_line = 0,
-                    size_t to_line = 0);
+  void train(const Parameters &params);
+  void trainAndTest(const Parameters &params);
 
 private:
   Network *network_;
-
-  bool ProcessEpoch(size_t epoch, float learning_rate, size_t from_line,
-                    size_t to_line, bool output_at_end);
+  FileParser fileParser_;
 };
