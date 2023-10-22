@@ -9,11 +9,8 @@
  */
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
-#include <cstddef>
+#include "Common.h"
 #include <fstream>
-
-using RecordFunction = std::function<void(
-    size_t, size_t, std::pair<std::vector<float>, std::vector<float>>)>;
 
 class FileParser {
 public:
@@ -22,21 +19,17 @@ public:
   bool OpenFile();
   void CloseFile();
   void ResetPos();
-  bool ProcessFile(size_t epoch, size_t from_line, size_t to_line,
-                   size_t input_size, size_t output_size, bool output_at_end,
-                   const RecordFunction &processRecord);
-  bool ProcessLine(size_t epoch, const std::string &line, size_t line_number,
-                   size_t input_size, size_t output_size, bool output_at_end,
-                   const RecordFunction &processRecord) const;
 
-private:
-  std::pair<std::vector<float>, std::vector<float>> ProcessInputFirst(
+  RecordResult ProcessLine(const Parameters &params);
+
+  Record ProcessInputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size) const;
-  std::pair<std::vector<float>, std::vector<float>> ProcessOutputFirst(
+  Record ProcessOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t output_size) const;
   std::ifstream file_;
   std::string path_;
   Csv::Parser parser_;
+  size_t line_number = 0;
 };

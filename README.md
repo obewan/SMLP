@@ -9,7 +9,8 @@ The neural network currently uses a sigmoid activation function.
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
 - Functionality: operational, including forward propagation, backward propagation and weight update.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
-- CSV parsing (using CLI11 lib), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
+- CSV parsing using [csv-parser](https://github.com/ashaduri/csv-parser), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
+- Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
 - Cmake compilation, tested on Linux, but should be portable to other systems.
 - Doxygen documentation.
 - Includes a mushroom edibility dataset example.

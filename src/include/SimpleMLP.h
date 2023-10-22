@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include "Common.h"
 #include "Network.h"
 #include <string>
 
@@ -20,24 +21,8 @@ public:
 
 private:
   // default parameters
-  struct Parameters {
-    std::string title;
-    std::string data_file;
-    size_t input_size = 0;
-    size_t hidden_size = 10;
-    size_t output_size = 1;
-    size_t hiddens_count = 1;
-    size_t num_epochs = 3;
-    size_t to_line = 0;
-    float learning_rate = 1e-3f;
-    bool output_at_end = false;
-    bool verbose = false;
-  };
 
-  Parameters params_ = {
-      .title = "SMLP",
-      .data_file = "",
-  };
+  Parameters params_;
 
   int parseArgs(int argc, char **argv);
   Network *network_ = nullptr;

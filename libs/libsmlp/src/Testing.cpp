@@ -1,48 +1,30 @@
 #include "Testing.h"
-#include <algorithm>
-#include <cstddef>
-#include <fstream>
+#include "Common.h"
 #include <iomanip>
 #include <iostream>
 #include <ranges>
 
 using namespace std::string_view_literals;
 
-bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line,
-                   size_t epoch) {
-  if (from_line > to_line && to_line > 0) {
-    std::cerr << "[ERROR] from_line is greater than to_line." << std::endl;
-    return false;
+void Testing::test(const Parameters &params, size_t epoch) {
+  if (!fileParser_.OpenFile()) {
+    throw std::runtime_error("invalid file");
   }
 
-  if (!OpenFile()) {
-    return false;
-  }
-
-  // Loop through the test data and evaluate the network's performance
-  size_t input_size = network_->inputLayer.neurons.size();
-  size_t ouput_size = network_->outputLayer.neurons.size();
   std::vector<TestResults> testResults;
-
-  RecordFunction recordFunction =
-      [&network = network_, &testResults](
-          size_t stepoch, size_t stline,
-          std::pair<std::vector<float>, std::vector<float>> const &record) {
-        auto predicteds = network->forwardPropagation(record.first);
-        testResults.emplace_back(stepoch, stline, record.second[0],
-                                 predicteds[0]);
-      };
-
-  try {
-    if (!ProcessFile(epoch, from_line, to_line, input_size, ouput_size,
-                     output_at_end, recordFunction)) {
-      std::cerr << "[ERROR] Error during file processing." << std::endl;
-      return false;
+  Parameters testParams = params;
+  testParams.from_line = params.to_line;
+  bool isTesting = true;
+  while (isTesting) {
+    RecordResult result = fileParser_.ProcessLine(testParams);
+    if (result.isSuccess) {
+      auto predicteds = network_->forwardPropagation(result.record.first);
+      // TODO: improve this for more than one output.
+      testResults.emplace_back(epoch, fileParser_.line_number,
+                               result.record.second[0], predicteds[0]);
+    } else {
+      isTesting = false;
     }
-  } catch (std::exception &ex) {
-    std::cerr << "[ERROR] Exception during file processing: " << ex.what()
-              << std::endl;
-    return false;
   }
 
   // Process Results
@@ -57,9 +39,7 @@ bool Testing::Test(bool output_at_end, size_t from_line, size_t to_line,
   lastEpochTestResultTemp_ = testResults;
   last_epoch_ = epoch;
 
-  CloseFile();
-
-  return true;
+  fileParser_.CloseFile();
 }
 
 Testing::Stat Testing::calcStats() {
