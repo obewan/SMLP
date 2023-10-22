@@ -9,7 +9,6 @@
  */
 #pragma once
 #include "Layer.h"
-#include <cstddef>
 
 class HiddenLayer : public Layer {
 public:

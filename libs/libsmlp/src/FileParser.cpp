@@ -1,9 +1,7 @@
 #include "FileParser.h"
 #include "Common.h"
 #include <iostream>
-#include <pthread.h>
 #include <sstream>
-#include <stdexcept>
 
 FileParser::~FileParser() {
   if (file_.is_open()) {

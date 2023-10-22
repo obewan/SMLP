@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Layer.h"
+#include <stdexcept>
 
 class InputLayer : public Layer {
 public:

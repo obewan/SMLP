@@ -12,7 +12,6 @@
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
-#include <cstddef>
 
 /**
  The methods for getting and setting weights and biases are also necessary

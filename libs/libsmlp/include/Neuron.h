@@ -10,7 +10,6 @@
 #pragma once
 #include <math.h>
 #include <random>
-#include <stdexcept>
 #include <vector>
 
 class Neuron {

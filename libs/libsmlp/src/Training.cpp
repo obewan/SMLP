@@ -1,8 +1,6 @@
 #include "Training.h"
 #include "Common.h"
 #include <chrono>
-#include <cstddef>
-#include <cstdlib>
 #include <iostream>
 #include <ranges>
 #include <string>
@@ -64,10 +62,10 @@ void Training::trainAndTest(const Parameters &params) {
     testing.showResultsLine();
     std::cout << std::endl;
   }
-  fileParser_.CloseFile();
-
   const auto end{std::chrono::steady_clock::now()};
   const std::chrono::duration<double> elapsed_seconds{end - start};
   std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
   testing.showResults(params.verbose);
+
+  fileParser_.CloseFile();
 }
