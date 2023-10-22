@@ -1,6 +1,7 @@
 #include "FileParser.h"
 #include "Common.h"
 #include <iostream>
+#include <limits>
 #include <sstream>
 
 FileParser::~FileParser() {
@@ -38,7 +39,7 @@ RecordResult FileParser::ProcessLine(const Parameters &params) {
 
   // Skipping lines until from_line
   for (; line_number < params.from_line; ++line_number) {
-    if (!std::getline(file_, line)) {
+    if (!file_.ignore(std::numeric_limits<size_t>::max(), '\n')) {
       return {.isSuccess = false, .isEndOfFile = true};
     }
   }

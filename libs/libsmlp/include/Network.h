@@ -67,7 +67,6 @@ public:
 
   std::vector<float> forwardPropagation(const std::vector<float> &inputValues) {
     inputLayer.setInputValues(inputValues);
-
     // Implement forward propagation for network
     if (hiddenLayers.empty()) {
       outputLayer.forwardPropagation(inputLayer);
