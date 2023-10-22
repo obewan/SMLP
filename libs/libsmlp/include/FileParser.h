@@ -23,12 +23,7 @@ public:
   bool OpenFile();
   void CloseFile();
   void ResetPos();
-  bool ProcessFile(size_t epoch, size_t from_line, size_t to_line,
-                   size_t input_size, size_t output_size, bool output_at_end,
-                   const RecordFunction &processRecord);
-  bool ProcessLine(size_t epoch, const std::string &line, size_t line_number,
-                   size_t input_size, size_t output_size, bool output_at_end,
-                   const RecordFunction &processRecord) const;
+
   RecordResult ProcessLine(const Parameters &params);
 
   size_t line_number;
