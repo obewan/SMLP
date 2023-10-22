@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
   auto smlp = new SimpleMLP();
 
   if (!smlp->init(argc, argv)) {
-    std::cerr << "[ERROR] Init error. Exiting." << std::endl;
     return EXIT_FAILURE;
   }
 

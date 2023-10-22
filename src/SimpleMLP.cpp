@@ -42,7 +42,7 @@ measures that legally restrict others from doing anything the license permits.
 bool SimpleMLP::init(int argc, char **argv,
                      [[maybe_unused]] bool withMonitoring) {
   try {
-    if (parseArgs(argc, argv) != EXIT_SUCCESS) {
+    if (parseArgs(argc, argv) != EXIT_SUCCESS || params_.data_file.empty()) {
       return false;
     }
 
