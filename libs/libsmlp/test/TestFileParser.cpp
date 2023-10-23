@@ -1,9 +1,10 @@
+#include <string>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "FileParser.h"
 #include "doctest.h"
 #include <cmath>
 
-TEST_CASE("testing the FileParser class") {
+TEST_CASE("Testing the FileParser class") {
   SUBCASE("Test Constructor") { CHECK_NOTHROW(FileParser("")); }
 
   // beware current path is "build/libs/libsmlp/test"
@@ -29,8 +30,12 @@ TEST_CASE("testing the FileParser class") {
 
   SUBCASE("Test ResetPos") {
     parser.OpenFile();
+    CHECK(parser.file_.is_open() == true);
+    std::string line;
+    std::getline(parser.file_, line);
+    CHECK((long)parser.file_.tellg() > 0);
     parser.ResetPos();
-    CHECK(parser.file_.tellg() == 0);
+    CHECK((long)parser.file_.tellg() == 0);
   }
 
   SUBCASE("Test ProcessLine") {
