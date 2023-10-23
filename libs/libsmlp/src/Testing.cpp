@@ -7,9 +7,7 @@
 using namespace std::string_view_literals;
 
 void Testing::test(const Parameters &params, size_t epoch) {
-  if (!fileParser_.OpenFile()) {
-    throw std::runtime_error("invalid file");
-  }
+  fileParser_.OpenFile();
 
   std::vector<TestResults> testResults;
   Parameters testParams = params;

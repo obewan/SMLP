@@ -12,9 +12,7 @@ void Training::train(const Parameters &params) {
   if (params.from_line > params.to_line && params.to_line > 0) {
     throw std::invalid_argument("from_line is greater than to_line.");
   }
-  if (!fileParser_.OpenFile()) {
-    throw std::runtime_error("invalid file");
-  }
+  fileParser_.OpenFile();
   network_->learningRate = params.learning_rate;
 
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
@@ -37,9 +35,7 @@ void Training::trainAndTest(const Parameters &params) {
   if (params.from_line > params.to_line && params.to_line > 0) {
     throw std::invalid_argument("from_line is greater than to_line.");
   }
-  if (!fileParser_.OpenFile()) {
-    throw std::runtime_error("invalid file");
-  }
+  fileParser_.OpenFile();
   Testing testing(network_, params.data_file);
   network_->learningRate = params.learning_rate;
 

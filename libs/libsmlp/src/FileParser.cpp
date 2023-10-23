@@ -10,14 +10,12 @@ FileParser::~FileParser() {
   }
 }
 
-bool FileParser::OpenFile() {
+void FileParser::OpenFile() {
   file_.open(path_);
   if (!file_.is_open()) {
-    std::cerr << "Failed to open file: " << path_ << std::endl;
-    return false;
+    throw FileParserException("Failed to open file: " + path_);
   }
   line_number = 0;
-  return true;
 }
 
 void FileParser::CloseFile() {
@@ -54,7 +52,7 @@ RecordResult FileParser::ProcessLine(const Parameters &params) {
   } catch (Csv::ParseError &ex) {
     std::stringstream sstr;
     sstr << "CSV parsing error at line " << line_number << ": " << ex.what();
-    throw std::runtime_error(sstr.str());
+    throw FileParserException(sstr.str());
   }
 
   if (cell_refs.empty() ||
@@ -63,7 +61,7 @@ RecordResult FileParser::ProcessLine(const Parameters &params) {
     sstr << "Invalid columns at line " << line_number << ": found "
          << cell_refs.size() << " columns instead of "
          << params.input_size + params.output_size;
-    throw std::runtime_error(sstr.str());
+    throw FileParserException(sstr.str());
   }
 
   Record record = params.output_at_end

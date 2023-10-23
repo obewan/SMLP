@@ -10,13 +10,14 @@
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
+#include "exception/FileParserException.h"
 #include <fstream>
 
 class FileParser {
 public:
   explicit FileParser(const std::string &path) : path_(path){};
   virtual ~FileParser();
-  bool OpenFile();
+  void OpenFile();
   void CloseFile();
   void ResetPos();
 

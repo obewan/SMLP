@@ -1,5 +1,113 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include "../include/FileParser.h"
+#include "FileParser.h"
 #include "doctest.h"
+#include <cmath>
 
-TEST_CASE("Testing FileParser") { CHECK_NOTHROW(FileParser("")); }
+TEST_CASE("testing the FileParser class") {
+  SUBCASE("Test Constructor") { CHECK_NOTHROW(FileParser("")); }
+
+  // beware current path is "build/libs/libsmlp/test"
+  std::string test_file = "../../../../libs/libsmlp/test/test_file.csv";
+
+  SUBCASE("Test OpenFile") {
+    FileParser parser_NOK("non_existent_file.csv"); // This file does not exist
+    CHECK_THROWS_AS(parser_NOK.OpenFile(), FileParserException);
+
+    FileParser parser_OK(test_file);
+    CHECK_NOTHROW(parser_OK.OpenFile());
+    CHECK(parser_OK.file_.is_open() == true);
+    parser_OK.CloseFile();
+  }
+
+  FileParser parser(test_file);
+
+  SUBCASE("Test CloseFile") {
+    parser.OpenFile();
+    parser.CloseFile();
+    CHECK(parser.file_.is_open() == false);
+  }
+
+  SUBCASE("Test ResetPos") {
+    parser.OpenFile();
+    parser.ResetPos();
+    CHECK(parser.file_.tellg() == 0);
+  }
+
+  SUBCASE("Test ProcessLine") {
+    Parameters params{.input_size = 20,
+                      .hidden_size = 12,
+                      .output_size = 1,
+                      .hiddens_count = 1,
+                      .output_at_end = true};
+
+    CHECK(params.input_size == 20);
+    CHECK(params.hidden_size == 12);
+
+    parser.OpenFile();
+
+    // Test first line
+    RecordResult result = parser.ProcessLine(params);
+    CHECK(result.isSuccess == true);
+    const auto &[inputs, outputs] = result.record;
+    std::vector<float> expectedInputs = {
+        1.00f, 0.08f, 0.43f, 0.80f, 0.08f, 1.00f, 0.75f, 0.67f, 0.69f, 0.15f,
+        0.09f, 0.00f, 0.36f, 0.08f, 0.00f, 0.00f, 1.00f, 0.92f, 0.00f, 0.62f};
+    std::vector<float> expectedOuputs = {0.0f};
+
+    CHECK(inputs.size() == expectedInputs.size());
+    CHECK(outputs.size() == expectedOuputs.size());
+    for (size_t i = 0; i < inputs.size(); ++i) {
+      // using absolute difference because of float precision issue
+      CHECK(std::fabs(inputs[i] - expectedInputs[i]) <= 1e-6f);
+    }
+    for (size_t i = 0; i < outputs.size(); ++i) {
+      CHECK(std::fabs(outputs[i] - expectedOuputs[i]) <= 1e-6f);
+    }
+
+    // Test next line
+    RecordResult result2 = parser.ProcessLine(params);
+    CHECK(result.isSuccess == true);
+    const auto &[inputs2, outputs2] = result2.record;
+    std::vector<float> expectedInputs2 = {
+        1.00f, 0.09f, 0.43f, 0.40f, 0.08f, 1.00f, 0.50f, 0.33f, 0.62f, 0.15f,
+        0.07f, 0.00f, 0.09f, 0.62f, 0.00f, 0.00f, 1.00f, 0.92f, 0.42f, 1.00f};
+    std::vector<float> expectedOuputs2 = {0.0f};
+
+    CHECK(inputs2.size() == expectedInputs2.size());
+    CHECK(outputs2.size() == expectedOuputs2.size());
+    for (size_t i = 0; i < inputs2.size(); ++i) {
+      // using absolute difference because of float precision issue
+      CHECK(std::fabs(inputs2[i] - expectedInputs2[i]) <= 1e-6f);
+    }
+    for (size_t i = 0; i < outputs2.size(); ++i) {
+      CHECK(std::fabs(outputs2[i] - expectedOuputs2[i]) <= 1e-6f);
+    }
+  }
+
+  SUBCASE("Test ProcessInputFirst and ProcessOutputFirst") {
+    std::vector<std::vector<Csv::CellReference>>
+        cell_refs; // Assuming you have some cell_refs
+    size_t input_size = 20;
+    size_t output_size = 1;
+    std::string line =
+        "1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
+        "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00";
+    std::string_view data(line);
+    parser.parser_.parseTo(data, cell_refs);
+
+    const auto &[inputs1, outputs1] =
+        parser.ProcessInputFirst(cell_refs, input_size);
+    const auto &[inputs2, outputs2] =
+        parser.ProcessOutputFirst(cell_refs, output_size);
+
+    CHECK(inputs1.size() == input_size);
+    CHECK(outputs1.size() == output_size);
+    CHECK(inputs2.size() == input_size);
+    CHECK(outputs2.size() == output_size);
+    // using absolute difference because of float precision issue
+    CHECK(std::fabs(inputs1.at(0) - 1.00f) <= 1e-6f);
+    CHECK(std::fabs(inputs2.at(0) - 0.04f) <= 1e-6f);
+    CHECK(std::fabs(outputs1.at(0) - 0.00f) <= 1e-6f);
+    CHECK(std::fabs(outputs2.at(0) - 1.00f) <= 1e-6f);
+  }
+}
