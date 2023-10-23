@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 
+option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+
 set(PROJECT_NAME smlp)
 set(SOURCE_DIR src)
 set(SOURCE ${SOURCE_DIR}/SimpleMLP.cpp ${SOURCE_DIR}/Main.cpp)
@@ -11,6 +13,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
+if(ENABLE_COVERAGE)
+    if(CMAKE_COMPILER_IS_GNUCXX)
+        set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+        set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+    endif()
+endif()
 
 project(${PROJECT_NAME})
 

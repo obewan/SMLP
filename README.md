@@ -74,7 +74,3 @@ This work is licensed under a
 - _NonCommercial_ — You may not use the material for commercial purposes.
 - _ShareAlike_ — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 - _No additional restrictions_ — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-
-```
-
-```
