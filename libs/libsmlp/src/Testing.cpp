@@ -7,14 +7,21 @@
 using namespace std::string_view_literals;
 
 void Testing::test(const Parameters &params, size_t epoch) {
-  fileParser_.OpenFile();
+  fileParser_.getTrainingRatioLine(params.training_ratio);
+  if (fileParser_.training_ratio_line >= fileParser_.total_lines) {
+    std::cout
+        << "Warning: No lines left for testing, check your training_ratio "
+           "parameter. Abording testing"
+        << std::endl;
+    return;
+  }
+
+  fileParser_.openFile();
 
   std::vector<TestResults> testResults;
-  Parameters testParams = params;
-  testParams.from_line = params.to_line;
   bool isTesting = true;
   while (isTesting) {
-    RecordResult result = fileParser_.ProcessLine(testParams);
+    RecordResult result = fileParser_.processLine(params, true);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
       // TODO: improve this for more than one output.
@@ -37,14 +44,14 @@ void Testing::test(const Parameters &params, size_t epoch) {
   lastEpochTestResultTemp_ = testResults;
   last_epoch_ = epoch;
 
-  fileParser_.CloseFile();
+  fileParser_.closeFile();
 }
 
 Testing::Stat Testing::calcStats() {
   testResultExts.clear();
   for (auto const &result : lastEpochTestResultTemp_) {
-    testResultExts.push_back({result.epoch, result.line, result.expected,
-                              result.output, progress.at(result.line)});
+    testResultExts.emplace_back(result.epoch, result.line, result.expected,
+                                result.output, progress.at(result.line));
   }
   Testing::Stat stats;
   stats.total_samples = testResultExts.size();

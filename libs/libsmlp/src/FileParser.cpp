@@ -11,7 +11,7 @@ FileParser::~FileParser() {
   }
 }
 
-void FileParser::OpenFile() {
+void FileParser::openFile() {
   file.open(path);
   if (!file.is_open()) {
     throw FileParserException("Failed to open file: " + path);
@@ -19,27 +19,29 @@ void FileParser::OpenFile() {
   line_number = 0;
 }
 
-void FileParser::CloseFile() {
+void FileParser::closeFile() {
   if (file.is_open()) {
     file.close();
   }
 }
 
-void FileParser::ResetPos() {
+void FileParser::resetPos() {
   file.clear();
   file.seekg(0, std::ios::beg);
   line_number = 0;
 }
 
-RecordResult FileParser::ProcessLine(const Parameters &params) {
+RecordResult FileParser::processLine(const Parameters &params, bool isTesting) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
   line_number++;
 
-  // Skipping lines until from_line
-  for (; line_number < params.from_line; ++line_number) {
-    if (!std::getline(file, line)) {
-      return {.isSuccess = false, .isEndOfFile = true};
+  // if isTesting, skipping lines until testing lines
+  if (isTesting) {
+    for (; line_number < training_ratio_line; ++line_number) {
+      if (!std::getline(file, line)) {
+        return {.isSuccess = false, .isEndOfFile = true};
+      }
     }
   }
 
@@ -66,12 +68,12 @@ RecordResult FileParser::ProcessLine(const Parameters &params) {
   }
 
   Record record = params.output_at_end
-                      ? ProcessInputFirst(cell_refs, params.input_size)
-                      : ProcessOutputFirst(cell_refs, params.output_size);
+                      ? processInputFirst(cell_refs, params.input_size)
+                      : processOutputFirst(cell_refs, params.output_size);
   return {.isSuccess = true, .record = record};
 }
 
-Record FileParser::ProcessInputFirst(
+Record FileParser::processInputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
   std::vector<float> input;
@@ -94,7 +96,7 @@ Record FileParser::ProcessInputFirst(
   return std::make_pair(input, expected_output);
 }
 
-Record FileParser::ProcessOutputFirst(
+Record FileParser::processOutputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t output_size) const {
   std::vector<float> input;

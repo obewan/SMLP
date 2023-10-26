@@ -63,8 +63,8 @@ void SimpleMLP::train() {
             << " HiddenSize:" << params_.hidden_size
             << " HiddenLayers:" << params_.hiddens_count
             << " Epochs:" << params_.num_epochs
+            << " TrainingRatio:" << params_.training_ratio
             << " LearningRate: " << params_.learning_rate
-            << " LineToStartTest:" << params_.to_line
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
@@ -86,8 +86,8 @@ void SimpleMLP::trainAndTest() {
             << " HiddenSize:" << params_.hidden_size
             << " HiddenLayers:" << params_.hiddens_count
             << " Epochs:" << params_.num_epochs
+            << " TrainingRatio:" << params_.training_ratio
             << " LearningRate: " << params_.learning_rate
-            << " LineToStartTest:" << params_.to_line
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
@@ -122,15 +122,16 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
                  "the numbers of epochs retraining")
       ->default_val(params_.num_epochs)
       ->check(CLI::PositiveNumber);
-  app.add_option(
-         "-l,--line_to", params_.to_line,
-         "the line number until the training will complete and testing will "
-         "start, or 0 to use the entire file")
-      ->default_val(params_.to_line)
-      ->check(CLI::NonNegativeNumber);
+  app.add_option("-t,--training_ratio", params_.training_ratio,
+                 "the training ratio of the file to switch between data for "
+                 "training and data for testing, should be around 0.7.")
+      ->default_val(params_.training_ratio)
+      ->check(CLI::Range(0.0f, 1.0f))
+      ->check(CLI::TypeValidator<float>());
   app.add_option("-r,--learning_rate", params_.learning_rate,
                  "optimizer learning rate")
       ->default_val(params_.learning_rate)
+      ->check(CLI::PositiveNumber)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
          "-z,--output_ends", params_.output_at_end,

@@ -13,29 +13,25 @@ TEST_CASE("Testing the Training class") {
   Training training(network, test_file);
 
   SUBCASE("Test train function") {
-    SUBCASE("from_line is greater than to_line") {
-      params.from_line = 10;
-      params.to_line = 5;
+    SUBCASE("invalid training_ratio") {
+      params.training_ratio = 0;
       CHECK_THROWS_AS(training.train(params), TrainingException);
     }
 
-    SUBCASE("from_line is less than to_line") {
-      params.from_line = 5;
-      params.to_line = 10;
+    SUBCASE("valid training_ratio") {
+      params.training_ratio = 0.5f;
       CHECK_NOTHROW(training.train(params));
     }
   }
 
   SUBCASE("Test trainAndTest function") {
-    SUBCASE("from_line is greater than to_line") {
-      params.from_line = 10;
-      params.to_line = 5;
+    SUBCASE("invalid training_ratio") {
+      params.training_ratio = 0;
       CHECK_THROWS_AS(training.trainAndTest(params), TrainingException);
     }
 
-    SUBCASE("from_line is less than to_line") {
-      params.from_line = 5;
-      params.to_line = 10;
+    SUBCASE("valid training_ratio") {
+      params.training_ratio = 0.5f;
       CHECK_NOTHROW(training.trainAndTest(params));
     }
   }

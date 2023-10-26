@@ -10,35 +10,50 @@ TEST_CASE("Testing the FileParser class") {
   // beware current path is "build/libs/libsmlp/test"
   std::string test_file = "../../../../libs/libsmlp/test/test_file.csv";
 
-  SUBCASE("Test OpenFile") {
+  SUBCASE("Test openFile") {
     FileParser parser_NOK("non_existent_file.csv"); // This file does not exist
-    CHECK_THROWS_AS(parser_NOK.OpenFile(), FileParserException);
+    CHECK_THROWS_AS(parser_NOK.openFile(), FileParserException);
 
     FileParser parser_OK(test_file);
-    CHECK_NOTHROW(parser_OK.OpenFile());
+    CHECK_NOTHROW(parser_OK.openFile());
     CHECK(parser_OK.file.is_open() == true);
-    parser_OK.CloseFile();
+    parser_OK.closeFile();
   }
 
   FileParser parser(test_file);
 
-  SUBCASE("Test CloseFile") {
-    parser.OpenFile();
-    parser.CloseFile();
+  SUBCASE("Test closeFile") {
+    parser.openFile();
+    parser.closeFile();
     CHECK(parser.file.is_open() == false);
   }
 
-  SUBCASE("Test ResetPos") {
-    parser.OpenFile();
+  SUBCASE("Test resetPos") {
+    parser.openFile();
     CHECK(parser.file.is_open() == true);
     std::string line;
     std::getline(parser.file, line);
     CHECK((long)parser.file.tellg() > 0);
-    parser.ResetPos();
+    parser.resetPos();
     CHECK((long)parser.file.tellg() == 0);
+    parser.closeFile();
   }
 
-  SUBCASE("Test ProcessLine") {
+  SUBCASE("Test getTrainingRatioLine") {
+    auto trainingRatioLine = parser.getTrainingRatioLine(0.6f);
+    CHECK(trainingRatioLine == 6);
+    CHECK(parser.training_ratio_line == trainingRatioLine);
+    CHECK(parser.total_lines == 10);
+  }
+
+  SUBCASE("Test countLine") {
+    CHECK(parser.file.is_open() == false);
+    auto linesCount = parser.countLine();
+    CHECK(linesCount == 10);
+    CHECK(parser.file.is_open() == false);
+  }
+
+  SUBCASE("Test processLine") {
     Parameters params{.input_size = 20,
                       .hidden_size = 12,
                       .output_size = 1,
@@ -48,10 +63,10 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(params.input_size == 20);
     CHECK(params.hidden_size == 12);
 
-    parser.OpenFile();
+    parser.openFile();
 
     // Test first line
-    RecordResult result = parser.ProcessLine(params);
+    RecordResult result = parser.processLine(params);
     CHECK(result.isSuccess == true);
     const auto &[inputs, outputs] = result.record;
     std::vector<float> expectedInputs = {
@@ -70,7 +85,7 @@ TEST_CASE("Testing the FileParser class") {
     }
 
     // Test next line
-    RecordResult result2 = parser.ProcessLine(params);
+    RecordResult result2 = parser.processLine(params);
     CHECK(result.isSuccess == true);
     const auto &[inputs2, outputs2] = result2.record;
     std::vector<float> expectedInputs2 = {
@@ -89,7 +104,7 @@ TEST_CASE("Testing the FileParser class") {
     }
   }
 
-  SUBCASE("Test ProcessInputFirst and ProcessOutputFirst") {
+  SUBCASE("Test processInputFirst and processOutputFirst") {
     std::vector<std::vector<Csv::CellReference>>
         cell_refs; // Assuming you have some cell_refs
     size_t input_size = 20;
@@ -101,9 +116,9 @@ TEST_CASE("Testing the FileParser class") {
     parser.csv_parser.parseTo(data, cell_refs);
 
     const auto &[inputs1, outputs1] =
-        parser.ProcessInputFirst(cell_refs, input_size);
+        parser.processInputFirst(cell_refs, input_size);
     const auto &[inputs2, outputs2] =
-        parser.ProcessOutputFirst(cell_refs, output_size);
+        parser.processOutputFirst(cell_refs, output_size);
 
     CHECK(inputs1.size() == input_size);
     CHECK(outputs1.size() == output_size);
