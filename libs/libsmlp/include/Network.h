@@ -14,24 +14,6 @@
 #include "InputLayer.h"
 #include "OutputLayer.h"
 
-/**
- The methods for getting and setting weights and biases are also necessary
- for implementing backpropagation during training.
- The addition of InitializeWeights() will also be useful
- for initializing the weights in the network before training.
-
- The Forward() method takes a std::vector<float> input and returns a float*
-output. It's important to make sure that the memory for the output is allocated
- before passing it to the ComputeOutput() method of the output layer.
-
-The Backward() and ClearGradient() methods will be used during backpropagation
-to compute the gradients of the weights and biases in the network.
-
-Finally, the Predict() method takes a std::vector<float> input and returns a
-std::vector<float> output. This method will be useful for using the trained
-network to make predictions on new input data.
-*/
-
 class Network {
 public:
   InputLayer inputLayer;
@@ -39,7 +21,8 @@ public:
   std::vector<HiddenLayer> hiddenLayers;
   float learningRate;
 
-  Network(const Parameters &params) {
+  explicit Network(const Parameters &params)
+      : learningRate(params.learning_rate) {
     // setting layers
     inputLayer.neurons.resize(params.input_size);
     hiddenLayers.resize(params.hiddens_count);

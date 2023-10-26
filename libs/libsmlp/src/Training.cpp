@@ -14,8 +14,6 @@ void Training::train(const Parameters &params) {
                             "no data for training.");
   }
   fileParser_.openFile();
-  network_->learningRate = params.learning_rate;
-
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
               << params.num_epochs << "... " << std::endl;
@@ -39,8 +37,6 @@ void Training::trainAndTest(const Parameters &params) {
   }
   fileParser_.openFile();
   Testing testing(network_, params.data_file);
-  network_->learningRate = params.learning_rate;
-
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
