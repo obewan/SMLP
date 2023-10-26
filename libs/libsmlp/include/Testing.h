@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "FileParser.h"
 #include "Network.h"
+#include "exception/TestingException.h"
 #include <map>
 
 class Testing {

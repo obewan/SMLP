@@ -6,28 +6,28 @@
 #include <string>
 
 FileParser::~FileParser() {
-  if (file_.is_open()) {
-    file_.close();
+  if (file.is_open()) {
+    file.close();
   }
 }
 
 void FileParser::OpenFile() {
-  file_.open(path_);
-  if (!file_.is_open()) {
-    throw FileParserException("Failed to open file: " + path_);
+  file.open(path);
+  if (!file.is_open()) {
+    throw FileParserException("Failed to open file: " + path);
   }
   line_number = 0;
 }
 
 void FileParser::CloseFile() {
-  if (file_.is_open()) {
-    file_.close();
+  if (file.is_open()) {
+    file.close();
   }
 }
 
 void FileParser::ResetPos() {
-  file_.clear();
-  file_.seekg(0, std::ios::beg);
+  file.clear();
+  file.seekg(0, std::ios::beg);
   line_number = 0;
 }
 
@@ -38,18 +38,18 @@ RecordResult FileParser::ProcessLine(const Parameters &params) {
 
   // Skipping lines until from_line
   for (; line_number < params.from_line; ++line_number) {
-    if (!std::getline(file_, line)) {
+    if (!std::getline(file, line)) {
       return {.isSuccess = false, .isEndOfFile = true};
     }
   }
 
-  if (!std::getline(file_, line)) {
+  if (!std::getline(file, line)) {
     return {.isSuccess = false, .isEndOfFile = true};
   }
 
   try {
     std::string_view data(line);
-    parser_.parseTo(data, cell_refs);
+    csv_parser.parseTo(data, cell_refs);
   } catch (Csv::ParseError &ex) {
     std::stringstream sstr;
     sstr << "CSV parsing error at line " << line_number << ": " << ex.what();

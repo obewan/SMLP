@@ -1,8 +1,8 @@
-#include <string>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "FileParser.h"
 #include "doctest.h"
 #include <cmath>
+#include <string>
 
 TEST_CASE("Testing the FileParser class") {
   SUBCASE("Test Constructor") { CHECK_NOTHROW(FileParser("")); }
@@ -16,7 +16,7 @@ TEST_CASE("Testing the FileParser class") {
 
     FileParser parser_OK(test_file);
     CHECK_NOTHROW(parser_OK.OpenFile());
-    CHECK(parser_OK.file_.is_open() == true);
+    CHECK(parser_OK.file.is_open() == true);
     parser_OK.CloseFile();
   }
 
@@ -25,17 +25,17 @@ TEST_CASE("Testing the FileParser class") {
   SUBCASE("Test CloseFile") {
     parser.OpenFile();
     parser.CloseFile();
-    CHECK(parser.file_.is_open() == false);
+    CHECK(parser.file.is_open() == false);
   }
 
   SUBCASE("Test ResetPos") {
     parser.OpenFile();
-    CHECK(parser.file_.is_open() == true);
+    CHECK(parser.file.is_open() == true);
     std::string line;
-    std::getline(parser.file_, line);
-    CHECK((long)parser.file_.tellg() > 0);
+    std::getline(parser.file, line);
+    CHECK((long)parser.file.tellg() > 0);
     parser.ResetPos();
-    CHECK((long)parser.file_.tellg() == 0);
+    CHECK((long)parser.file.tellg() == 0);
   }
 
   SUBCASE("Test ProcessLine") {
@@ -98,7 +98,7 @@ TEST_CASE("Testing the FileParser class") {
         "1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
         "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00";
     std::string_view data(line);
-    parser.parser_.parseTo(data, cell_refs);
+    parser.csv_parser.parseTo(data, cell_refs);
 
     const auto &[inputs1, outputs1] =
         parser.ProcessInputFirst(cell_refs, input_size);

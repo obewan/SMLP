@@ -10,7 +10,8 @@ using namespace std::string_view_literals;
 
 void Training::train(const Parameters &params) {
   if (params.from_line > params.to_line && params.to_line > 0) {
-    throw std::invalid_argument("from_line is greater than to_line.");
+    throw TrainingException(
+        "invalid parameter: from_line is greater than to_line.");
   }
   fileParser_.OpenFile();
   network_->learningRate = params.learning_rate;
@@ -33,7 +34,8 @@ void Training::train(const Parameters &params) {
 
 void Training::trainAndTest(const Parameters &params) {
   if (params.from_line > params.to_line && params.to_line > 0) {
-    throw std::invalid_argument("from_line is greater than to_line.");
+    throw TrainingException(
+        "invaild parameter: from_line is greater than to_line.");
   }
   fileParser_.OpenFile();
   Testing testing(network_, params.data_file);

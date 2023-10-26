@@ -9,6 +9,7 @@
  */
 
 #pragma once
+#include "Common.h"
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
@@ -38,29 +39,28 @@ public:
   std::vector<HiddenLayer> hiddenLayers;
   float learningRate;
 
-  Network(size_t inputSize, size_t hiddenLayerSize, size_t outputLayerSize,
-          size_t totalHiddenLayers) {
+  Network(const Parameters &params) {
     // setting layers
-    inputLayer.neurons.resize(inputSize);
-    hiddenLayers.resize(totalHiddenLayers);
+    inputLayer.neurons.resize(params.input_size);
+    hiddenLayers.resize(params.hiddens_count);
     for (auto &hl : hiddenLayers) {
-      hl.neurons.resize(hiddenLayerSize);
+      hl.neurons.resize(params.hidden_size);
     }
-    outputLayer.neurons.resize(outputLayerSize);
+    outputLayer.neurons.resize(params.output_size);
 
     // setting neurons weights with previous layer size
-    if (hiddenLayerSize > 0) {
-      for (size_t i = 0; i < totalHiddenLayers; i++) {
+    if (params.hidden_size > 0) {
+      for (size_t i = 0; i < params.hiddens_count; i++) {
         for (auto &n : hiddenLayers.at(i).neurons) {
-          n.initWeights(i == 0 ? inputSize : hiddenLayerSize);
+          n.initWeights(i == 0 ? params.input_size : params.hidden_size);
         }
       }
       for (auto &n : outputLayer.neurons) {
-        n.initWeights(hiddenLayerSize);
+        n.initWeights(params.hidden_size);
       }
     } else {
       for (auto &n : outputLayer.neurons) {
-        n.initWeights(inputSize);
+        n.initWeights(params.input_size);
       }
     }
   }

@@ -15,7 +15,8 @@
 
 class FileParser {
 public:
-  explicit FileParser(const std::string &path) : path_(path){};
+  explicit FileParser(const std::string &path) : path(path) {}
+
   virtual ~FileParser();
   void OpenFile();
   void CloseFile();
@@ -29,8 +30,8 @@ public:
   Record ProcessOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t output_size) const;
-  std::ifstream file_;
-  std::string path_;
-  Csv::Parser parser_;
+  std::ifstream file;
+  std::string path;
+  Csv::Parser csv_parser;
   size_t line_number = 0;
 };

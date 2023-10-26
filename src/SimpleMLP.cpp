@@ -46,8 +46,7 @@ bool SimpleMLP::init(int argc, char **argv,
       return false;
     }
 
-    network_ = new Network(params_.input_size, params_.hidden_size,
-                           params_.output_size, params_.hiddens_count);
+    network_ = new Network(params_);
 
     return true;
 
