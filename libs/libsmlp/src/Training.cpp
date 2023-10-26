@@ -9,8 +9,10 @@
 using namespace std::string_view_literals;
 
 void Training::train(const Parameters &params) {
-  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0 &&
-      fileParser_->getTrainingRatioLine(params.training_ratio) == 0) {
+  if (!fileParser_->isTrainingRatioLineProcessed) {
+    fileParser_->getTrainingRatioLine(params.training_ratio);
+  }
+  if (fileParser_->training_ratio_line == 0) {
     throw TrainingException("invalid parameter: training_ratio is too small, "
                             "no data for training.");
   }
@@ -33,8 +35,10 @@ void Training::train(const Parameters &params) {
 
 void Training::trainAndTest(const Parameters &params) {
 
-  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0 &&
-      fileParser_->getTrainingRatioLine(params.training_ratio) == 0) {
+  if (!fileParser_->isTrainingRatioLineProcessed) {
+    fileParser_->getTrainingRatioLine(params.training_ratio);
+  }
+  if (fileParser_->training_ratio_line == 0) {
     throw TrainingException("invalid parameter: training_ratio is too small, "
                             "no data for training.");
   }
