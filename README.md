@@ -11,18 +11,19 @@ The neural network currently uses a sigmoid activation function.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
 - CSV parsing using [csv-parser](https://github.com/ashaduri/csv-parser), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
 - Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
-- Cmake compilation, tested on Linux, but should be portable to other systems.
-- Doxygen documentation.
+- [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
+- [Doctest](https://github.com/doctest/doctest) unit tests.
+- [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 
 # Roadmap
 
-- Add unit-tests (with code coverage) and continuous integration.
+- Add unit-tests (with code coverage) and continuous integration. `[In Progress]`
+- Add more activation functions that can be selected.
 - Add import/export of the model.
 - Add training/testing modes.
-- Add an auto-training feature (searching for the best parameters).
-- Add more activation functions that can be selected.
 - Add interactive testing.
+- Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 - Add a CUDA support (but probably on a more advanced project).
 
