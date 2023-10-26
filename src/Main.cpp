@@ -8,8 +8,9 @@
  * @param argc numbers of arguments
  * @param argv table of arguments: 1:input_size 2:hidden_size
  * @code {.bash}
- * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -s 20 -o 1 -e 10
- * -l 40000 -z false
+ * smlp -h
+ * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t
+ * 0.7 -r 0.01 -v false
  * @endcode
  *
  * @return int

@@ -12,6 +12,9 @@
 #include "FileParser.h"
 #include "Network.h"
 #include "Testing.h"
+#include "exception/TrainingException.h"
+#include <bits/types/FILE.h>
+#include <string>
 
 /**
  * Here's a high-level overview of the process:
@@ -42,6 +45,7 @@ predict the correct outputs for the given inputs.
 
 class Training {
 public:
+  Training() : network_(nullptr), fileParser_("") {}
   // Constructor that takes a pointer to the network and the file path to
   // training data as arguments
   Training(Network *network, const std::string &file_path)
@@ -49,6 +53,14 @@ public:
 
   void train(const Parameters &params);
   void trainAndTest(const Parameters &params);
+
+  void setNetwork(Network *network) { network_ = network; }
+  Network *getNetwork() { return network_; }
+
+  void setFileParserPath(const std::string &file_path) {
+    fileParser_.path = file_path;
+  }
+  FileParser &getFileParser() { return fileParser_; }
 
 private:
   Network *network_;

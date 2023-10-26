@@ -9,20 +9,17 @@
 using namespace std::string_view_literals;
 
 void Training::train(const Parameters &params) {
-  if (params.from_line > params.to_line && params.to_line > 0) {
-    throw std::invalid_argument("from_line is greater than to_line.");
+  if (fileParser_.getTrainingRatioLine(params.training_ratio) == 0) {
+    throw TrainingException("invalid parameter: training_ratio is too small, "
+                            "no data for training.");
   }
-  if (!fileParser_.OpenFile()) {
-    throw std::runtime_error("invalid file");
-  }
-  network_->learningRate = params.learning_rate;
-
+  fileParser_.openFile();
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
               << params.num_epochs << "... " << std::endl;
-    fileParser_.ResetPos();
-    for (size_t i = params.from_line; i < params.to_line; i++) {
-      RecordResult result = fileParser_.ProcessLine(params);
+    fileParser_.resetPos();
+    for (size_t i = 0; i < fileParser_.training_ratio_line; i++) {
+      RecordResult result = fileParser_.processLine(params);
       if (result.isSuccess) {
         network_->forwardPropagation(result.record.first);
         network_->backwardPropagation(result.record.second);
@@ -30,26 +27,23 @@ void Training::train(const Parameters &params) {
       }
     }
   }
-  fileParser_.CloseFile();
+  fileParser_.closeFile();
 }
 
 void Training::trainAndTest(const Parameters &params) {
-  if (params.from_line > params.to_line && params.to_line > 0) {
-    throw std::invalid_argument("from_line is greater than to_line.");
+  if (fileParser_.getTrainingRatioLine(params.training_ratio) == 0) {
+    throw TrainingException("invalid parameter: training_ratio is too small, "
+                            "no data for training.");
   }
-  if (!fileParser_.OpenFile()) {
-    throw std::runtime_error("invalid file");
-  }
+  fileParser_.openFile();
   Testing testing(network_, params.data_file);
-  network_->learningRate = params.learning_rate;
-
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
               << params.num_epochs << "... ";
-    fileParser_.ResetPos();
-    for (size_t i = params.from_line; i < params.to_line; i++) {
-      RecordResult result = fileParser_.ProcessLine(params);
+    fileParser_.resetPos();
+    for (size_t i = 0; i < fileParser_.training_ratio_line; i++) {
+      RecordResult result = fileParser_.processLine(params);
       if (result.isSuccess) {
         network_->forwardPropagation(result.record.first);
         network_->backwardPropagation(result.record.second);
@@ -67,5 +61,5 @@ void Training::trainAndTest(const Parameters &params) {
   std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
   testing.showResults(params.verbose);
 
-  fileParser_.CloseFile();
+  fileParser_.closeFile();
 }

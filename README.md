@@ -33,13 +33,13 @@ The neural network currently uses a sigmoid activation function.
 3. To get command line help: `smlp -h`
 4. The `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
 5. `epochs` (`-e` paramater) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-6. The `line_to` number delimiter (`-l` parameter) is the line number from which smlp will use the remaining dataset lines for test and not for train, so the first part is used for training and the second part of the file for testing. It should be a valid number, and be at around 70% of the datafile.
+6. The `training_ratio` (specified by the `-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
 7. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 8. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 
 # Example
 
-`smlp -f ../test/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -l 40000 -r 0.01 -v false`
+`smlp -f ../test/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -v false`
 
 Output:
 
@@ -74,7 +74,3 @@ This work is licensed under a
 - _NonCommercial_ — You may not use the material for commercial purposes.
 - _ShareAlike_ — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 - _No additional restrictions_ — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-
-```
-
-```

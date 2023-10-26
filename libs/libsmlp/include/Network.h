@@ -9,27 +9,10 @@
  */
 
 #pragma once
+#include "Common.h"
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
-
-/**
- The methods for getting and setting weights and biases are also necessary
- for implementing backpropagation during training.
- The addition of InitializeWeights() will also be useful
- for initializing the weights in the network before training.
-
- The Forward() method takes a std::vector<float> input and returns a float*
-output. It's important to make sure that the memory for the output is allocated
- before passing it to the ComputeOutput() method of the output layer.
-
-The Backward() and ClearGradient() methods will be used during backpropagation
-to compute the gradients of the weights and biases in the network.
-
-Finally, the Predict() method takes a std::vector<float> input and returns a
-std::vector<float> output. This method will be useful for using the trained
-network to make predictions on new input data.
-*/
 
 class Network {
 public:
@@ -38,36 +21,35 @@ public:
   std::vector<HiddenLayer> hiddenLayers;
   float learningRate;
 
-  Network(size_t inputSize, size_t hiddenLayerSize, size_t outputLayerSize,
-          size_t totalHiddenLayers) {
+  explicit Network(const Parameters &params)
+      : learningRate(params.learning_rate) {
     // setting layers
-    inputLayer.neurons.resize(inputSize);
-    hiddenLayers.resize(totalHiddenLayers);
+    inputLayer.neurons.resize(params.input_size);
+    hiddenLayers.resize(params.hiddens_count);
     for (auto &hl : hiddenLayers) {
-      hl.neurons.resize(hiddenLayerSize);
+      hl.neurons.resize(params.hidden_size);
     }
-    outputLayer.neurons.resize(outputLayerSize);
+    outputLayer.neurons.resize(params.output_size);
 
     // setting neurons weights with previous layer size
-    if (hiddenLayerSize > 0) {
-      for (size_t i = 0; i < totalHiddenLayers; i++) {
+    if (params.hidden_size > 0) {
+      for (size_t i = 0; i < params.hiddens_count; i++) {
         for (auto &n : hiddenLayers.at(i).neurons) {
-          n.initWeights(i == 0 ? inputSize : hiddenLayerSize);
+          n.initWeights(i == 0 ? params.input_size : params.hidden_size);
         }
       }
       for (auto &n : outputLayer.neurons) {
-        n.initWeights(hiddenLayerSize);
+        n.initWeights(params.hidden_size);
       }
     } else {
       for (auto &n : outputLayer.neurons) {
-        n.initWeights(inputSize);
+        n.initWeights(params.input_size);
       }
     }
   }
 
   std::vector<float> forwardPropagation(const std::vector<float> &inputValues) {
     inputLayer.setInputValues(inputValues);
-
     // Implement forward propagation for network
     if (hiddenLayers.empty()) {
       outputLayer.forwardPropagation(inputLayer);
