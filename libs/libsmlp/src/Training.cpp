@@ -9,17 +9,18 @@
 using namespace std::string_view_literals;
 
 void Training::train(const Parameters &params) {
-  if (fileParser_.getTrainingRatioLine(params.training_ratio) == 0) {
+  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0 &&
+      fileParser_->getTrainingRatioLine(params.training_ratio) == 0) {
     throw TrainingException("invalid parameter: training_ratio is too small, "
                             "no data for training.");
   }
-  fileParser_.openFile();
+  fileParser_->openFile();
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
               << params.num_epochs << "... " << std::endl;
-    fileParser_.resetPos();
-    for (size_t i = 0; i < fileParser_.training_ratio_line; i++) {
-      RecordResult result = fileParser_.processLine(params);
+    fileParser_->resetPos();
+    for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
+      RecordResult result = fileParser_->processLine(params);
       if (result.isSuccess) {
         network_->forwardPropagation(result.record.first);
         network_->backwardPropagation(result.record.second);
@@ -27,23 +28,25 @@ void Training::train(const Parameters &params) {
       }
     }
   }
-  fileParser_.closeFile();
+  fileParser_->closeFile();
 }
 
 void Training::trainAndTest(const Parameters &params) {
-  if (fileParser_.getTrainingRatioLine(params.training_ratio) == 0) {
+
+  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0 &&
+      fileParser_->getTrainingRatioLine(params.training_ratio) == 0) {
     throw TrainingException("invalid parameter: training_ratio is too small, "
                             "no data for training.");
   }
-  fileParser_.openFile();
-  Testing testing(network_, params.data_file);
+  fileParser_->openFile();
+  Testing testing(network_, fileParser_);
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < params.num_epochs; epoch++) {
     std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
               << params.num_epochs << "... ";
-    fileParser_.resetPos();
-    for (size_t i = 0; i < fileParser_.training_ratio_line; i++) {
-      RecordResult result = fileParser_.processLine(params);
+    fileParser_->resetPos();
+    for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
+      RecordResult result = fileParser_->processLine(params);
       if (result.isSuccess) {
         network_->forwardPropagation(result.record.first);
         network_->backwardPropagation(result.record.second);
@@ -61,5 +64,5 @@ void Training::trainAndTest(const Parameters &params) {
   std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
   testing.showResults(params.verbose);
 
-  fileParser_.closeFile();
+  fileParser_->closeFile();
 }

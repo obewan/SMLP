@@ -7,25 +7,29 @@
 using namespace std::string_view_literals;
 
 void Testing::test(const Parameters &params, size_t epoch) {
-  fileParser_.getTrainingRatioLine(params.training_ratio);
-  if (fileParser_.training_ratio_line >= fileParser_.total_lines) {
-    std::cout
-        << "Warning: No lines left for testing, check your training_ratio "
-           "parameter. Abording testing"
-        << std::endl;
-    return;
+  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0) {
+    fileParser_->getTrainingRatioLine(params.training_ratio);
+    if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
+      std::cout
+          << "Warning: No lines left for testing, check your training_ratio "
+             "parameter. Abording testing"
+          << std::endl;
+      return;
+    }
   }
 
-  fileParser_.openFile();
+  if (!fileParser_->file.is_open()) {
+    fileParser_->openFile();
+  }
 
   std::vector<TestResults> testResults;
   bool isTesting = true;
   while (isTesting) {
-    RecordResult result = fileParser_.processLine(params, true);
+    RecordResult result = fileParser_->processLine(params, true);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
       // TODO: improve this for more than one output.
-      testResults.emplace_back(epoch, fileParser_.line_number,
+      testResults.emplace_back(epoch, fileParser_->current_line_number,
                                result.record.second[0], predicteds[0]);
     } else {
       isTesting = false;
@@ -43,8 +47,6 @@ void Testing::test(const Parameters &params, size_t epoch) {
 
   lastEpochTestResultTemp_ = testResults;
   last_epoch_ = epoch;
-
-  fileParser_.closeFile();
 }
 
 Testing::Stat Testing::calcStats() {

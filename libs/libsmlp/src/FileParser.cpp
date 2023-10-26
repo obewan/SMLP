@@ -16,7 +16,7 @@ void FileParser::openFile() {
   if (!file.is_open()) {
     throw FileParserException("Failed to open file: " + path);
   }
-  line_number = 0;
+  current_line_number = 0;
 }
 
 void FileParser::closeFile() {
@@ -28,17 +28,17 @@ void FileParser::closeFile() {
 void FileParser::resetPos() {
   file.clear();
   file.seekg(0, std::ios::beg);
-  line_number = 0;
+  current_line_number = 0;
 }
 
 RecordResult FileParser::processLine(const Parameters &params, bool isTesting) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
-  line_number++;
+  current_line_number++;
 
   // if isTesting, skipping lines until testing lines
-  if (isTesting) {
-    for (; line_number < training_ratio_line; ++line_number) {
+  if (isTesting && current_line_number < training_ratio_line) {
+    for (; current_line_number < training_ratio_line; ++current_line_number) {
       if (!std::getline(file, line)) {
         return {.isSuccess = false, .isEndOfFile = true};
       }
@@ -54,14 +54,15 @@ RecordResult FileParser::processLine(const Parameters &params, bool isTesting) {
     csv_parser.parseTo(data, cell_refs);
   } catch (Csv::ParseError &ex) {
     std::stringstream sstr;
-    sstr << "CSV parsing error at line " << line_number << ": " << ex.what();
+    sstr << "CSV parsing error at line " << current_line_number << ": "
+         << ex.what();
     throw FileParserException(sstr.str());
   }
 
   if (cell_refs.empty() ||
       cell_refs.size() != params.input_size + params.output_size) {
     std::stringstream sstr;
-    sstr << "Invalid columns at line " << line_number << ": found "
+    sstr << "Invalid columns at line " << current_line_number << ": found "
          << cell_refs.size() << " columns instead of "
          << params.input_size + params.output_size;
     throw FileParserException(sstr.str());

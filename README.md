@@ -18,7 +18,7 @@ The neural network currently uses a sigmoid activation function.
 
 # Roadmap
 
-- Add unit-tests (with code coverage) and continuous integration. `[In Progress]`
+- Add unit-tests (with code coverage) and continuous integration. `[in progress]`
 - Add training/testing modes.
 - Add more activation functions that can be selected.
 - Add import/export of the model.

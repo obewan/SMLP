@@ -45,11 +45,11 @@ predict the correct outputs for the given inputs.
 
 class Training {
 public:
-  Training() : network_(nullptr), fileParser_("") {}
+  Training() : network_(nullptr), fileParser_(nullptr) {}
   // Constructor that takes a pointer to the network and the file path to
   // training data as arguments
   Training(Network *network, const std::string &file_path)
-      : network_(network), fileParser_(file_path) {}
+      : network_(network), fileParser_(new FileParser(file_path)) {}
 
   void train(const Parameters &params);
   void trainAndTest(const Parameters &params);
@@ -57,12 +57,10 @@ public:
   void setNetwork(Network *network) { network_ = network; }
   Network *getNetwork() { return network_; }
 
-  void setFileParserPath(const std::string &file_path) {
-    fileParser_.path = file_path;
-  }
-  FileParser &getFileParser() { return fileParser_; }
+  void setFileParser(FileParser *fileParser) { fileParser_ = fileParser; }
+  FileParser *getFileParser() { return fileParser_; }
 
 private:
   Network *network_;
-  FileParser fileParser_;
+  FileParser *fileParser_;
 };
