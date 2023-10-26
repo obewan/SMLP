@@ -16,8 +16,10 @@
 
 class Testing {
 public:
+  Testing(Network *network, FileParser *fileparser)
+      : network_(network), fileParser_(fileparser) {}
   Testing(Network *network, const std::string &file_path)
-      : network_(network), fileParser_(file_path) {}
+      : network_(network), fileParser_(new FileParser(file_path)) {}
 
   void test(const Parameters &params, size_t epoch = 0);
 
@@ -62,9 +64,15 @@ public:
   void showResults(bool verbose = false);
   Stat calcStats();
 
+  void setNetwork(Network *network) { network_ = network; }
+  Network *getNetwork() { return network_; }
+
+  void setFileParser(FileParser *fileparser) { fileParser_ = fileparser; }
+  FileParser *getFileParser() { return fileParser_; }
+
 private:
   Network *network_;
+  FileParser *fileParser_;
   std::vector<TestResults> lastEpochTestResultTemp_;
   size_t last_epoch_ = 0;
-  FileParser fileParser_;
 };

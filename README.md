@@ -11,29 +11,30 @@ The neural network currently uses a sigmoid activation function.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
 - CSV parsing using [csv-parser](https://github.com/ashaduri/csv-parser), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
 - Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
-- Cmake compilation, tested on Linux, but should be portable to other systems.
-- Doxygen documentation.
+- [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
+- [Doctest](https://github.com/doctest/doctest) unit tests.
+- [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 
 # Roadmap
 
-- Add unit-tests (with code coverage) and continuous integration.
-- Add import/export of the model.
+- Add unit-tests (with code coverage) and continuous integration. `[in progress]`
 - Add training/testing modes.
-- Add an auto-training feature (searching for the best parameters).
 - Add more activation functions that can be selected.
+- Add import/export of the model.
 - Add interactive testing.
+- Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 - Add a CUDA support (but probably on a more advanced project).
 
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in test/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
-2. Build and run smlp (should be in build directory then).
+2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
 4. The `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
-5. `epochs` (`-e` paramater) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-6. The `training_ratio` (specified by the `-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
+5. `epochs` (`-e` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
+6. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
 7. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 8. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 
