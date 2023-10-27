@@ -78,7 +78,7 @@ void SimpleMLP::test() {
   testing.showResults();
 }
 
-void SimpleMLP::trainAndTest() {
+void SimpleMLP::trainAndTestMonitored() {
   std::cout << "Train and testing, using file " << params_.data_file
             << std::endl;
   std::cout << "InputSize:" << params_.input_size
@@ -91,7 +91,7 @@ void SimpleMLP::trainAndTest() {
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
-  training.trainAndTest(params_);
+  training.trainAndTestMonitored(params_);
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {

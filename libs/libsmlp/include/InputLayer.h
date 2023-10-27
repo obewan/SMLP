@@ -11,6 +11,11 @@
 #include "Layer.h"
 #include <stdexcept>
 
+/**
+ * @brief The InputLayer class represents the input layer of a neural network.
+ * It inherits from the Layer class and overrides its methods as necessary. This
+ * layer is responsible for receiving input from external sources.
+ */
 class InputLayer : public Layer {
 public:
   void forwardPropagation(Layer &prevLayer) override {

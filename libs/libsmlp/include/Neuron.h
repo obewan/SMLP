@@ -12,15 +12,34 @@
 #include <random>
 #include <vector>
 
+/**
+ * @brief The Neuron class represents a neuron in a neural network. It contains
+ * a value, bias, error, and a vector of weights. It also has methods for
+ * initializing weights.
+ */
 class Neuron {
 public:
+  // The value of the neuron
   float value = 0.0;
+
+  // The bias of the neuron
   float bias = 0.0;
+
+  // The error of the neuron
   float error = 0.0;
+
+  // The weights of the neuron
   std::vector<float> weights;
 
+  // Default constructor
   Neuron() = default;
 
+  /**
+   * @brief Initializes the weights of the neuron to a given size. The weights
+   * are randomized to break symmetry.
+   *
+   * @param new_size The new size of the weights vector.
+   */
   void initWeights(size_t new_size) {
     weights.resize(new_size);
 

@@ -14,13 +14,32 @@
 #include "InputLayer.h"
 #include "OutputLayer.h"
 
+/**
+ * @brief The Network class represents a neural network model. It contains an
+ * input layer, an output layer, and a vector of hidden layers. It also has a
+ * learning rate and methods for forward propagation, backward propagation, and
+ * updating weights.
+ */
 class Network {
 public:
+  // The input layer of the network
   InputLayer inputLayer;
+
+  // The output layer of the network
   OutputLayer outputLayer;
+
+  // The hidden layers of the network
   std::vector<HiddenLayer> hiddenLayers;
+
+  // The learning rate of the network
   float learningRate;
 
+  /**
+   * @brief Constructor that takes a Parameters object as an argument. It
+   * initializes the layers and neurons in the network.
+   *
+   * @param params The parameters for initializing the network.
+   */
   explicit Network(const Parameters &params)
       : learningRate(params.learning_rate) {
     // setting layers
@@ -48,6 +67,14 @@ public:
     }
   }
 
+  /**
+   * @brief Performs forward propagation on the network using the given input
+   * values.
+   *
+   * @param inputValues The input values for forward propagation.
+   * @return A vector of output values from the output layer after forward
+   * propagation.
+   */
   std::vector<float> forwardPropagation(const std::vector<float> &inputValues) {
     inputLayer.setInputValues(inputValues);
     // Implement forward propagation for network
@@ -64,6 +91,12 @@ public:
     return outputLayer.getOutputValues();
   }
 
+  /**
+   * @brief Performs backward propagation on the network using the given
+   * expected values.
+   *
+   * @param expectedValues The expected values for backward propagation.
+   */
   void backwardPropagation(const std::vector<float> &expectedValues) {
     outputLayer.computeErrors(expectedValues);
     // Implement backward propagation for network
@@ -78,6 +111,10 @@ public:
     }
   }
 
+  /**
+   * @brief Updates the weights of the neurons in the network using the learning
+   * rate.
+   */
   void updateWeights() {
     // Implement update weights for network
     if (hiddenLayers.empty()) {

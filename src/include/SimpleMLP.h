@@ -15,9 +15,24 @@
 class SimpleMLP {
 public:
   bool init(int argc, char **argv, bool withMonitoring = true);
+
+  /**
+   * @brief This method trains the model.
+   */
   void train();
+
+  /**
+   * @brief This method tests the model.
+   */
   void test();
-  void trainAndTest();
+
+  /**
+   * @brief This method trains the model, testing at each epoch and monitoring
+   * the progress of an output neuron. Be aware that this mode consumes more
+   * memory with each epoch to save the monitoring progress. Therefore, it is
+   * recommended for use with smaller datasets and a lower number of epochs.
+   */
+  void trainAndTestMonitored();
 
 private:
   // default parameters
