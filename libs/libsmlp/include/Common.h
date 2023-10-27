@@ -25,6 +25,7 @@ struct Parameters {
   size_t output_size = 1;
   size_t hiddens_count = 1;
   size_t num_epochs = 3;
+  size_t output_index_to_monitor = 1;
   float training_ratio = 0.7f;
   float learning_rate = 1e-3f;
   bool output_at_end = false;

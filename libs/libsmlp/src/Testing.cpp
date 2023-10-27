@@ -24,13 +24,19 @@ void Testing::test(const Parameters &params, size_t epoch) {
 
   std::vector<TestResults> testResults;
   bool isTesting = true;
+  int output_neuron_to_monitor = (int)params.output_index_to_monitor - 1;
   while (isTesting) {
     RecordResult result = fileParser_->processLine(params, true);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
-      // TODO: improve this for more than one output.
-      testResults.emplace_back(epoch, fileParser_->current_line_number,
-                               result.record.second[0], predicteds[0]);
+      // Using just one output neuron to monitor, or else there will be too much
+      // memory used.
+      if (output_neuron_to_monitor >= 0 &&
+          output_neuron_to_monitor < (int)params.output_size) {
+        testResults.emplace_back(epoch, fileParser_->current_line_number,
+                                 result.record.second[output_neuron_to_monitor],
+                                 predicteds[output_neuron_to_monitor]);
+      }
     } else {
       isTesting = false;
     }
