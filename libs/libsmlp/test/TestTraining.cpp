@@ -61,11 +61,13 @@ TEST_CASE("Testing the Training class") {
       auto it_first = testProgress.begin();
       auto firstKey = it_first->first;
       auto firstValue = it_first->second;
+      CHECK(firstKey == training.getFileParser()->training_ratio_line + 1);
 
       // Get the last element
       auto it_last = --testProgress.end();
       auto lastKey = it_last->first;
       auto lastValue = it_last->second;
+      CHECK(lastKey == training.getFileParser()->total_lines);
       CHECK(lastKey > firstKey);
       CHECK(lastValue.back() > firstValue.front());
 
