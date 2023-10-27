@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 
   // can also use just smlp->train() and/or smlp->test()
   // but trainAndTest() will log the progress as it will test at each epoch.
-  smlp->trainAndTest();
+  smlp->trainAndTestMonitored();
 
   return EXIT_SUCCESS;
 }

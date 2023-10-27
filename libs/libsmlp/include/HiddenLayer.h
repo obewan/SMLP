@@ -61,6 +61,12 @@ TODO: add sigmoid alternatives:
  accuracy than any other combination of activation functions in certain
  cases2.*/
 
+/**
+ * @brief The HiddenLayer class represents a hidden layer in a neural network.
+ * It inherits from the Layer class and overrides its methods as necessary.
+ * Hidden layers are responsible for processing inputs received from the input
+ * layer and passing the result to the output layer or the next hidden layer.
+ */
 class HiddenLayer : public Layer {
 public:
   void forwardPropagation(Layer &prevLayer) override {

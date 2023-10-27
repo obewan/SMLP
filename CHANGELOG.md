@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- Dev [\#5](https://github.com/obewan/SMLP/pull/5) ([obewan](https://github.com/obewan))
 - Dev [\#4](https://github.com/obewan/SMLP/pull/4) ([obewan](https://github.com/obewan))
 - Dev [\#3](https://github.com/obewan/SMLP/pull/3) ([obewan](https://github.com/obewan))
 - Dev [\#2](https://github.com/obewan/SMLP/pull/2) ([obewan](https://github.com/obewan))

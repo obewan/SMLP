@@ -33,7 +33,7 @@ void Training::train(const Parameters &params) {
   fileParser_->closeFile();
 }
 
-void Training::trainAndTest(const Parameters &params) {
+void Training::trainAndTestMonitored(const Parameters &params) {
 
   if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->getTrainingRatioLine(params.training_ratio);

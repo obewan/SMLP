@@ -13,6 +13,11 @@
 #include <ranges>
 #include <vector>
 
+/**
+ * @brief The OutputLayer class represents the output layer of a neural network.
+ * It inherits from the Layer class and overrides its methods as necessary. This
+ * layer is responsible for producing the final output of the network.
+ */
 class OutputLayer : public Layer {
 public:
   void forwardPropagation(Layer &prevLayer) override {

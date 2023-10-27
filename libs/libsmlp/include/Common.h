@@ -17,6 +17,9 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
+/**
+ * @brief Parameters for the neural Network.
+ */
 struct Parameters {
   std::string title = "SMLP";
   std::string data_file = "";
@@ -25,12 +28,16 @@ struct Parameters {
   size_t output_size = 1;
   size_t hiddens_count = 1;
   size_t num_epochs = 3;
+  size_t output_index_to_monitor = 1;
   float training_ratio = 0.7f;
   float learning_rate = 1e-3f;
   bool output_at_end = false;
   bool verbose = false;
 };
 
+/**
+ * @brief Results of a parsed record.
+ */
 struct RecordResult {
   bool isSuccess = false;
   bool isLineSkipped = false;

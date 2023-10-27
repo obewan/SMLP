@@ -64,7 +64,7 @@ void SimpleMLP::train() {
             << " HiddenLayers:" << params_.hiddens_count
             << " Epochs:" << params_.num_epochs
             << " TrainingRatio:" << params_.training_ratio
-            << " LearningRate: " << params_.learning_rate
+            << " LearningRate:" << params_.learning_rate
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
@@ -78,7 +78,14 @@ void SimpleMLP::test() {
   testing.showResults();
 }
 
-void SimpleMLP::trainAndTest() {
+void SimpleMLP::trainAndTestMonitored() {
+  if (params_.output_index_to_monitor > params_.output_size) {
+    std::cerr << "[ERROR] output_index_to_monitor > output_size: "
+              << params_.output_index_to_monitor << ">" << params_.output_size
+              << std::endl;
+    return;
+  }
+
   std::cout << "Train and testing, using file " << params_.data_file
             << std::endl;
   std::cout << "InputSize:" << params_.input_size
@@ -87,11 +94,12 @@ void SimpleMLP::trainAndTest() {
             << " HiddenLayers:" << params_.hiddens_count
             << " Epochs:" << params_.num_epochs
             << " TrainingRatio:" << params_.training_ratio
-            << " LearningRate: " << params_.learning_rate
+            << " LearningRate:" << params_.learning_rate
+            << " OutputIndexToMonitor:" << params_.output_index_to_monitor
             << " Verbose:" << params_.verbose << std::endl;
 
   Training training(network_, params_.data_file);
-  training.trainAndTest(params_);
+  training.trainAndTestMonitored(params_);
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
@@ -113,15 +121,15 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   app.add_option("-d,--hidden_size", params_.hidden_size,
                  "the numbers of hidden neurons per hidden layer")
       ->default_val(params_.hidden_size)
-      ->check(CLI::PositiveNumber);
+      ->check(CLI::NonNegativeNumber);
   app.add_option("-c,--hiddens_count", params_.hiddens_count,
                  "the count of hidden layers")
       ->default_val(params_.hiddens_count)
-      ->check(CLI::PositiveNumber);
+      ->check(CLI::NonNegativeNumber);
   app.add_option("-e,--epochs", params_.num_epochs,
                  "the numbers of epochs retraining")
       ->default_val(params_.num_epochs)
-      ->check(CLI::PositiveNumber);
+      ->check(CLI::NonNegativeNumber);
   app.add_option("-t,--training_ratio", params_.training_ratio,
                  "the training ratio of the file to switch between data for "
                  "training and data for testing, should be around 0.7.")
@@ -133,6 +141,13 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
       ->default_val(params_.learning_rate)
       ->check(CLI::PositiveNumber)
       ->check(CLI::TypeValidator<float>());
+  app.add_option("-y, --output_index_to_monitor",
+                 params_.output_index_to_monitor,
+                 "indicate the output neuron index to monitor during a "
+                 "TrainingAndTestMonitored mode. If index = 0 there will be no "
+                 "progress monitoring. Default is 1, the first neuron output.")
+      ->default_val(params_.output_index_to_monitor)
+      ->check(CLI ::NonNegativeNumber);
   app.add_option(
          "-z,--output_ends", params_.output_at_end,
          "indicate if the output data is at the end of the record (1) or at "

@@ -3,6 +3,10 @@
 #include <exception>
 #include <string>
 
+/**
+ * @brief A custom exception class that inherits from std::exception.
+ * This class is thrown when there are issues with file parsing operations.
+ */
 class FileParserException : public std::exception {
 public:
   explicit FileParserException(const std::string &message)

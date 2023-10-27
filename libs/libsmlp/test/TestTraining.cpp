@@ -24,15 +24,16 @@ TEST_CASE("Testing the Training class") {
     }
   }
 
-  SUBCASE("Test trainAndTest function") {
+  SUBCASE("Test trainAndTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       params.training_ratio = 0;
-      CHECK_THROWS_AS(training.trainAndTest(params), TrainingException);
+      CHECK_THROWS_AS(training.trainAndTestMonitored(params),
+                      TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.trainAndTest(params));
+      CHECK_NOTHROW(training.trainAndTestMonitored(params));
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
@@ -44,7 +45,7 @@ TEST_CASE("Testing the Training class") {
       params.hidden_size = 12;
       params.hiddens_count = 1;
       params.num_epochs = 2;
-      CHECK_NOTHROW(training.trainAndTest(params));
+      CHECK_NOTHROW(training.trainAndTestMonitored(params));
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);
@@ -61,11 +62,13 @@ TEST_CASE("Testing the Training class") {
       auto it_first = testProgress.begin();
       auto firstKey = it_first->first;
       auto firstValue = it_first->second;
+      CHECK(firstKey == training.getFileParser()->training_ratio_line + 1);
 
       // Get the last element
       auto it_last = --testProgress.end();
       auto lastKey = it_last->first;
       auto lastValue = it_last->second;
+      CHECK(lastKey == training.getFileParser()->total_lines);
       CHECK(lastKey > firstKey);
       CHECK(lastValue.back() > firstValue.front());
 
