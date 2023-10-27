@@ -26,6 +26,7 @@ public:
   size_t getTrainingRatioLine(float trainingRatio) {
     total_lines = countLine();
     training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+    isTrainingRatioLineProcessed = true;
     return training_ratio_line;
   }
 
@@ -52,4 +53,5 @@ public:
   size_t current_line_number = 0;
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
+  bool isTrainingRatioLineProcessed = false;
 };

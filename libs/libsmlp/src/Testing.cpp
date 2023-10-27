@@ -7,15 +7,15 @@
 using namespace std::string_view_literals;
 
 void Testing::test(const Parameters &params, size_t epoch) {
-  if (fileParser_->training_ratio_line == 0 && fileParser_->total_lines == 0) {
+  if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->getTrainingRatioLine(params.training_ratio);
-    if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
-      std::cout
-          << "Warning: No lines left for testing, check your training_ratio "
-             "parameter. Abording testing"
-          << std::endl;
-      return;
-    }
+  }
+  if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
+    std::cout
+        << "Warning: No lines left for testing, check your training_ratio "
+           "parameter. Aborting testing"
+        << std::endl;
+    return;
   }
 
   if (!fileParser_->file.is_open()) {

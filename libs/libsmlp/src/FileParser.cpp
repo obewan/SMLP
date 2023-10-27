@@ -12,6 +12,9 @@ FileParser::~FileParser() {
 }
 
 void FileParser::openFile() {
+  if (file.is_open()) {
+    return;
+  }
   file.open(path);
   if (!file.is_open()) {
     throw FileParserException("Failed to open file: " + path);
