@@ -12,6 +12,11 @@
 #include "Network.h"
 #include <string>
 
+/**
+ * @brief Main class to train and test the neural network after parsing the
+ * arguments.
+ *
+ */
 class SimpleMLP {
 public:
   bool init(int argc, char **argv, bool withMonitoring = true);
@@ -35,10 +40,7 @@ public:
   void trainAndTestMonitored();
 
 private:
-  // default parameters
-
   Parameters params_;
-
   int parseArgs(int argc, char **argv);
   Network *network_ = nullptr;
 };
