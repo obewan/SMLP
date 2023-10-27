@@ -24,7 +24,7 @@ TEST_CASE("Testing the Training class") {
     }
   }
 
-  SUBCASE("Test trainAndTest function") {
+  SUBCASE("Test trainAndTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       params.training_ratio = 0;
       CHECK_THROWS_AS(training.trainAndTestMonitored(params),

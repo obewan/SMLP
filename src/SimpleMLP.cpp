@@ -80,9 +80,9 @@ void SimpleMLP::test() {
 
 void SimpleMLP::trainAndTestMonitored() {
   if (params_.output_index_to_monitor > params_.output_size) {
-    std::cerr << "[ERROR] output_index_to_monitor > output_size: ("
+    std::cerr << "[ERROR] output_index_to_monitor > output_size: "
               << params_.output_index_to_monitor << ">" << params_.output_size
-              << ")." << std::endl;
+              << std::endl;
     return;
   }
 
