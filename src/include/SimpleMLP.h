@@ -37,10 +37,14 @@ public:
    * memory with each epoch to save the monitoring progress. Therefore, it is
    * recommended for use with smaller datasets and a lower number of epochs.
    */
-  void trainAndTestMonitored();
+  void trainTestMonitored();
+
+  /**
+   * @brief SMLP parameters.
+   */
+  Parameters params;
 
 private:
-  Parameters params_;
   int parseArgs(int argc, char **argv);
   Network *network_ = nullptr;
 };

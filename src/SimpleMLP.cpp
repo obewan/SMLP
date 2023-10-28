@@ -42,11 +42,11 @@ measures that legally restrict others from doing anything the license permits.
 bool SimpleMLP::init(int argc, char **argv,
                      [[maybe_unused]] bool withMonitoring) {
   try {
-    if (parseArgs(argc, argv) != EXIT_SUCCESS || params_.data_file.empty()) {
+    if (parseArgs(argc, argv) != EXIT_SUCCESS || params.data_file.empty()) {
       return false;
     }
 
-    network_ = new Network(params_);
+    network_ = new Network(params);
 
     return true;
 
@@ -57,105 +57,117 @@ bool SimpleMLP::init(int argc, char **argv,
 }
 
 void SimpleMLP::train() {
-  std::cout << "Training, using file " << params_.data_file << std::endl;
-  std::cout << "InputSize:" << params_.input_size
-            << " OutputSize:" << params_.output_size
-            << " HiddenSize:" << params_.hidden_size
-            << " HiddenLayers:" << params_.hiddens_count
-            << " Epochs:" << params_.num_epochs
-            << " TrainingRatio:" << params_.training_ratio
-            << " LearningRate:" << params_.learning_rate
-            << " Verbose:" << params_.verbose << std::endl;
+  std::cout << "Training, using file " << params.data_file << std::endl;
+  std::cout << "InputSize:" << params.input_size
+            << " OutputSize:" << params.output_size
+            << " HiddenSize:" << params.hidden_size
+            << " HiddenLayers:" << params.hiddens_count
+            << " Epochs:" << params.num_epochs
+            << " TrainingRatio:" << params.training_ratio
+            << " LearningRate:" << params.learning_rate
+            << " Mode:" << Common::getModeStr(params.mode)
+            << " Verbose:" << params.verbose << std::endl;
 
-  Training training(network_, params_.data_file);
-  training.train(params_);
+  Training training(network_, params.data_file);
+  training.train(params);
 }
 
 void SimpleMLP::test() {
-  std::cout << "Testing, using file " << params_.data_file << std::endl;
-  Testing testing(network_, params_.data_file);
-  testing.test(params_, 0);
+  std::cout << "Testing, using file " << params.data_file << std::endl;
+  Testing testing(network_, params.data_file);
+  testing.test(params, 0);
   testing.showResults();
 }
 
-void SimpleMLP::trainAndTestMonitored() {
-  if (params_.output_index_to_monitor > params_.output_size) {
+void SimpleMLP::trainTestMonitored() {
+  if (params.output_index_to_monitor > params.output_size) {
     std::cerr << "[ERROR] output_index_to_monitor > output_size: "
-              << params_.output_index_to_monitor << ">" << params_.output_size
+              << params.output_index_to_monitor << ">" << params.output_size
               << std::endl;
     return;
   }
 
-  std::cout << "Train and testing, using file " << params_.data_file
+  std::cout << "Train and testing, using file " << params.data_file
             << std::endl;
-  std::cout << "InputSize:" << params_.input_size
-            << " OutputSize:" << params_.output_size
-            << " HiddenSize:" << params_.hidden_size
-            << " HiddenLayers:" << params_.hiddens_count
-            << " Epochs:" << params_.num_epochs
-            << " TrainingRatio:" << params_.training_ratio
-            << " LearningRate:" << params_.learning_rate
-            << " OutputIndexToMonitor:" << params_.output_index_to_monitor
-            << " Verbose:" << params_.verbose << std::endl;
+  std::cout << "InputSize:" << params.input_size
+            << " OutputSize:" << params.output_size
+            << " HiddenSize:" << params.hidden_size
+            << " HiddenLayers:" << params.hiddens_count
+            << " Epochs:" << params.num_epochs
+            << " TrainingRatio:" << params.training_ratio
+            << " LearningRate:" << params.learning_rate
+            << " Mode:" << Common::getModeStr(params.mode)
+            << " OutputIndexToMonitor:" << params.output_index_to_monitor
+            << " Verbose:" << params.verbose << std::endl;
 
-  Training training(network_, params_.data_file);
-  training.trainAndTestMonitored(params_);
+  Training training(network_, params.data_file);
+  training.trainTestMonitored(params);
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
 
-  CLI::App app{params_.title};
+  CLI::App app{params.title};
 
-  app.add_option("-f,--file_input", params_.data_file,
+  app.add_option("-f,--file_input", params.data_file,
                  "the data file to use for training and testing")
       ->mandatory()
       ->check(CLI::ExistingPath);
-  app.add_option("-i,--input_size", params_.input_size,
+  app.add_option("-i,--input_size", params.input_size,
                  "the numbers of input neurons")
       ->mandatory()
       ->check(CLI::PositiveNumber);
-  app.add_option("-o,--output_size", params_.output_size,
+  app.add_option("-o,--output_size", params.output_size,
                  "the numbers of output neurons")
-      ->default_val(params_.output_size)
+      ->default_val(params.output_size)
       ->check(CLI::PositiveNumber);
-  app.add_option("-d,--hidden_size", params_.hidden_size,
+  app.add_option("-d,--hidden_size", params.hidden_size,
                  "the numbers of hidden neurons per hidden layer")
-      ->default_val(params_.hidden_size)
+      ->default_val(params.hidden_size)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-c,--hiddens_count", params_.hiddens_count,
+  app.add_option("-c,--hiddens_count", params.hiddens_count,
                  "the count of hidden layers")
-      ->default_val(params_.hiddens_count)
+      ->default_val(params.hiddens_count)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-e,--epochs", params_.num_epochs,
+  app.add_option("-e,--epochs", params.num_epochs,
                  "the numbers of epochs retraining")
-      ->default_val(params_.num_epochs)
+      ->default_val(params.num_epochs)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-t,--training_ratio", params_.training_ratio,
-                 "the training ratio of the file to switch between data for "
-                 "training and data for testing, should be around 0.7.")
-      ->default_val(params_.training_ratio)
-      ->check(CLI::Range(0.0f, 1.0f))
-      ->check(CLI::TypeValidator<float>());
-  app.add_option("-r,--learning_rate", params_.learning_rate,
+  app.add_option("-r,--learning_rate", params.learning_rate,
                  "optimizer learning rate")
-      ->default_val(params_.learning_rate)
+      ->default_val(params.learning_rate)
       ->check(CLI::PositiveNumber)
       ->check(CLI::TypeValidator<float>());
-  app.add_option("-y, --output_index_to_monitor",
-                 params_.output_index_to_monitor,
-                 "indicate the output neuron index to monitor during a "
-                 "TrainingAndTestMonitored mode. If index = 0 there will be no "
-                 "progress monitoring. Default is 1, the first neuron output.")
-      ->default_val(params_.output_index_to_monitor)
-      ->check(CLI ::NonNegativeNumber);
+  app.add_option("-t,--training_ratio", params.training_ratio,
+                 "the training ratio of the file to switch between data for "
+                 "training and data for testing, should be around 0.7.")
+      ->default_val(params.training_ratio)
+      ->check(CLI::Range(0.0f, 1.0f))
+      ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-z,--output_ends", params_.output_at_end,
+         "-z,--output_ends", params.output_at_end,
          "indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
-      ->default_val(params_.output_at_end)
+      ->default_val(params.output_at_end)
       ->check(CLI::TypeValidator<bool>());
-  app.add_option("-v,--verbose", params_.verbose, "verbose logs")
-      ->default_val(params_.verbose)
+  app.add_option(
+         "-m, --mode", params.mode,
+         "Select the running mode:\n"
+         "  - TrainOnly: Just train the network without testing.\n"
+         "  - TestOnly: Just test an imported network without training.\n"
+         "  - TrainThenTest: Train at once then test (default mode).\n"
+         "  - TrainTestMonitored: Train and test at each epoch with monitoring "
+         "progress of an output neuron. Beware as this is slower and uses more "
+         "memory.")
+      ->transform(CLI::CheckedTransformer(mode_map, CLI::ignore_case));
+  app.add_option("-y, --output_index_to_monitor",
+                 params.output_index_to_monitor,
+                 "indicate the output neuron index to monitor during a "
+                 "TrainTestMonitored mode. If index = 0 there will be no "
+                 "progress monitoring. Default is 1, the first neuron output.")
+      ->default_val(params.output_index_to_monitor)
+      ->check(CLI ::NonNegativeNumber);
+  app.add_option("-v,--verbose", params.verbose, "verbose logs")
+      ->default_val(params.verbose)
       ->check(CLI::TypeValidator<bool>());
 
   CLI11_PARSE(app, argc, argv)

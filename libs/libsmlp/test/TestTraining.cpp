@@ -24,16 +24,15 @@ TEST_CASE("Testing the Training class") {
     }
   }
 
-  SUBCASE("Test trainAndTestMonitored function") {
+  SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       params.training_ratio = 0;
-      CHECK_THROWS_AS(training.trainAndTestMonitored(params),
-                      TrainingException);
+      CHECK_THROWS_AS(training.trainTestMonitored(params), TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.trainAndTestMonitored(params));
+      CHECK_NOTHROW(training.trainTestMonitored(params));
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
@@ -45,7 +44,8 @@ TEST_CASE("Testing the Training class") {
       params.hidden_size = 12;
       params.hiddens_count = 1;
       params.num_epochs = 2;
-      CHECK_NOTHROW(training.trainAndTestMonitored(params));
+      params.mode = Mode::TrainTestMonitored;
+      CHECK_NOTHROW(training.trainTestMonitored(params));
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);
