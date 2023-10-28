@@ -21,7 +21,7 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config Debug -- -j 2
     - name: Test
       working-directory: ${{github.workspace}}/build/libs/libsmlp/test
-      run: tester
+      run: ./tester
     - name: Coverage
       run: |
         lcov --directory . --capture --output-file lcov.info
