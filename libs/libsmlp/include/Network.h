@@ -31,8 +31,8 @@ public:
   // The hidden layers of the network
   std::vector<HiddenLayer> hiddenLayers;
 
-  // The learning rate of the network
-  float learningRate;
+  // Network parameters
+  Parameters params;
 
   /**
    * @brief Constructor that takes a Parameters object as an argument. It
@@ -40,8 +40,7 @@ public:
    *
    * @param params The parameters for initializing the network.
    */
-  explicit Network(const Parameters &params)
-      : learningRate(params.learning_rate) {
+  explicit Network(const Parameters &params) : params(params) {
     // setting layers
     inputLayer.neurons.resize(params.input_size);
     hiddenLayers.resize(params.hiddens_count);
@@ -118,15 +117,15 @@ public:
   void updateWeights() {
     // Implement update weights for network
     if (hiddenLayers.empty()) {
-      outputLayer.updateWeights(inputLayer, learningRate);
+      outputLayer.updateWeights(inputLayer, params.learning_rate);
     } else {
-      hiddenLayers.front().updateWeights(inputLayer, learningRate);
+      hiddenLayers.front().updateWeights(inputLayer, params.learning_rate);
       if (hiddenLayers.size() > 1) {
         for (size_t i = 1; i < hiddenLayers.size(); i++)
           hiddenLayers.at(i).updateWeights(hiddenLayers.at(i - 1),
-                                           learningRate);
+                                           params.learning_rate);
       }
-      outputLayer.updateWeights(hiddenLayers.back(), learningRate);
+      outputLayer.updateWeights(hiddenLayers.back(), params.learning_rate);
     }
   }
 };

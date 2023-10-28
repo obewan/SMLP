@@ -147,17 +147,20 @@ void Testing::showResults(bool verbose) {
   std::cout << std::setprecision(3)
             << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
             << std::endl;
-  std::cout << std::setprecision(3)
-            << "Good convergence toward zero: " << stats.convergence_zero
-            << "% (" << stats.good_convergence_zero << "/"
-            << stats.total_expected_zero << ")" << std::endl;
-  std::cout << std::setprecision(3)
-            << "Good convergence toward one: " << stats.convergence_one
-            << "%  (" << stats.good_convergence_one << "/"
-            << stats.total_expected_one << ")" << std::endl;
-  std::cout << std::setprecision(3)
-            << "Good convergence total: " << stats.convergence << "% ("
-            << stats.good_convergence << "/" << stats.total_samples << ")"
-            << std::endl;
+
+  if (network_->params.mode == Mode::TrainTestMonitored) {
+    std::cout << std::setprecision(3)
+              << "Good convergence toward zero: " << stats.convergence_zero
+              << "% (" << stats.good_convergence_zero << "/"
+              << stats.total_expected_zero << ")" << std::endl;
+    std::cout << std::setprecision(3)
+              << "Good convergence toward one: " << stats.convergence_one
+              << "%  (" << stats.good_convergence_one << "/"
+              << stats.total_expected_one << ")" << std::endl;
+    std::cout << std::setprecision(3)
+              << "Good convergence total: " << stats.convergence << "% ("
+              << stats.good_convergence << "/" << stats.total_samples << ")"
+              << std::endl;
+  }
   std::cout << std::setprecision((int)default_precision); // restore defaults
 }
