@@ -78,7 +78,7 @@ public:
    *
    * @param params Parameters.
    */
-  void trainAndTestMonitored(const Parameters &params);
+  void trainTestMonitored(const Parameters &params);
 
   /**
    * @brief Sets the network for training.

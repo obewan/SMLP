@@ -1,3 +1,4 @@
+#include "Common.h"
 #include "include/SimpleMLP.h"
 #include <cstdlib>
 #include <iostream>
@@ -22,9 +23,23 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  // can also use just smlp->train() and/or smlp->test()
-  // but trainAndTest() will log the progress as it will test at each epoch.
-  smlp->trainAndTestMonitored();
+  switch (smlp->params.mode) {
+  case Mode::TrainOnly: {
+    smlp->train();
+  } break;
+  case Mode::TestOnly: {
+    // TODO: add import/export model for this feature
+    smlp->test();
+  } break;
+  case Mode::TrainTestMonitored: {
+    smlp->trainTestMonitored();
+  } break;
+  // case Mode::TrainThenTest:
+  default: {
+    smlp->train();
+    smlp->test();
+  } break;
+  }
 
   return EXIT_SUCCESS;
 }

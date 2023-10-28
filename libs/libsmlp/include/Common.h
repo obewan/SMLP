@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include <map>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,14 @@
  *
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
+
+enum class Mode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
+
+const std::map<std::string, Mode, std::less<>> mode_map{
+    {"TrainOnly", Mode::TrainOnly},
+    {"TestOnly", Mode::TestOnly},
+    {"TrainThenTest", Mode::TrainThenTest},
+    {"TrainTestMonitored", Mode::TrainTestMonitored}};
 
 /**
  * @brief Parameters for the neural Network.
@@ -33,6 +42,7 @@ struct Parameters {
   float learning_rate = 1e-3f;
   bool output_at_end = false;
   bool verbose = false;
+  Mode mode = Mode::TrainThenTest;
 };
 
 /**
@@ -44,4 +54,19 @@ struct RecordResult {
   bool isEndOfFile = false;
   bool isEndOfTrainingLines = false;
   Record record;
+};
+
+/**
+ * @brief Common class.
+ */
+class Common {
+public:
+  static std::string getModeStr(Mode value) {
+    for (const auto &[key, mode] : mode_map) {
+      if (mode == value) {
+        return key;
+      }
+    }
+    return "Unknown";
+  }
 };
