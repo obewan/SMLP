@@ -13,13 +13,17 @@ The neural network currently uses a sigmoid activation function.
 - Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
 - [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
 - [Doctest](https://github.com/doctest/doctest) unit tests.
+- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage.
+- Github [Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test pass.
+- Github [CodeQL](https://github.com/features/security/code) security analysis.
+- [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 
-# Roadmap
+# Roadmap to first release
 
-- Add unit-tests (with code coverage) and continuous integration. `[in progress]`
-- Add training/testing modes.
+- Add training/testing modes.`[in progress]`
+- Improve code coverage to 80%
 - Add more activation functions that can be selected.
 - Add import/export of the model.
 - Add interactive testing.
