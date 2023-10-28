@@ -8,7 +8,7 @@ TEST_CASE("Testing the FileParser class") {
   SUBCASE("Test Constructor") { CHECK_NOTHROW(FileParser("")); }
 
   // beware current path is "build/libs/libsmlp/test"
-  std::string test_file = "../../../../libs/libsmlp/test/test_file.csv";
+  std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
   SUBCASE("Test openFile") {
     FileParser parser_NOK("non_existent_file.csv"); // This file does not exist

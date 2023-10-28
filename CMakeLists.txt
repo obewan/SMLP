@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.0)
 
-option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
+option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
 set(PROJECT_NAME smlp)
 set(SOURCE_DIR src)
@@ -12,15 +12,22 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE debug)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 
 if(ENABLE_COVERAGE)
-    if(CMAKE_COMPILER_IS_GNUCXX)
-        set(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-        set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
-    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")    
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")    
+    set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
+    add_custom_target(lcov
+        COMMAND lcov --capture --directory . --output-file lcov.info
+        COMMENT "Generating lcov.info"
+    )
+    add_custom_target(lcov_summary
+        COMMAND lcov --summary lcov.info
+        COMMENT "Generating lcov summary"
+    )
 endif()
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(${PROJECT_NAME})
 
