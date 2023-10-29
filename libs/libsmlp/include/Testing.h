@@ -111,6 +111,13 @@ public:
   void showResults(bool verbose = false);
 
   /**
+   * @brief Display some verbose results.
+   *
+   */
+  void showResultsVerbose(const TestResultsExt &result,
+                          const Parameters &params) const;
+
+  /**
    * @brief Calculates and returns the statistics of the test results.
    *
    * @return A Stat object containing the calculated statistics.

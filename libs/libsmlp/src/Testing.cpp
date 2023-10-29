@@ -121,18 +121,27 @@ void Testing::showResultsLine() {
   std::cout << std::setprecision((int)default_precision); // restore defaults
 }
 
+void Testing::showResultsVerbose(const TestResultsExt &result,
+                                 const Parameters &params) const {
+  std::cout << "Expected:" << result.expected << " Predicted:" << result.output;
+  if (network_->params.mode == Mode::TrainTestMonitored) {
+    std::cout << " [ ";
+    for (auto &progres : result.progress) {
+      std::cout << progres << " ";
+    }
+    std::cout << "] (" << result.progress.back() - result.progress.front()
+              << ")" << std::endl;
+  } else {
+    std::cout << std::endl;
+  }
+}
+
 void Testing::showResults(bool verbose) {
   auto stats = calcStats();
 
   if (verbose) {
     for (auto const &result : testResultExts) {
-      std::cout << "Expected:" << result.expected
-                << " Predicted:" << result.output << " [ ";
-      for (auto &progres : result.progress) {
-        std::cout << progres << " ";
-      }
-      std::cout << "] (" << result.progress.back() - result.progress.front()
-                << ")" << std::endl;
+      showResultsVerbose(result, network_->params);
     }
     std::cout << std::endl;
   }
