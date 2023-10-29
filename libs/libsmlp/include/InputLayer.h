@@ -18,15 +18,15 @@
  */
 class InputLayer : public Layer {
 public:
-  void forwardPropagation(Layer &prevLayer) override {
+  void forwardPropagation() override {
     // No need to implement for input layer
   }
 
-  void backwardPropagation(Layer &nextLayer) override {
+  void backwardPropagation() override {
     // No need to implement for input layer (no weights of input layer)
   }
 
-  void updateWeights(Layer &prevLayer, float learningRate) override {
+  void updateWeights(float learningRate) override {
     // No need to implement for input layer (no weights of input layer)
   }
 

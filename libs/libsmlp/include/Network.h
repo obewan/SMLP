@@ -13,6 +13,7 @@
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
+#include <cstddef>
 
 /**
  * @brief The Network class represents a neural network model. It contains an
@@ -22,16 +23,18 @@
  */
 class Network {
 public:
-  // The input layer of the network
-  InputLayer inputLayer;
+  // Rule of Five:
+  Network(const Network &other) = delete;            // Copy constructor
+  Network &operator=(const Network &other) = delete; // Copy assignment operator
+  Network(Network &&other) = default;                // Move constructor
+  Network &operator=(Network &&other) = default;     // Move assignment operator
+  ~Network() {
+    for (auto layer : layers) {
+      delete layer;
+    }
+  }
 
-  // The output layer of the network
-  OutputLayer outputLayer;
-
-  // The hidden layers of the network
-  std::vector<HiddenLayer> hiddenLayers;
-
-  // Network parameters
+  std::vector<Layer *> layers;
   Parameters params;
 
   /**
@@ -41,29 +44,7 @@ public:
    * @param params The parameters for initializing the network.
    */
   explicit Network(const Parameters &params) : params(params) {
-    // setting layers
-    inputLayer.neurons.resize(params.input_size);
-    hiddenLayers.resize(params.hiddens_count);
-    for (auto &hl : hiddenLayers) {
-      hl.neurons.resize(params.hidden_size);
-    }
-    outputLayer.neurons.resize(params.output_size);
-
-    // setting neurons weights with previous layer size
-    if (params.hidden_size > 0) {
-      for (size_t i = 0; i < params.hiddens_count; i++) {
-        for (auto &n : hiddenLayers.at(i).neurons) {
-          n.initWeights(i == 0 ? params.input_size : params.hidden_size);
-        }
-      }
-      for (auto &n : outputLayer.neurons) {
-        n.initWeights(params.hidden_size);
-      }
-    } else {
-      for (auto &n : outputLayer.neurons) {
-        n.initWeights(params.input_size);
-      }
-    }
+    initializeLayers();
   }
 
   /**
@@ -75,19 +56,11 @@ public:
    * propagation.
    */
   std::vector<float> forwardPropagation(const std::vector<float> &inputValues) {
-    inputLayer.setInputValues(inputValues);
-    // Implement forward propagation for network
-    if (hiddenLayers.empty()) {
-      outputLayer.forwardPropagation(inputLayer);
-    } else {
-      hiddenLayers.front().forwardPropagation(inputLayer);
-      if (hiddenLayers.size() > 1) {
-        for (size_t i = 1; i < hiddenLayers.size(); i++)
-          hiddenLayers.at(i).forwardPropagation(hiddenLayers.at(i - 1));
-      }
-      outputLayer.forwardPropagation(hiddenLayers.back());
+    ((InputLayer *)layers.front())->setInputValues(inputValues);
+    for (auto &layer : layers) {
+      layer->forwardPropagation();
     }
-    return outputLayer.getOutputValues();
+    return ((OutputLayer *)layers.back())->getOutputValues();
   }
 
   /**
@@ -97,16 +70,9 @@ public:
    * @param expectedValues The expected values for backward propagation.
    */
   void backwardPropagation(const std::vector<float> &expectedValues) {
-    outputLayer.computeErrors(expectedValues);
-    // Implement backward propagation for network
-    if (!hiddenLayers.empty()) {
-      for (int i = (int)hiddenLayers.size() - 1; i >= 0; --i) {
-        if (i == (int)hiddenLayers.size() - 1) {
-          hiddenLayers[i].backwardPropagation(outputLayer);
-        } else {
-          hiddenLayers[i].backwardPropagation(hiddenLayers[i + 1]);
-        }
-      }
+    ((OutputLayer *)layers.back())->computeErrors(expectedValues);
+    for (auto it = layers.rbegin(); it != layers.rend(); ++it) {
+      (*it)->backwardPropagation();
     }
   }
 
@@ -115,17 +81,42 @@ public:
    * rate.
    */
   void updateWeights() {
-    // Implement update weights for network
-    if (hiddenLayers.empty()) {
-      outputLayer.updateWeights(inputLayer, params.learning_rate);
-    } else {
-      hiddenLayers.front().updateWeights(inputLayer, params.learning_rate);
-      if (hiddenLayers.size() > 1) {
-        for (size_t i = 1; i < hiddenLayers.size(); i++)
-          hiddenLayers.at(i).updateWeights(hiddenLayers.at(i - 1),
-                                           params.learning_rate);
+    for (auto &layer : layers) {
+      layer->updateWeights(params.learning_rate);
+    }
+  }
+
+private:
+  void initializeLayers() {
+    auto inputLayer = new InputLayer();
+    inputLayer->neurons.resize(params.input_size);
+    layers.push_back(inputLayer);
+
+    for (size_t i = 0; i < params.hiddens_count; ++i) {
+      auto hiddenLayer = new HiddenLayer();
+      hiddenLayer->neurons.resize(params.hidden_size);
+      layers.push_back(hiddenLayer);
+    }
+
+    auto outputLayer = new OutputLayer();
+    outputLayer->neurons.resize(params.output_size);
+    layers.push_back(outputLayer);
+
+    for (size_t i = 0; i < layers.size(); ++i) {
+      if (i > 0) {
+        layers.at(i)->previousLayer = layers.at(i - 1);
       }
-      outputLayer.updateWeights(hiddenLayers.back(), params.learning_rate);
+      if (i < layers.size() - 1) {
+        layers.at(i)->nextLayer = layers.at(i + 1);
+      }
+    }
+
+    for (auto layer : layers) {
+      if (layer->previousLayer != nullptr) {
+        for (auto &n : layer->neurons) {
+          n.initWeights(layer->previousLayer->neurons.size());
+        }
+      }
     }
   }
 };

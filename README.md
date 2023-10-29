@@ -22,10 +22,9 @@ The neural network currently uses a sigmoid activation function.
 
 # Roadmap to first release
 
-- Add training/testing modes.`[in progress]`
-- Improve code coverage to 80%
+- Add import/export of the model.`[in progress]`
 - Add more activation functions that can be selected.
-- Add import/export of the model.
+- Improve code coverage to 80%
 - Add interactive testing.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).

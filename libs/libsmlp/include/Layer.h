@@ -17,8 +17,9 @@
  */
 class Layer {
 public:
-  // Vector of Neurons in this layer
   std::vector<Neuron> neurons;
+  Layer *previousLayer = nullptr;
+  Layer *nextLayer = nullptr;
 
   // Virtual destructor
   virtual ~Layer() = default;
@@ -26,23 +27,20 @@ public:
   /**
    * @brief Performs forward propagation using the previous layer.
    *
-   * @param prevLayer The previous layer in the network.
    */
-  virtual void forwardPropagation(Layer &prevLayer) = 0;
+  virtual void forwardPropagation() = 0;
 
   /**
    * @brief Performs backward propagation using the next layer.
    *
-   * @param nextLayer The next layer in the network.
    */
-  virtual void backwardPropagation(Layer &nextLayer) = 0;
+  virtual void backwardPropagation() = 0;
 
   /**
    * @brief Updates the weights of the neurons in this layer using the previous
    * layer and a learning rate.
    *
-   * @param prevLayer The previous layer in the network.
    * @param learningRate The learning rate to use when updating weights.
    */
-  virtual void updateWeights(Layer &prevLayer, float learningRate) = 0;
+  virtual void updateWeights(float learningRate) = 0;
 };
