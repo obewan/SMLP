@@ -69,12 +69,15 @@ TODO: add sigmoid alternatives:
  */
 class HiddenLayer : public Layer {
 public:
-  void forwardPropagation(Layer &prevLayer) override {
+  void forwardPropagation() override {
+    if (previousLayer == nullptr) {
+      return;
+    }
     // Implement forward propagation for hidden layer
     for (auto &n : neurons) {
       n.value = 0.0;
-      for (size_t i = 0; i < prevLayer.neurons.size(); i++) {
-        auto const &prev_n = prevLayer.neurons.at(i);
+      for (size_t i = 0; i < previousLayer->neurons.size(); i++) {
+        auto const &prev_n = previousLayer->neurons.at(i);
         n.value += prev_n.value * n.weights.at(i);
       }
       // Use sigmoid activation function
@@ -82,22 +85,29 @@ public:
     }
   }
 
-  void backwardPropagation(Layer &nextLayer) override {
+  void backwardPropagation() override {
+    if (nextLayer == nullptr) {
+      return;
+    }
+
     // Implement backward propagation for hidden layer
     for (size_t i = 0; i < neurons.size(); ++i) {
       neurons[i].error = 0.0;
-      for (Neuron &n : nextLayer.neurons)
+      for (Neuron &n : nextLayer->neurons)
         neurons[i].error += n.weights[i] * n.error;
       // Use the derivative of the sigmoid function
       neurons[i].error *= neurons[i].value * (1 - neurons[i].value);
     }
   }
 
-  void updateWeights(Layer &prevLayer, float learningRate) override {
+  void updateWeights(float learningRate) override {
+    if (previousLayer == nullptr) {
+      return;
+    }
     for (Neuron &n : neurons) {
       for (size_t j = 0; j < n.weights.size(); ++j) {
         // Gradient descent
-        float dE_dw = prevLayer.neurons[j].value * n.error;
+        float dE_dw = previousLayer->neurons[j].value * n.error;
         // Update weights
         n.weights[j] -= learningRate * dE_dw;
       }
