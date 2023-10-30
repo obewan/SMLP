@@ -2,6 +2,7 @@
 #include "include/SimpleMLP.h"
 #include <cstdlib>
 #include <iostream>
+#include <ostream>
 
 /**
  * @brief main function
@@ -11,7 +12,7 @@
  * @code {.bash}
  * smlp -h
  * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t
- * 0.7 -r 0.01 -v false
+ * 0.7 -r 0.01
  * @endcode
  *
  * @return int
@@ -19,16 +20,21 @@
 int main(int argc, char *argv[]) {
   auto smlp = new SimpleMLP();
 
-  if (!smlp->init(argc, argv)) {
+  if (bool showVersion{false}; !smlp->init(argc, argv, showVersion)) {
+    if (showVersion) {
+      std::cout << smlp->app_params.title << " v" << smlp->app_params.version
+                << std::endl;
+      std::cout << "Copyright Damien Balima (https://dams-labs.net) 2023"
+                << std::endl;
+    }
     return EXIT_FAILURE;
   }
 
-  switch (smlp->params.mode) {
+  switch (smlp->app_params.mode) {
   case Mode::TrainOnly: {
     smlp->train();
   } break;
   case Mode::TestOnly: {
-    // TODO: add import/export model for this feature
     smlp->test();
   } break;
   case Mode::TrainTestMonitored: {
@@ -39,6 +45,12 @@ int main(int argc, char *argv[]) {
     smlp->train();
     smlp->test();
   } break;
+  }
+
+  if (!smlp->app_params.network_to_export.empty()) {
+    std::cout << "[INFO] Exporting network model to "
+              << smlp->app_params.network_to_export << "..." << std::endl;
+    smlp->importExportJSON.exportModel(smlp->network, smlp->app_params);
   }
 
   return EXIT_SUCCESS;

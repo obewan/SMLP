@@ -18,6 +18,7 @@
  */
 class InputLayer : public Layer {
 public:
+  InputLayer() : Layer(LayerType::InputLayer) {}
   void forwardPropagation() override {
     // No need to implement for input layer
   }

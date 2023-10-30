@@ -49,6 +49,6 @@ CMakeCache.txt
 .cache
 
 # Others
-test/ai/
+data/ai/
 changelog_refresh.sh
 

@@ -21,28 +21,38 @@ using Record = std::pair<std::vector<float>, std::vector<float>>;
 enum class Mode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
 
 const std::map<std::string, Mode, std::less<>> mode_map{
-    {"TrainOnly", Mode::TrainOnly},
     {"TestOnly", Mode::TestOnly},
+    {"TrainOnly", Mode::TrainOnly},
     {"TrainThenTest", Mode::TrainThenTest},
     {"TrainTestMonitored", Mode::TrainTestMonitored}};
 
 /**
+ * @brief Application parameters
+ *
+ */
+struct AppParameters {
+  std::string title = "SMLP - Simple Multilayer Perceptron";
+  std::string version = "1.0.0";
+  std::string network_to_import = "";
+  std::string network_to_export = "";
+  std::string data_file = "";
+  size_t num_epochs = 3;
+  size_t output_index_to_monitor = 1;
+  float training_ratio = 0.7f;
+  bool output_at_end = false;
+  bool verbose = false;
+  Mode mode = Mode::TrainThenTest;
+};
+
+/**
  * @brief Parameters for the neural Network.
  */
-struct Parameters {
-  std::string title = "SMLP";
-  std::string data_file = "";
+struct NetworkParameters {
   size_t input_size = 0;
   size_t hidden_size = 10;
   size_t output_size = 1;
   size_t hiddens_count = 1;
-  size_t num_epochs = 3;
-  size_t output_index_to_monitor = 1;
-  float training_ratio = 0.7f;
   float learning_rate = 1e-3f;
-  bool output_at_end = false;
-  bool verbose = false;
-  Mode mode = Mode::TrainThenTest;
 };
 
 /**
@@ -67,6 +77,6 @@ public:
         return key;
       }
     }
-    return "Unknown";
+    return "Undefined";
   }
 };

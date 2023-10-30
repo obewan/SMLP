@@ -44,10 +44,12 @@ public:
   /**
    * @brief This method tests the model with the given parameters.
    *
-   * @param params Parameters for testing.
+   * @param network_params Network parameters.
+   * @param app_params Application parameters.
    * @param epoch The current epoch (default is 0).
    */
-  void test(const Parameters &params, size_t epoch = 0);
+  void test(const NetworkParameters &network_params,
+            const AppParameters &app_params, size_t epoch = 0);
 
   /**
    * @brief TestResults structure that holds the epoch, line, expected output,
@@ -105,17 +107,17 @@ public:
    * @brief Displays detailed test results. If the verbose parameter is set to
    * true, additional information will be displayed.
    *
+   * @param mode Mode of the training.
    * @param verbose If true, additional details are displayed (default is
    * false).
    */
-  void showResults(bool verbose = false);
+  void showResults(Mode mode, bool verbose = false);
 
   /**
    * @brief Display some verbose results.
    *
    */
-  void showResultsVerbose(const TestResultsExt &result,
-                          const Parameters &params) const;
+  void showResultsVerbose(const TestResultsExt &result, Mode mode) const;
 
   /**
    * @brief Calculates and returns the statistics of the test results.
