@@ -33,13 +33,15 @@ const std::map<std::string, Mode, std::less<>> mode_map{
 struct AppParameters {
   std::string title = "SMLP - Simple Multilayer Perceptron";
   std::string version = "1.0.0";
+  std::string network_to_import = "";
+  std::string network_to_export = "";
+  std::string data_file = "";
 };
 
 /**
  * @brief Parameters for the neural Network.
  */
 struct NetworkParameters {
-  std::string data_file = "";
   size_t input_size = 0;
   size_t hidden_size = 10;
   size_t output_size = 1;

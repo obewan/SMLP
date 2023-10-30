@@ -9,7 +9,6 @@ TEST_CASE("Testing the ImportExportJSON class") {
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
   NetworkParameters params{
-      .data_file = test_file,
       .input_size = 20,
       .hidden_size = 12,
       .output_size = 1,
@@ -18,7 +17,7 @@ TEST_CASE("Testing the ImportExportJSON class") {
       .output_at_end = true,
       .mode = Mode::TrainTestMonitored,
   };
-  AppParameters app_params{.version = "1.0.0"};
+  AppParameters app_params{.version = "1.0.0", .data_file = test_file};
   std::string modelJsonFile = "testModel.json";
 
   SUBCASE("Test exportModel function") {
@@ -47,7 +46,6 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(network->layers.front()->neurons.size() == params.input_size);
     CHECK(network->layers.back()->layerType == LayerType::OutputLayer);
     CHECK(network->layers.back()->neurons.size() == params.output_size);
-    CHECK(network->params.data_file == params.data_file);
     CHECK(network->params.input_size == params.input_size);
     CHECK(network->params.hidden_size == params.hidden_size);
     CHECK(network->params.output_size == params.output_size);

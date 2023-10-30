@@ -70,7 +70,6 @@ public:
 
       // Create a new Network object and deserialize the JSON data into it.
       auto model = new Network();
-      model->params.data_file = json_model["parameters"]["data_file"];
       model->params.input_size = json_model["parameters"]["input_size"];
       model->params.hidden_size = json_model["parameters"]["hidden_size"];
       model->params.output_size = json_model["parameters"]["output_size"];
@@ -169,7 +168,6 @@ public:
     }
 
     // Serialize the parameters to JSON.
-    json_network["parameters"]["data_file"] = json(network->params.data_file);
     json_network["parameters"]["input_size"] = json(network->params.input_size);
     json_network["parameters"]["hidden_size"] =
         json(network->params.hidden_size);
