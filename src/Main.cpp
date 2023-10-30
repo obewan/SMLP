@@ -2,6 +2,7 @@
 #include "include/SimpleMLP.h"
 #include <cstdlib>
 #include <iostream>
+#include <ostream>
 
 /**
  * @brief main function
@@ -34,7 +35,6 @@ int main(int argc, char *argv[]) {
     smlp->train();
   } break;
   case Mode::TestOnly: {
-    // TODO: add import/export model for this feature
     smlp->test();
   } break;
   case Mode::TrainTestMonitored: {
@@ -45,6 +45,11 @@ int main(int argc, char *argv[]) {
     smlp->train();
     smlp->test();
   } break;
+  }
+  if (!smlp->app_params.network_to_export.empty()) {
+    std::cout << "[INFO] Exporting network model to "
+              << smlp->app_params.network_to_export << "..." << std::endl;
+    smlp->importExportJSON.exportModel(smlp->network, smlp->app_params);
   }
 
   return EXIT_SUCCESS;

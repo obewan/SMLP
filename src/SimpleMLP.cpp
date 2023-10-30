@@ -48,8 +48,13 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
       return false;
     }
 
-    network_ = new Network(network_params);
-
+    if (!app_params.network_to_import.empty()) {
+      std::cout << "[INFO] Importing network model from "
+                << app_params.network_to_import << "..." << std::endl;
+      network = importExportJSON.importModel(app_params);
+    } else {
+      network = new Network(network_params);
+    }
     return true;
 
   } catch (std::exception &ex) {
@@ -70,13 +75,13 @@ void SimpleMLP::train() {
             << " Mode:" << Common::getModeStr(network_params.mode)
             << " Verbose:" << network_params.verbose << std::endl;
 
-  Training training(network_, app_params.data_file);
+  Training training(network, app_params.data_file);
   training.train(network_params);
 }
 
 void SimpleMLP::test() {
   std::cout << "Testing, using file " << app_params.data_file << std::endl;
-  Testing testing(network_, app_params.data_file);
+  Testing testing(network, app_params.data_file);
   testing.test(network_params, 0);
   testing.showResults();
 }
@@ -103,7 +108,7 @@ void SimpleMLP::trainTestMonitored() {
             << network_params.output_index_to_monitor
             << " Verbose:" << network_params.verbose << std::endl;
 
-  Training training(network_, app_params.data_file);
+  Training training(network, app_params.data_file);
   training.trainTestMonitored(network_params);
 }
 

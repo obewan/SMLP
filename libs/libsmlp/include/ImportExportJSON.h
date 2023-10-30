@@ -30,18 +30,19 @@ public:
   /**
    * @brief Parse a json file into a network model.
    *
-   * @param path_in the file path, including its path (relative or absolute),
-   * not just a filename or else it will failed to parse.
+   * @param app_params the application parameters, including the file path/
    * @return Network*
    */
-  Network *importModel(const std::string &path_in,
-                       const AppParameters &app_params) {
-    std::string path_in_ext = path_in;
+  Network *importModel(const AppParameters &app_params) {
+    if (app_params.network_to_import.empty()) {
+      throw ImportExportJSONException("Missing file to import.");
+    }
+    std::string path_in_ext = app_params.network_to_import;
 
     // A workaround for parsing error in case of missing
     // at least a relative path
-    if (path_in.find('/') == std::string::npos &&
-        path_in.find('\\') == std::string::npos) {
+    if (app_params.network_to_import.find('/') == std::string::npos &&
+        app_params.network_to_import.find('\\') == std::string::npos) {
       path_in_ext = "./" + path_in_ext;
     }
 
@@ -141,10 +142,10 @@ public:
   /**
    * @brief export a Network model into a json file.
    *
-   * @param path_out path of the file to create, including its filename.
    * @param network the network to export.
+   * @param app_params the application parameters.
    */
-  void exportModel(const std::string &path_out, const Network *network,
+  void exportModel(const Network *network,
                    const AppParameters &app_params) const {
     json json_network;
     json_network["version"] = app_params.version;
@@ -189,8 +190,8 @@ public:
 
     // Write the JSON object to the file.
     // The 4 argument specifies the indentation level of the resulting string.
-    std::ofstream file(path_out);
-    file << json_network.dump(4);
+    std::ofstream file(app_params.network_to_export);
+    file << json_network.dump(2);
     file.close();
   }
 };

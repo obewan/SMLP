@@ -25,11 +25,11 @@ TEST_CASE("Testing the ImportExportJSON class") {
       std::filesystem::remove(modelJsonFile);
     }
     CHECK(std::filesystem::exists(modelJsonFile) == false);
+    app_params.network_to_export = modelJsonFile;
 
     ImportExportJSON importExportJSON;
     auto network = new Network(params);
-    CHECK_NOTHROW(
-        importExportJSON.exportModel(modelJsonFile, network, app_params));
+    CHECK_NOTHROW(importExportJSON.exportModel(network, app_params));
 
     CHECK(std::filesystem::exists(modelJsonFile) == true);
   }
@@ -38,9 +38,9 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(std::filesystem::exists(modelJsonFile) == true);
 
     ImportExportJSON importExportJSON;
+    app_params.network_to_import = modelJsonFile;
     Network *network = nullptr;
-    CHECK_NOTHROW(network =
-                      importExportJSON.importModel(modelJsonFile, app_params));
+    CHECK_NOTHROW(network = importExportJSON.importModel(app_params));
     CHECK(network != nullptr);
     CHECK(network->layers.front()->layerType == LayerType::InputLayer);
     CHECK(network->layers.front()->neurons.size() == params.input_size);

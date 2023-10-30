@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Common.h"
+#include "ImportExportJSON.h"
 #include "Network.h"
 #include <string>
 
@@ -50,7 +51,16 @@ public:
    */
   NetworkParameters network_params;
 
+  /**
+   * @brief ImportExportJSON tool.
+   */
+  [[no_unique_address]] ImportExportJSON importExportJSON;
+
+  /**
+   * @brief The neural network
+   */
+  Network *network = nullptr;
+
 private:
   int parseArgs(int argc, char **argv, bool &showVersion);
-  Network *network_ = nullptr;
 };
