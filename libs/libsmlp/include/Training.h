@@ -68,7 +68,7 @@ public:
    *
    * @param params Parameters for training.
    */
-  void train(const Parameters &params);
+  void train(const NetworkParameters &params);
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
@@ -78,7 +78,7 @@ public:
    *
    * @param params Parameters.
    */
-  void trainTestMonitored(const Parameters &params);
+  void trainTestMonitored(const NetworkParameters &params);
 
   /**
    * @brief Sets the network for training.

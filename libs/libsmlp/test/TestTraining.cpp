@@ -7,7 +7,8 @@ TEST_CASE("Testing the Training class") {
   // beware current path is "build/libs/libsmlp/test"
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
-  Parameters params{.data_file = test_file, .input_size = 20, .output_size = 1};
+  NetworkParameters params{
+      .data_file = test_file, .input_size = 20, .output_size = 1};
 
   auto network = new Network(params);
   Training training(network, test_file);

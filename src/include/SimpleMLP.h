@@ -19,7 +19,7 @@
  */
 class SimpleMLP {
 public:
-  bool init(int argc, char **argv, bool withMonitoring = true);
+  bool init(int argc, char **argv, bool &showVersion);
 
   /**
    * @brief This method trains the model.
@@ -40,11 +40,17 @@ public:
   void trainTestMonitored();
 
   /**
-   * @brief SMLP parameters.
+   * @brief Application parameters.
+   *
    */
-  Parameters params;
+  AppParameters app_params;
+
+  /**
+   * @brief Network parameters.
+   */
+  NetworkParameters network_params;
 
 private:
-  int parseArgs(int argc, char **argv);
+  int parseArgs(int argc, char **argv, bool &showVersion);
   Network *network_ = nullptr;
 };

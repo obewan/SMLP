@@ -34,7 +34,8 @@ void FileParser::resetPos() {
   current_line_number = 0;
 }
 
-RecordResult FileParser::processLine(const Parameters &params, bool isTesting) {
+RecordResult FileParser::processLine(const NetworkParameters &params,
+                                     bool isTesting) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
   current_line_number++;

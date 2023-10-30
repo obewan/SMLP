@@ -6,7 +6,7 @@
 
 using namespace std::string_view_literals;
 
-void Testing::test(const Parameters &params, size_t epoch) {
+void Testing::test(const NetworkParameters &params, size_t epoch) {
   if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->getTrainingRatioLine(params.training_ratio);
   }
@@ -122,7 +122,7 @@ void Testing::showResultsLine() {
 }
 
 void Testing::showResultsVerbose(const TestResultsExt &result,
-                                 const Parameters &params) const {
+                                 const NetworkParameters &params) const {
   std::cout << "Expected:" << result.expected << " Predicted:" << result.output;
   if (network_->params.mode == Mode::TrainTestMonitored) {
     std::cout << " [ ";

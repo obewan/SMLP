@@ -10,6 +10,7 @@
  */
 #pragma once
 #include "../../json/include/json.hpp"
+#include "Common.h"
 #include "Layer.h"
 #include "Network.h"
 #include "OutputLayer.h"
@@ -33,7 +34,8 @@ public:
    * not just a filename or else it will failed to parse.
    * @return Network*
    */
-  Network *importModel(const std::string &path_in) {
+  Network *importModel(const std::string &path_in,
+                       const AppParameters &app_params) {
     std::string path_in_ext = path_in;
 
     // A workaround for parsing error in case of missing
@@ -59,15 +61,15 @@ public:
     try {
       json_model = json::parse(file);
 
-      if (std::string jversion = json_model["version"]; jversion != version) {
+      if (std::string jversion = json_model["version"];
+          jversion != app_params.version) {
         std::cerr << "[WARN] your model version (" << jversion
-                  << ") is not the same as current version (" << version << ")"
-                  << std::endl;
+                  << ") is not the same as current version ("
+                  << app_params.version << ")" << std::endl;
       }
 
       // Create a new Network object and deserialize the JSON data into it.
       auto model = new Network();
-      model->params.title = json_model["parameters"]["title"];
       model->params.data_file = json_model["parameters"]["data_file"];
       model->params.input_size = json_model["parameters"]["input_size"];
       model->params.hidden_size = json_model["parameters"]["hidden_size"];
@@ -143,9 +145,10 @@ public:
    * @param path_out path of the file to create, including its filename.
    * @param network the network to export.
    */
-  void exportModel(const std::string &path_out, const Network *network) {
+  void exportModel(const std::string &path_out, const Network *network,
+                   const AppParameters &app_params) const {
     json json_network;
-    json_network["version"] = version;
+    json_network["version"] = app_params.version;
 
     // Serialize the layers to JSON.
     for (auto layer : network->layers) {
@@ -166,7 +169,6 @@ public:
     }
 
     // Serialize the parameters to JSON.
-    json_network["parameters"]["title"] = json(network->params.title);
     json_network["parameters"]["data_file"] = json(network->params.data_file);
     json_network["parameters"]["input_size"] = json(network->params.input_size);
     json_network["parameters"]["hidden_size"] =

@@ -8,7 +8,7 @@
 
 using namespace std::string_view_literals;
 
-void Training::train(const Parameters &params) {
+void Training::train(const NetworkParameters &params) {
   if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->getTrainingRatioLine(params.training_ratio);
   }
@@ -33,7 +33,7 @@ void Training::train(const Parameters &params) {
   fileParser_->closeFile();
 }
 
-void Training::trainTestMonitored(const Parameters &params) {
+void Training::trainTestMonitored(const NetworkParameters &params) {
 
   if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->getTrainingRatioLine(params.training_ratio);

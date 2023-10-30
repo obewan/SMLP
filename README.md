@@ -28,25 +28,25 @@ The neural network currently uses a sigmoid activation function.
 - Add interactive testing.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
-- Add a CUDA support (but probably on a more advanced project).
-- Add tensors (on a more advanced project).
-- Add ONNX (Open Neural Network Exchange) format for import/export (definitively on a more advanced project).
+
+Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for a more advanced MLP project.
 
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in data/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
-4. The `input_size` parameter (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` parameter (`-z` parameter).
-5. `epochs` (`-e` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-6. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
-7. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
-8. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
-9. You can specify the running mode with the `mode` option (`-m` parameter), refer to the command line help for more details.
+4. The `file_input` (`-f` parameter) must be the file path of your data file that will be used for training and testing.
+5. The `input_size` (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` (`-s` parameter).
+6. `epochs` (`-e` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
+7. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
+8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
+9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
+10. You can specify the running mode with the `mode` option (`-m` parameter), refer to the command line help for more details.
 
 # Example
 
-`smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored -v false`
+`smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored`
 
 Output:
 

@@ -47,7 +47,7 @@ public:
    * @param params Parameters for testing.
    * @param epoch The current epoch (default is 0).
    */
-  void test(const Parameters &params, size_t epoch = 0);
+  void test(const NetworkParameters &params, size_t epoch = 0);
 
   /**
    * @brief TestResults structure that holds the epoch, line, expected output,
@@ -115,7 +115,7 @@ public:
    *
    */
   void showResultsVerbose(const TestResultsExt &result,
-                          const Parameters &params) const;
+                          const NetworkParameters &params) const;
 
   /**
    * @brief Calculates and returns the statistics of the test results.

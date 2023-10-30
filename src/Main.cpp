@@ -11,7 +11,7 @@
  * @code {.bash}
  * smlp -h
  * smlp -f ../test/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t
- * 0.7 -r 0.01 -v false
+ * 0.7 -r 0.01
  * @endcode
  *
  * @return int
@@ -19,11 +19,17 @@
 int main(int argc, char *argv[]) {
   auto smlp = new SimpleMLP();
 
-  if (!smlp->init(argc, argv)) {
+  if (bool showVersion{false}; !smlp->init(argc, argv, showVersion)) {
+    if (showVersion) {
+      std::cout << smlp->app_params.title << " v" << smlp->app_params.version
+                << std::endl;
+      std::cout << "Copyright Damien Balima (https://dams-labs.net) 2023"
+                << std::endl;
+    }
     return EXIT_FAILURE;
   }
 
-  switch (smlp->params.mode) {
+  switch (smlp->network_params.mode) {
   case Mode::TrainOnly: {
     smlp->train();
   } break;

@@ -12,8 +12,6 @@
 #include <string>
 #include <vector>
 
-const std::string version = "1.0.0";
-
 /**
  * @brief Record of inputs vector and outputs vector, in that order.
  *
@@ -23,16 +21,24 @@ using Record = std::pair<std::vector<float>, std::vector<float>>;
 enum class Mode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
 
 const std::map<std::string, Mode, std::less<>> mode_map{
-    {"TrainOnly", Mode::TrainOnly},
     {"TestOnly", Mode::TestOnly},
+    {"TrainOnly", Mode::TrainOnly},
     {"TrainThenTest", Mode::TrainThenTest},
     {"TrainTestMonitored", Mode::TrainTestMonitored}};
 
 /**
+ * @brief Application parameters
+ *
+ */
+struct AppParameters {
+  std::string title = "SMLP - Simple Multilayer Perceptron";
+  std::string version = "1.0.0";
+};
+
+/**
  * @brief Parameters for the neural Network.
  */
-struct Parameters {
-  std::string title = "SMLP";
+struct NetworkParameters {
   std::string data_file = "";
   size_t input_size = 0;
   size_t hidden_size = 10;

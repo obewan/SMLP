@@ -46,12 +46,12 @@ public:
    *
    * @param params The parameters for initializing the network.
    */
-  explicit Network(const Parameters &params) : params(params) {
+  explicit Network(const NetworkParameters &params) : params(params) {
     initializeLayers();
   }
 
   std::vector<Layer *> layers;
-  Parameters params;
+  NetworkParameters params;
 
   /**
    * @brief Performs forward propagation on the network using the given input

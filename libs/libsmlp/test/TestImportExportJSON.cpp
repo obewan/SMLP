@@ -1,3 +1,4 @@
+#include "Common.h"
 #include "ImportExportJSON.h"
 #include "Layer.h"
 #include "doctest.h"
@@ -7,7 +8,7 @@
 TEST_CASE("Testing the ImportExportJSON class") {
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
-  Parameters params{
+  NetworkParameters params{
       .data_file = test_file,
       .input_size = 20,
       .hidden_size = 12,
@@ -17,8 +18,8 @@ TEST_CASE("Testing the ImportExportJSON class") {
       .output_at_end = true,
       .mode = Mode::TrainTestMonitored,
   };
-  std::string modelJsonFile = "testModel.json"; // beware path "./" is important
-                                                // or else parsing error.
+  AppParameters app_params{.version = "1.0.0"};
+  std::string modelJsonFile = "testModel.json";
 
   SUBCASE("Test exportModel function") {
     if (std::filesystem::exists(modelJsonFile)) {
@@ -28,7 +29,8 @@ TEST_CASE("Testing the ImportExportJSON class") {
 
     ImportExportJSON importExportJSON;
     auto network = new Network(params);
-    CHECK_NOTHROW(importExportJSON.exportModel(modelJsonFile, network));
+    CHECK_NOTHROW(
+        importExportJSON.exportModel(modelJsonFile, network, app_params));
 
     CHECK(std::filesystem::exists(modelJsonFile) == true);
   }
@@ -38,13 +40,13 @@ TEST_CASE("Testing the ImportExportJSON class") {
 
     ImportExportJSON importExportJSON;
     Network *network = nullptr;
-    CHECK_NOTHROW(network = importExportJSON.importModel(modelJsonFile));
+    CHECK_NOTHROW(network =
+                      importExportJSON.importModel(modelJsonFile, app_params));
     CHECK(network != nullptr);
     CHECK(network->layers.front()->layerType == LayerType::InputLayer);
     CHECK(network->layers.front()->neurons.size() == params.input_size);
     CHECK(network->layers.back()->layerType == LayerType::OutputLayer);
     CHECK(network->layers.back()->neurons.size() == params.output_size);
-    CHECK(network->params.title == params.title);
     CHECK(network->params.data_file == params.data_file);
     CHECK(network->params.input_size == params.input_size);
     CHECK(network->params.hidden_size == params.hidden_size);

@@ -56,11 +56,11 @@ TEST_CASE("Testing the FileParser class") {
   }
 
   SUBCASE("Test processLine") {
-    Parameters params{.input_size = 20,
-                      .hidden_size = 12,
-                      .output_size = 1,
-                      .hiddens_count = 1,
-                      .output_at_end = true};
+    NetworkParameters params{.input_size = 20,
+                             .hidden_size = 12,
+                             .output_size = 1,
+                             .hiddens_count = 1,
+                             .output_at_end = true};
 
     CHECK(params.input_size == 20);
     CHECK(params.hidden_size == 12);

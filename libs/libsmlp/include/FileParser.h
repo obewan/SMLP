@@ -83,7 +83,8 @@ public:
    * (default is false).
    * @return A RecordResult containing the processed data from the line.
    */
-  RecordResult processLine(const Parameters &params, bool isTesting = false);
+  RecordResult processLine(const NetworkParameters &params,
+                           bool isTesting = false);
 
   /**
    * @brief Processes a record with input first. This method is used when the
