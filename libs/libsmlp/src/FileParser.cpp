@@ -34,7 +34,8 @@ void FileParser::resetPos() {
   current_line_number = 0;
 }
 
-RecordResult FileParser::processLine(const NetworkParameters &params,
+RecordResult FileParser::processLine(const NetworkParameters &network_params,
+                                     const AppParameters &app_params,
                                      bool isTesting) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
@@ -63,18 +64,19 @@ RecordResult FileParser::processLine(const NetworkParameters &params,
     throw FileParserException(sstr.str());
   }
 
-  if (cell_refs.empty() ||
-      cell_refs.size() != params.input_size + params.output_size) {
+  if (cell_refs.empty() || cell_refs.size() != network_params.input_size +
+                                                   network_params.output_size) {
     std::stringstream sstr;
     sstr << "Invalid columns at line " << current_line_number << ": found "
          << cell_refs.size() << " columns instead of "
-         << params.input_size + params.output_size;
+         << network_params.input_size + network_params.output_size;
     throw FileParserException(sstr.str());
   }
 
-  Record record = params.output_at_end
-                      ? processInputFirst(cell_refs, params.input_size)
-                      : processOutputFirst(cell_refs, params.output_size);
+  Record record =
+      app_params.output_at_end
+          ? processInputFirst(cell_refs, network_params.input_size)
+          : processOutputFirst(cell_refs, network_params.output_size);
   return {.isSuccess = true, .record = record};
 }
 

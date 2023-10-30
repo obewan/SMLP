@@ -52,6 +52,7 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
       std::cout << "[INFO] Importing network model from "
                 << app_params.network_to_import << "..." << std::endl;
       network = importExportJSON.importModel(app_params);
+      network_params = network->params;
     } else {
       network = new Network(network_params);
     }
@@ -69,27 +70,27 @@ void SimpleMLP::train() {
             << " OutputSize:" << network_params.output_size
             << " HiddenSize:" << network_params.hidden_size
             << " HiddenLayers:" << network_params.hiddens_count
-            << " Epochs:" << network_params.num_epochs
-            << " TrainingRatio:" << network_params.training_ratio
             << " LearningRate:" << network_params.learning_rate
-            << " Mode:" << Common::getModeStr(network_params.mode)
-            << " Verbose:" << network_params.verbose << std::endl;
+            << " Epochs:" << app_params.num_epochs
+            << " TrainingRatio:" << app_params.training_ratio
+            << " Mode:" << Common::getModeStr(app_params.mode)
+            << " Verbose:" << app_params.verbose << std::endl;
 
   Training training(network, app_params.data_file);
-  training.train(network_params);
+  training.train(network_params, app_params);
 }
 
 void SimpleMLP::test() {
   std::cout << "Testing, using file " << app_params.data_file << std::endl;
   Testing testing(network, app_params.data_file);
-  testing.test(network_params, 0);
-  testing.showResults();
+  testing.test(network_params, app_params, 0);
+  testing.showResults(app_params.mode);
 }
 
 void SimpleMLP::trainTestMonitored() {
-  if (network_params.output_index_to_monitor > network_params.output_size) {
+  if (app_params.output_index_to_monitor > network_params.output_size) {
     std::cerr << "[ERROR] output_index_to_monitor > output_size: "
-              << network_params.output_index_to_monitor << ">"
+              << app_params.output_index_to_monitor << ">"
               << network_params.output_size << std::endl;
     return;
   }
@@ -100,16 +101,15 @@ void SimpleMLP::trainTestMonitored() {
             << " OutputSize:" << network_params.output_size
             << " HiddenSize:" << network_params.hidden_size
             << " HiddenLayers:" << network_params.hiddens_count
-            << " Epochs:" << network_params.num_epochs
-            << " TrainingRatio:" << network_params.training_ratio
             << " LearningRate:" << network_params.learning_rate
-            << " Mode:" << Common::getModeStr(network_params.mode)
-            << " OutputIndexToMonitor:"
-            << network_params.output_index_to_monitor
-            << " Verbose:" << network_params.verbose << std::endl;
+            << " Epochs:" << app_params.num_epochs
+            << " TrainingRatio:" << app_params.training_ratio
+            << " Mode:" << Common::getModeStr(app_params.mode)
+            << " OutputIndexToMonitor:" << app_params.output_index_to_monitor
+            << " Verbose:" << app_params.verbose << std::endl;
 
   Training training(network, app_params.data_file);
-  training.trainTestMonitored(network_params);
+  training.trainTestMonitored(network_params, app_params);
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
@@ -133,7 +133,7 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
          "the model.")
       ->check(CLI::ExistingFile);
   app.add_option(
-         "-b, --export_network",
+         "-b, --export_network", app_params.network_to_export,
          "Export the network model after training. This must be a valid "
          "filepath. "
          "The exported model can be imported later, eliminating the need for "
@@ -157,9 +157,9 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
                  "The count of hidden layers")
       ->default_val(network_params.hiddens_count)
       ->check(CLI::NonNegativeNumber);
-  app.add_option("-e,--epochs", network_params.num_epochs,
+  app.add_option("-e,--epochs", app_params.num_epochs,
                  "The numbers of epochs retraining")
-      ->default_val(network_params.num_epochs)
+      ->default_val(app_params.num_epochs)
       ->check(CLI::NonNegativeNumber);
   app.add_option("-r,--learning_rate", network_params.learning_rate,
                  "The network training learning rate")
@@ -167,19 +167,19 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
       ->check(CLI::PositiveNumber)
       ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-s,--output_ends", network_params.output_at_end,
+         "-s,--output_ends", app_params.output_at_end,
          "Indicate if the output data is at the end of the record (1) or at "
          "the beginning (0)")
-      ->default_val(network_params.output_at_end)
+      ->default_val(app_params.output_at_end)
       ->check(CLI::TypeValidator<bool>());
-  app.add_option("-t,--training_ratio", network_params.training_ratio,
+  app.add_option("-t,--training_ratio", app_params.training_ratio,
                  "The training ratio of the file to switch between data for "
                  "training and data for testing, should be around 0.7.")
-      ->default_val(network_params.training_ratio)
+      ->default_val(app_params.training_ratio)
       ->check(CLI::Range(0.0f, 1.0f))
       ->check(CLI::TypeValidator<float>());
   app.add_option(
-         "-m, --mode", network_params.mode,
+         "-m, --mode", app_params.mode,
          "Select the running mode:\n"
          "  - TestOnly: Just test an imported network without training.\n"
          "  - TrainOnly: Just train the network without testing.\n"
@@ -189,14 +189,14 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
          "memory.")
       ->transform(CLI::CheckedTransformer(mode_map, CLI::ignore_case));
   app.add_option("-y, --output_index_to_monitor",
-                 network_params.output_index_to_monitor,
+                 app_params.output_index_to_monitor,
                  "Indicate the output neuron index to monitor during a "
                  "TrainTestMonitored mode. If index = 0 there will be no "
                  "progress monitoring. Default is 1, the first neuron output.")
-      ->default_val(network_params.output_index_to_monitor)
+      ->default_val(app_params.output_index_to_monitor)
       ->check(CLI ::NonNegativeNumber);
   app.add_flag("-v,--version", showVersion, "Show current version");
-  app.add_flag("-w,--verbose", network_params.verbose, "Verbose logs");
+  app.add_flag("-w,--verbose", app_params.verbose, "Verbose logs");
 
   CLI11_PARSE(app, argc, argv) return EXIT_SUCCESS;
 }

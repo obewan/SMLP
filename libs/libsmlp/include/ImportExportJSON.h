@@ -75,14 +75,7 @@ public:
       model->params.hidden_size = json_model["parameters"]["hidden_size"];
       model->params.output_size = json_model["parameters"]["output_size"];
       model->params.hiddens_count = json_model["parameters"]["hiddens_count"];
-      model->params.num_epochs = json_model["parameters"]["num_epochs"];
-      model->params.output_index_to_monitor =
-          json_model["parameters"]["output_index_to_monitor"];
-      model->params.training_ratio = json_model["parameters"]["training_ratio"];
       model->params.learning_rate = json_model["parameters"]["learning_rate"];
-      model->params.output_at_end = json_model["parameters"]["output_at_end"];
-      model->params.verbose = json_model["parameters"]["verbose"];
-      model->params.mode = json_model["parameters"]["mode"];
 
       for (auto json_layer : json_model["layers"]) {
         // Get the type of the layer.
@@ -176,17 +169,8 @@ public:
         json(network->params.output_size);
     json_network["parameters"]["hiddens_count"] =
         json(network->params.hiddens_count);
-    json_network["parameters"]["num_epochs"] = json(network->params.num_epochs);
-    json_network["parameters"]["output_index_to_monitor"] =
-        json(network->params.output_index_to_monitor);
-    json_network["parameters"]["training_ratio"] =
-        json(network->params.training_ratio);
     json_network["parameters"]["learning_rate"] =
         json(network->params.learning_rate);
-    json_network["parameters"]["output_at_end"] =
-        json(network->params.output_at_end);
-    json_network["parameters"]["verbose"] = json(network->params.verbose);
-    json_network["parameters"]["mode"] = json(network->params.mode);
 
     // Write the JSON object to the file.
     // The 4 argument specifies the indentation level of the resulting string.

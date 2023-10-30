@@ -1,3 +1,4 @@
+#include "Common.h"
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "FileParser.h"
 #include "doctest.h"
@@ -56,19 +57,19 @@ TEST_CASE("Testing the FileParser class") {
   }
 
   SUBCASE("Test processLine") {
-    NetworkParameters params{.input_size = 20,
-                             .hidden_size = 12,
-                             .output_size = 1,
-                             .hiddens_count = 1,
-                             .output_at_end = true};
+    NetworkParameters network_params{.input_size = 20,
+                                     .hidden_size = 12,
+                                     .output_size = 1,
+                                     .hiddens_count = 1};
+    AppParameters app_params{.output_at_end = true};
 
-    CHECK(params.input_size == 20);
-    CHECK(params.hidden_size == 12);
+    CHECK(network_params.input_size == 20);
+    CHECK(network_params.hidden_size == 12);
 
     parser.openFile();
 
     // Test first line
-    RecordResult result = parser.processLine(params);
+    RecordResult result = parser.processLine(network_params, app_params);
     CHECK(result.isSuccess == true);
     const auto &[inputs, outputs] = result.record;
     std::vector<float> expectedInputs = {
@@ -87,7 +88,7 @@ TEST_CASE("Testing the FileParser class") {
     }
 
     // Test next line
-    RecordResult result2 = parser.processLine(params);
+    RecordResult result2 = parser.processLine(network_params, app_params);
     CHECK(result.isSuccess == true);
     const auto &[inputs2, outputs2] = result2.record;
     std::vector<float> expectedInputs2 = {

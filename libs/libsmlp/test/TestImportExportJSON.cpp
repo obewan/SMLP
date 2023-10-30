@@ -8,15 +8,10 @@
 TEST_CASE("Testing the ImportExportJSON class") {
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
-  NetworkParameters params{
-      .input_size = 20,
-      .hidden_size = 12,
-      .output_size = 1,
-      .hiddens_count = 1,
-      .num_epochs = 2,
-      .output_at_end = true,
-      .mode = Mode::TrainTestMonitored,
-  };
+  NetworkParameters params{.input_size = 20,
+                           .hidden_size = 12,
+                           .output_size = 1,
+                           .hiddens_count = 1};
   AppParameters app_params{.version = "1.0.0", .data_file = test_file};
   std::string modelJsonFile = "testModel.json";
 
@@ -50,13 +45,6 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(network->params.hidden_size == params.hidden_size);
     CHECK(network->params.output_size == params.output_size);
     CHECK(network->params.hiddens_count == params.hiddens_count);
-    CHECK(network->params.num_epochs == params.num_epochs);
-    CHECK(network->params.output_index_to_monitor ==
-          params.output_index_to_monitor);
-    CHECK(abs(network->params.training_ratio - params.training_ratio) < 1e-6f);
     CHECK(abs(network->params.learning_rate - params.learning_rate) < 1e-6f);
-    CHECK(network->params.output_at_end == params.output_at_end);
-    CHECK(network->params.verbose == params.verbose);
-    CHECK(network->params.mode == params.mode);
   }
 }

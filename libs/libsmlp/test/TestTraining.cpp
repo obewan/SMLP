@@ -8,46 +8,48 @@ TEST_CASE("Testing the Training class") {
   // beware current path is "build/libs/libsmlp/test"
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
-  NetworkParameters params{.input_size = 20, .output_size = 1};
+  NetworkParameters network_params{.input_size = 20, .output_size = 1};
   AppParameters app_params{.data_file = test_file};
 
-  auto network = new Network(params);
+  auto network = new Network(network_params);
   Training training(network, test_file);
 
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {
-      params.training_ratio = 0;
-      CHECK_THROWS_AS(training.train(params), TrainingException);
+      app_params.training_ratio = 0;
+      CHECK_THROWS_AS(training.train(network_params, app_params),
+                      TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
-      params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.train(params));
+      app_params.training_ratio = 0.5f;
+      CHECK_NOTHROW(training.train(network_params, app_params));
     }
   }
 
   SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
-      params.training_ratio = 0;
-      CHECK_THROWS_AS(training.trainTestMonitored(params), TrainingException);
+      app_params.training_ratio = 0;
+      CHECK_THROWS_AS(training.trainTestMonitored(network_params, app_params),
+                      TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
-      params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.trainTestMonitored(params));
+      app_params.training_ratio = 0.5f;
+      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
     }
 
     SUBCASE("valid testing") {
-      params.training_ratio = 0.6f;
-      params.learning_rate = 0.01f;
-      params.hidden_size = 12;
-      params.hiddens_count = 1;
-      params.num_epochs = 2;
-      params.mode = Mode::TrainTestMonitored;
-      CHECK_NOTHROW(training.trainTestMonitored(params));
+      network_params.learning_rate = 0.01f;
+      network_params.hidden_size = 12;
+      network_params.hiddens_count = 1;
+      app_params.training_ratio = 0.6f;
+      app_params.num_epochs = 2;
+      app_params.mode = Mode::TrainTestMonitored;
+      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);
@@ -57,7 +59,7 @@ TEST_CASE("Testing the Training class") {
             training.getFileParser()->total_lines -
                 training.getFileParser()->training_ratio_line);
       for (auto const &[key, values] : testProgress) {
-        CHECK(values.size() == params.num_epochs);
+        CHECK(values.size() == app_params.num_epochs);
       }
 
       // Get the first element

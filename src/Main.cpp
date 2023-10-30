@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  switch (smlp->network_params.mode) {
+  switch (smlp->app_params.mode) {
   case Mode::TrainOnly: {
     smlp->train();
   } break;
@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     smlp->test();
   } break;
   }
+
   if (!smlp->app_params.network_to_export.empty()) {
     std::cout << "[INFO] Exporting network model to "
               << smlp->app_params.network_to_export << "..." << std::endl;

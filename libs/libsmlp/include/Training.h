@@ -66,9 +66,11 @@ public:
   /**
    * @brief This method trains the model with the given parameters.
    *
-   * @param params Parameters for training.
+   * @param network_params Network parameters for training.
+   * @param app_params Application parameters.
    */
-  void train(const NetworkParameters &params);
+  void train(const NetworkParameters &network_params,
+             const AppParameters &app_params);
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
@@ -76,9 +78,11 @@ public:
    * memory with each epoch to save the monitoring progress. Therefore, it is
    * recommended for use with smaller datasets and a lower number of epochs.
    *
-   * @param params Parameters.
+   * @param network_params Network parameters.
+   * @param app_params Application parameters.
    */
-  void trainTestMonitored(const NetworkParameters &params);
+  void trainTestMonitored(const NetworkParameters &network_params,
+                          const AppParameters &app_params);
 
   /**
    * @brief Sets the network for training.

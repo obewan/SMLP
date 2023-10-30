@@ -78,12 +78,14 @@ public:
    * @brief Processes a line from the file and returns a RecordResult. This
    * method can be used for both testing and training data.
    *
-   * @param params The parameters to use when processing the line.
+   * @param network_params The parameters to use when processing the line.
+   * @param app_params The application parameters.
    * @param isTesting A boolean indicating whether the line is from testing data
    * (default is false).
    * @return A RecordResult containing the processed data from the line.
    */
-  RecordResult processLine(const NetworkParameters &params,
+  RecordResult processLine(const NetworkParameters &network_params,
+                           const AppParameters &app_params,
                            bool isTesting = false);
 
   /**
