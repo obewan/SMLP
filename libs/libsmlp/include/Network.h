@@ -34,8 +34,11 @@ public:
     }
   }
 
-  std::vector<Layer *> layers;
-  Parameters params;
+  /**
+   * @brief Construct a new Network object
+   * Default constructor used for deserialization.
+   */
+  Network() = default;
 
   /**
    * @brief Constructor that takes a Parameters object as an argument. It
@@ -46,6 +49,9 @@ public:
   explicit Network(const Parameters &params) : params(params) {
     initializeLayers();
   }
+
+  std::vector<Layer *> layers;
+  Parameters params;
 
   /**
    * @brief Performs forward propagation on the network using the given input
@@ -80,13 +86,33 @@ public:
    * @brief Updates the weights of the neurons in the network using the learning
    * rate.
    */
-  void updateWeights() {
+  void updateWeights() const {
     for (auto &layer : layers) {
       layer->updateWeights(params.learning_rate);
     }
   }
 
-private:
+  void bindLayers() {
+    for (size_t i = 0; i < layers.size(); ++i) {
+      if (i > 0) {
+        layers.at(i)->previousLayer = layers.at(i - 1);
+      }
+      if (i < layers.size() - 1) {
+        layers.at(i)->nextLayer = layers.at(i + 1);
+      }
+    }
+  }
+
+  void initializeWeights() const {
+    for (auto layer : layers) {
+      if (layer->previousLayer != nullptr) {
+        for (auto &n : layer->neurons) {
+          n.initWeights(layer->previousLayer->neurons.size());
+        }
+      }
+    }
+  }
+
   void initializeLayers() {
     auto inputLayer = new InputLayer();
     inputLayer->neurons.resize(params.input_size);
@@ -102,21 +128,7 @@ private:
     outputLayer->neurons.resize(params.output_size);
     layers.push_back(outputLayer);
 
-    for (size_t i = 0; i < layers.size(); ++i) {
-      if (i > 0) {
-        layers.at(i)->previousLayer = layers.at(i - 1);
-      }
-      if (i < layers.size() - 1) {
-        layers.at(i)->nextLayer = layers.at(i + 1);
-      }
-    }
-
-    for (auto layer : layers) {
-      if (layer->previousLayer != nullptr) {
-        for (auto &n : layer->neurons) {
-          n.initWeights(layer->previousLayer->neurons.size());
-        }
-      }
-    }
+    bindLayers();
+    initializeWeights();
   }
 };

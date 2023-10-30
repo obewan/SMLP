@@ -67,6 +67,6 @@ public:
         return key;
       }
     }
-    return "Unknown";
+    return "Undefined";
   }
 };

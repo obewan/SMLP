@@ -9,6 +9,14 @@
  */
 #pragma once
 #include "Neuron.h"
+#include <map>
+
+enum class LayerType { InputLayer, HiddenLayer, OutputLayer };
+
+const std::map<std::string, LayerType, std::less<>> layer_map{
+    {"InputLayer", LayerType::InputLayer},
+    {"HiddenLayer", LayerType::HiddenLayer},
+    {"OutputLayer", LayerType::OutputLayer}};
 
 /**
  * @brief The Layer class represents a layer in a neural network. It contains a
@@ -17,6 +25,9 @@
  */
 class Layer {
 public:
+  explicit Layer(LayerType layerType) : layerType(layerType) {}
+
+  LayerType layerType;
   std::vector<Neuron> neurons;
   Layer *previousLayer = nullptr;
   Layer *nextLayer = nullptr;
@@ -43,4 +54,13 @@ public:
    * @param learningRate The learning rate to use when updating weights.
    */
   virtual void updateWeights(float learningRate) = 0;
+
+  std::string layerTypeStr() const {
+    for (const auto &[key, mLayerType] : layer_map) {
+      if (mLayerType == layerType) {
+        return key;
+      }
+    }
+    return "Undefined";
+  }
 };
