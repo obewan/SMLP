@@ -24,7 +24,8 @@ The neural network currently uses a sigmoid activation function.
 # Roadmap to first release
 
 - Add more activation functions that can be selected. `[in progress]`
-- Improve code coverage to 80%
+- Add a Prediction mode.
+- Improve code coverage to 80%.
 - Add interactive testing.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
@@ -44,9 +45,11 @@ Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for
 9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 10. You can specify the running mode with the `mode` option (`-m` parameter), refer to the command line help for more details.
 
-# Example
+# Examples
 
-`smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored`
+### Example 1: training a new MLP with the mushroom dataset, 20 inputs, 1 output, 12 neurons by hidden layers, 1 hidden layer, during 100 epochs, with 70% training data and 30% testing data, a learning rate of 0.01 and with monitored tests. Then exporting the model to myMushroomMLP.json after the training.
+
+`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored`
 
 Output:
 
@@ -62,6 +65,21 @@ High accuracy (correct at 90%): 81.2%
 Good convergence toward zero: 95.9% (21277/22177)
 Good convergence toward one: 96.6%  (17215/17824)
 Good convergence total: 96.2% (38492/40001)
+[INFO] Exporting network model to myMushroomMLP.json...
+```
+
+### Example 2: importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
+
+`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
+
+Output:
+
+```
+[INFO] Importing network model from myMushroomMLP.json...
+Testing, using file ../data/mushroom/mushroom_data.csv
+Low accuracy (correct at 70%): 91.6%
+Avg accuracy (correct at 80%): 88.2%
+High accuracy (correct at 90%): 81.2%
 ```
 
 ## License
