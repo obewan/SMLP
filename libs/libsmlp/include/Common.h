@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+const std::string version = "1.0.0";
+
 /**
  * @brief Record of inputs vector and outputs vector, in that order.
  *

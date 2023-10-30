@@ -2,6 +2,7 @@
  * @file ImpotExportJson.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief Import/Export using JSON format
+ * @see https://github.com/nlohmann/json
  * @date 2023-10-29
  *
  * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2023
@@ -14,6 +15,7 @@
 #include "OutputLayer.h"
 #include "exception/ImportExportJSONException.h"
 #include <fstream>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -24,8 +26,6 @@ using json = nlohmann::json;
  */
 class ImportExportJSON {
 public:
-  std::string version = "1.0.0";
-
   /**
    * @brief Parse a json file into a network model.
    *
@@ -34,8 +34,17 @@ public:
    * @return Network*
    */
   Network *importModel(const std::string &path_in) {
-    std::ifstream file(path_in);
-    nlohmann::json json_model;
+    std::string path_in_ext = path_in;
+
+    // A workaround for parsing error in case of missing
+    // at least a relative path
+    if (path_in.find('/') == std::string::npos &&
+        path_in.find('\\') == std::string::npos) {
+      path_in_ext = "./" + path_in_ext;
+    }
+
+    std::ifstream file(path_in_ext);
+    json json_model;
 
     if (!file.is_open()) {
       throw ImportExportJSONException("Failed to open file for reading.");
@@ -50,9 +59,28 @@ public:
     try {
       json_model = json::parse(file);
 
+      if (std::string jversion = json_model["version"]; jversion != version) {
+        std::cerr << "[WARN] your model version (" << jversion
+                  << ") is not the same as current version (" << version << ")"
+                  << std::endl;
+      }
+
       // Create a new Network object and deserialize the JSON data into it.
       auto model = new Network();
-      model->params.learning_rate = json_model["params"]["learning_rate"];
+      model->params.title = json_model["parameters"]["title"];
+      model->params.data_file = json_model["parameters"]["data_file"];
+      model->params.input_size = json_model["parameters"]["input_size"];
+      model->params.hidden_size = json_model["parameters"]["hidden_size"];
+      model->params.output_size = json_model["parameters"]["output_size"];
+      model->params.hiddens_count = json_model["parameters"]["hiddens_count"];
+      model->params.num_epochs = json_model["parameters"]["num_epochs"];
+      model->params.output_index_to_monitor =
+          json_model["parameters"]["output_index_to_monitor"];
+      model->params.training_ratio = json_model["parameters"]["training_ratio"];
+      model->params.learning_rate = json_model["parameters"]["learning_rate"];
+      model->params.output_at_end = json_model["parameters"]["output_at_end"];
+      model->params.verbose = json_model["parameters"]["verbose"];
+      model->params.mode = json_model["parameters"]["mode"];
 
       for (auto json_layer : json_model["layers"]) {
         // Get the type of the layer.
@@ -98,9 +126,12 @@ public:
 
       model->bindLayers();
 
+      file.close();
+
       return model;
 
     } catch (const nlohmann::json::parse_error &e) {
+      file.close();
       throw ImportExportJSONException("JSON parsing error: " +
                                       std::string(e.what()));
     }
@@ -118,11 +149,11 @@ public:
 
     // Serialize the layers to JSON.
     for (auto layer : network->layers) {
-      nlohmann::json json_layer = {{"type", layer->layerTypeStr()},
-                                   {"neurons", nlohmann::json::array()}};
+      json json_layer = {{"type", layer->layerTypeStr()},
+                         {"neurons", json::array()}};
 
       for (const auto &neuron : layer->neurons) {
-        nlohmann::json json_neuron = {{"weights", nlohmann::json::array()}};
+        json json_neuron = {{"weights", json::array()}};
 
         for (auto weight : neuron.weights) {
           json_neuron["weights"].push_back(weight);
@@ -135,8 +166,26 @@ public:
     }
 
     // Serialize the parameters to JSON.
-    json_network["params"] =
-        nlohmann::json{{"learning_rate", network->params.learning_rate}};
+    json_network["parameters"]["title"] = json(network->params.title);
+    json_network["parameters"]["data_file"] = json(network->params.data_file);
+    json_network["parameters"]["input_size"] = json(network->params.input_size);
+    json_network["parameters"]["hidden_size"] =
+        json(network->params.hidden_size);
+    json_network["parameters"]["output_size"] =
+        json(network->params.output_size);
+    json_network["parameters"]["hiddens_count"] =
+        json(network->params.hiddens_count);
+    json_network["parameters"]["num_epochs"] = json(network->params.num_epochs);
+    json_network["parameters"]["output_index_to_monitor"] =
+        json(network->params.output_index_to_monitor);
+    json_network["parameters"]["training_ratio"] =
+        json(network->params.training_ratio);
+    json_network["parameters"]["learning_rate"] =
+        json(network->params.learning_rate);
+    json_network["parameters"]["output_at_end"] =
+        json(network->params.output_at_end);
+    json_network["parameters"]["verbose"] = json(network->params.verbose);
+    json_network["parameters"]["mode"] = json(network->params.mode);
 
     // Write the JSON object to the file.
     // The 4 argument specifies the indentation level of the resulting string.

@@ -7,10 +7,18 @@
 TEST_CASE("Testing the ImportExportJSON class") {
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
 
-  Parameters params{.data_file = test_file, .input_size = 20, .output_size = 1};
-  std::string modelJsonFile =
-      "./testModel.json"; // beware path "./" is important or else parsing
-                          // error.
+  Parameters params{
+      .data_file = test_file,
+      .input_size = 20,
+      .hidden_size = 12,
+      .output_size = 1,
+      .hiddens_count = 1,
+      .num_epochs = 2,
+      .output_at_end = true,
+      .mode = Mode::TrainTestMonitored,
+  };
+  std::string modelJsonFile = "testModel.json"; // beware path "./" is important
+                                                // or else parsing error.
 
   SUBCASE("Test exportModel function") {
     if (std::filesystem::exists(modelJsonFile)) {
@@ -36,5 +44,19 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(network->layers.front()->neurons.size() == params.input_size);
     CHECK(network->layers.back()->layerType == LayerType::OutputLayer);
     CHECK(network->layers.back()->neurons.size() == params.output_size);
+    CHECK(network->params.title == params.title);
+    CHECK(network->params.data_file == params.data_file);
+    CHECK(network->params.input_size == params.input_size);
+    CHECK(network->params.hidden_size == params.hidden_size);
+    CHECK(network->params.output_size == params.output_size);
+    CHECK(network->params.hiddens_count == params.hiddens_count);
+    CHECK(network->params.num_epochs == params.num_epochs);
+    CHECK(network->params.output_index_to_monitor ==
+          params.output_index_to_monitor);
+    CHECK(abs(network->params.training_ratio - params.training_ratio) < 1e-6f);
+    CHECK(abs(network->params.learning_rate - params.learning_rate) < 1e-6f);
+    CHECK(network->params.output_at_end == params.output_at_end);
+    CHECK(network->params.verbose == params.verbose);
+    CHECK(network->params.mode == params.mode);
   }
 }

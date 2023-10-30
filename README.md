@@ -29,7 +29,8 @@ The neural network currently uses a sigmoid activation function.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 - Add a CUDA support (but probably on a more advanced project).
-- Use the ONNX format to import/export the model (definitively on a more advanced project).
+- Add tensors (on a more advanced project).
+- Add ONNX (Open Neural Network Exchange) format for import/export (definitively on a more advanced project).
 
 # Usage
 
