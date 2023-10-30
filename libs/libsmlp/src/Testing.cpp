@@ -6,9 +6,10 @@
 
 using namespace std::string_view_literals;
 
-void Testing::test(const Parameters &params, size_t epoch) {
+void Testing::test(const NetworkParameters &network_params,
+                   const AppParameters &app_params, size_t epoch) {
   if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->getTrainingRatioLine(params.training_ratio);
+    fileParser_->getTrainingRatioLine(app_params.training_ratio);
   }
   if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
     std::cout
@@ -24,15 +25,16 @@ void Testing::test(const Parameters &params, size_t epoch) {
 
   std::vector<TestResults> testResults;
   bool isTesting = true;
-  int output_neuron_to_monitor = (int)params.output_index_to_monitor - 1;
+  int output_neuron_to_monitor = (int)app_params.output_index_to_monitor - 1;
   while (isTesting) {
-    RecordResult result = fileParser_->processLine(params, true);
+    RecordResult result =
+        fileParser_->processLine(network_params, app_params, true);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
       // Using just one output neuron to monitor, or else there will be too much
       // memory used.
       if (output_neuron_to_monitor >= 0 &&
-          output_neuron_to_monitor < (int)params.output_size) {
+          output_neuron_to_monitor < (int)network_params.output_size) {
         testResults.emplace_back(epoch, fileParser_->current_line_number,
                                  result.record.second[output_neuron_to_monitor],
                                  predicteds[output_neuron_to_monitor]);
@@ -121,18 +123,27 @@ void Testing::showResultsLine() {
   std::cout << std::setprecision((int)default_precision); // restore defaults
 }
 
-void Testing::showResults(bool verbose) {
+void Testing::showResultsVerbose(const TestResultsExt &result,
+                                 Mode mode) const {
+  std::cout << "Expected:" << result.expected << " Predicted:" << result.output;
+  if (mode == Mode::TrainTestMonitored) {
+    std::cout << " [ ";
+    for (auto &progres : result.progress) {
+      std::cout << progres << " ";
+    }
+    std::cout << "] (" << result.progress.back() - result.progress.front()
+              << ")" << std::endl;
+  } else {
+    std::cout << std::endl;
+  }
+}
+
+void Testing::showResults(Mode mode, bool verbose) {
   auto stats = calcStats();
 
   if (verbose) {
     for (auto const &result : testResultExts) {
-      std::cout << "Expected:" << result.expected
-                << " Predicted:" << result.output << " [ ";
-      for (auto &progres : result.progress) {
-        std::cout << progres << " ";
-      }
-      std::cout << "] (" << result.progress.back() - result.progress.front()
-                << ")" << std::endl;
+      showResultsVerbose(result, mode);
     }
     std::cout << std::endl;
   }
@@ -148,7 +159,7 @@ void Testing::showResults(bool verbose) {
             << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
             << std::endl;
 
-  if (network_->params.mode == Mode::TrainTestMonitored) {
+  if (mode == Mode::TrainTestMonitored) {
     std::cout << std::setprecision(3)
               << "Good convergence toward zero: " << stats.convergence_zero
               << "% (" << stats.good_convergence_zero << "/"
