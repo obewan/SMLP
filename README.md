@@ -24,13 +24,14 @@ The neural network currently uses a sigmoid activation function.
 # Roadmap to first release
 
 - Add more activation functions that can be selected. `[in progress]`
-- Add a Prediction mode.
+- Add a Predictive mode.
+- Add a pipe input.
 - Improve code coverage to 80%.
 - Add interactive testing.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 
-Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for a more advanced MLP project.
+Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced MLP project.
 
 # Usage
 
@@ -43,7 +44,11 @@ Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for
 7. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
 8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
-10. You can specify the running mode with the `mode` option (`-m` parameter), refer to the command line help for more details.
+10. You can specify the running mode with the `mode` option (`-m` parameter):
+    - TestOnly: Just test an imported network without training.
+    - TrainOnly: Just train the network without testing.
+    - TrainThenTest: Train at once then test (default mode).
+    - TrainTestMonitored: Train and test at each epoch with monitoring progress of an output neuron. Beware as this is slower and uses more memory.
 
 # Examples
 
