@@ -18,13 +18,23 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
-enum class Mode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
+enum class EMode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
 
-const std::map<std::string, Mode, std::less<>> mode_map{
-    {"TestOnly", Mode::TestOnly},
-    {"TrainOnly", Mode::TrainOnly},
-    {"TrainThenTest", Mode::TrainThenTest},
-    {"TrainTestMonitored", Mode::TrainTestMonitored}};
+const std::map<std::string, EMode, std::less<>> mode_map{
+    {"TestOnly", EMode::TestOnly},
+    {"TrainOnly", EMode::TrainOnly},
+    {"TrainThenTest", EMode::TrainThenTest},
+    {"TrainTestMonitored", EMode::TrainTestMonitored}};
+
+enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
+
+const std::map<std::string, EActivationFunction, std::less<>> activation_map{
+    {"ELU", EActivationFunction::ELU},
+    {"LReLU", EActivationFunction::LReLU},
+    {"PReLU", EActivationFunction::PReLU},
+    {"ReLU", EActivationFunction::ReLU},
+    {"Sigmoid", EActivationFunction::Sigmoid},
+    {"Tanh", EActivationFunction::Tanh}};
 
 /**
  * @brief Application parameters
@@ -41,7 +51,7 @@ struct AppParameters {
   float training_ratio = 0.7f;
   bool output_at_end = false;
   bool verbose = false;
-  Mode mode = Mode::TrainThenTest;
+  EMode mode = EMode::TrainThenTest;
 };
 
 /**
@@ -52,7 +62,11 @@ struct NetworkParameters {
   size_t hidden_size = 10;
   size_t output_size = 1;
   size_t hiddens_count = 1;
-  float learning_rate = 1e-3f;
+  float learning_rate = 0.01f;
+  float hidden_activation_alpha = 0.0f; // used for ELU and PReLU
+  float output_activation_alpha = 0.0f; // used for ELU and PReLU
+  EActivationFunction hidden_activation_function = EActivationFunction::Sigmoid;
+  EActivationFunction output_activation_function = EActivationFunction::Sigmoid;
 };
 
 /**
@@ -71,7 +85,7 @@ struct RecordResult {
  */
 class Common {
 public:
-  static std::string getModeStr(Mode value) {
+  static std::string getModeStr(EMode value) {
     for (const auto &[key, mode] : mode_map) {
       if (mode == value) {
         return key;

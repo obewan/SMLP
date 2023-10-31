@@ -111,13 +111,13 @@ public:
    * @param verbose If true, additional details are displayed (default is
    * false).
    */
-  void showResults(Mode mode, bool verbose = false);
+  void showResults(EMode mode, bool verbose = false);
 
   /**
    * @brief Display some verbose results.
    *
    */
-  void showResultsVerbose(const TestResultsExt &result, Mode mode) const;
+  void showResultsVerbose(const TestResultsExt &result, EMode mode) const;
 
   /**
    * @brief Calculates and returns the statistics of the test results.

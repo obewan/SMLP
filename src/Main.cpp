@@ -31,13 +31,13 @@ int main(int argc, char *argv[]) {
   }
 
   switch (smlp->app_params.mode) {
-  case Mode::TrainOnly: {
+  case EMode::TrainOnly: {
     smlp->train();
   } break;
-  case Mode::TestOnly: {
+  case EMode::TestOnly: {
     smlp->test();
   } break;
-  case Mode::TrainTestMonitored: {
+  case EMode::TrainTestMonitored: {
     smlp->trainTestMonitored();
   } break;
   // case Mode::TrainThenTest:

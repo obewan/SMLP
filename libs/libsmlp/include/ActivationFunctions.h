@@ -23,17 +23,6 @@ inline auto sigmoidDerivative = [](auto x) {
 };
 
 /**
- * @brief ReLU Function (Rectified Linear Unit): This function outputs the input
- * directly if it’s positive; otherwise, it outputs zero. It has become very
- * popular in recent years because it helps to alleviate the vanishing gradient
- * problem.
- * @param Unit
- * @return ReLU
- */
-inline auto relu = [](auto x) { return std::max(0.0f, x); };
-inline auto reluDerivative = [](auto x) { return x > 0 ? 1.0f : 0.0f; };
-
-/**
  * @brief Tanh Function (Hyperbolic Tangent): This function is similar to the
  * sigmoid function but maps the input to a range between -1 and 1. It is often
  * used in the hidden layers of a neural network.
@@ -43,6 +32,17 @@ inline auto tanhDerivative = [](auto x) {
   float tanhValue = tanh(x);
   return 1 - tanhValue * tanhValue;
 };
+
+/**
+ * @brief ReLU Function (Rectified Linear Unit): This function outputs the input
+ * directly if it’s positive; otherwise, it outputs zero. It has become very
+ * popular in recent years because it helps to alleviate the vanishing gradient
+ * problem.
+ * @param Unit
+ * @return ReLU
+ */
+inline auto relu = [](auto x) { return std::max(0.0f, x); };
+inline auto reluDerivative = [](auto x) { return x > 0 ? 1.0f : 0.0f; };
 
 /**
  * @brief Leaky ReLU: This is a variant of ReLU that allows small negative
