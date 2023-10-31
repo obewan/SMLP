@@ -29,6 +29,7 @@ measures that legally restrict others from doing anything the license permits.
  */
 
 #include "include/SimpleMLP.h"
+#include "Common.h"
 #include "Network.h"
 #include "Testing.h"
 #include "Training.h"
@@ -64,18 +65,37 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
   }
 }
 
-void SimpleMLP::train() {
-  std::cout << "Training, using file " << app_params.data_file << std::endl;
-  std::cout << "InputSize:" << network_params.input_size
+void SimpleMLP::showInlineHeader() const {
+  std::cout << " InputSize:" << network_params.input_size
             << " OutputSize:" << network_params.output_size
             << " HiddenSize:" << network_params.hidden_size
             << " HiddenLayers:" << network_params.hiddens_count
-            << " LearningRate:" << network_params.learning_rate
-            << " Epochs:" << app_params.num_epochs
+            << " LearningRate:" << network_params.learning_rate;
+  std::cout << " HiddenActivationFunction:"
+            << Common::getActivationStr(
+                   network_params.hidden_activation_function);
+  if (network_params.hidden_activation_function == EActivationFunction::ELU ||
+      network_params.hidden_activation_function == EActivationFunction::PReLU) {
+    std::cout << " HiddenActivationAlpha:"
+              << network_params.hidden_activation_alpha;
+  }
+  std::cout << " OutputActivationFunction:"
+            << Common::getActivationStr(
+                   network_params.output_activation_function);
+  if (network_params.output_activation_function == EActivationFunction::ELU ||
+      network_params.output_activation_function == EActivationFunction::PReLU) {
+    std::cout << " OutputActivationAlpha:"
+              << network_params.output_activation_alpha;
+  }
+  std::cout << " Epochs:" << app_params.num_epochs
             << " TrainingRatio:" << app_params.training_ratio
             << " Mode:" << Common::getModeStr(app_params.mode)
             << " Verbose:" << app_params.verbose << std::endl;
+}
 
+void SimpleMLP::train() {
+  std::cout << "Training, using file " << app_params.data_file << std::endl;
+  showInlineHeader();
   Training training(network, app_params.data_file);
   training.train(network_params, app_params);
 }
@@ -97,17 +117,8 @@ void SimpleMLP::trainTestMonitored() {
 
   std::cout << "Train and testing, using file " << app_params.data_file
             << std::endl;
-  std::cout << "InputSize:" << network_params.input_size
-            << " OutputSize:" << network_params.output_size
-            << " HiddenSize:" << network_params.hidden_size
-            << " HiddenLayers:" << network_params.hiddens_count
-            << " LearningRate:" << network_params.learning_rate
-            << " Epochs:" << app_params.num_epochs
-            << " TrainingRatio:" << app_params.training_ratio
-            << " Mode:" << Common::getModeStr(app_params.mode)
-            << " OutputIndexToMonitor:" << app_params.output_index_to_monitor
-            << " Verbose:" << app_params.verbose << std::endl;
-
+  std::cout << " OutputIndexToMonitor:" << app_params.output_index_to_monitor;
+  showInlineHeader();
   Training training(network, app_params.data_file);
   training.trainTestMonitored(network_params, app_params);
 }
@@ -204,9 +215,9 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
                  "  - LReLU: Leaky ReLU.\n"
                  "  - PReLU: Parametric ReLU, require an "
                  "hidden_activation_alpha_parameter.\n"
-                 "  - ReLU: Rectified Linear Unit\n"
-                 "  - Sigmoid (default)\n"
-                 "  - Tanh: Hyperbolic Tangent\n")
+                 "  - ReLU: Rectified Linear Unit.\n"
+                 "  - Sigmoid (default).\n"
+                 "  - Tanh: Hyperbolic Tangent")
       ->default_val(network_params.hidden_activation_function)
       ->transform(CLI::CheckedTransformer(activation_map, CLI::ignore_case));
   app.add_option("-k, --output_activation_function",
@@ -217,9 +228,9 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
                  "  - LReLU: Leaky ReLU.\n"
                  "  - PReLU: Parametric ReLU, require an "
                  "output_activation_alpha parameter.\n"
-                 "  - ReLU: Rectified Linear Unit\n"
-                 "  - Sigmoid (default)\n"
-                 "  - Tanh: Hyperbolic Tangent\n")
+                 "  - ReLU: Rectified Linear Unit.\n"
+                 "  - Sigmoid (default).\n"
+                 "  - Tanh: Hyperbolic Tangent")
       ->default_val(network_params.output_activation_function)
       ->transform(CLI::CheckedTransformer(activation_map, CLI::ignore_case));
   app.add_option("-p, --hidden_activation_alpha",

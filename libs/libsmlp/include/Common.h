@@ -18,13 +18,13 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
-enum class EMode { TestOnly, TrainOnly, TrainThenTest, TrainTestMonitored };
+enum class EMode { TestOnly, TrainOnly, TrainTestMonitored, TrainThenTest };
 
 const std::map<std::string, EMode, std::less<>> mode_map{
     {"TestOnly", EMode::TestOnly},
     {"TrainOnly", EMode::TrainOnly},
-    {"TrainThenTest", EMode::TrainThenTest},
-    {"TrainTestMonitored", EMode::TrainTestMonitored}};
+    {"TrainTestMonitored", EMode::TrainTestMonitored},
+    {"TrainThenTest", EMode::TrainThenTest}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
 
@@ -87,6 +87,15 @@ class Common {
 public:
   static std::string getModeStr(EMode value) {
     for (const auto &[key, mode] : mode_map) {
+      if (mode == value) {
+        return key;
+      }
+    }
+    return "Undefined";
+  }
+
+  static std::string getActivationStr(EActivationFunction value) {
+    for (const auto &[key, mode] : activation_map) {
       if (mode == value) {
         return key;
       }
