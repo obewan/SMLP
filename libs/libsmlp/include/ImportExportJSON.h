@@ -132,6 +132,18 @@ public:
     }
   }
 
+  json createJsonNeuron(const Neuron &neuron, LayerType layerType) const {
+    json json_neuron = {{"weights", json::array()}};
+
+    if (layerType != LayerType::InputLayer) {
+      for (auto weight : neuron.weights) {
+        json_neuron["weights"].push_back(weight);
+      }
+    }
+
+    return json_neuron;
+  }
+
   /**
    * @brief export a Network model into a json file.
    *
@@ -149,13 +161,8 @@ public:
                          {"neurons", json::array()}};
 
       for (const auto &neuron : layer->neurons) {
-        json json_neuron = {{"weights", json::array()}};
-
-        for (auto weight : neuron.weights) {
-          json_neuron["weights"].push_back(weight);
-        }
-
-        json_layer["neurons"].push_back(json_neuron);
+        json_layer["neurons"].push_back(
+            createJsonNeuron(neuron, layer->layerType));
       }
 
       json_network["layers"].push_back(json_layer);

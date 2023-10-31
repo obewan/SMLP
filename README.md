@@ -31,7 +31,7 @@ The neural network currently uses a sigmoid activation function.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 
-Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced MLP project.
+Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project.
 
 # Usage
 
