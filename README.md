@@ -23,8 +23,7 @@ The neural network currently uses a sigmoid activation function.
 
 # Roadmap to first release
 
-- Add more activation functions that can be selected. `[in progress]`
-- Add a Predictive mode.
+- Add a Predictive mode.`[in progress]`
 - Add a pipe input.
 - Improve code coverage to 80%.
 - Add interactive testing.
