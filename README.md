@@ -1,8 +1,7 @@
 # SMLP
 
 A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
-Each neurons of a previous layer is connected with each neurons of its next layer.  
-The neural network currently uses a sigmoid activation function.
+Each neurons of a previous layer is connected with each neurons of its next layer.
 
 # Features
 
@@ -25,12 +24,13 @@ The neural network currently uses a sigmoid activation function.
 
 - Add a Predictive mode.`[in progress]`
 - Add a pipe input.
+- Add a config file.
 - Improve code coverage to 80%.
 - Add interactive testing.
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 
-Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project.
+_Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
 # Usage
 
@@ -58,7 +58,9 @@ Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for
 
 # Examples
 
-### Example 1: training a new MLP with the mushroom dataset, 20 inputs, 1 output, 12 neurons by hidden layers, 1 hidden layer, during 100 epochs, with 70% training data and 30% testing data, a learning rate of 0.01 and with monitored tests. Then exporting the model to myMushroomMLP.json after the training.
+### Example 1:
+
+Training a new MLP with the mushroom dataset, 20 inputs, 1 output, 12 neurons by hidden layers, 1 hidden layer, during 100 epochs, with 70% training data and 30% testing data, a learning rate of 0.01 and with monitored tests. Then exporting the model to myMushroomMLP.json after the training.
 
 `smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored`
 
@@ -79,7 +81,9 @@ Good convergence total: 96.2% (38492/40001)
 [INFO] Exporting network model to myMushroomMLP.json...
 ```
 
-### Example 2: importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
+### Example 2:
+
+Importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
 
 `smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
 
