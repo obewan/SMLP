@@ -49,6 +49,13 @@ Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for
     - TrainOnly: Just train the network without testing.
     - TrainThenTest: Train at once then test (default mode).
     - TrainTestMonitored: Train and test at each epoch with monitoring progress of an output neuron. Beware as this is slower and uses more memory.
+11. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
+    - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - LReLU: Leaky ReLU.
+    - PReLU: Parametric ReLU, require an an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - ReLU: Rectified Linear Unit.
+    - Sigmoid (default).
+    - Tanh: Hyperbolic Tangent.
 
 # Examples
 

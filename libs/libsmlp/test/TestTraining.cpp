@@ -48,7 +48,7 @@ TEST_CASE("Testing the Training class") {
       network_params.hiddens_count = 1;
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
-      app_params.mode = Mode::TrainTestMonitored;
+      app_params.mode = EMode::TrainTestMonitored;
       CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
 
       auto testing = training.getTesting();

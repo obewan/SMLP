@@ -124,9 +124,9 @@ void Testing::showResultsLine() {
 }
 
 void Testing::showResultsVerbose(const TestResultsExt &result,
-                                 Mode mode) const {
+                                 EMode mode) const {
   std::cout << "Expected:" << result.expected << " Predicted:" << result.output;
-  if (mode == Mode::TrainTestMonitored) {
+  if (mode == EMode::TrainTestMonitored) {
     std::cout << " [ ";
     for (auto &progres : result.progress) {
       std::cout << progres << " ";
@@ -138,7 +138,7 @@ void Testing::showResultsVerbose(const TestResultsExt &result,
   }
 }
 
-void Testing::showResults(Mode mode, bool verbose) {
+void Testing::showResults(EMode mode, bool verbose) {
   auto stats = calcStats();
 
   if (verbose) {
@@ -159,7 +159,7 @@ void Testing::showResults(Mode mode, bool verbose) {
             << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
             << std::endl;
 
-  if (mode == Mode::TrainTestMonitored) {
+  if (mode == EMode::TrainTestMonitored) {
     std::cout << std::setprecision(3)
               << "Good convergence toward zero: " << stats.convergence_zero
               << "% (" << stats.good_convergence_zero << "/"

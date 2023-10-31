@@ -8,6 +8,8 @@
  *
  */
 #pragma once
+#include "ActivationFunctions.h"
+#include <functional>
 #include <math.h>
 #include <random>
 #include <vector>
@@ -52,4 +54,7 @@ public:
       w = std::max(0.0f, std::min(0.1f, distg));
     }
   }
+
+  std::function<float(float)> activationFunction;
+  std::function<float(float)> activationFunctionDerivative;
 };

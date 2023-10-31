@@ -63,4 +63,12 @@ public:
     }
     return "Undefined";
   }
+
+  void setActivationFunction(const std::function<float(float)> &function,
+                             const std::function<float(float)> &derivative) {
+    for (auto &n : neurons) {
+      n.activationFunction = function;
+      n.activationFunctionDerivative = derivative;
+    }
+  }
 };
