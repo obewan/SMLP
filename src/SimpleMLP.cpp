@@ -183,10 +183,11 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
          "Select the running mode:\n"
          "  - TestOnly: Just test an imported network without training.\n"
          "  - TrainOnly: Just train the network without testing.\n"
-         "  - TrainThenTest: Train at once then test (default mode).\n"
+         "  - TrainThenTest: Train at once then test (default).\n"
          "  - TrainTestMonitored: Train and test at each epoch with monitoring "
          "progress of an output neuron. Beware as this is slower and uses more "
          "memory.")
+      ->default_val(app_params.mode)
       ->transform(CLI::CheckedTransformer(mode_map, CLI::ignore_case));
   app.add_option("-y, --output_index_to_monitor",
                  app_params.output_index_to_monitor,
@@ -195,6 +196,44 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
                  "progress monitoring. Default is 1, the first neuron output.")
       ->default_val(app_params.output_index_to_monitor)
       ->check(CLI ::NonNegativeNumber);
+  app.add_option("-j, --hidden_activation_function",
+                 network_params.hidden_activation_function,
+                 "Select the hidden neurons activation function:\n"
+                 "  - ELU: Exponential Linear Units, require an "
+                 "hidden_activation_alpha parameter.\n"
+                 "  - LReLU: Leaky ReLU.\n"
+                 "  - PReLU: Parametric ReLU, require an "
+                 "hidden_activation_alpha_parameter.\n"
+                 "  - ReLU: Rectified Linear Unit\n"
+                 "  - Sigmoid (default)\n"
+                 "  - Tanh: Hyperbolic Tangent\n")
+      ->default_val(network_params.hidden_activation_function)
+      ->transform(CLI::CheckedTransformer(activation_map, CLI::ignore_case));
+  app.add_option("-k, --output_activation_function",
+                 network_params.output_activation_function,
+                 "Select the output neurons activation function:\n"
+                 "  - ELU: Exponential Linear Units, require an "
+                 "output_activation_alpha parameter.\n"
+                 "  - LReLU: Leaky ReLU.\n"
+                 "  - PReLU: Parametric ReLU, require an "
+                 "output_activation_alpha parameter.\n"
+                 "  - ReLU: Rectified Linear Unit\n"
+                 "  - Sigmoid (default)\n"
+                 "  - Tanh: Hyperbolic Tangent\n")
+      ->default_val(network_params.output_activation_function)
+      ->transform(CLI::CheckedTransformer(activation_map, CLI::ignore_case));
+  app.add_option("-p, --hidden_activation_alpha",
+                 network_params.hidden_activation_alpha,
+                 "alpha parameter value for ELU and PReLU activation functions "
+                 "on hidden layers")
+      ->default_val(network_params.output_activation_alpha)
+      ->check(CLI::Range(-100.0f, 100.0f));
+  app.add_option("-q, --output_activation_alpha",
+                 network_params.output_activation_alpha,
+                 "alpha parameter value for ELU and PReLU activation functions "
+                 "on output layer")
+      ->default_val(network_params.output_activation_alpha)
+      ->check(CLI::Range(-100.0f, 100.0f));
   app.add_flag("-v,--version", showVersion, "Show current version");
   app.add_flag("-w,--verbose", app_params.verbose, "Verbose logs");
 

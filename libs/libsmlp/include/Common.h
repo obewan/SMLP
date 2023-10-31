@@ -18,7 +18,7 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
-enum class EMode { TrainOnly, TestOnly, TrainThenTest, TrainTestMonitored };
+enum class EMode { TestOnly, TrainOnly, TrainThenTest, TrainTestMonitored };
 
 const std::map<std::string, EMode, std::less<>> mode_map{
     {"TestOnly", EMode::TestOnly},
@@ -63,8 +63,8 @@ struct NetworkParameters {
   size_t output_size = 1;
   size_t hiddens_count = 1;
   float learning_rate = 0.01f;
-  float hidden_activation_alpha = 0.0f; // used for ELU and PReLU
-  float output_activation_alpha = 0.0f; // used for ELU and PReLU
+  float hidden_activation_alpha = 0.1f; // used for ELU and PReLU
+  float output_activation_alpha = 0.1f; // used for ELU and PReLU
   EActivationFunction hidden_activation_function = EActivationFunction::Sigmoid;
   EActivationFunction output_activation_function = EActivationFunction::Sigmoid;
 };
