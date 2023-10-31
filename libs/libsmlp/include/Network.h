@@ -119,7 +119,8 @@ public:
     inputLayer->neurons.resize(params.input_size);
     layers.push_back(inputLayer);
 
-    float elu_alpha = 0.01;
+    // float elu_alpha = 0.01f;
+    float prelu_alpha = 0.01f;
     for (size_t i = 0; i < params.hiddens_count; ++i) {
       auto hiddenLayer = new HiddenLayer();
       hiddenLayer->neurons.resize(params.hidden_size);
@@ -129,11 +130,16 @@ public:
 
       // example for parametricRelu
       // hiddenLayer->setActivationFunction({}, {}, 0.01);
+      hiddenLayer->setActivationFunction(
+          [prelu_alpha](auto x) { return parametricRelu(x, prelu_alpha); },
+          [prelu_alpha](auto x) {
+            return parametricReluDerivative(x, prelu_alpha);
+          });
 
       // example for elu
-      hiddenLayer->setActivationFunction(
-          [elu_alpha](auto x) { return elu(x, elu_alpha); },
-          [elu_alpha](auto x) { return eluDerivative(x, elu_alpha); });
+      // hiddenLayer->setActivationFunction(
+      //     [elu_alpha](auto x) { return elu(x, elu_alpha); },
+      //     [elu_alpha](auto x) { return eluDerivative(x, elu_alpha); });
 
       layers.push_back(hiddenLayer);
     }
