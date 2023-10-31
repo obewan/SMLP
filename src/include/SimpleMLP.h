@@ -63,4 +63,5 @@ public:
 
 private:
   int parseArgs(int argc, char **argv, bool &showVersion);
+  void showInlineHeader() const;
 };

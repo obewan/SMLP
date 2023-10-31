@@ -9,10 +9,12 @@
  */
 
 #pragma once
+#include "ActivationFunctions.h"
 #include "Common.h"
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
+#include "exception/NetworkException.h"
 #include <cstddef>
 
 /**
@@ -121,14 +123,55 @@ public:
     for (size_t i = 0; i < params.hiddens_count; ++i) {
       auto hiddenLayer = new HiddenLayer();
       hiddenLayer->neurons.resize(params.hidden_size);
+      SetActivationFunction(hiddenLayer, params.hidden_activation_function,
+                            params.hidden_activation_alpha);
       layers.push_back(hiddenLayer);
     }
 
     auto outputLayer = new OutputLayer();
     outputLayer->neurons.resize(params.output_size);
+    SetActivationFunction(outputLayer, params.output_activation_function,
+                          params.output_activation_alpha);
     layers.push_back(outputLayer);
 
     bindLayers();
     initializeWeights();
+  }
+
+  void SetActivationFunction(Layer *layer,
+                             EActivationFunction activation_function,
+                             float activation_alpha) const {
+    switch (activation_function) {
+    case EActivationFunction::ELU:
+      layer->setActivationFunction(
+          [activation_alpha](auto x) { return elu(x, activation_alpha); },
+          [activation_alpha](auto x) {
+            return eluDerivative(x, activation_alpha);
+          });
+      break;
+    case EActivationFunction::LReLU:
+      layer->setActivationFunction(leakyRelu, leakyReluDerivative);
+      break;
+    case EActivationFunction::PReLU:
+      layer->setActivationFunction(
+          [activation_alpha](auto x) {
+            return parametricRelu(x, activation_alpha);
+          },
+          [activation_alpha](auto x) {
+            return parametricReluDerivative(x, activation_alpha);
+          });
+      break;
+    case EActivationFunction::ReLU:
+      layer->setActivationFunction(relu, reluDerivative);
+      break;
+    case EActivationFunction::Sigmoid:
+      layer->setActivationFunction(sigmoid, sigmoidDerivative);
+      break;
+    case EActivationFunction::Tanh:
+      layer->setActivationFunction(tanhFunc, tanhDerivative);
+      break;
+    default:
+      throw NetworkException("Unimplemented Activation Function.");
+    }
   }
 };

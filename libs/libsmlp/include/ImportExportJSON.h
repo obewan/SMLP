@@ -76,6 +76,14 @@ public:
       model->params.output_size = json_model["parameters"]["output_size"];
       model->params.hiddens_count = json_model["parameters"]["hiddens_count"];
       model->params.learning_rate = json_model["parameters"]["learning_rate"];
+      model->params.hidden_activation_alpha =
+          json_model["parameters"]["hidden_activation_alpha"];
+      model->params.output_activation_alpha =
+          json_model["parameters"]["output_activation_alpha"];
+      model->params.hidden_activation_function =
+          json_model["parameters"]["hidden_activation_function"];
+      model->params.output_activation_function =
+          json_model["parameters"]["output_activation_function"];
 
       for (auto json_layer : json_model["layers"]) {
         // Get the type of the layer.
@@ -132,6 +140,18 @@ public:
     }
   }
 
+  json createJsonNeuron(const Neuron &neuron, LayerType layerType) const {
+    json json_neuron = {{"weights", json::array()}};
+
+    if (layerType != LayerType::InputLayer) {
+      for (auto weight : neuron.weights) {
+        json_neuron["weights"].push_back(weight);
+      }
+    }
+
+    return json_neuron;
+  }
+
   /**
    * @brief export a Network model into a json file.
    *
@@ -149,13 +169,8 @@ public:
                          {"neurons", json::array()}};
 
       for (const auto &neuron : layer->neurons) {
-        json json_neuron = {{"weights", json::array()}};
-
-        for (auto weight : neuron.weights) {
-          json_neuron["weights"].push_back(weight);
-        }
-
-        json_layer["neurons"].push_back(json_neuron);
+        json_layer["neurons"].push_back(
+            createJsonNeuron(neuron, layer->layerType));
       }
 
       json_network["layers"].push_back(json_layer);
@@ -171,6 +186,14 @@ public:
         json(network->params.hiddens_count);
     json_network["parameters"]["learning_rate"] =
         json(network->params.learning_rate);
+    json_network["parameters"]["hidden_activation_alpha"] =
+        json(network->params.hidden_activation_alpha);
+    json_network["parameters"]["output_activation_alpha"] =
+        json(network->params.output_activation_alpha);
+    json_network["parameters"]["hidden_activation_function"] =
+        json(network->params.hidden_activation_function);
+    json_network["parameters"]["output_activation_function"] =
+        json(network->params.output_activation_function);
 
     // Write the JSON object to the file.
     // The 4 argument specifies the indentation level of the resulting string.
