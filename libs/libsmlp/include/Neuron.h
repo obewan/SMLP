@@ -8,6 +8,8 @@
  *
  */
 #pragma once
+#include "ActivationFunctions.h"
+#include <functional>
 #include <math.h>
 #include <random>
 #include <vector>
@@ -27,6 +29,9 @@ public:
 
   // The error of the neuron
   float error = 0.0;
+
+  // This is the parameter for PReLU
+  float alpha = 0.0;
 
   // The weights of the neuron
   std::vector<float> weights;
@@ -52,4 +57,7 @@ public:
       w = std::max(0.0f, std::min(0.1f, distg));
     }
   }
+
+  std::function<float(float)> activationFunction;
+  std::function<float(float)> activationFunctionDerivative;
 };

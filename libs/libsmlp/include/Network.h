@@ -9,6 +9,7 @@
  */
 
 #pragma once
+#include "ActivationFunctions.h"
 #include "Common.h"
 #include "HiddenLayer.h"
 #include "InputLayer.h"
@@ -118,14 +119,28 @@ public:
     inputLayer->neurons.resize(params.input_size);
     layers.push_back(inputLayer);
 
+    float elu_alpha = 0.01;
     for (size_t i = 0; i < params.hiddens_count; ++i) {
       auto hiddenLayer = new HiddenLayer();
       hiddenLayer->neurons.resize(params.hidden_size);
+
+      // example for leakyRelu
+      // hiddenLayer->setActivationFunction(leakyRelu, leakyReluDerivative);
+
+      // example for parametricRelu
+      // hiddenLayer->setActivationFunction({}, {}, 0.01);
+
+      // example for elu
+      hiddenLayer->setActivationFunction(
+          [elu_alpha](auto x) { return elu(x, elu_alpha); },
+          [elu_alpha](auto x) { return eluDerivative(x, elu_alpha); });
+
       layers.push_back(hiddenLayer);
     }
 
     auto outputLayer = new OutputLayer();
     outputLayer->neurons.resize(params.output_size);
+    outputLayer->setActivationFunction(relu, reluDerivative);
     layers.push_back(outputLayer);
 
     bindLayers();

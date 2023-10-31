@@ -63,4 +63,21 @@ public:
     }
     return "Undefined";
   }
+
+  void setActivationFunction(const std::function<float(float)> &function,
+                             const std::function<float(float)> &derivative,
+                             const std::optional<float> &alpha = std::nullopt) {
+    for (auto &n : neurons) {
+      if (alpha.has_value()) {
+        n.alpha = alpha.value();
+        n.activationFunction =
+            std::bind(parametricRelu, std::placeholders::_1, n.alpha);
+        n.activationFunctionDerivative =
+            std::bind(parametricReluDerivative, std::placeholders::_1, n.alpha);
+      } else {
+        n.activationFunction = function;
+        n.activationFunctionDerivative = derivative;
+      }
+    }
+  }
 };
