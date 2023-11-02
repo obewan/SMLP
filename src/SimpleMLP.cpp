@@ -192,14 +192,30 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
   app.add_option(
          "-m, --mode", app_params.mode,
          "Select the running mode:\n"
-         "  - TestOnly: Just test an imported network without training.\n"
-         "  - TrainOnly: Just train the network without testing.\n"
-         "  - TrainThenTest: Train at once then test (default).\n"
-         "  - TrainTestMonitored: Train and test at each epoch with monitoring "
-         "progress of an output neuron. Beware as this is slower and uses more "
-         "memory.")
+         "  - Predictive: use an inputs file (without outputs) to predict the "
+         "outputs. This requires an imported and trained network.\n"
+         "  - TestOnly: Test an imported network without training.\n"
+         "  - TrainOnly: Train the network without testing.\n"
+         "  - TrainThenTest: Train and then test the network (default).\n"
+         "  - TrainTestMonitored: Train and test at each epoch while "
+         "monitoring the progress of an output neuron. Be aware that this is "
+         "slower and uses more memory.")
       ->default_val(app_params.mode)
       ->transform(CLI::CheckedTransformer(mode_map, CLI::ignore_case));
+  app.add_option(
+         "-n, --predictive_mode", app_params.predictive_mode,
+         "If using Predictive mode, select the output render mode:\n"
+         "  - CSV: This will render the output(s) at the end or at the "
+         "begining of the input line, "
+         "depending of your output_ends option (default).\n"
+         "  - NumberAndProba: This will show both the predicted output(s) "
+         "numbers and their probabilities. "
+         "Note that a probability closer to 0 means "
+         "the output is likely 0.\n"
+         "  - NumberOnly: This will show only the predicted outputs number.\n"
+         "  - ProbaOnly: This will only show the output(s) probabilities.")
+      ->default_val(app_params.predictive_mode)
+      ->transform(CLI::CheckedTransformer(predictive_map, CLI::ignore_case));
   app.add_option("-y, --output_index_to_monitor",
                  app_params.output_index_to_monitor,
                  "Indicate the output neuron index to monitor during a "

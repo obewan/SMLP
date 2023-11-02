@@ -33,12 +33,12 @@ const std::map<std::string, EMode, std::less<>> mode_map{
     {"TrainTestMonitored", EMode::TrainTestMonitored},
     {"TrainThenTest", EMode::TrainThenTest}};
 
-enum class EPredictiveMode { CSV, NumberOnly, NumberAndProba, ProbaOnly };
+enum class EPredictiveMode { CSV, NumberAndProba, NumberOnly, ProbaOnly };
 
 const std::map<std::string, EPredictiveMode, std::less<>> predictive_map{
     {"CSV", EPredictiveMode::CSV},
-    {"NumberOnly", EPredictiveMode::NumberOnly},
     {"NumberAndProba", EPredictiveMode::NumberAndProba},
+    {"NumberOnly", EPredictiveMode::NumberOnly},
     {"ProbaOnly", EPredictiveMode::ProbaOnly}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
@@ -67,6 +67,7 @@ struct AppParameters {
   bool output_at_end = false;
   bool verbose = false;
   EMode mode = EMode::TrainThenTest;
+  EPredictiveMode predictive_mode = EPredictiveMode::CSV;
 };
 
 /**
@@ -100,21 +101,30 @@ struct RecordResult {
  */
 class Common {
 public:
-  static std::string getModeStr(EMode value) {
-    for (const auto &[key, mode] : mode_map) {
-      if (mode == value) {
+  static std::string getModeStr(EMode mode) {
+    for (const auto &[key, value] : mode_map) {
+      if (value == mode) {
         return key;
       }
     }
-    return "Undefined";
+    return "";
   }
 
-  static std::string getActivationStr(EActivationFunction value) {
-    for (const auto &[key, mode] : activation_map) {
-      if (mode == value) {
+  static std::string getPredictiveModeStr(EPredictiveMode predictive) {
+    for (const auto &[key, value] : predictive_map) {
+      if (value == predictive) {
         return key;
       }
     }
-    return "Undefined";
+    return "";
+  }
+
+  static std::string getActivationStr(EActivationFunction activation) {
+    for (const auto &[key, value] : activation_map) {
+      if (value == activation) {
+        return key;
+      }
+    }
+    return "";
   }
 };
