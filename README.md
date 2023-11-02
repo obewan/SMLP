@@ -51,9 +51,9 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
 11. If using the Predictive mode, you can specify how to render the output with the `predictive_mode` option (`-n` parameter):
     - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option.
-    - NumberAndProba: This will show both the predicted output(s) numbers and their probabilities. Note that a probability closer to 0 means the output is likely 0.
+    - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values (float).
     - NumberOnly: This will show only the predicted outputs number.
-    - ProbaOnly: This will only show the output(s) probabilities.
+    - RawOnly: This will only show the output(s) raw values (float).
 12. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
     - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
     - LReLU: Leaky ReLU.

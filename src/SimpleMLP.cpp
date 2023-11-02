@@ -208,12 +208,10 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
          "  - CSV: This will render the output(s) at the end or at the "
          "begining of the input line, "
          "depending of your output_ends option (default).\n"
-         "  - NumberAndProba: This will show both the predicted output(s) "
-         "numbers and their probabilities. "
-         "Note that a probability closer to 0 means "
-         "the output is likely 0.\n"
+         "  - NumberAndRaw: This will show both the predicted output(s) "
+         "numbers and their raw values.\n"
          "  - NumberOnly: This will show only the predicted outputs number.\n"
-         "  - ProbaOnly: This will only show the output(s) probabilities.")
+         "  - RawOnly: This will only show the output(s) raw values.")
       ->default_val(app_params.predictive_mode)
       ->transform(CLI::CheckedTransformer(predictive_map, CLI::ignore_case));
   app.add_option("-y, --output_index_to_monitor",

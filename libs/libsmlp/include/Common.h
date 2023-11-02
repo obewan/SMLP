@@ -33,13 +33,13 @@ const std::map<std::string, EMode, std::less<>> mode_map{
     {"TrainTestMonitored", EMode::TrainTestMonitored},
     {"TrainThenTest", EMode::TrainThenTest}};
 
-enum class EPredictiveMode { CSV, NumberAndProba, NumberOnly, ProbaOnly };
+enum class EPredictiveMode { CSV, NumberAndRaw, NumberOnly, RawOnly };
 
 const std::map<std::string, EPredictiveMode, std::less<>> predictive_map{
     {"CSV", EPredictiveMode::CSV},
-    {"NumberAndProba", EPredictiveMode::NumberAndProba},
+    {"NumberAndRaw", EPredictiveMode::NumberAndRaw},
     {"NumberOnly", EPredictiveMode::NumberOnly},
-    {"ProbaOnly", EPredictiveMode::ProbaOnly}};
+    {"RawOnly", EPredictiveMode::RawOnly}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
 
