@@ -44,11 +44,17 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 10. You can specify the running mode with the `mode` option (`-m` parameter):
-    - TestOnly: Just test an imported network without training.
-    - TrainOnly: Just train the network without testing.
-    - TrainThenTest: Train at once then test (default mode).
-    - TrainTestMonitored: Train and test at each epoch with monitoring progress of an output neuron. Beware as this is slower and uses more memory.
-11. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
+    - Predictive: use an inputs file (without outputs) to predict the outputs. This requires an imported and trained network.
+    - TestOnly: Test an imported network without training.
+    - TrainOnly: Train the network without testing.
+    - TrainThenTest: Train and then test the network (default mode).
+    - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
+11. If using the Predictive mode, you can specify how to render the output with the `predictive_mode` option (`-n` parameter):
+    - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option.
+    - NumberOnly: This will show only the predicted outputs number.
+    - NumberAndProba: This will show both the predicted output(s) numbers and their probabilities. Note that a probability closer to 0 means the output is likely 0.
+    - ProbaOnly: This will only show the output(s) probabilities.
+12. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
     - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
     - LReLU: Leaky ReLU.
     - PReLU: Parametric ReLU, require an an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).

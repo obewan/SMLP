@@ -18,13 +18,28 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
-enum class EMode { TestOnly, TrainOnly, TrainTestMonitored, TrainThenTest };
+enum class EMode {
+  Predictive,
+  TestOnly,
+  TrainOnly,
+  TrainTestMonitored,
+  TrainThenTest
+};
 
 const std::map<std::string, EMode, std::less<>> mode_map{
+    {"Predictive", EMode::Predictive},
     {"TestOnly", EMode::TestOnly},
     {"TrainOnly", EMode::TrainOnly},
     {"TrainTestMonitored", EMode::TrainTestMonitored},
     {"TrainThenTest", EMode::TrainThenTest}};
+
+enum class EPredictiveMode { CSV, NumberOnly, NumberAndProba, ProbaOnly };
+
+const std::map<std::string, EPredictiveMode, std::less<>> predictive_map{
+    {"CSV", EPredictiveMode::CSV},
+    {"NumberOnly", EPredictiveMode::NumberOnly},
+    {"NumberAndProba", EPredictiveMode::NumberAndProba},
+    {"ProbaOnly", EPredictiveMode::ProbaOnly}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
 
