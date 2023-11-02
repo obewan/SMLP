@@ -15,6 +15,7 @@
 #include "Network.h"
 #include "OutputLayer.h"
 #include "exception/ImportExportJSONException.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -37,12 +38,9 @@ public:
     if (app_params.network_to_import.empty()) {
       throw ImportExportJSONException("Missing file to import.");
     }
-    std::string path_in_ext = app_params.network_to_import;
 
-    // A workaround for parsing error in case of missing
-    // at least a relative path
-    if (app_params.network_to_import.find('/') == std::string::npos &&
-        app_params.network_to_import.find('\\') == std::string::npos) {
+    std::string path_in_ext = app_params.network_to_import;
+    if (std::filesystem::path p(path_in_ext); p.parent_path().empty()) {
       path_in_ext = "./" + path_in_ext;
     }
 
