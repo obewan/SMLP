@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "ImportExportJSON.h"
 #include "Network.h"
+#include "SimpleLogger.h"
 #include <string>
 
 /**
@@ -21,6 +22,11 @@
 class SimpleMLP {
 public:
   bool init(int argc, char **argv, bool &showVersion);
+
+  /**
+   * @brief This method apply the model on inputs to predict the outputs
+   */
+  void predict();
 
   /**
    * @brief This method trains the model.
@@ -42,7 +48,6 @@ public:
 
   /**
    * @brief Application parameters.
-   *
    */
   AppParameters app_params;
 
@@ -61,7 +66,12 @@ public:
    */
   Network *network = nullptr;
 
+  /**
+   * @brief A simple logger
+   */
+  [[no_unique_address]] SimpleLogger logger;
+
 private:
   int parseArgs(int argc, char **argv, bool &showVersion);
-  void showInlineHeader() const;
+  std::string showInlineHeader() const;
 };

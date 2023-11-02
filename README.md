@@ -50,7 +50,7 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - TrainThenTest: Train and then test the network (default mode).
     - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
 11. If using the Predictive mode, you can specify how to render the output with the `predictive_mode` option (`-n` parameter):
-    - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option.
+    - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option (default mode).
     - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values (float).
     - NumberOnly: This will show only the predicted outputs number.
     - RawOnly: This will only show the output(s) raw values (float).

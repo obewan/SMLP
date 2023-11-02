@@ -31,6 +31,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "include/SimpleMLP.h"
 #include "Common.h"
 #include "Network.h"
+#include "Predict.h"
 #include "Testing.h"
 #include "Training.h"
 #include "include/CLI11.hpp"
@@ -38,20 +39,33 @@ measures that legally restrict others from doing anything the license permits.
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <ostream>
 #include <sstream>
 #include <string>
 
 bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
   try {
-
     if (parseArgs(argc, argv, showVersion) != EXIT_SUCCESS ||
         app_params.data_file.empty()) { // in case of show help or show version
       return false;
     }
 
+    // Some post validations
+    if (app_params.mode == EMode::Predictive &&
+        app_params.network_to_import.empty()) {
+      logger.error("Predictive mode require a trained network to import, but "
+                   "network_to_import is missing.");
+      return false;
+    }
+
+    // Instantiation of the network
     if (!app_params.network_to_import.empty()) {
-      std::cout << "[INFO] Importing network model from "
-                << app_params.network_to_import << "..." << std::endl;
+      if (app_params.mode !=
+          EMode::Predictive) { // avoiding header lines on
+                               // this mode, for commands chaining
+        logger.log("Importing network model from ",
+                   app_params.network_to_import, "...");
+      }
       network = importExportJSON.importModel(app_params);
       network_params = network->params;
     } else {
@@ -60,48 +74,25 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
     return true;
 
   } catch (std::exception &ex) {
-    std::cerr << "[ERROR] " << ex.what() << std::endl;
+    logger.error(ex.what());
     return false;
   }
 }
 
-void SimpleMLP::showInlineHeader() const {
-  std::cout << " InputSize:" << network_params.input_size
-            << " OutputSize:" << network_params.output_size
-            << " HiddenSize:" << network_params.hidden_size
-            << " HiddenLayers:" << network_params.hiddens_count
-            << " LearningRate:" << network_params.learning_rate;
-  std::cout << " HiddenActivationFunction:"
-            << Common::getActivationStr(
-                   network_params.hidden_activation_function);
-  if (network_params.hidden_activation_function == EActivationFunction::ELU ||
-      network_params.hidden_activation_function == EActivationFunction::PReLU) {
-    std::cout << " HiddenActivationAlpha:"
-              << network_params.hidden_activation_alpha;
-  }
-  std::cout << " OutputActivationFunction:"
-            << Common::getActivationStr(
-                   network_params.output_activation_function);
-  if (network_params.output_activation_function == EActivationFunction::ELU ||
-      network_params.output_activation_function == EActivationFunction::PReLU) {
-    std::cout << " OutputActivationAlpha:"
-              << network_params.output_activation_alpha;
-  }
-  std::cout << " Epochs:" << app_params.num_epochs
-            << " TrainingRatio:" << app_params.training_ratio
-            << " Mode:" << Common::getModeStr(app_params.mode)
-            << " Verbose:" << app_params.verbose << std::endl;
+void SimpleMLP::predict() {
+  auto predic = new Predict(network, app_params);
+  predic->predict();
 }
 
 void SimpleMLP::train() {
-  std::cout << "Training, using file " << app_params.data_file << std::endl;
-  showInlineHeader();
+  logger.log("Training, using file ", app_params.data_file);
+  logger.log(showInlineHeader());
   Training training(network, app_params.data_file);
   training.train(network_params, app_params);
 }
 
 void SimpleMLP::test() {
-  std::cout << "Testing, using file " << app_params.data_file << std::endl;
+  logger.log("Testing, using file ", app_params.data_file);
   Testing testing(network, app_params.data_file);
   testing.test(network_params, app_params, 0);
   testing.showResults(app_params.mode);
@@ -109,18 +100,43 @@ void SimpleMLP::test() {
 
 void SimpleMLP::trainTestMonitored() {
   if (app_params.output_index_to_monitor > network_params.output_size) {
-    std::cerr << "[ERROR] output_index_to_monitor > output_size: "
-              << app_params.output_index_to_monitor << ">"
-              << network_params.output_size << std::endl;
+    logger.error("output_index_to_monitor > output_size: ",
+                 app_params.output_index_to_monitor, ">",
+                 network_params.output_size);
     return;
   }
 
-  std::cout << "Train and testing, using file " << app_params.data_file
-            << std::endl;
-  std::cout << " OutputIndexToMonitor:" << app_params.output_index_to_monitor;
-  showInlineHeader();
+  logger.log("Train and testing, using file ", app_params.data_file);
+  logger.log("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+             showInlineHeader());
   Training training(network, app_params.data_file);
   training.trainTestMonitored(network_params, app_params);
+}
+
+std::string SimpleMLP::showInlineHeader() const {
+  std::stringstream sst;
+  sst << " InputSize:" << network_params.input_size
+      << " OutputSize:" << network_params.output_size
+      << " HiddenSize:" << network_params.hidden_size
+      << " HiddenLayers:" << network_params.hiddens_count
+      << " LearningRate:" << network_params.learning_rate
+      << " HiddenActivationFunction:"
+      << Common::getActivationStr(network_params.hidden_activation_function);
+  if (network_params.hidden_activation_function == EActivationFunction::ELU ||
+      network_params.hidden_activation_function == EActivationFunction::PReLU) {
+    sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
+  }
+  sst << " OutputActivationFunction:"
+      << Common::getActivationStr(network_params.output_activation_function);
+  if (network_params.output_activation_function == EActivationFunction::ELU ||
+      network_params.output_activation_function == EActivationFunction::PReLU) {
+    sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
+  }
+  sst << " Epochs:" << app_params.num_epochs
+      << " TrainingRatio:" << app_params.training_ratio
+      << " Mode:" << Common::getModeStr(app_params.mode)
+      << " Verbose:" << app_params.verbose;
+  return sst.str();
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
