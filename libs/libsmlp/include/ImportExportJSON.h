@@ -14,6 +14,7 @@
 #include "Layer.h"
 #include "Network.h"
 #include "OutputLayer.h"
+#include "SimpleLogger.h"
 #include "exception/ImportExportJSONException.h"
 #include <filesystem>
 #include <fstream>
@@ -28,6 +29,8 @@ using json = nlohmann::json;
  */
 class ImportExportJSON {
 public:
+  void setLogger(const SimpleLogger &logger) { logger_ = logger; }
+
   /**
    * @brief Parse a json file into a network model.
    *
@@ -62,9 +65,9 @@ public:
 
       if (std::string jversion = json_model["version"];
           jversion != app_params.version) {
-        std::cerr << "[WARN] your model version (" << jversion
-                  << ") is not the same as current version ("
-                  << app_params.version << ")" << std::endl;
+        logger_.warn("Your model version (", jversion,
+                     ") is not the same as current version (",
+                     app_params.version, ")");
       }
 
       // Create a new Network object and deserialize the JSON data into it.
@@ -199,4 +202,7 @@ public:
     file << json_network.dump(2);
     file.close();
   }
+
+private:
+  [[no_unique_address]] SimpleLogger logger_;
 };

@@ -19,8 +19,8 @@ void Training::train(const NetworkParameters &network_params,
   }
   fileParser_->openFile();
   for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
-    std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
-              << app_params.num_epochs << "... " << std::endl;
+    logger_.log("Training epoch ", epoch + 1, "/", app_params.num_epochs,
+                "... ");
     fileParser_->resetPos();
     for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
       RecordResult result =
@@ -50,8 +50,8 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
 
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
-    std::cout << "[INFO] Training epoch " << epoch + 1 << "/"
-              << app_params.num_epochs << "... ";
+    logger_.log_append("Training epoch ", epoch + 1, "/", app_params.num_epochs,
+                       "... ");
     fileParser_->resetPos();
     for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
       RecordResult result =
@@ -63,16 +63,15 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
       }
     }
 
-    std::cout << "testing... ";
+    logger_.append("testing... ");
     testing_->test(network_params, app_params, epoch);
-    testing_->showResultsLine();
-    std::cout << std::endl;
+    logger_.out(testing_->showResultsLine());
   }
   const auto end{std::chrono::steady_clock::now()};
 
   const std::chrono::duration<double> elapsed_seconds{end - start};
-  std::cout << "Elapsed time: " << elapsed_seconds.count() << "s" << std::endl;
-  testing_->showResults(app_params.mode, app_params.verbose);
+  logger_.log("Elapsed time: ", elapsed_seconds.count(), "s");
+  logger_.out(testing_->showResults(app_params.mode, app_params.verbose));
 
   fileParser_->closeFile();
 }

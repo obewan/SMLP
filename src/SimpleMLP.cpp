@@ -87,7 +87,7 @@ void SimpleMLP::predict() {
 void SimpleMLP::train() {
   logger.log("Training, using file ", app_params.data_file);
   logger.log(showInlineHeader());
-  Training training(network, app_params.data_file);
+  Training training(network, app_params.data_file, logger);
   training.train(network_params, app_params);
 }
 
@@ -95,7 +95,7 @@ void SimpleMLP::test() {
   logger.log("Testing, using file ", app_params.data_file);
   Testing testing(network, app_params.data_file);
   testing.test(network_params, app_params, 0);
-  testing.showResults(app_params.mode);
+  logger.out(testing.showResults(app_params.mode));
 }
 
 void SimpleMLP::trainTestMonitored() {
@@ -109,7 +109,7 @@ void SimpleMLP::trainTestMonitored() {
   logger.log("Train and testing, using file ", app_params.data_file);
   logger.log("OutputIndexToMonitor:", app_params.output_index_to_monitor,
              showInlineHeader());
-  Training training(network, app_params.data_file);
+  Training training(network, app_params.data_file, logger);
   training.trainTestMonitored(network_params, app_params);
 }
 

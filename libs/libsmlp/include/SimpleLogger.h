@@ -12,18 +12,31 @@
 
 class SimpleLogger {
 public:
+  template <typename... Args> void out(Args &&...args) const {
+    (std::cout << ... << args) << std::endl;
+  }
+
+  template <typename... Args> void append(Args &&...args) const {
+    (std::cout << ... << args);
+  }
+
   template <typename... Args> void log(Args &&...args) const {
     std::cout << "[INFO] ";
     (std::cout << ... << args) << std::endl;
   }
 
+  template <typename... Args> void log_append(Args &&...args) const {
+    std::cout << "[INFO] ";
+    (std::cout << ... << args);
+  }
+
   template <typename... Args> void warn(Args &&...args) const {
-    std::cout << "[WARN] ";
-    (std::cout << ... << args) << std::endl;
+    std::cerr << "[WARN] ";
+    (std::cerr << ... << args) << std::endl;
   }
 
   template <typename... Args> void error(Args &&...args) const {
-    std::cout << "[ERROR] ";
-    (std::cout << ... << args) << std::endl;
+    std::cerr << "[ERROR] ";
+    (std::cerr << ... << args) << std::endl;
   }
 };

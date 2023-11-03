@@ -57,14 +57,14 @@ public:
   NetworkParameters network_params;
 
   /**
-   * @brief ImportExportJSON tool.
-   */
-  [[no_unique_address]] ImportExportJSON importExportJSON;
-
-  /**
    * @brief The neural network
    */
   Network *network = nullptr;
+
+  /**
+   * @brief ImportExportJSON tool.
+   */
+  [[no_unique_address]] ImportExportJSON importExportJSON;
 
   /**
    * @brief A simple logger
