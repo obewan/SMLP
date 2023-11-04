@@ -80,14 +80,42 @@ RecordResult FileParser::processLine(const NetworkParameters &network_params,
     throw FileParserException(sstr.str());
   }
 
+  if (app_params.mode == EMode::Predictive &&
+      cell_refs.size() < network_params.input_size) {
+    std::stringstream sstr;
+    sstr << "Invalid columns at line " << current_line_number << ": found "
+         << cell_refs.size() << " columns instead of a minimum of "
+         << network_params.input_size;
+    throw FileParserException(sstr.str());
+  }
+
   Record record;
-  if (app_params.output_at_end) {
+  if (app_params.mode == EMode::Predictive &&
+      cell_refs.size() == network_params.input_size) {
+    record = processInputOnly(cell_refs, network_params.input_size);
+  } else if (app_params.output_at_end) {
     record = processInputFirst(cell_refs, network_params.input_size);
   } else {
     record = processOutputFirst(cell_refs, network_params.output_size);
   }
 
   return {.isSuccess = true, .record = record};
+}
+
+Record FileParser::processInputOnly(
+    const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+    size_t input_size) const {
+  std::vector<float> input;
+  auto getValue = [](auto cells) {
+    return (float)cells[0].getDouble().value();
+  };
+  for (auto const &value :
+       std::ranges::subrange(cell_refs.begin(),
+                             cell_refs.begin() + input_size) |
+           std::views::transform(getValue)) {
+    input.push_back(value);
+  }
+  return std::make_pair(input, std::vector<float>{});
 }
 
 Record FileParser::processInputFirst(
