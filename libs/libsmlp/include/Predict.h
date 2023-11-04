@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "FileParser.h"
 #include "Network.h"
+#include "SimpleLogger.h"
 #include "exception/PredictException.h"
 
 /**
@@ -19,14 +20,21 @@
 class Predict {
 public:
   Predict(Network *network, FileParser *fileparser,
-          const AppParameters &app_params)
-      : network_(network), fileParser_(fileparser), app_params_(app_params) {}
+          const AppParameters &app_params, const SimpleLogger &logger)
+      : network_(network), fileParser_(fileparser), app_params_(app_params),
+        logger_(logger) {}
 
-  Predict(Network *network, const AppParameters &app_params)
+  Predict(Network *network, const AppParameters &app_params,
+          const SimpleLogger &logger)
       : network_(network), fileParser_(new FileParser(app_params.data_file)),
-        app_params_(app_params) {}
+        app_params_(app_params), logger_(logger) {}
 
   void predict();
+
+  void appendValues(const std::vector<float> &values, bool roundValues) const;
+
+  void showOutput(const std::vector<float> &inputs,
+                  const std::vector<float> &predicteds) const;
 
   /**
    * @brief Sets the network for testing.
@@ -60,4 +68,5 @@ private:
   Network *network_;
   FileParser *fileParser_;
   const AppParameters &app_params_;
+  const SimpleLogger &logger_;
 };

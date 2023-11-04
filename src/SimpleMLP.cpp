@@ -80,7 +80,7 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
 }
 
 void SimpleMLP::predict() {
-  auto predic = new Predict(network, app_params);
+  auto predic = new Predict(network, app_params, logger);
   predic->predict();
 }
 
@@ -208,8 +208,13 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
   app.add_option(
          "-m, --mode", app_params.mode,
          "Select the running mode:\n"
-         "  - Predictive: use an inputs file (without outputs) to predict the "
-         "outputs. This requires an imported and trained network.\n"
+         "  - Predictive:This mode uses an input file to predict the outputs. "
+         "If the input file contains output columns, the predicted CSV outputs "
+         "will replace them without modifying the original input file. Please "
+         "be mindful of the parameters (input_size, output_size, output_ends). "
+         "If the input file does not contain output columns, pay close "
+         "attention to the input_size parameter. This mode requires a network "
+         "that has been imported and trained.\n"
          "  - TestOnly: Test an imported network without training.\n"
          "  - TrainOnly: Train the network without testing.\n"
          "  - TrainThenTest: Train and then test the network (default).\n"

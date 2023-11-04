@@ -39,4 +39,6 @@ public:
     std::cerr << "[ERROR] ";
     (std::cerr << ... << args) << std::endl;
   }
+
+  void endl() const { std::cout << std::endl; }
 };

@@ -44,7 +44,7 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 10. You can specify the running mode with the `mode` option (`-m` parameter):
-    - Predictive: use an inputs file (without outputs) to predict the outputs. This requires an imported and trained network.
+    - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network that has been imported and trained.
     - TestOnly: Test an imported network without training.
     - TrainOnly: Train the network without testing.
     - TrainThenTest: Train and then test the network (default mode).
@@ -55,9 +55,9 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - NumberOnly: This will show only the predicted outputs number.
     - RawOnly: This will only show the output(s) raw values (float).
 12. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
-    - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - ELU: Exponential Linear Units, require an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - LReLU: Leaky ReLU.
-    - PReLU: Parametric ReLU, require an an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - PReLU: Parametric ReLU, require an an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - ReLU: Rectified Linear Unit.
     - Sigmoid (default).
     - Tanh: Hyperbolic Tangent.
