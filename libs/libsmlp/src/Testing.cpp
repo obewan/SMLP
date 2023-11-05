@@ -140,6 +140,8 @@ std::string Testing::showResults(EMode mode, bool verbose) {
   auto stats = calcStats();
   std::stringstream sstr;
 
+  sstr << "Testing results: " << std::endl;
+
   if (verbose) {
     for (auto const &result : testResultExts) {
       sstr << showResultsVerbose(result, mode) << std::endl;

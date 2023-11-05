@@ -74,17 +74,22 @@ Output:
 
 ```
 ...
-[INFO] Training epoch 98/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-[INFO] Training epoch 99/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-[INFO] Training epoch 100/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-Elapsed time: 273.487s
-Low accuracy (correct at 70%): 91.6%
-Avg accuracy (correct at 80%): 88.2%
-High accuracy (correct at 90%): 81.2%
-Good convergence toward zero: 95.9% (21277/22177)
-Good convergence toward one: 96.6%  (17215/17824)
-Good convergence total: 96.2% (38492/40001)
-[INFO] Exporting network model to myMushroomMLP.json...
+[2023-11-05 09:26:09] [INFO] Training epoch 95/100... testing... acc(lah)[94 92 88] conv(01t)[99 92 96]
+[2023-11-05 09:26:11] [INFO] Training epoch 96/100... testing... acc(lah)[94 92 88] conv(01t)[99 92 96]
+[2023-11-05 09:26:13] [INFO] Training epoch 97/100... testing... acc(lah)[94 92 89] conv(01t)[99 92 96]
+[2023-11-05 09:26:18] [INFO] Training epoch 98/100... testing... acc(lah)[94 93 89] conv(01t)[98 93 96]
+[2023-11-05 09:26:23] [INFO] Training epoch 99/100... testing... acc(lah)[94 92 89] conv(01t)[99 92 96]
+[2023-11-05 09:26:25] [INFO] Training epoch 100/100... testing... acc(lah)[94 92 89] conv(01t)[99 92 96]
+[2023-11-05 09:26:27] [INFO] Elapsed time: 248.004s
+[2023-11-05 09:26:27] [INFO] Testing results:
+Low accuracy (correct at 70%): 94.3%
+Avg accuracy (correct at 80%): 92.2%
+High accuracy (correct at 90%): 88.9%
+Good convergence toward zero: 98.8% (10096/10215)
+Good convergence toward one: 91.8%  (7438/8106)
+Good convergence total: 95.7% (17534/18321)
+
+[2023-11-05 09:26:27] [INFO] Exporting network model to myMushroomMLP.json...
 ```
 
 ### Example 2:
@@ -96,11 +101,12 @@ Importing the previous myMushroomMLP.json and testing it with the mushroom datas
 Output:
 
 ```
-[INFO] Importing network model from myMushroomMLP.json...
-Testing, using file ../data/mushroom/mushroom_data.csv
-Low accuracy (correct at 70%): 91.6%
-Avg accuracy (correct at 80%): 88.2%
-High accuracy (correct at 90%): 81.2%
+[2023-11-05 09:41:18] [INFO] Importing network model from myMushroomMLP.json...
+[2023-11-05 09:41:18] [INFO] Testing, using file ../data/mushroom/mushroom_data.csv
+Testing results:
+Low accuracy (correct at 70%): 94.3%
+Avg accuracy (correct at 80%): 92.2%
+High accuracy (correct at 90%): 88.9%
 ```
 
 ## License

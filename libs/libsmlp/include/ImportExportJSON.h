@@ -107,11 +107,29 @@ public:
           throw ImportExportJSONException("LayerType not recognized.");
         }
 
-        // Deserialize the JSON data for the layer into it.
+        // Add neurons and their weights
         for (auto json_neuron : json_layer["neurons"]) {
           Neuron n;
           json_neuron["weights"].get_to(n.weights);
           layer->neurons.push_back(n);
+        }
+
+        // Set activation functions
+        switch (layer->layerType) {
+        case LayerType::InputLayer: // no activation function here
+          break;
+        case LayerType::HiddenLayer:
+          model->SetActivationFunction(layer,
+                                       model->params.hidden_activation_function,
+                                       model->params.hidden_activation_alpha);
+          break;
+        case LayerType::OutputLayer:
+          model->SetActivationFunction(layer,
+                                       model->params.output_activation_function,
+                                       model->params.output_activation_alpha);
+          break;
+        default:
+          throw ImportExportJSONException("LayerType not recognized.");
         }
 
         // Add the layer to the network.
