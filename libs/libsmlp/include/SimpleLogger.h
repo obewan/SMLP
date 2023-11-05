@@ -8,37 +8,75 @@
  *
  */
 #pragma once
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
+
+enum class LogLevel { INFO, WARN, ERROR, DEBUG };
 
 class SimpleLogger {
 public:
-  template <typename... Args> void out(Args &&...args) const {
-    (std::cout << ... << args) << std::endl;
-  }
+  template <typename... Args>
+  const SimpleLogger &log(LogLevel level, bool endl = true,
+                          Args &&...args) const {
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+    std::cout << "[" << std::put_time(std::localtime(&now_c), "%F %T") << "] ";
 
-  template <typename... Args> void append(Args &&...args) const {
+    switch (level) {
+    case LogLevel::INFO:
+      std::cout << "[INFO] ";
+      break;
+    case LogLevel::WARN:
+      std::cout << "[WARN] ";
+      break;
+    case LogLevel::ERROR:
+      std::cout << "[ERROR] ";
+      break;
+    case LogLevel::DEBUG:
+      std::cout << "[DEBUG] ";
+      break;
+    default:
+      break;
+    }
     (std::cout << ... << args);
+    if (endl) {
+      std::cout << std::endl;
+    }
+
+    return *this;
   }
 
-  template <typename... Args> void log(Args &&...args) const {
-    std::cout << "[INFO] ";
-    (std::cout << ... << args) << std::endl;
-  }
-
-  template <typename... Args> void log_append(Args &&...args) const {
-    std::cout << "[INFO] ";
+  template <typename... Args> const SimpleLogger &append(Args &&...args) const {
     (std::cout << ... << args);
+    return *this;
   }
 
-  template <typename... Args> void warn(Args &&...args) const {
-    std::cerr << "[WARN] ";
-    (std::cerr << ... << args) << std::endl;
+  template <typename... Args> const SimpleLogger &out(Args &&...args) const {
+    (std::cout << ... << args) << std::endl;
+    return *this;
   }
 
-  template <typename... Args> void error(Args &&...args) const {
-    std::cerr << "[ERROR] ";
-    (std::cerr << ... << args) << std::endl;
+  template <typename... Args> const SimpleLogger &info(Args &&...args) const {
+    return log(LogLevel::INFO, true, args...);
   }
 
-  void endl() const { std::cout << std::endl; }
+  template <typename... Args> const SimpleLogger &warn(Args &&...args) const {
+    return log(LogLevel::WARN, true, args...);
+  }
+
+  template <typename... Args> const SimpleLogger &error(Args &&...args) const {
+    return log(LogLevel::ERROR, true, args...);
+  }
+
+  template <typename... Args> const SimpleLogger &debug(Args &&...args) const {
+    return log(LogLevel::DEBUG, true, args...);
+  }
+
+  const SimpleLogger &endl() const {
+    std::cout << std::endl;
+    std::cout.flush();
+    return *this;
+  }
 };

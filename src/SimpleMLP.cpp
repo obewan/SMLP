@@ -63,8 +63,8 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
       if (app_params.mode !=
           EMode::Predictive) { // avoiding header lines on
                                // this mode, for commands chaining
-        logger.log("Importing network model from ",
-                   app_params.network_to_import, "...");
+        logger.info("Importing network model from ",
+                    app_params.network_to_import, "...");
       }
       network = importExportJSON.importModel(app_params);
       network_params = network->params;
@@ -85,14 +85,14 @@ void SimpleMLP::predict() {
 }
 
 void SimpleMLP::train() {
-  logger.log("Training, using file ", app_params.data_file);
-  logger.log(showInlineHeader());
+  logger.info("Training, using file ", app_params.data_file);
+  logger.info(showInlineHeader());
   Training training(network, app_params.data_file, logger);
   training.train(network_params, app_params);
 }
 
 void SimpleMLP::test() {
-  logger.log("Testing, using file ", app_params.data_file);
+  logger.info("Testing, using file ", app_params.data_file);
   Testing testing(network, app_params.data_file);
   testing.test(network_params, app_params, 0);
   logger.out(testing.showResults(app_params.mode));
@@ -106,9 +106,9 @@ void SimpleMLP::trainTestMonitored() {
     return;
   }
 
-  logger.log("Train and testing, using file ", app_params.data_file);
-  logger.log("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-             showInlineHeader());
+  logger.info("Train and testing, using file ", app_params.data_file);
+  logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+              showInlineHeader());
   Training training(network, app_params.data_file, logger);
   training.trainTestMonitored(network_params, app_params);
 }

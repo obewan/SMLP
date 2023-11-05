@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
 
   if (bool showVersion{false}; !smlp->init(argc, argv, showVersion)) {
     if (showVersion) {
-      smlp->logger.log(smlp->app_params.title, " v", smlp->app_params.version);
-      smlp->logger.log("Copyright Damien Balima (https://dams-labs.net) 2023");
+      smlp->logger.out(smlp->app_params.title, " v", smlp->app_params.version);
+      smlp->logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
       return EXIT_SUCCESS;
     }
     return EXIT_FAILURE;
@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
   }
 
   if (!smlp->app_params.network_to_export.empty()) {
-    smlp->logger.log("Exporting network model to ",
-                     smlp->app_params.network_to_export, "...");
+    smlp->logger.info("Exporting network model to ",
+                      smlp->app_params.network_to_export, "...");
     smlp->importExportJSON.exportModel(smlp->network, smlp->app_params);
   }
 
