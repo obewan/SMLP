@@ -1,9 +1,11 @@
 #include "Common.h"
+#include "SimpleLogger.h"
 #include "Training.h"
 #include "doctest.h"
 
 TEST_CASE("Testing the Training class") {
-  SUBCASE("Test Constructor") { CHECK_NOTHROW(Training(nullptr, "")); }
+  SimpleLogger logger;
+  SUBCASE("Test Constructor") { CHECK_NOTHROW(Training(nullptr, "", logger)); }
 
   // beware current path is "build/libs/libsmlp/test"
   std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
@@ -12,7 +14,7 @@ TEST_CASE("Testing the Training class") {
   AppParameters app_params{.data_file = test_file};
 
   auto network = new Network(network_params);
-  Training training(network, test_file);
+  Training training(network, test_file, logger);
 
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {

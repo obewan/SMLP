@@ -19,6 +19,7 @@
 class HiddenLayer : public Layer {
 public:
   HiddenLayer() : Layer(LayerType::HiddenLayer) {}
+
   void forwardPropagation() override {
     if (previousLayer == nullptr) {
       return;

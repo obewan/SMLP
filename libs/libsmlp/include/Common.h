@@ -18,13 +18,28 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
-enum class EMode { TestOnly, TrainOnly, TrainTestMonitored, TrainThenTest };
+enum class EMode {
+  Predictive,
+  TestOnly,
+  TrainOnly,
+  TrainTestMonitored,
+  TrainThenTest
+};
 
 const std::map<std::string, EMode, std::less<>> mode_map{
+    {"Predictive", EMode::Predictive},
     {"TestOnly", EMode::TestOnly},
     {"TrainOnly", EMode::TrainOnly},
     {"TrainTestMonitored", EMode::TrainTestMonitored},
     {"TrainThenTest", EMode::TrainThenTest}};
+
+enum class EPredictiveMode { CSV, NumberAndRaw, NumberOnly, RawOnly };
+
+const std::map<std::string, EPredictiveMode, std::less<>> predictive_map{
+    {"CSV", EPredictiveMode::CSV},
+    {"NumberAndRaw", EPredictiveMode::NumberAndRaw},
+    {"NumberOnly", EPredictiveMode::NumberOnly},
+    {"RawOnly", EPredictiveMode::RawOnly}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
 
@@ -52,6 +67,7 @@ struct AppParameters {
   bool output_at_end = false;
   bool verbose = false;
   EMode mode = EMode::TrainThenTest;
+  EPredictiveMode predictive_mode = EPredictiveMode::CSV;
 };
 
 /**
@@ -85,21 +101,30 @@ struct RecordResult {
  */
 class Common {
 public:
-  static std::string getModeStr(EMode value) {
-    for (const auto &[key, mode] : mode_map) {
-      if (mode == value) {
+  static std::string getModeStr(EMode mode) {
+    for (const auto &[key, value] : mode_map) {
+      if (value == mode) {
         return key;
       }
     }
-    return "Undefined";
+    return "";
   }
 
-  static std::string getActivationStr(EActivationFunction value) {
-    for (const auto &[key, mode] : activation_map) {
-      if (mode == value) {
+  static std::string getPredictiveModeStr(EPredictiveMode predictive) {
+    for (const auto &[key, value] : predictive_map) {
+      if (value == predictive) {
         return key;
       }
     }
-    return "Undefined";
+    return "";
+  }
+
+  static std::string getActivationStr(EActivationFunction activation) {
+    for (const auto &[key, value] : activation_map) {
+      if (value == activation) {
+        return key;
+      }
+    }
+    return "";
   }
 };

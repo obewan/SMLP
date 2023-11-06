@@ -89,6 +89,17 @@ public:
                            bool isTesting = false);
 
   /**
+   * @brief Processes a record with input only.
+   * @param cell_refs A 2D vector containing Csv::CellReference objects for each
+   * cell in the record.
+   * @param input_size The size of the input data in the record.
+   * @return A Record containing the processed data from the record.
+   */
+  Record processInputOnly(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+      size_t input_size) const;
+
+  /**
    * @brief Processes a record with input first. This method is used when the
    * input values are located before the output values in a record.
    *

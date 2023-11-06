@@ -1,5 +1,5 @@
-#include "Common.h"
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include "Common.h"
 #include "FileParser.h"
 #include "doctest.h"
 #include <cmath>

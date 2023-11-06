@@ -101,7 +101,7 @@ public:
   /**
    * @brief Displays a summary of the test results on a single line.
    */
-  void showResultsLine();
+  std::string showResultsLine();
 
   /**
    * @brief Displays detailed test results. If the verbose parameter is set to
@@ -111,13 +111,14 @@ public:
    * @param verbose If true, additional details are displayed (default is
    * false).
    */
-  void showResults(EMode mode, bool verbose = false);
+  std::string showResults(EMode mode, bool verbose = false);
 
   /**
    * @brief Display some verbose results.
    *
    */
-  void showResultsVerbose(const TestResultsExt &result, EMode mode) const;
+  std::string showResultsVerbose(const TestResultsExt &result,
+                                 EMode mode) const;
 
   /**
    * @brief Calculates and returns the statistics of the test results.

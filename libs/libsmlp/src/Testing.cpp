@@ -1,8 +1,10 @@
 #include "Testing.h"
 #include "Common.h"
+#include "exception/TestingException.h"
 #include <iomanip>
 #include <iostream>
 #include <ranges>
+#include <sstream>
 
 using namespace std::string_view_literals;
 
@@ -12,11 +14,8 @@ void Testing::test(const NetworkParameters &network_params,
     fileParser_->getTrainingRatioLine(app_params.training_ratio);
   }
   if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
-    std::cout
-        << "Warning: No lines left for testing, check your training_ratio "
-           "parameter. Aborting testing"
-        << std::endl;
-    return;
+    throw TestingException("No data left for testing, check your "
+                           "training_ratio parameter. Aborting testing.");
   }
 
   if (!fileParser_->file.is_open()) {
@@ -111,67 +110,68 @@ Testing::Stat Testing::calcStats() {
   return stats;
 }
 
-void Testing::showResultsLine() {
+std::string Testing::showResultsLine() {
   auto stats = calcStats();
-  const auto default_precision{std::cout.precision()};
+  std::stringstream sstr;
 
-  std::cout << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
-            << stats.accuracy << " " << stats.accuracy_high << "] ";
-  std::cout << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero
-            << " " << stats.convergence_one << " " << stats.convergence << "]";
+  sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
+       << stats.accuracy << " " << stats.accuracy_high << "] ";
+  sstr << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero << " "
+       << stats.convergence_one << " " << stats.convergence << "]";
 
-  std::cout << std::setprecision((int)default_precision); // restore defaults
+  return sstr.str();
 }
 
-void Testing::showResultsVerbose(const TestResultsExt &result,
-                                 EMode mode) const {
-  std::cout << "Expected:" << result.expected << " Predicted:" << result.output;
+std::string Testing::showResultsVerbose(const TestResultsExt &result,
+                                        EMode mode) const {
+  std::stringstream sstr;
+  sstr << "Expected:" << result.expected << " Predicted:" << result.output;
   if (mode == EMode::TrainTestMonitored) {
-    std::cout << " [ ";
+    sstr << " [ ";
     for (auto &progres : result.progress) {
-      std::cout << progres << " ";
+      sstr << progres << " ";
     }
-    std::cout << "] (" << result.progress.back() - result.progress.front()
-              << ")" << std::endl;
-  } else {
-    std::cout << std::endl;
+    sstr << "] (" << result.progress.back() - result.progress.front() << ")";
   }
+  return sstr.str();
 }
 
-void Testing::showResults(EMode mode, bool verbose) {
+std::string Testing::showResults(EMode mode, bool verbose) {
   auto stats = calcStats();
+  std::stringstream sstr;
+
+  sstr << "Testing results: " << std::endl;
 
   if (verbose) {
     for (auto const &result : testResultExts) {
-      showResultsVerbose(result, mode);
+      sstr << showResultsVerbose(result, mode) << std::endl;
     }
-    std::cout << std::endl;
+    sstr << std::endl;
   }
 
-  const auto default_precision{std::cout.precision()};
-  std::cout << std::setprecision(3)
-            << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
-            << std::endl;
-  std::cout << std::setprecision(3)
-            << "Avg accuracy (correct at 80%): " << stats.accuracy << "%"
-            << std::endl;
-  std::cout << std::setprecision(3)
-            << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
-            << std::endl;
+  sstr << std::setprecision(3)
+       << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
+       << std::endl;
+  sstr << std::setprecision(3)
+       << "Avg accuracy (correct at 80%): " << stats.accuracy << "%"
+       << std::endl;
+  sstr << std::setprecision(3)
+       << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
+       << std::endl;
 
   if (mode == EMode::TrainTestMonitored) {
-    std::cout << std::setprecision(3)
-              << "Good convergence toward zero: " << stats.convergence_zero
-              << "% (" << stats.good_convergence_zero << "/"
-              << stats.total_expected_zero << ")" << std::endl;
-    std::cout << std::setprecision(3)
-              << "Good convergence toward one: " << stats.convergence_one
-              << "%  (" << stats.good_convergence_one << "/"
-              << stats.total_expected_one << ")" << std::endl;
-    std::cout << std::setprecision(3)
-              << "Good convergence total: " << stats.convergence << "% ("
-              << stats.good_convergence << "/" << stats.total_samples << ")"
-              << std::endl;
+    sstr << std::setprecision(3)
+         << "Good convergence toward zero: " << stats.convergence_zero << "% ("
+         << stats.good_convergence_zero << "/" << stats.total_expected_zero
+         << ")" << std::endl;
+    sstr << std::setprecision(3)
+         << "Good convergence toward one: " << stats.convergence_one << "%  ("
+         << stats.good_convergence_one << "/" << stats.total_expected_one << ")"
+         << std::endl;
+    sstr << std::setprecision(3)
+         << "Good convergence total: " << stats.convergence << "% ("
+         << stats.good_convergence << "/" << stats.total_samples << ")"
+         << std::endl;
   }
-  std::cout << std::setprecision((int)default_precision); // restore defaults
+  return sstr.str();
 }
