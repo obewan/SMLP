@@ -64,6 +64,16 @@ public:
    */
   FileParser *getFileParser() { return fileParser_; }
 
+  /**
+   * @brief Truncate to zero if close to zero, to avoid scientific notation.
+   *
+   * @param value
+   * @return float
+   */
+  float truncZero(const float &value) const {
+    return value < 1e-4 ? 0.0f : value;
+  }
+
 private:
   Network *network_;
   FileParser *fileParser_;

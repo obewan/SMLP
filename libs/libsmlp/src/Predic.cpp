@@ -25,15 +25,17 @@ void Predict::predict() {
 void Predict::appendValues(const std::vector<float> &values,
                            bool roundValues) const {
   if (!values.empty()) {
-    logger_.append(roundValues ? round(values.front()) : values.front());
+    logger_.append(roundValues ? round(values.front())
+                               : truncZero(values.front()));
     for (auto it = std::next(values.begin()); it != values.end(); ++it) {
-      logger_.append(",", roundValues ? round(*it) : *it);
+      logger_.append(",", roundValues ? round(*it) : truncZero(*it));
     }
   }
 }
 
 void Predict::showOutput(const std::vector<float> &inputs,
                          const std::vector<float> &predicteds) const {
+  logger_.setPrecision(3);
   switch (app_params_.predictive_mode) {
   case EPredictiveMode::CSV: {
     appendValues(app_params_.output_at_end ? inputs : predicteds,
@@ -58,6 +60,8 @@ void Predict::showOutput(const std::vector<float> &inputs,
     logger_.endl();
   } break;
   default:
+    logger_.resetPrecision();
     throw PredictException("Unimplemented predictive mode");
   }
+  logger_.resetPrecision();
 }

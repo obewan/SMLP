@@ -1,7 +1,7 @@
 /**
  * @file SimpleLogger.h
  * @author Damien Balima (www.dams-labs.net)
- * @brief a simple logger
+ * @brief a simple logger, using fluent interfaces.
  * @date 2023-11-02
  *
  * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2023
@@ -40,6 +40,8 @@ public:
     default:
       break;
     }
+
+    std::cout.precision(current_precision);
     (std::cout << ... << args);
     if (endl) {
       std::cout << std::endl;
@@ -49,12 +51,15 @@ public:
   }
 
   template <typename... Args> const SimpleLogger &append(Args &&...args) const {
+    std::cout.precision(current_precision);
     (std::cout << ... << args);
     return *this;
   }
 
   template <typename... Args> const SimpleLogger &out(Args &&...args) const {
-    (std::cout << ... << args) << std::endl;
+    std::cout.precision(current_precision);
+    (std::cout << ... << args);
+    std::cout << std::endl;
     return *this;
   }
 
@@ -79,4 +84,18 @@ public:
     std::cout.flush();
     return *this;
   }
+
+  const SimpleLogger &setPrecision(std::streamsize precision) const {
+    current_precision = precision;
+    return *this;
+  }
+
+  const SimpleLogger &resetPrecision() const {
+    current_precision = default_precision;
+    return *this;
+  }
+
+private:
+  std::streamsize default_precision = std::cout.precision();
+  mutable std::streamsize current_precision = std::cout.precision();
 };

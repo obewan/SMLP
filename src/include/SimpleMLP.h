@@ -64,12 +64,12 @@ public:
   /**
    * @brief ImportExportJSON tool.
    */
-  [[no_unique_address]] ImportExportJSON importExportJSON;
+  ImportExportJSON importExportJSON;
 
   /**
    * @brief A simple logger
    */
-  [[no_unique_address]] SimpleLogger logger;
+  SimpleLogger logger;
 
 private:
   int parseArgs(int argc, char **argv, bool &showVersion);
