@@ -14,7 +14,9 @@
 #include "Layer.h"
 #include "Network.h"
 #include "OutputLayer.h"
+#include "SimpleLogger.h"
 #include "exception/ImportExportJSONException.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
@@ -27,6 +29,8 @@ using json = nlohmann::json;
  */
 class ImportExportJSON {
 public:
+  void setLogger(const SimpleLogger &logger) { logger_ = logger; }
+
   /**
    * @brief Parse a json file into a network model.
    *
@@ -37,12 +41,9 @@ public:
     if (app_params.network_to_import.empty()) {
       throw ImportExportJSONException("Missing file to import.");
     }
-    std::string path_in_ext = app_params.network_to_import;
 
-    // A workaround for parsing error in case of missing
-    // at least a relative path
-    if (app_params.network_to_import.find('/') == std::string::npos &&
-        app_params.network_to_import.find('\\') == std::string::npos) {
+    std::string path_in_ext = app_params.network_to_import;
+    if (std::filesystem::path p(path_in_ext); p.parent_path().empty()) {
       path_in_ext = "./" + path_in_ext;
     }
 
@@ -64,9 +65,9 @@ public:
 
       if (std::string jversion = json_model["version"];
           jversion != app_params.version) {
-        std::cerr << "[WARN] your model version (" << jversion
-                  << ") is not the same as current version ("
-                  << app_params.version << ")" << std::endl;
+        logger_.warn("Your model version (", jversion,
+                     ") is not the same as current version (",
+                     app_params.version, ")");
       }
 
       // Create a new Network object and deserialize the JSON data into it.
@@ -106,11 +107,29 @@ public:
           throw ImportExportJSONException("LayerType not recognized.");
         }
 
-        // Deserialize the JSON data for the layer into it.
+        // Add neurons and their weights
         for (auto json_neuron : json_layer["neurons"]) {
           Neuron n;
           json_neuron["weights"].get_to(n.weights);
           layer->neurons.push_back(n);
+        }
+
+        // Set activation functions
+        switch (layer->layerType) {
+        case LayerType::InputLayer: // no activation function here
+          break;
+        case LayerType::HiddenLayer:
+          model->SetActivationFunction(layer,
+                                       model->params.hidden_activation_function,
+                                       model->params.hidden_activation_alpha);
+          break;
+        case LayerType::OutputLayer:
+          model->SetActivationFunction(layer,
+                                       model->params.output_activation_function,
+                                       model->params.output_activation_alpha);
+          break;
+        default:
+          throw ImportExportJSONException("LayerType not recognized.");
         }
 
         // Add the layer to the network.
@@ -201,4 +220,7 @@ public:
     file << json_network.dump(2);
     file.close();
   }
+
+private:
+  [[no_unique_address]] SimpleLogger logger_;
 };

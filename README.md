@@ -1,8 +1,7 @@
 # SMLP
 
 A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
-Each neurons of a previous layer is connected with each neurons of its next layer.  
-The neural network currently uses a sigmoid activation function.
+Each neurons of a previous layer is connected with each neurons of its next layer.
 
 # Features
 
@@ -23,14 +22,15 @@ The neural network currently uses a sigmoid activation function.
 
 # Roadmap to first release
 
-- Add a Predictive mode.`[in progress]`
+- Improve code coverage to 80%. `[in progress]`
+- Add a config file.
 - Add a pipe input.
-- Improve code coverage to 80%.
-- Add interactive testing.
+- Add a socket input.
+- Add an interactive testing (command line input).
 - Add an auto-training feature (searching for the best parameters).
 - Add a GUI (but probably on a more advanced project).
 
-Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project.
+_Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
 # Usage
 
@@ -44,54 +44,109 @@ Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for
 8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 9. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 10. You can specify the running mode with the `mode` option (`-m` parameter):
-    - TestOnly: Just test an imported network without training.
-    - TrainOnly: Just train the network without testing.
-    - TrainThenTest: Train at once then test (default mode).
-    - TrainTestMonitored: Train and test at each epoch with monitoring progress of an output neuron. Beware as this is slower and uses more memory.
-11. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
-    - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
+    - TestOnly: Test an imported network without training.
+    - TrainOnly: Train the network without testing.
+    - TrainThenTest: Train and then test the network (default mode).
+    - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
+11. If using the Predictive mode, you can specify how to render the output with the `predictive_mode` option (`-n` parameter):
+    - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option (default mode).
+    - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values (float).
+    - NumberOnly: This will show only the predicted outputs number.
+    - RawOnly: This will only show the output(s) raw values (float).
+12. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
+    - ELU: Exponential Linear Units, require an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - LReLU: Leaky ReLU.
-    - PReLU: Parametric ReLU, require an an hidden_activation_alpha parameter (`-p` parameter) or an output_activation_alpha parameter (`-q` parameter).
+    - PReLU: Parametric ReLU, require an an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - ReLU: Rectified Linear Unit.
     - Sigmoid (default).
     - Tanh: Hyperbolic Tangent.
 
 # Examples
 
-### Example 1: training a new MLP with the mushroom dataset, 20 inputs, 1 output, 12 neurons by hidden layers, 1 hidden layer, during 100 epochs, with 70% training data and 30% testing data, a learning rate of 0.01 and with monitored tests. Then exporting the model to myMushroomMLP.json after the training.
+### Example 1:
 
-`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t 0.7 -r 0.01 -m TrainTestMonitored`
+Training a new MLP with the mushroom dataset, 20 inputs (-i), 1 output (-o), 12 neurons by hidden layers (-d), 1 hidden layer (-c), during 100 epochs (-e), output at beginning of the dataset (-s), with a ReLU activation function on hidden layer (-j) and with monitored tests (-m). Then exporting the model to myMushroomMLP.json after the training (-b).
+
+`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -j ReLU -s false -m TrainTestMonitored`
 
 Output:
 
 ```
 ...
-[INFO] Training epoch 98/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-[INFO] Training epoch 99/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-[INFO] Training epoch 100/100... testing... acc(lah)[92 88 81] conv(01t)[96 97 96]
-Elapsed time: 273.487s
-Low accuracy (correct at 70%): 91.6%
-Avg accuracy (correct at 80%): 88.2%
-High accuracy (correct at 90%): 81.2%
-Good convergence toward zero: 95.9% (21277/22177)
-Good convergence toward one: 96.6%  (17215/17824)
-Good convergence total: 96.2% (38492/40001)
-[INFO] Exporting network model to myMushroomMLP.json...
+[2023-11-06 14:58:26] [INFO] Training epoch 93/100... testing... acc(lah)[87 85 82] conv(01t)[84 99 91]
+[2023-11-06 14:58:28] [INFO] Training epoch 94/100... testing... acc(lah)[84 81 78] conv(01t)[78 1e+02 88]
+[2023-11-06 14:58:30] [INFO] Training epoch 95/100... testing... acc(lah)[84 81 79] conv(01t)[78 1e+02 88]
+[2023-11-06 14:58:41] [INFO] Training epoch 96/100... testing... acc(lah)[84 81 79] conv(01t)[78 1e+02 88]
+[2023-11-06 14:58:43] [INFO] Training epoch 97/100... testing... acc(lah)[84 81 79] conv(01t)[78 1e+02 88]
+[2023-11-06 14:58:45] [INFO] Training epoch 98/100... testing... acc(lah)[84 82 79] conv(01t)[79 99 88]
+[2023-11-06 14:58:47] [INFO] Training epoch 99/100... testing... acc(lah)[84 82 79] conv(01t)[79 1e+02 88]
+[2023-11-06 14:58:49] [INFO] Training epoch 100/100... testing... acc(lah)[85 83 80] conv(01t)[80 99 89]
+[2023-11-06 14:58:51] [INFO] Elapsed time: 292.32s
+[2023-11-06 14:58:51] [INFO] Testing results:
+Low accuracy (correct at 70%): 84.8%
+Avg accuracy (correct at 80%): 82.8%
+High accuracy (correct at 90%): 79.6%
+Good convergence toward zero: 80.1% (8183/10215)
+Good convergence toward one: 99.4%  (8057/8106)
+Good convergence total: 88.6% (16240/18321)
+
+[2023-11-06 14:58:51] [INFO] Exporting network model to myMushroomMLP.json...
 ```
 
-### Example 2: importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
+### Example 2:
 
-`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
+Importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
+
+`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -s false -m TestOnly`
 
 Output:
 
 ```
-[INFO] Importing network model from myMushroomMLP.json...
-Testing, using file ../data/mushroom/mushroom_data.csv
-Low accuracy (correct at 70%): 91.6%
-Avg accuracy (correct at 80%): 88.2%
-High accuracy (correct at 90%): 81.2%
+[2023-11-06 15:00:13] [INFO] Importing network model from myMushroomMLP.json...
+[2023-11-06 15:00:13] [INFO] Testing, using file ../data/mushroom/mushroom_data.csv
+Testing results:
+Low accuracy (correct at 70%): 84.8%
+Avg accuracy (correct at 80%): 82.8%
+High accuracy (correct at 90%): 79.6%
 ```
+
+### Example 3:
+
+Using a new data file that doesn't have outputs to predict the outputs with our previous mushroom mlp model.
+`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -s false -m Predictive`
+
+mushroom_data_to_predict.csv:
+
+```
+0.08,0.43,0.90,0.42,1.00,0.62,0.33,0.38,0.10,0.07,0.00,0.00,0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+0.01,0.57,0.90,0.25,1.00,0.00,0.67,0.92,0.09,0.02,0.00,0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+0.07,0.57,0.00,0.25,1.00,0.38,0.33,0.62,0.11,0.07,0.14,0.00,0.08,0.00,0.00,1.00,0.92,0.00,0.25,0.00
+0.09,0.57,0.00,0.67,1.00,0.62,0.33,0.62,0.13,0.20,0.00,0.00,0.62,0.00,0.00,1.00,0.92,0.00,0.38,0.00
+0.16,0.71,0.40,0.08,1.00,0.38,0.33,0.69,0.12,0.20,0.00,0.64,0.08,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+0.06,0.14,0.40,1.00,1.00,0.50,0.00,0.69,0.17,0.06,0.00,0.00,0.92,0.00,0.00,1.00,0.92,0.00,0.12,0.00
+0.02,0.43,0.20,0.08,1.00,0.38,0.67,0.08,0.04,0.02,0.00,0.36,0.08,0.00,0.00,1.00,0.92,0.00,0.62,0.00
+0.09,1.00,0.70,0.75,1.00,0.00,0.33,0.85,0.03,0.09,0.00,0.00,0.08,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+0.07,0.71,0.00,0.08,0.50,0.38,0.33,0.69,0.10,0.06,0.00,0.00,0.54,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+0.06,0.43,0.00,0.75,1.00,0.12,0.33,0.62,0.11,0.09,0.00,0.00,0.23,0.00,0.00,1.00,0.92,0.00,1.00,0.00
+```
+
+Output:
+
+```
+1,0.08,0.43,0.9,0.42,1,0.62,0.33,0.38,0.1,0.07,0,0,0.38,0,0,1,0.92,0,1,0
+1,0.01,0.57,0.9,0.25,1,0,0.67,0.92,0.09,0.02,0,0,0.62,0,0,1,0.92,0,1,0
+0,0.07,0.57,0,0.25,1,0.38,0.33,0.62,0.11,0.07,0.14,0,0.08,0,0,1,0.92,0,0.25,0
+1,0.09,0.57,0,0.67,1,0.62,0.33,0.62,0.13,0.2,0,0,0.62,0,0,1,0.92,0,0.38,0
+1,0.16,0.71,0.4,0.08,1,0.38,0.33,0.69,0.12,0.2,0,0.64,0.08,0,0,1,0.92,0,1,0
+0,0.06,0.14,0.4,1,1,0.5,0,0.69,0.17,0.06,0,0,0.92,0,0,1,0.92,0,0.12,0
+0,0.02,0.43,0.2,0.08,1,0.38,0.67,0.08,0.04,0.02,0,0.36,0.08,0,0,1,0.92,0,0.62,0
+1,0.09,1,0.7,0.75,1,0,0.33,0.85,0.03,0.09,0,0,0.08,0,0,1,0.92,0,1,0
+0,0.07,0.71,0,0.08,0.5,0.38,0.33,0.69,0.1,0.06,0,0,0.54,0,0,1,0.92,0,1,0
+1,0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0
+```
+
+The first column represents the predicted result: 1 signifies that the mushroom is likely edible, while 0 indicates it is likely not edible. These predictions are made with an accuracy of 80%, meaning that there is an 80% confidence in these predictions. However, caution is advised. While we can strive to improve the accuracy of the model, it’s important to remember that predictions are inherently probabilistic and will never reach 100% certainty, mirroring the inherent uncertainties of real life.
 
 ## License
 

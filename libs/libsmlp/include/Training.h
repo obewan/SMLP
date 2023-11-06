@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "FileParser.h"
 #include "Network.h"
+#include "SimpleLogger.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
 #include <bits/types/FILE.h>
@@ -60,8 +61,10 @@ public:
    * @param network Pointer to the network.
    * @param file_path File path to the training data.
    */
-  Training(Network *network, const std::string &file_path)
-      : network_(network), fileParser_(new FileParser(file_path)) {}
+  Training(Network *network, const std::string &file_path,
+           const SimpleLogger &logger)
+      : network_(network), fileParser_(new FileParser(file_path)),
+        logger_(logger) {}
 
   /**
    * @brief This method trains the model with the given parameters.
@@ -130,4 +133,5 @@ private:
   Network *network_ = nullptr;
   FileParser *fileParser_ = nullptr;
   Testing *testing_ = nullptr;
+  [[no_unique_address]] SimpleLogger logger_;
 };
