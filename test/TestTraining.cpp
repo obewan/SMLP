@@ -7,8 +7,7 @@ TEST_CASE("Testing the Training class") {
   SimpleLogger logger;
   SUBCASE("Test Constructor") { CHECK_NOTHROW(Training(nullptr, "", logger)); }
 
-  // beware current path is "build/libs/libsmlp/test"
-  std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
+  std::string test_file = "data/test_file.csv";
 
   NetworkParameters network_params{.input_size = 20, .output_size = 1};
   AppParameters app_params{.data_file = test_file};

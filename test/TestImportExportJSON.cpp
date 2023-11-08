@@ -2,11 +2,12 @@
 #include "ImportExportJSON.h"
 #include "Layer.h"
 #include "doctest.h"
+#include "exception/ImportExportJSONException.h"
 #include <cstddef>
 #include <filesystem>
 
 TEST_CASE("Testing the ImportExportJSON class") {
-  std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
+  std::string test_file = "data/test_file.csv";
 
   NetworkParameters params{.input_size = 20,
                            .hidden_size = 12,
@@ -14,6 +15,13 @@ TEST_CASE("Testing the ImportExportJSON class") {
                            .hiddens_count = 1};
   AppParameters app_params{.version = "1.0.0", .data_file = test_file};
   std::string modelJsonFile = "testModel.json";
+
+  SUBCASE("Test exceptions") {
+    ImportExportJSON importExportJSON;
+    CHECK_THROWS_AS(
+        importExportJSON.importModel({.network_to_import = "wrongfile"}),
+        ImportExportJSONException);
+  }
 
   SUBCASE("Test exportModel function") {
     if (std::filesystem::exists(modelJsonFile)) {

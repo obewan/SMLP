@@ -51,12 +51,14 @@ public:
     json json_model;
 
     if (!file.is_open()) {
-      throw ImportExportJSONException("Failed to open file for reading.");
+      throw ImportExportJSONException("Failed to open file for reading:" +
+                                      path_in_ext);
     }
 
     if (!json::accept(file)) {
       file.close();
-      throw ImportExportJSONException("JSON parsing error: invalid JSON file.");
+      throw ImportExportJSONException("JSON parsing error: invalid JSON file:" +
+                                      path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
 
