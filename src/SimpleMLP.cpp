@@ -193,10 +193,11 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
       ->default_val(network_params.learning_rate)
       ->check(CLI::PositiveNumber)
       ->check(CLI::TypeValidator<float>());
-  app.add_option(
+  app.add_flag(
          "-s,--output_ends", app_params.output_at_end,
-         "Indicate if the output data is at the end of the record (1) or at "
-         "the beginning (0)")
+         "Indicate that the output columns of the dataset are located at the "
+         "end of the record, "
+         "by default smlp will look at the firsts columns")
       ->default_val(app_params.output_at_end)
       ->check(CLI::TypeValidator<bool>());
   app.add_option("-t,--training_ratio", app_params.training_ratio,

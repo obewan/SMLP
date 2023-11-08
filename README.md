@@ -38,7 +38,7 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
 4. The `file_input` (`-f` parameter) must be the file path of your data file that will be used for training and testing.
-5. The `input_size` (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output is at the beginning of your data rows, you can indicate it with the `output_ends` (`-s` parameter).
+5. The `input_size` (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output columns are at the ends of your dataset, you can indicate it with the `output_ends` (`-s` parameter).
 6. `epochs` (`-e` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
 7. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
 8. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
@@ -64,11 +64,11 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 
 # Examples
 
-### Example 1:
+### Example 1: Training
 
 Training a new MLP with the mushroom dataset, 20 inputs (-i), 1 output (-o), 12 neurons by hidden layers (-d), 1 hidden layer (-c), during 100 epochs (-e), output at beginning of the dataset (-s), with a ReLU activation function on hidden layer (-j) and with monitored tests (-m). Then exporting the model to myMushroomMLP.json after the training (-b).
 
-`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -j ReLU -s false -m TrainTestMonitored`
+`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -j ReLU -m TrainTestMonitored`
 
 Output:
 
@@ -94,11 +94,11 @@ Good convergence total: 88.6% (16240/18321)
 [2023-11-06 14:58:51] [INFO] Exporting network model to myMushroomMLP.json...
 ```
 
-### Example 2:
+### Example 2: Testing
 
 Importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
 
-`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -s false -m TestOnly`
+`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
 
 Output:
 
@@ -111,10 +111,10 @@ Avg accuracy (correct at 80%): 82.8%
 High accuracy (correct at 90%): 79.6%
 ```
 
-### Example 3:
+### Example 3: Predict
 
 Using a new data file that doesn't have outputs to predict the outputs with our previous mushroom mlp model.
-`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -s false -m Predictive`
+`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -m Predictive`
 
 mushroom_data_to_predict.csv:
 
