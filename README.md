@@ -13,7 +13,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - Json export/import using [JSON for Modern C++](https://github.com/nlohmann/json).
 - [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
 - [Doctest](https://github.com/doctest/doctest) unit tests.
-- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage.
+- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage (80% minimum validation)
 - Github [Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test pass.
 - Github [CodeQL](https://github.com/features/security/code) security analysis.
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
@@ -22,8 +22,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 # Roadmap to first release
 
-- Improve code coverage to 80%. `[in progress]`
-- Add a config file.
+- Add a config file. `[in progress]`
 - Add a pipe input.
 - Add a socket input.
 - Add an interactive testing (command line input).
