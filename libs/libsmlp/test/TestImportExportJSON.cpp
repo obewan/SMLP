@@ -6,7 +6,7 @@
 #include <filesystem>
 
 TEST_CASE("Testing the ImportExportJSON class") {
-  std::string test_file = "../../../../libs/libsmlp/test/data/test_file.csv";
+  std::string test_file = "data/test_file.csv";
 
   NetworkParameters params{.input_size = 20,
                            .hidden_size = 12,

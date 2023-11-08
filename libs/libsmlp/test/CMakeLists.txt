@@ -1,3 +1,8 @@
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file.csv
+               COPYONLY)
+
+
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
 if(ENABLE_COVERAGE)

@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.5.0)
 
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/i18n/en.json
+               ${CMAKE_CURRENT_BINARY_DIR}/i18n/en.json
+               COPYONLY)
+
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
 set(PROJECT_NAME smlp)
