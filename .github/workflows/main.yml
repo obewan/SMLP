@@ -22,7 +22,12 @@ jobs:
         working-directory: ${{github.workspace}}/build/test
         run: ./tester
       - name: Run integration tests
-        run: ctest --output-on-failure
+        uses: HorstBaerbel/action-ctest@1.1
+        with:
+          sourcedir: "."
+          builddir: "build"
+          cmakeoptions: "--config Release"
+          ctestoptions: "--output-on-failure"
       - name: Run code coverage
         run: |
           mkdir -p ${{github.workspace}}/coverage

@@ -2,6 +2,7 @@
 #include "ImportExportJSON.h"
 #include "Layer.h"
 #include "doctest.h"
+#include "exception/ImportExportJSONException.h"
 #include <cstddef>
 #include <filesystem>
 
@@ -14,6 +15,13 @@ TEST_CASE("Testing the ImportExportJSON class") {
                            .hiddens_count = 1};
   AppParameters app_params{.version = "1.0.0", .data_file = test_file};
   std::string modelJsonFile = "testModel.json";
+
+  SUBCASE("Test exceptions") {
+    ImportExportJSON importExportJSON;
+    CHECK_THROWS_AS(
+        importExportJSON.importModel({.network_to_import = "wrongfile"}),
+        ImportExportJSONException);
+  }
 
   SUBCASE("Test exportModel function") {
     if (std::filesystem::exists(modelJsonFile)) {
