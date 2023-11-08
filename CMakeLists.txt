@@ -24,7 +24,7 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
     add_custom_target(lcov
         COMMAND lcov --capture --directory . --output-file ../coverage/lcov.info
-        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/libsmlp/test/*' '${CMAKE_CURRENT_SOURCE_DIR}/src/include/CLI11.hpp'
+        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' '${CMAKE_CURRENT_SOURCE_DIR}/test/*' '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
         COMMENT "Generating lcov.info"
     )
     add_custom_target(lcov_summary
@@ -39,7 +39,11 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
+add_subdirectory(test)
+
 foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+enable_testing()

@@ -18,12 +18,19 @@ jobs:
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Debug
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config Debug -- -j 2
-      - name: Test
-        working-directory: ${{github.workspace}}/build/libs/libsmlp/test
+      - name: Run unit tests
+        working-directory: ${{github.workspace}}/build/test
         run: ./tester
-      - name: Coverage
+      - name: Run integration tests
+        run: ctest --output-on-failure
+      - name: Run code coverage
         run: |
           mkdir -p ${{github.workspace}}/coverage
           lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/libs/libsmlp/test/*' '${{github.workspace}}/src/include/CLI11.hpp'
+          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/test/*' '${{github.workspace}}/src/*'
           lcov --summary ${{github.workspace}}/coverage/lcov.info
+      - name: Very Good Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v2
+        with:
+          path: "${{github.workspace}}/coverage/lcov.info"
+          min_coverage: 80

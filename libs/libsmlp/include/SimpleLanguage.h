@@ -39,12 +39,14 @@ private:
     json json_model;
 
     if (!file.is_open()) {
-      throw SimpleLanguageException("Failed to open file for reading.");
+      throw SimpleLanguageException("Failed to open file for reading: " +
+                                    path_in_ext);
     }
 
     if (!json::accept(file)) {
       file.close();
-      throw SimpleLanguageException("JSON parsing error: invalid JSON file.");
+      throw SimpleLanguageException("JSON parsing error: invalid JSON file:" +
+                                    path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
 

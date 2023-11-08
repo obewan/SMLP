@@ -12,12 +12,23 @@ if(ENABLE_COVERAGE)
 endif()
 
 add_library(nlohmann-json INTERFACE)
-target_sources(nlohmann-json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../../json/include/json.hpp)
+target_sources(nlohmann-json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../libs/json/include/json.hpp)
 add_library(lib_doctest INTERFACE)
 target_sources(lib_doctest INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/doctest.h)
 set(LIBRARY_HEADERS_DIR include)
 target_include_directories(lib_doctest INTERFACE  "${CMAKE_CURRENT_SOURCE_DIR}/${LIBRARY_HEADERS_DIR}")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libs/libsmlp/include)
 
+
+#### DOCTEST UNIT TESTS
 file(GLOB SOURCES "*.cpp")
 add_executable(tester ${SOURCES}) 
-target_link_libraries(tester PRIVATE ${LIBRARY_NAME} lib_doctest nlohmann-json)
+target_link_libraries(tester PRIVATE ${LIBRARY_NAME} lib_doctest nlohmann-json libsmlp)
+
+
+#### CTEST INTEGRATION TESTS
+include(CTest) 
+add_test(NAME test_version COMMAND smlp -v WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+set_tests_properties(test_version PROPERTIES
+  PASS_REGULAR_EXPRESSION "SMLP - Simple Multilayer Perceptron v"
+)

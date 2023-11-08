@@ -9,11 +9,10 @@
  * @brief main function
  *
  * @param argc numbers of arguments
- * @param argv table of arguments: 1:input_size 2:hidden_size
+ * @param argv table of arguments
  * @code {.bash}
  * smlp -h
- * smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -t
- * 0.7 -r 0.01
+ * smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100
  * @endcode
  *
  * @return int
