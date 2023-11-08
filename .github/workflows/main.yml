@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir -p ${{github.workspace}}/coverage
           lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/test/*' '${{github.workspace}}/src/*'
+          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/test/*' '${{github.workspace}}/ctest/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/src/*'
           lcov --summary ${{github.workspace}}/coverage/lcov.info
       - name: Very Good Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
