@@ -25,7 +25,7 @@ jobs:
         uses: HorstBaerbel/action-ctest@1.1
         with:
           sourcedir: "."
-          builddir: "build"
+          builddir: "ctest"
           cmakeoptions: "--config Release"
           ctestoptions: "--output-on-failure"
       - name: Run code coverage
