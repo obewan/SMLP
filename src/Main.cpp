@@ -2,6 +2,7 @@
 #include "include/SimpleMLP.h"
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 #include <ostream>
 
 /**
@@ -18,7 +19,7 @@
  * @return int
  */
 int main(int argc, char *argv[]) {
-  auto smlp = new SimpleMLP();
+  auto smlp = std::make_unique<SimpleMLP>();
 
   if (bool showVersion{false}; !smlp->init(argc, argv, showVersion)) {
     if (showVersion) {
@@ -29,32 +30,36 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  switch (smlp->app_params.mode) {
-  case EMode::Predictive:
-    smlp->predict();
-    break;
-  case EMode::TrainOnly:
-    smlp->train();
-    break;
-  case EMode::TestOnly:
-    smlp->test();
-    break;
-  case EMode::TrainTestMonitored:
-    smlp->trainTestMonitored();
-    break;
-  case EMode::TrainThenTest: {
-    smlp->train();
-    smlp->test();
-  } break;
-  default:
-    smlp->logger.error("nimplemented mode.");
-    return EXIT_FAILURE;
-  }
+  try {
+    switch (smlp->app_params.mode) {
+    case EMode::Predictive:
+      smlp->predict();
+      break;
+    case EMode::TrainOnly:
+      smlp->train();
+      break;
+    case EMode::TestOnly:
+      smlp->test();
+      break;
+    case EMode::TrainTestMonitored:
+      smlp->trainTestMonitored();
+      break;
+    case EMode::TrainThenTest: {
+      smlp->train();
+      smlp->test();
+    } break;
+    default:
+      throw std::runtime_error("Unimplemented mode.");
+    }
 
-  if (!smlp->app_params.network_to_export.empty()) {
-    smlp->logger.info("Exporting network model to ",
-                      smlp->app_params.network_to_export, "...");
-    smlp->importExportJSON.exportModel(smlp->network, smlp->app_params);
+    if (!smlp->app_params.network_to_export.empty()) {
+      smlp->logger.info("Exporting network model to ",
+                        smlp->app_params.network_to_export, "...");
+      smlp->importExportJSON.exportModel(smlp->network.get(), smlp->app_params);
+    }
+  } catch (const std::exception &e) {
+    smlp->logger.error(e.what());
+    return EXIT_FAILURE;
   }
 
   return EXIT_SUCCESS;
