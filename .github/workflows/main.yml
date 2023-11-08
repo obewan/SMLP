@@ -24,7 +24,8 @@ jobs:
       run: ./tester
     - name: Coverage
       run: |
-        lcov --directory . --capture --output-file lcov.info
-        lcov --summary lcov.info
+        lcov --directory . --capture --output-file ../coverage/lcov.info
+        lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/libs/libsmlp/test/*' '${{github.workspace}}/src/include/CLI11.hpp'
+        lcov --summary ../coverage/lcov.info
 
 

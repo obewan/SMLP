@@ -51,4 +51,5 @@ CMakeCache.txt
 # Others
 data/ai/
 changelog_refresh.sh
+coverage/
 

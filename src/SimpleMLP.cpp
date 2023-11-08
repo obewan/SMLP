@@ -180,7 +180,7 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
   addOption("-a,--import_network", app_params.network_to_import,
             CLI::ExistingFile);
   addOption("-b,--export_network", app_params.network_to_export, valid_path);
-  addOption("-f,--file_input", app_params.data_file, CLI::ExistingPath);
+  addOption("-f,--file_input", app_params.data_file, CLI::ExistingFile);
   addOption("-i,--input_size", network_params.input_size, CLI::PositiveNumber);
   addOption("-o,--output_size", network_params.output_size,
             CLI::PositiveNumber);
