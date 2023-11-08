@@ -12,6 +12,7 @@
 #include "ImportExportJSON.h"
 #include "Network.h"
 #include "SimpleLogger.h"
+#include <memory>
 #include <string>
 
 /**
@@ -59,7 +60,7 @@ public:
   /**
    * @brief The neural network
    */
-  Network *network = nullptr;
+  std::unique_ptr<Network> network;
 
   /**
    * @brief ImportExportJSON tool.

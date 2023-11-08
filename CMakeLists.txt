@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.5.0)
 
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/i18n/en.json
+               ${CMAKE_CURRENT_BINARY_DIR}/i18n/en.json
+               COPYONLY)
+
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
 set(PROJECT_NAME smlp)
@@ -18,11 +23,12 @@ if(ENABLE_COVERAGE)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")    
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
     add_custom_target(lcov
-        COMMAND lcov --capture --directory . --output-file lcov.info
+        COMMAND lcov --capture --directory . --output-file ../coverage/lcov.info
+        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' '${CMAKE_CURRENT_SOURCE_DIR}/test/*' '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
         COMMENT "Generating lcov.info"
     )
     add_custom_target(lcov_summary
-        COMMAND lcov --summary lcov.info
+        COMMAND lcov --summary ../coverage/lcov.info
         COMMENT "Generating lcov summary"
     )
 endif()
@@ -33,7 +39,11 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
+add_subdirectory(test)
+
 foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+enable_testing()
