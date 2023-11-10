@@ -63,16 +63,18 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - Tanh: Hyperbolic Tangent.
 13. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
     - `lang_file`: The language file to use for the messages (currently, only i18n/en.json is available).
-    - `data_file`: The dataset file to use, similar to the file_input option.
-    - `model_file`: The model file to export or import, similar to the import_network and export_network options.
+    - `file_input`: The dataset file to use, similar to the file_input option.
+    - `import_network`: The model file to import, similar to the import_network option.
+    - `export_network`: The model file to export, similar to the export_network option.
 
 If you use the corresponding command line options, they will override the config file parameters. Here an example of `smlp.conf`:
 
 ```json
 {
   "lang_file": "i18n/en.json",
-  "data_file": "../data/mushroom/mushroom_data.csv",
-  "model_file": "mushroom_model.json"
+  "file_input": "../data/mushroom/mushroom_data.csv",
+  "import_network": "mushroom_model.json",
+  "export_network": "mushroom_model_new.json"
 }
 ```
 

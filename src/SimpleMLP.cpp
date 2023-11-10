@@ -260,13 +260,13 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   } else {
     logger.info("No valid config file ", config.config_file, " found...");
   }
-  if (!config.data_file.empty() && app_params.data_file.empty()) {
-    app_params.data_file = config.data_file;
+  if (!config.file_input.empty() && app_params.data_file.empty()) {
+    app_params.data_file = config.file_input;
   }
-  if (!config.model_file.empty() && app_params.network_to_import.empty()) {
-    app_params.network_to_import = config.model_file;
+  if (!config.import_network.empty() && app_params.network_to_import.empty()) {
+    app_params.network_to_import = config.import_network;
   }
-  if (!config.model_file.empty() && app_params.network_to_export.empty()) {
-    app_params.network_to_export = config.model_file;
+  if (!config.export_network.empty() && app_params.network_to_export.empty()) {
+    app_params.network_to_export = config.export_network;
   }
 }

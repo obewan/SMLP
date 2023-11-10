@@ -26,8 +26,9 @@ public:
   };
   std::string config_file = "";
   std::string lang_file = "i18n/en.json";
-  std::string data_file = "";
-  std::string model_file = "";
+  std::string file_input = "";
+  std::string import_network = "";
+  std::string export_network = "";
   bool isValidConfig = false;
 
 private:
@@ -63,12 +64,16 @@ private:
       lang_file = json_model.at("lang_file").get<std::string>();
     }
 
-    if (json_model.contains("data_file")) {
-      data_file = json_model.at("data_file").get<std::string>();
+    if (json_model.contains("file_input")) {
+      file_input = json_model.at("file_input").get<std::string>();
     }
 
-    if (json_model.contains("model_file")) {
-      model_file = json_model.at("model_file").get<std::string>();
+    if (json_model.contains("import_network")) {
+      import_network = json_model.at("import_network").get<std::string>();
+    }
+
+    if (json_model.contains("export_network")) {
+      export_network = json_model.at("export_network").get<std::string>();
     }
 
     isValidConfig = true;
