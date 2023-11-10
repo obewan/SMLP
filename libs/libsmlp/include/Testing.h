@@ -9,7 +9,7 @@
  */
 #pragma once
 #include "Common.h"
-#include "FileParser.h"
+#include "DataFileParser.h"
 #include "Network.h"
 #include "exception/TestingException.h"
 #include <map>
@@ -28,7 +28,7 @@ public:
    * @param network Pointer to the network.
    * @param fileparser Pointer to the file parser.
    */
-  Testing(Network *network, FileParser *fileparser)
+  Testing(Network *network, DataFileParser *fileparser)
       : network_(network), fileParser_(fileparser) {}
 
   /**
@@ -39,7 +39,7 @@ public:
    * @param file_path File path to the testing data.
    */
   Testing(Network *network, const std::string &file_path)
-      : network_(network), fileParser_(new FileParser(file_path)) {}
+      : network_(network), fileParser_(new DataFileParser(file_path)) {}
 
   /**
    * @brief This method tests the model with the given parameters.
@@ -146,21 +146,21 @@ public:
    *
    * @param fileparser Pointer to the file parser.
    */
-  void setFileParser(FileParser *fileparser) { fileParser_ = fileparser; }
+  void setFileParser(DataFileParser *fileparser) { fileParser_ = fileparser; }
 
   /**
    * @brief Gets the file parser used for testing data.
    *
    * @return Pointer to the file parser.
    */
-  FileParser *getFileParser() { return fileParser_; }
+  DataFileParser *getFileParser() { return fileParser_; }
 
   std::vector<TestResultsExt> testResultExts;
   std::map<size_t, std::vector<float>> progress;
 
 private:
   Network *network_;
-  FileParser *fileParser_;
+  DataFileParser *fileParser_;
   std::vector<TestResults> lastEpochTestResultTemp_;
   size_t last_epoch_ = 0;
 };

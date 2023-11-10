@@ -78,5 +78,3 @@ set_tests_properties(test_predictive PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0"
 )
 
-
-enable_testing()

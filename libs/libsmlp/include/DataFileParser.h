@@ -1,5 +1,5 @@
 /**
- * @file FileParser.h
+ * @file DataFileParser.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief File Parser
  * @date 2023-09-01
@@ -19,17 +19,17 @@
  * methods for opening, closing, and resetting the file position, as well as
  * methods for processing lines and counting lines.
  */
-class FileParser {
+class DataFileParser {
 public:
   /**
    * @brief Constructor that takes a file path as an argument.
    *
    * @param path The path to the file.
    */
-  explicit FileParser(const std::string &path) : path(path) {}
+  explicit DataFileParser(const std::string &path) : path(path) {}
 
   // Virtual destructor
-  virtual ~FileParser();
+  virtual ~DataFileParser();
 
   /**
    * @brief Opens the file.

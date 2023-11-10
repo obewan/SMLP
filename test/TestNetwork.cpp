@@ -4,6 +4,8 @@
 #include "doctest.h"
 
 TEST_CASE("Testing the Network class") {
+  const float eps = 1e-6f; // epsilon for float testing
+
   SUBCASE("Test Constructor and Destructor") {
     Network *network = nullptr;
     CHECK_NOTHROW(network = new Network());
@@ -30,28 +32,28 @@ TEST_CASE("Testing the Network class") {
           EActivationFunction::PReLU, EActivationFunction::ReLU,
           EActivationFunction::Sigmoid, EActivationFunction::Tanh}) {
       CHECK_NOTHROW(network->SetActivationFunction(hlayer, activ, 0.1f));
-      for (auto neu : hlayer->neurons) {
+      for (const auto &neu : hlayer->neurons) {
         if (activ == EActivationFunction::ELU) {
           CHECK(neu.activationFunction(1.0f) == 1.0);
           CHECK(neu.activationFunction(-1.0f) ==
-                doctest::Approx(-0.06321).epsilon(0.0001));
+                doctest::Approx(-0.0632121).epsilon(eps));
           CHECK(neu.activationFunction(0.0f) == 0.0f);
           CHECK(neu.activationFunctionDerivative(1.0f) == 1.0);
           CHECK(neu.activationFunctionDerivative(-1.0f) ==
-                doctest::Approx(0.0367879f).epsilon(0.0001));
+                doctest::Approx(0.0367879f).epsilon(eps));
           hasElu = true;
         } else if (activ == EActivationFunction::Tanh) {
           CHECK(neu.activationFunction(0.0f) ==
-                doctest::Approx(0.0).epsilon(0.0001));
+                doctest::Approx(0.0).epsilon(eps));
           CHECK(neu.activationFunction(1.0f) ==
-                doctest::Approx(0.7615941559557649).epsilon(0.0001));
+                doctest::Approx(0.7615941559557649).epsilon(eps));
           CHECK(neu.activationFunction(-1.0f) ==
-                doctest::Approx(-0.7615941559557649).epsilon(0.0001));
+                doctest::Approx(-0.7615941559557649).epsilon(eps));
           CHECK(neu.activationFunctionDerivative(0.0f) == 1);
           CHECK(neu.activationFunctionDerivative(1.0f) ==
-                doctest::Approx(0.41997434161402614).epsilon(0.0001));
+                doctest::Approx(0.41997434161402614).epsilon(eps));
           CHECK(neu.activationFunctionDerivative(-1.0f) ==
-                doctest::Approx(0.41997434161402614).epsilon(0.0001));
+                doctest::Approx(0.41997434161402614).epsilon(eps));
           hasTanh = true;
         }
       }

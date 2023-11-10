@@ -56,7 +56,7 @@ int SimpleMLP::init(int argc, char **argv) {
 
     // Some post validations
     if (app_params.data_file.empty()) {
-      logger.error("Dataset file is required.");
+      logger.error("A dataset file is required, but file_input is missing.");
       return EXIT_FAILURE;
     }
 
@@ -150,7 +150,8 @@ std::string SimpleMLP::showInlineHeader() const {
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
-  SimpleLanguage lang("i18n/en.json");
+  SimpleConfig config(app_params.config_file);
+  SimpleLanguage lang(config.lang_file);
   CLI::App app{app_params.title};
   bool version = false;
 
@@ -222,6 +223,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addFlag("-v,--version", version);
   addFlag("-w,--verbose", app_params.verbose);
 
+  // Parsing
   try {
     app.parse(argc, argv);
   } catch (const CLI::CallForHelp &e) {
@@ -232,11 +234,32 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
     return app.exit(e);
   }
 
+  // Version special exit
   if (version) {
     logger.out(app_params.title, " v", app_params.version);
     logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
     return EXIT_VERSION;
   }
 
+  // Config file settings
+  ConfigSettings(config);
+
   return EXIT_SUCCESS;
+}
+
+void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
+  if (config.isValidConfig) {
+    logger.info("Using config file ", config.config_file, "...");
+  } else {
+    logger.info("No valid config file ", config.config_file, " found...");
+  }
+  if (!config.data_file.empty() && app_params.data_file.empty()) {
+    app_params.data_file = config.data_file;
+  }
+  if (!config.model_file.empty() && app_params.network_to_import.empty()) {
+    app_params.network_to_import = config.model_file;
+  }
+  if (!config.model_file.empty() && app_params.network_to_export.empty()) {
+    app_params.network_to_export = config.model_file;
+  }
 }

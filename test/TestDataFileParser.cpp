@@ -1,26 +1,28 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Common.h"
-#include "FileParser.h"
+#include "DataFileParser.h"
 #include "doctest.h"
 #include <cmath>
 #include <string>
 
 TEST_CASE("Testing the FileParser class") {
-  SUBCASE("Test Constructor") { CHECK_NOTHROW(FileParser("")); }
-
   std::string test_file = "data/test_file.csv";
+  const float eps = 1e-6f; // epsilon for float testing
+
+  SUBCASE("Test Constructor") { CHECK_NOTHROW(DataFileParser("")); }
 
   SUBCASE("Test openFile") {
-    FileParser parser_NOK("non_existent_file.csv"); // This file does not exist
+    DataFileParser parser_NOK(
+        "non_existent_file.csv"); // This file does not exist
     CHECK_THROWS_AS(parser_NOK.openFile(), FileParserException);
 
-    FileParser parser_OK(test_file);
+    DataFileParser parser_OK(test_file);
     CHECK_NOTHROW(parser_OK.openFile());
     CHECK(parser_OK.file.is_open() == true);
     parser_OK.closeFile();
   }
 
-  FileParser parser(test_file);
+  DataFileParser parser(test_file);
 
   SUBCASE("Test closeFile") {
     parser.openFile();
@@ -56,6 +58,7 @@ TEST_CASE("Testing the FileParser class") {
   }
 
   SUBCASE("Test processLine") {
+
     NetworkParameters network_params{.input_size = 20,
                                      .hidden_size = 12,
                                      .output_size = 1,
@@ -79,11 +82,10 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(inputs.size() == expectedInputs.size());
     CHECK(outputs.size() == expectedOuputs.size());
     for (size_t i = 0; i < inputs.size(); ++i) {
-      // using absolute difference because of float precision issue
-      CHECK(std::fabs(inputs[i] - expectedInputs[i]) <= 1e-6f);
+      CHECK(inputs[i] == doctest::Approx(expectedInputs[i]).epsilon(eps));
     }
     for (size_t i = 0; i < outputs.size(); ++i) {
-      CHECK(std::fabs(outputs[i] - expectedOuputs[i]) <= 1e-6f);
+      CHECK(outputs[i] == doctest::Approx(expectedOuputs[i]).epsilon(eps));
     }
 
     // Test next line
@@ -98,11 +100,10 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(inputs2.size() == expectedInputs2.size());
     CHECK(outputs2.size() == expectedOuputs2.size());
     for (size_t i = 0; i < inputs2.size(); ++i) {
-      // using absolute difference because of float precision issue
-      CHECK(std::fabs(inputs2[i] - expectedInputs2[i]) <= 1e-6f);
+      CHECK(inputs2[i] == doctest::Approx(expectedInputs2[i]).epsilon(eps));
     }
     for (size_t i = 0; i < outputs2.size(); ++i) {
-      CHECK(std::fabs(outputs2[i] - expectedOuputs2[i]) <= 1e-6f);
+      CHECK(outputs2[i] == doctest::Approx(expectedOuputs2[i]).epsilon(eps));
     }
   }
 
@@ -126,10 +127,10 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(outputs1.size() == output_size);
     CHECK(inputs2.size() == input_size);
     CHECK(outputs2.size() == output_size);
-    // using absolute difference because of float precision issue
-    CHECK(std::fabs(inputs1.at(0) - 1.00f) <= 1e-6f);
-    CHECK(std::fabs(inputs2.at(0) - 0.04f) <= 1e-6f);
-    CHECK(std::fabs(outputs1.at(0) - 0.00f) <= 1e-6f);
-    CHECK(std::fabs(outputs2.at(0) - 1.00f) <= 1e-6f);
+
+    CHECK(inputs1.at(0) == doctest::Approx(1.00f).epsilon(eps));
+    CHECK(inputs2.at(0) == doctest::Approx(0.04f).epsilon(eps));
+    CHECK(outputs1.at(0) == doctest::Approx(0.00f).epsilon(eps));
+    CHECK(outputs2.at(0) == doctest::Approx(1.00f).epsilon(eps));
   }
 }

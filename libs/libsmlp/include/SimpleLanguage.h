@@ -56,8 +56,8 @@ private:
       for (auto it = json_model.begin(); it != json_model.end(); ++it) {
         strings[it.key()] = it.value();
       }
-
       file.close();
+
     } catch (const json::parse_error &e) {
       file.close();
       throw SimpleLanguageException("JSON parsing error: " +

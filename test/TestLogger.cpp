@@ -11,6 +11,7 @@ TEST_CASE("Testing the SimpleLogger class") {
   float f = 0.1234567890123456789f;
   float g = 0.0000000000000000001f;
 
+  // CHECK THE LOG OUTPUT
   SUBCASE("Test precision") {
     logger.out("before: ", std::round(f), " [", f, "]");
     logger.setPrecision(3);
@@ -22,6 +23,7 @@ TEST_CASE("Testing the SimpleLogger class") {
     logger.endl();
   }
 
+  // CHECK THE LOG OUTPUT
   SUBCASE("Test predict precision") {
     const Predict predict1(
         nullptr,

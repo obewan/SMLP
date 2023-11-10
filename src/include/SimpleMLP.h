@@ -9,8 +9,9 @@
  */
 #pragma once
 #include "Common.h"
-#include "ImportExportJSON.h"
 #include "Network.h"
+#include "NetworkImportExportJSON.h"
+#include "SimpleConfig.h"
 #include "SimpleLogger.h"
 #include <memory>
 #include <string>
@@ -68,7 +69,7 @@ public:
   /**
    * @brief ImportExportJSON tool.
    */
-  ImportExportJSON importExportJSON;
+  NetworkImportExportJSON importExportJSON;
 
   /**
    * @brief A simple logger
@@ -78,4 +79,5 @@ public:
 private:
   int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;
+  void ConfigSettings(const SimpleConfig &config);
 };

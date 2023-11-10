@@ -1,13 +1,14 @@
 #include "Common.h"
-#include "ImportExportJSON.h"
 #include "Layer.h"
+#include "NetworkImportExportJSON.h"
 #include "doctest.h"
-#include "exception/ImportExportJSONException.h"
+#include "exception/ImportExportException.h"
 #include <cstddef>
 #include <filesystem>
 
 TEST_CASE("Testing the ImportExportJSON class") {
   std::string test_file = "data/test_file.csv";
+  const float eps = 1e-6f; // epsilon for float testing
 
   NetworkParameters params{.input_size = 20,
                            .hidden_size = 12,
@@ -17,10 +18,10 @@ TEST_CASE("Testing the ImportExportJSON class") {
   std::string modelJsonFile = "testModel.json";
 
   SUBCASE("Test exceptions") {
-    ImportExportJSON importExportJSON;
+    NetworkImportExportJSON importExportJSON;
     CHECK_THROWS_AS(
         importExportJSON.importModel({.network_to_import = "wrongfile"}),
-        ImportExportJSONException);
+        ImportExportException);
   }
 
   SUBCASE("Test exportModel function") {
@@ -30,7 +31,7 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(std::filesystem::exists(modelJsonFile) == false);
     app_params.network_to_export = modelJsonFile;
 
-    ImportExportJSON importExportJSON;
+    NetworkImportExportJSON importExportJSON;
     auto network = new Network(params);
     CHECK_NOTHROW(importExportJSON.exportModel(network, app_params));
 
@@ -40,7 +41,7 @@ TEST_CASE("Testing the ImportExportJSON class") {
   SUBCASE("Test importModel function") {
     CHECK(std::filesystem::exists(modelJsonFile) == true);
 
-    ImportExportJSON importExportJSON;
+    NetworkImportExportJSON importExportJSON;
     app_params.network_to_import = modelJsonFile;
     Network *network = nullptr;
     CHECK_NOTHROW(network = importExportJSON.importModel(app_params));
@@ -53,6 +54,7 @@ TEST_CASE("Testing the ImportExportJSON class") {
     CHECK(network->params.hidden_size == params.hidden_size);
     CHECK(network->params.output_size == params.output_size);
     CHECK(network->params.hiddens_count == params.hiddens_count);
-    CHECK(abs(network->params.learning_rate - params.learning_rate) < 1e-6f);
+    CHECK(network->params.learning_rate ==
+          doctest::Approx(params.learning_rate).epsilon(eps));
   }
 }
