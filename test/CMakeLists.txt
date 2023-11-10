@@ -1,6 +1,21 @@
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file.csv
                ${CMAKE_CURRENT_BINARY_DIR}/data/test_file.csv
                COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_bad_format.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_bad_format.csv
+               COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_bad_line.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_bad_line.csv
+               COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_empty_line.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_empty_line.csv
+               COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_short_line.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_short_line.csv
+               COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_input_only.csv
+               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_input_only.csv
+               COPYONLY)
 
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)

@@ -34,7 +34,7 @@ public:
   /**
    * @brief Opens the file.
    */
-  void openFile();
+  void openFile(const std::string &filepath = "");
 
   /**
    * @brief Closes the file.
@@ -126,10 +126,10 @@ public:
       size_t output_size) const;
 
   std::ifstream file;
-  std::string path;
   Csv::Parser csv_parser;
   size_t current_line_number = 0;
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
+  std::string path = "";
 };

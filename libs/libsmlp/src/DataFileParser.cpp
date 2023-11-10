@@ -2,6 +2,7 @@
 #include "Common.h"
 #include <iostream>
 #include <limits>
+#include <optional>
 #include <sstream>
 #include <string>
 
@@ -11,9 +12,12 @@ DataFileParser::~DataFileParser() {
   }
 }
 
-void DataFileParser::openFile() {
+void DataFileParser::openFile(const std::string &filepath) {
   if (file.is_open()) {
     return;
+  }
+  if (!filepath.empty()) {
+    path = filepath;
   }
   file.open(path);
   if (!file.is_open()) {
@@ -90,13 +94,20 @@ DataFileParser::processLine(const NetworkParameters &network_params,
   }
 
   Record record;
-  if (app_params.mode == EMode::Predictive &&
-      cell_refs.size() == network_params.input_size) {
-    record = processInputOnly(cell_refs, network_params.input_size);
-  } else if (app_params.output_at_end) {
-    record = processInputFirst(cell_refs, network_params.input_size);
-  } else {
-    record = processOutputFirst(cell_refs, network_params.output_size);
+  try {
+    if (app_params.mode == EMode::Predictive &&
+        cell_refs.size() == network_params.input_size) {
+      record = processInputOnly(cell_refs, network_params.input_size);
+    } else if (app_params.output_at_end) {
+      record = processInputFirst(cell_refs, network_params.input_size);
+    } else {
+      record = processOutputFirst(cell_refs, network_params.output_size);
+    }
+  } catch (std::bad_optional_access &) {
+    std::stringstream sstr;
+    sstr << "CSV parsing error at line " << current_line_number
+         << ": bad column format";
+    throw FileParserException(sstr.str());
   }
 
   return {.isSuccess = true, .record = record};

@@ -1,3 +1,5 @@
+#include "exception/FileParserException.h"
+#include <bits/types/FILE.h>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Common.h"
 #include "DataFileParser.h"
@@ -5,7 +7,7 @@
 #include <cmath>
 #include <string>
 
-TEST_CASE("Testing the FileParser class") {
+TEST_CASE("Testing the DataFileParser class") {
   std::string test_file = "data/test_file.csv";
   const float eps = 1e-6f; // epsilon for float testing
 
@@ -63,7 +65,7 @@ TEST_CASE("Testing the FileParser class") {
                                      .hidden_size = 12,
                                      .output_size = 1,
                                      .hiddens_count = 1};
-    AppParameters app_params{.output_at_end = true};
+    AppParameters app_params{.output_at_end = false};
 
     CHECK(network_params.input_size == 20);
     CHECK(network_params.hidden_size == 12);
@@ -75,9 +77,9 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(result.isSuccess == true);
     const auto &[inputs, outputs] = result.record;
     std::vector<float> expectedInputs = {
-        1.00f, 0.08f, 0.43f, 0.80f, 0.08f, 1.00f, 0.75f, 0.67f, 0.69f, 0.15f,
-        0.09f, 0.00f, 0.36f, 0.08f, 0.00f, 0.00f, 1.00f, 0.92f, 0.00f, 0.62f};
-    std::vector<float> expectedOuputs = {0.0f};
+        0.08f, 0.43f, 0.80f, 0.08f, 1.00f, 0.75f, 0.67f, 0.69f, 0.15f, 0.09f,
+        0.00f, 0.36f, 0.08f, 0.00f, 0.00f, 1.00f, 0.92f, 0.00f, 0.62f, 0.00f};
+    std::vector<float> expectedOuputs = {1.00f};
 
     CHECK(inputs.size() == expectedInputs.size());
     CHECK(outputs.size() == expectedOuputs.size());
@@ -93,9 +95,9 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(result.isSuccess == true);
     const auto &[inputs2, outputs2] = result2.record;
     std::vector<float> expectedInputs2 = {
-        1.00f, 0.09f, 0.43f, 0.40f, 0.08f, 1.00f, 0.50f, 0.33f, 0.62f, 0.15f,
-        0.07f, 0.00f, 0.09f, 0.62f, 0.00f, 0.00f, 1.00f, 0.92f, 0.42f, 1.00f};
-    std::vector<float> expectedOuputs2 = {0.0f};
+        0.09f, 0.43f, 0.40f, 0.08f, 1.00f, 0.50f, 0.33f, 0.62f, 0.15f, 0.07f,
+        0.00f, 0.09f, 0.62f, 0.00f, 0.00f, 1.00f, 0.92f, 0.42f, 1.00f, 0.0f};
+    std::vector<float> expectedOuputs2 = {1.00f};
 
     CHECK(inputs2.size() == expectedInputs2.size());
     CHECK(outputs2.size() == expectedOuputs2.size());
@@ -105,6 +107,20 @@ TEST_CASE("Testing the FileParser class") {
     for (size_t i = 0; i < outputs2.size(); ++i) {
       CHECK(outputs2[i] == doctest::Approx(expectedOuputs2[i]).epsilon(eps));
     }
+
+    // Test special Input Only of Predictive mode:
+    // in Predictive mode outputs will be
+    // predicted and added at the end, so they are
+    // optional in dataset entry, but inputs are mandatory ofc.
+    parser.closeFile();
+    app_params.mode = EMode::Predictive;
+    parser.openFile("data/test_file_input_only.csv");
+    CHECK_NOTHROW(parser.processLine(network_params, app_params));
+    RecordResult result3 = parser.processLine(network_params, app_params);
+    const auto &[inputs3, outputs3] = result3.record;
+    CHECK(inputs3.size() == network_params.input_size);
+    CHECK(outputs3.size() == 0);
+    parser.closeFile();
   }
 
   SUBCASE("Test processInputFirst and processOutputFirst") {
@@ -132,5 +148,39 @@ TEST_CASE("Testing the FileParser class") {
     CHECK(inputs2.at(0) == doctest::Approx(0.04f).epsilon(eps));
     CHECK(outputs1.at(0) == doctest::Approx(0.00f).epsilon(eps));
     CHECK(outputs2.at(0) == doctest::Approx(1.00f).epsilon(eps));
+  }
+
+  SUBCASE("Test processLine errors") {
+    parser.closeFile();
+    NetworkParameters network_params{.input_size = 20,
+                                     .hidden_size = 12,
+                                     .output_size = 1,
+                                     .hiddens_count = 1};
+    AppParameters app_params{.output_at_end = false};
+
+    CHECK(network_params.input_size == 20);
+    CHECK(network_params.hidden_size == 12);
+
+    parser.openFile("data/test_file_bad_line.csv");
+    CHECK_NOTHROW(parser.processLine(network_params, app_params));
+    CHECK_THROWS_WITH_AS(
+        parser.processLine(network_params, app_params),
+        "Invalid columns at line 2: found 20 columns instead of 21",
+        FileParserException);
+    parser.closeFile();
+
+    parser.openFile("data/test_file_bad_format.csv");
+    CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
+                         "CSV parsing error at line 1: bad column format",
+                         FileParserException);
+    parser.closeFile();
+
+    // Special Predictive mode tests
+    app_params.mode = EMode::Predictive;
+    parser.openFile("data/test_file_short_line.csv");
+    CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
+                         "Invalid columns at line 1: found 19 columns instead "
+                         "of a minimum of 20",
+                         FileParserException);
   }
 }

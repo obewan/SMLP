@@ -32,7 +32,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "Common.h"
 #include "Network.h"
 #include "Predict.h"
-#include "SimpleLanguage.h"
+#include "SimpleLang.h"
 #include "Testing.h"
 #include "Training.h"
 #include "include/CLI11.hpp"
@@ -151,7 +151,7 @@ std::string SimpleMLP::showInlineHeader() const {
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
   SimpleConfig config(app_params.config_file);
-  SimpleLanguage lang(config.lang_file);
+  SimpleLang lang(config.lang_file);
   CLI::App app{app_params.title};
   bool version = false;
 
