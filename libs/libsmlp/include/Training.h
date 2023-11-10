@@ -9,7 +9,7 @@
  */
 #pragma once
 #include "Common.h"
-#include "FileParser.h"
+#include "DataFileParser.h"
 #include "Network.h"
 #include "SimpleLogger.h"
 #include "Testing.h"
@@ -63,7 +63,7 @@ public:
    */
   Training(Network *network, const std::string &file_path,
            const SimpleLogger &logger)
-      : network_(network), fileParser_(new FileParser(file_path)),
+      : network_(network), fileParser_(new DataFileParser(file_path)),
         logger_(logger) {}
 
   /**
@@ -106,14 +106,14 @@ public:
    *
    * @param fileParser Pointer to the file parser.
    */
-  void setFileParser(FileParser *fileParser) { fileParser_ = fileParser; }
+  void setFileParser(DataFileParser *fileParser) { fileParser_ = fileParser; }
 
   /**
    * @brief Gets the file parser used for training data.
    *
    * @return Pointer to the file parser.
    */
-  FileParser *getFileParser() { return fileParser_; }
+  DataFileParser *getFileParser() { return fileParser_; }
 
   /**
    * @brief Sets the tester for testing during training.
@@ -131,7 +131,7 @@ public:
 
 private:
   Network *network_ = nullptr;
-  FileParser *fileParser_ = nullptr;
+  DataFileParser *fileParser_ = nullptr;
   Testing *testing_ = nullptr;
   [[no_unique_address]] SimpleLogger logger_;
 };

@@ -1,7 +1,7 @@
 /**
- * @file ImpotExportJson.h
+ * @file NetworkImportExportJson.h
  * @author Damien Balima (www.dams-labs.net)
- * @brief Import/Export using JSON format
+ * @brief Model Import/Export using JSON format
  * @see https://github.com/nlohmann/json
  * @date 2023-10-29
  *
@@ -15,7 +15,7 @@
 #include "Network.h"
 #include "OutputLayer.h"
 #include "SimpleLogger.h"
-#include "exception/ImportExportJSONException.h"
+#include "exception/ImportExportException.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -23,11 +23,11 @@
 using json = nlohmann::json;
 
 /**
- * @brief ImportExportJSON class to export and import network models using the
- * JSON format.
+ * @brief NetworkImportExportJSON class to export and import network models
+ * using the JSON format.
  *
  */
-class ImportExportJSON {
+class NetworkImportExportJSON {
 public:
   void setLogger(const SimpleLogger &logger) { logger_ = logger; }
 
@@ -39,7 +39,7 @@ public:
    */
   Network *importModel(const AppParameters &app_params) {
     if (app_params.network_to_import.empty()) {
-      throw ImportExportJSONException("Missing file to import.");
+      throw ImportExportException("Missing file to import.");
     }
 
     std::string path_in_ext = app_params.network_to_import;
@@ -51,14 +51,14 @@ public:
     json json_model;
 
     if (!file.is_open()) {
-      throw ImportExportJSONException("Failed to open file for reading:" +
-                                      path_in_ext);
+      throw ImportExportException("Failed to open file for reading:" +
+                                  path_in_ext);
     }
 
     if (!json::accept(file)) {
       file.close();
-      throw ImportExportJSONException("JSON parsing error: invalid JSON file:" +
-                                      path_in_ext);
+      throw ImportExportException("JSON parsing error: invalid JSON file:" +
+                                  path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
 
@@ -106,7 +106,7 @@ public:
           layer = new OutputLayer();
           break;
         default:
-          throw ImportExportJSONException("LayerType not recognized.");
+          throw ImportExportException("LayerType not recognized.");
         }
 
         // Add neurons and their weights
@@ -131,7 +131,7 @@ public:
                                        model->params.output_activation_alpha);
           break;
         default:
-          throw ImportExportJSONException("LayerType not recognized.");
+          throw ImportExportException("LayerType not recognized.");
         }
 
         // Add the layer to the network.
@@ -139,12 +139,12 @@ public:
       }
 
       if (model->layers.front()->layerType != LayerType::InputLayer) {
-        throw ImportExportJSONException(
+        throw ImportExportException(
             "Invalid LayerType for first layer: not an InputLayer");
       }
 
       if (model->layers.back()->layerType != LayerType::OutputLayer) {
-        throw ImportExportJSONException(
+        throw ImportExportException(
             "Invalid LayerType for last layer: not an OutputLayer");
       }
 
@@ -156,8 +156,8 @@ public:
 
     } catch (const nlohmann::json::parse_error &e) {
       file.close();
-      throw ImportExportJSONException("JSON parsing error: " +
-                                      std::string(e.what()));
+      throw ImportExportException("JSON parsing error: " +
+                                  std::string(e.what()));
     }
   }
 
