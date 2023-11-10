@@ -30,6 +30,7 @@ public:
   std::string model_file = "";
   bool isValidConfig = false;
 
+private:
   void parseFile() {
     if (config_file.empty()) {
       return;
@@ -39,7 +40,6 @@ public:
       path_in_ext = "./" + path_in_ext;
     }
     std::ifstream file(path_in_ext);
-    json json_model;
 
     if (!file.is_open()) {
       return; // just return as config file is not mandatory
@@ -52,27 +52,25 @@ public:
     }
     file.seekg(0, std::ifstream::beg);
 
-    try {
-      json_model = json::parse(file);
+    parseJson(file);
+    file.close();
+  }
 
-      if (auto lang_file_j = json_model["lang_file"]) {
-        lang_file = lang_file_j;
-      }
+  void parseJson(std::ifstream &file) {
+    json json_model = json::parse(file);
 
-      if (auto data_file_j = json_model["data_file"]) {
-        data_file = data_file_j;
-      }
-
-      if (auto model_file_j = json_model["model_file"]) {
-        model_file = model_file_j;
-      }
-
-      file.close();
-      isValidConfig = true;
-    } catch (const json::parse_error &e) {
-      file.close();
-      throw SimpleConfigException("JSON parsing error: " +
-                                  std::string(e.what()));
+    if (json_model.contains("lang_file")) {
+      lang_file = json_model.at("lang_file").get<std::string>();
     }
+
+    if (json_model.contains("data_file")) {
+      data_file = json_model.at("data_file").get<std::string>();
+    }
+
+    if (json_model.contains("model_file")) {
+      model_file = json_model.at("model_file").get<std::string>();
+    }
+
+    isValidConfig = true;
   }
 };

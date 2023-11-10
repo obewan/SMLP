@@ -1,0 +1,5 @@
+{
+    "lang_file": "i18n/fr.json",
+    "data_file": "test.csv",
+    "model_file": "model.json"
+}

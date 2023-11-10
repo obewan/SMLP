@@ -1,21 +1,11 @@
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file.csv
-               COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_bad_format.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_bad_format.csv
-               COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_bad_line.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_bad_line.csv
-               COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_empty_line.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_empty_line.csv
-               COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_short_line.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_short_line.csv
-               COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/data/test_file_input_only.csv
-               ${CMAKE_CURRENT_BINARY_DIR}/data/test_file_input_only.csv
-               COPYONLY)
+file(GLOB TEST_DATA_FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/*")
+
+foreach(DATA_FILE ${TEST_DATA_FILES})
+    get_filename_component(FILENAME ${DATA_FILE} NAME)
+    configure_file(${DATA_FILE}
+                   ${CMAKE_CURRENT_BINARY_DIR}/data/${FILENAME}
+                   COPYONLY)
+endforeach()
 
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
@@ -71,7 +61,7 @@ set_tests_properties(test_trainonly PROPERTIES
 set_tests_properties(test_trainonly PROPERTIES
   PASS_REGULAR_EXPRESSION "Training epoch 2/2..."
 )
-# Test file exists
+# Test previous model file exists
 add_my_test(check_ctestModelJson_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/ctestModel.json)
 # Test testonly
 add_my_test(test_testonly smlp -a  ${CMAKE_BINARY_DIR}/ctestModel.json -f  ${CMAKE_BINARY_DIR}/../data/mushroom/mushroom_data.csv -m TestOnly)
@@ -92,4 +82,13 @@ set_tests_properties(test_predictive PROPERTIES
 set_tests_properties(test_predictive PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0"
 )
-
+# Test config 
+add_my_test(check_smlpConfig_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/smlp.conf)
+add_my_test(test_trainonly_withconfig smlp -i 20 -o 1 -d 12 -c 1 -e 1 -j ReLU -m TrainOnly)
+set_tests_properties(test_trainonly_withconfig PROPERTIES
+  PASS_REGULAR_EXPRESSION "Using config file .*smlp.conf..."
+)
+set_tests_properties(test_trainonly_withconfig PROPERTIES
+  PASS_REGULAR_EXPRESSION "InputSize:20 OutputSize:1 HiddenSize:12 HiddenLayers:1 LearningRate:0.01 HiddenActivationFunction:ReLU OutputActivationFunction:Sigmoid Epochs:1 TrainingRatio:0.7 Mode:TrainOnly Verbose:0"
+)
+add_my_test(check_modelSmlpConfig_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/mushroom_model.json)
