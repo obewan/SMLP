@@ -46,4 +46,4 @@ foreach(LIBRARY ${LIBRARIES})
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
-enable_testing()
+
