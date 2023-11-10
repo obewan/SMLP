@@ -44,23 +44,27 @@ measures that legally restrict others from doing anything the license permits.
 #include <sstream>
 #include <string>
 
-bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
+int SimpleMLP::init(int argc, char **argv) {
   try {
     if (argc == 1) {
       argv[1] = (char *)"-h"; // showing help by default
       argc++;
     }
-    if (parseArgs(argc, argv, showVersion) != EXIT_SUCCESS ||
-        app_params.data_file.empty()) { // in case of show help or show version
-      return false;
+    if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
+      return init;
     }
 
     // Some post validations
+    if (app_params.data_file.empty()) {
+      logger.error("Dataset file is required.");
+      return EXIT_FAILURE;
+    }
+
     if (app_params.mode == EMode::Predictive &&
         app_params.network_to_import.empty()) {
       logger.error("Predictive mode require a trained network to import, but "
                    "network_to_import is missing.");
-      return false;
+      return EXIT_FAILURE;
     }
 
     // Instantiation of the network
@@ -77,11 +81,11 @@ bool SimpleMLP::init(int argc, char **argv, bool &showVersion) {
     } else {
       network = std::make_unique<Network>(network_params);
     }
-    return true;
+    return EXIT_SUCCESS;
 
   } catch (std::exception &ex) {
     logger.error(ex.what());
-    return false;
+    return EXIT_FAILURE;
   }
 }
 
@@ -145,9 +149,10 @@ std::string SimpleMLP::showInlineHeader() const {
   return sst.str();
 }
 
-int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
+int SimpleMLP::parseArgs(int argc, char **argv) {
   SimpleLanguage lang("i18n/en.json");
   CLI::App app{app_params.title};
+  bool version = false;
 
   // valid a parent path, if there is a path, that include a futur filename (not
   // like CLI::ExistingPath, CLI::ExistingDirectory or CLI::ExistingFile)
@@ -164,6 +169,7 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
     auto option = app.add_option(name, param, lang.get(name));
     option->default_val(param);
     (option->check(validators), ...);
+    return option;
   };
 
   auto addOptionTransform = [&app, &lang](const auto &name, auto &param,
@@ -171,10 +177,11 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
     auto option = app.add_option(name, param, lang.get(name));
     option->default_val(param);
     option->transform(transform);
+    return option;
   };
 
   auto addFlag = [&app, &lang](const auto &name, auto &param) {
-    app.add_flag(name, param, lang.get(name));
+    return app.add_flag(name, param, lang.get(name));
   };
 
   addOption("-a,--import_network", app_params.network_to_import,
@@ -212,8 +219,24 @@ int SimpleMLP::parseArgs(int argc, char **argv, bool &showVersion) {
   addOption("-q,--output_activation_alpha",
             network_params.output_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
-  addFlag("-v,--version", showVersion);
+  addFlag("-v,--version", version);
   addFlag("-w,--verbose", app_params.verbose);
 
-  CLI11_PARSE(app, argc, argv) return EXIT_SUCCESS;
+  try {
+    app.parse(argc, argv);
+  } catch (const CLI::CallForHelp &e) {
+    // This is returned when -h or --help is called
+    app.exit(e);
+    return EXIT_HELP;
+  } catch (const CLI::ParseError &e) {
+    return app.exit(e);
+  }
+
+  if (version) {
+    logger.out(app_params.title, " v", app_params.version);
+    logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
+    return EXIT_VERSION;
+  }
+
+  return EXIT_SUCCESS;
 }

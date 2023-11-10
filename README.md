@@ -8,14 +8,15 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
 - Functionality: operational, including forward propagation, backward propagation and weight update.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
-- CSV parsing using [csv-parser](https://github.com/ashaduri/csv-parser), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
-- Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
-- Json export/import using [JSON for Modern C++](https://github.com/nlohmann/json).
+- [Csv-parser](https://github.com/ashaduri/csv-parser) CSV parsing. Dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
+- [CLI11](https://github.com/CLIUtils/CLI11) command line parsing.
+- [JSON for Modern C++](https://github.com/nlohmann/json) Json export/import.
 - [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
 - [Doctest](https://github.com/doctest/doctest) unit tests.
 - [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage (80% minimum validation)
-- Github [Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test pass.
-- Github [CodeQL](https://github.com/features/security/code) security analysis.
+- [Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html) integration tests
+- [Github Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test and a integration test checks.
+- [Github CodeQL](https://github.com/features/security/code) security analysis.
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.

@@ -20,16 +20,14 @@
 int main(int argc, char *argv[]) {
   auto smlp = std::make_unique<SimpleMLP>();
 
-  if (bool showVersion{false}; !smlp->init(argc, argv, showVersion)) {
-    if (showVersion) {
-      smlp->logger.out(smlp->app_params.title, " v", smlp->app_params.version);
-      smlp->logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
+  try {
+    if (int init = smlp->init(argc, argv); init == EXIT_FAILURE) {
+      return EXIT_FAILURE;
+    } else if (init == SimpleMLP::EXIT_HELP ||
+               init == SimpleMLP::EXIT_VERSION) {
       return EXIT_SUCCESS;
     }
-    return EXIT_FAILURE;
-  }
 
-  try {
     switch (smlp->app_params.mode) {
     case EMode::Predictive:
       smlp->predict();
