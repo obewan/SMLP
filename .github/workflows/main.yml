@@ -37,9 +37,6 @@ jobs:
           path: "${{github.workspace}}/coverage/lcov.info"
           min_coverage: 80
       - name: Run integration tests
-        uses: HorstBaerbel/action-ctest@1.1
-        with:
-          sourcedir: "."
-          builddir: "ctest"
-          cmakeoptions: "--config Release"
-          ctestoptions: "--output-on-failure"
+        run: |
+          cd test
+          ctest -C Release --output-on-failure
