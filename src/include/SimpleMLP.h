@@ -80,4 +80,5 @@ private:
   int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
+  void buildNetwork();
 };
