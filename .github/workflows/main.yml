@@ -41,5 +41,5 @@ jobs:
       - name: Build Release
         run: cmake --build ${{github.workspace}}/build --config Release -- -j 2
       - name: Run integration tests
-        working-directory: ${{github.workspace}}/build
+        working-directory: ${{github.workspace}}/build/test
         run: ctest -C Release --output-on-failure
