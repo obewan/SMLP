@@ -38,5 +38,5 @@ jobs:
           min_coverage: 80
       - name: Run integration tests
         run: |
-          cd test
+          cd ${{github.workspace}}/test
           ctest -C Release --output-on-failure
