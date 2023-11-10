@@ -1,19 +1,23 @@
-#include "FileParser.h"
+#include "DataFileParser.h"
 #include "Common.h"
 #include <iostream>
 #include <limits>
+#include <optional>
 #include <sstream>
 #include <string>
 
-FileParser::~FileParser() {
+DataFileParser::~DataFileParser() {
   if (file.is_open()) {
     file.close();
   }
 }
 
-void FileParser::openFile() {
+void DataFileParser::openFile(const std::string &filepath) {
   if (file.is_open()) {
     return;
+  }
+  if (!filepath.empty()) {
+    path = filepath;
   }
   file.open(path);
   if (!file.is_open()) {
@@ -22,21 +26,21 @@ void FileParser::openFile() {
   current_line_number = 0;
 }
 
-void FileParser::closeFile() {
+void DataFileParser::closeFile() {
   if (file.is_open()) {
     file.close();
   }
 }
 
-void FileParser::resetPos() {
+void DataFileParser::resetPos() {
   file.clear();
   file.seekg(0, std::ios::beg);
   current_line_number = 0;
 }
 
-RecordResult FileParser::processLine(const NetworkParameters &network_params,
-                                     const AppParameters &app_params,
-                                     bool isTesting) {
+RecordResult
+DataFileParser::processLine(const NetworkParameters &network_params,
+                            const AppParameters &app_params, bool isTesting) {
   std::vector<std::vector<Csv::CellReference>> cell_refs;
   std::string line;
   current_line_number++;
@@ -90,19 +94,26 @@ RecordResult FileParser::processLine(const NetworkParameters &network_params,
   }
 
   Record record;
-  if (app_params.mode == EMode::Predictive &&
-      cell_refs.size() == network_params.input_size) {
-    record = processInputOnly(cell_refs, network_params.input_size);
-  } else if (app_params.output_at_end) {
-    record = processInputFirst(cell_refs, network_params.input_size);
-  } else {
-    record = processOutputFirst(cell_refs, network_params.output_size);
+  try {
+    if (app_params.mode == EMode::Predictive &&
+        cell_refs.size() == network_params.input_size) {
+      record = processInputOnly(cell_refs, network_params.input_size);
+    } else if (app_params.output_at_end) {
+      record = processInputFirst(cell_refs, network_params.input_size);
+    } else {
+      record = processOutputFirst(cell_refs, network_params.output_size);
+    }
+  } catch (std::bad_optional_access &) {
+    std::stringstream sstr;
+    sstr << "CSV parsing error at line " << current_line_number
+         << ": bad column format";
+    throw FileParserException(sstr.str());
   }
 
   return {.isSuccess = true, .record = record};
 }
 
-Record FileParser::processInputOnly(
+Record DataFileParser::processInputOnly(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
   std::vector<float> input;
@@ -118,7 +129,7 @@ Record FileParser::processInputOnly(
   return std::make_pair(input, std::vector<float>{});
 }
 
-Record FileParser::processInputFirst(
+Record DataFileParser::processInputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
   std::vector<float> input;
@@ -141,7 +152,7 @@ Record FileParser::processInputFirst(
   return std::make_pair(input, expected_output);
 }
 
-Record FileParser::processOutputFirst(
+Record DataFileParser::processOutputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t output_size) const {
   std::vector<float> input;

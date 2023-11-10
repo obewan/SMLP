@@ -61,6 +61,7 @@ struct AppParameters {
   std::string network_to_import = "";
   std::string network_to_export = "";
   std::string data_file = "";
+  std::string config_file = "smlp.conf";
   size_t num_epochs = 3;
   size_t output_index_to_monitor = 1;
   float training_ratio = 0.7f;

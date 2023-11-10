@@ -8,21 +8,22 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
 - Functionality: operational, including forward propagation, backward propagation and weight update.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
-- CSV parsing using [csv-parser](https://github.com/ashaduri/csv-parser), dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
-- Command line parsing using [CLI11](https://github.com/CLIUtils/CLI11).
-- Json export/import using [JSON for Modern C++](https://github.com/nlohmann/json).
+- [Csv-parser](https://github.com/ashaduri/csv-parser) for CSV parsing. Dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
+- [CLI11](https://github.com/CLIUtils/CLI11) for command line parsing.
+- [JSON for Modern C++](https://github.com/nlohmann/json) for Json export/import.
 - [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
-- [Doctest](https://github.com/doctest/doctest) unit tests.
-- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage (80% minimum validation)
-- Github [Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test pass.
-- Github [CodeQL](https://github.com/features/security/code) security analysis.
+- [Doctest](https://github.com/doctest/doctest) for unit tests.
+- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) for code coverage, with 80% of minimum coverage validation.
+- [Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html) for integration tests.
+- [Github Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test and a integration test checks.
+- [Github CodeQL](https://github.com/features/security/code) security analysis.
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
-- Add a config file. `[in progress]`
+- Add a more language files (i18n). `[in progress]`
 - Add a pipe input.
 - Add a socket input.
 - Add an interactive testing (command line input).
@@ -60,6 +61,22 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - ReLU: Rectified Linear Unit.
     - Sigmoid (default).
     - Tanh: Hyperbolic Tangent.
+13. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
+    - `lang_file`: The language file to use for the messages (currently, only i18n/en.json is available).
+    - `file_input`: The dataset file to use, similar to the file_input option.
+    - `import_network`: The model file to import, similar to the import_network option.
+    - `export_network`: The model file to export, similar to the export_network option.
+
+If you use the corresponding command line options, they will override the config file parameters. Here an example of `smlp.conf`:
+
+```json
+{
+  "lang_file": "i18n/en.json",
+  "file_input": "../data/mushroom/mushroom_data.csv",
+  "import_network": "mushroom_model.json",
+  "export_network": "mushroom_model_new.json"
+}
+```
 
 # Examples
 

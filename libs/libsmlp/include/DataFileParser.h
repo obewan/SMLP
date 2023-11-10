@@ -1,5 +1,5 @@
 /**
- * @file FileParser.h
+ * @file DataFileParser.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief File Parser
  * @date 2023-09-01
@@ -19,22 +19,22 @@
  * methods for opening, closing, and resetting the file position, as well as
  * methods for processing lines and counting lines.
  */
-class FileParser {
+class DataFileParser {
 public:
   /**
    * @brief Constructor that takes a file path as an argument.
    *
    * @param path The path to the file.
    */
-  explicit FileParser(const std::string &path) : path(path) {}
+  explicit DataFileParser(const std::string &path) : path(path) {}
 
   // Virtual destructor
-  virtual ~FileParser();
+  virtual ~DataFileParser();
 
   /**
    * @brief Opens the file.
    */
-  void openFile();
+  void openFile(const std::string &filepath = "");
 
   /**
    * @brief Closes the file.
@@ -126,10 +126,10 @@ public:
       size_t output_size) const;
 
   std::ifstream file;
-  std::string path;
   Csv::Parser csv_parser;
   size_t current_line_number = 0;
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
+  std::string path = "";
 };

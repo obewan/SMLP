@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.5.0)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/i18n/en.json
                ${CMAKE_CURRENT_BINARY_DIR}/i18n/en.json
                COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/smlp.conf
+               ${CMAKE_CURRENT_BINARY_DIR}/smlp.conf
+               COPYONLY)
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
@@ -45,5 +48,6 @@ foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
 
 enable_testing()

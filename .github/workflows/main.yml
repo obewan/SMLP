@@ -8,6 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: "3.18.4"
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -32,10 +36,10 @@ jobs:
         with:
           path: "${{github.workspace}}/coverage/lcov.info"
           min_coverage: 80
+      - name: Configure CMake for Release
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
+      - name: Build Release
+        run: cmake --build ${{github.workspace}}/build --config Release -- -j 2
       - name: Run integration tests
-        uses: HorstBaerbel/action-ctest@1.1
-        with:
-          sourcedir: "."
-          builddir: "ctest"
-          cmakeoptions: "--config Release"
-          ctestoptions: "--output-on-failure"
+        working-directory: ${{github.workspace}}/build/test
+        run: ctest -C Release --output-on-failure

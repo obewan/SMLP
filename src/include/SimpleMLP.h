@@ -9,8 +9,9 @@
  */
 #pragma once
 #include "Common.h"
-#include "ImportExportJSON.h"
 #include "Network.h"
+#include "NetworkImportExportJSON.h"
+#include "SimpleConfig.h"
 #include "SimpleLogger.h"
 #include <memory>
 #include <string>
@@ -22,7 +23,10 @@
  */
 class SimpleMLP {
 public:
-  bool init(int argc, char **argv, bool &showVersion);
+  int init(int argc, char **argv);
+
+  static const int EXIT_HELP = 2;
+  static const int EXIT_VERSION = 3;
 
   /**
    * @brief This method apply the model on inputs to predict the outputs
@@ -65,7 +69,7 @@ public:
   /**
    * @brief ImportExportJSON tool.
    */
-  ImportExportJSON importExportJSON;
+  NetworkImportExportJSON importExportJSON;
 
   /**
    * @brief A simple logger
@@ -73,6 +77,8 @@ public:
   SimpleLogger logger;
 
 private:
-  int parseArgs(int argc, char **argv, bool &showVersion);
+  int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;
+  void ConfigSettings(const SimpleConfig &config);
+  void buildNetwork();
 };

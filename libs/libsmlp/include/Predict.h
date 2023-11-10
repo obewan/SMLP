@@ -9,7 +9,7 @@
  */
 #pragma once
 #include "Common.h"
-#include "FileParser.h"
+#include "DataFileParser.h"
 #include "Network.h"
 #include "SimpleLogger.h"
 #include "exception/PredictException.h"
@@ -19,14 +19,15 @@
  */
 class Predict {
 public:
-  Predict(Network *network, FileParser *fileparser,
+  Predict(Network *network, DataFileParser *fileparser,
           const AppParameters &app_params, const SimpleLogger &logger)
       : network_(network), fileParser_(fileparser), app_params_(app_params),
         logger_(logger) {}
 
   Predict(Network *network, const AppParameters &app_params,
           const SimpleLogger &logger)
-      : network_(network), fileParser_(new FileParser(app_params.data_file)),
+      : network_(network),
+        fileParser_(new DataFileParser(app_params.data_file)),
         app_params_(app_params), logger_(logger) {}
 
   void predict();
@@ -55,14 +56,14 @@ public:
    *
    * @param fileparser Pointer to the file parser.
    */
-  void setFileParser(FileParser *fileparser) { fileParser_ = fileparser; }
+  void setFileParser(DataFileParser *fileparser) { fileParser_ = fileparser; }
 
   /**
    * @brief Gets the file parser used for testing data.
    *
    * @return Pointer to the file parser.
    */
-  FileParser *getFileParser() { return fileParser_; }
+  DataFileParser *getFileParser() { return fileParser_; }
 
   /**
    * @brief Truncate to zero if close to zero, to avoid scientific notation.
@@ -76,7 +77,7 @@ public:
 
 private:
   Network *network_;
-  FileParser *fileParser_;
+  DataFileParser *fileParser_;
   const AppParameters &app_params_;
   const SimpleLogger &logger_;
 };

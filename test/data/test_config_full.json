@@ -1,0 +1,6 @@
+{
+    "lang_file": "i18n/fr.json",
+    "file_input": "test.csv",
+    "import_network": "model.json",
+    "export_network": "model_new.json"
+}
