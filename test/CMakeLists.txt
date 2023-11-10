@@ -40,6 +40,9 @@ macro(add_my_test TEST_NAME COMMAND_NAME)
            COMMAND ${COMMAND_NAME} ${ARGN} 
            WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 endmacro()
+# Rename the config file to a temporary file
+add_test(NAME rename_config_file
+         COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/smlp.conf ${CMAKE_BINARY_DIR}/smlp.conf.tmp)
 # Test version
 add_my_test(test_version smlp -v)
 set_tests_properties(test_version PROPERTIES
@@ -83,6 +86,9 @@ set_tests_properties(test_predictive PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0"
 )
 # Test config 
+# Restore the config file
+add_test(NAME restore_config_file
+         COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/smlp.conf.tmp ${CMAKE_BINARY_DIR}/smlp.conf)
 add_my_test(check_smlpConfig_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/smlp.conf)
 add_my_test(test_trainonly_withconfig smlp -i 20 -o 1 -d 12 -c 1 -e 1 -j ReLU -m TrainOnly)
 set_tests_properties(test_trainonly_withconfig PROPERTIES

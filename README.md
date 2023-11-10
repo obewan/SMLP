@@ -71,7 +71,7 @@ If you use the corresponding command line options, they will override the config
 ```json
 {
   "lang_file": "i18n/en.json",
-  "data_file": "data/mushroom/mushroom_data.csv",
+  "data_file": "../data/mushroom/mushroom_data.csv",
   "model_file": "mushroom_model.json"
 }
 ```
