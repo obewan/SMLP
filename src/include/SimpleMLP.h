@@ -52,6 +52,22 @@ public:
   void trainTestMonitored();
 
   /**
+   * @brief run the selected mode.
+   */
+  void runMode();
+
+  /**
+   * @brief check if the network should export its model.
+   */
+
+  bool shouldExportNetwork();
+
+  /**
+   * @brief export the network model.
+   */
+  void exportNetwork();
+
+  /**
    * @brief Application parameters.
    */
   AppParameters app_params;
@@ -80,5 +96,5 @@ private:
   int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
-  void buildNetwork();
+  void importOrBuildNetwork();
 };

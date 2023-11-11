@@ -21,38 +21,18 @@ int main(int argc, char *argv[]) {
   auto smlp = std::make_unique<SimpleMLP>();
 
   try {
-    if (int init = smlp->init(argc, argv); init == EXIT_FAILURE) {
+    int init = smlp->init(argc, argv);
+    if (init == EXIT_FAILURE) {
       return EXIT_FAILURE;
     } else if (init == SimpleMLP::EXIT_HELP ||
                init == SimpleMLP::EXIT_VERSION) {
       return EXIT_SUCCESS;
     }
 
-    switch (smlp->app_params.mode) {
-    case EMode::Predictive:
-      smlp->predict();
-      break;
-    case EMode::TrainOnly:
-      smlp->train();
-      break;
-    case EMode::TestOnly:
-      smlp->test();
-      break;
-    case EMode::TrainTestMonitored:
-      smlp->trainTestMonitored();
-      break;
-    case EMode::TrainThenTest: {
-      smlp->train();
-      smlp->test();
-    } break;
-    default:
-      throw std::runtime_error("Unimplemented mode.");
-    }
+    smlp->runMode();
 
-    if (!smlp->app_params.network_to_export.empty()) {
-      smlp->logger.info("Exporting network model to ",
-                        smlp->app_params.network_to_export, "...");
-      smlp->importExportJSON.exportModel(smlp->network.get(), smlp->app_params);
+    if (smlp->shouldExportNetwork()) {
+      smlp->exportNetwork();
     }
   } catch (const std::exception &e) {
     smlp->logger.error(e.what());

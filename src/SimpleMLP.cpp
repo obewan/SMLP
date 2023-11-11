@@ -67,32 +67,13 @@ int SimpleMLP::init(int argc, char **argv) {
       return EXIT_FAILURE;
     }
 
-    // Instantiation of the network
-    buildNetwork();
+    importOrBuildNetwork();
 
     return EXIT_SUCCESS;
 
   } catch (std::exception &ex) {
     logger.error(ex.what());
     return EXIT_FAILURE;
-  }
-}
-
-void SimpleMLP::buildNetwork() {
-  if (!app_params.network_to_import.empty() &&
-      (app_params.mode == EMode::Predictive ||
-       app_params.mode == EMode::TestOnly)) {
-    if (app_params.mode !=
-        EMode::Predictive) { // avoiding header lines on
-                             // this mode, for commands chaining with pipes
-      logger.info("Importing network model from ", app_params.network_to_import,
-                  "...");
-    }
-    network =
-        std::unique_ptr<Network>(importExportJSON.importModel(app_params));
-    network_params = network->params;
-  } else {
-    network = std::make_unique<Network>(network_params);
   }
 }
 
@@ -269,4 +250,58 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   if (!config.export_network.empty() && app_params.network_to_export.empty()) {
     app_params.network_to_export = config.export_network;
   }
+}
+
+void SimpleMLP::runMode() {
+  switch (app_params.mode) {
+  case EMode::Predictive:
+    predict();
+    break;
+  case EMode::TrainOnly:
+    train();
+    break;
+  case EMode::TestOnly:
+    test();
+    break;
+  case EMode::TrainTestMonitored:
+    trainTestMonitored();
+    break;
+  case EMode::TrainThenTest:
+    train();
+    test();
+    break;
+  default:
+    throw std::runtime_error("Unimplemented mode.");
+  }
+}
+
+void SimpleMLP::importOrBuildNetwork() {
+  if (!app_params.network_to_import.empty() &&
+      (app_params.mode == EMode::Predictive ||
+       app_params.mode == EMode::TestOnly)) {
+    if (app_params.mode !=
+        EMode::Predictive) { // avoiding header lines on
+                             // this mode, for commands chaining with pipes
+      logger.info("Importing network model from ", app_params.network_to_import,
+                  "...");
+    }
+    network =
+        std::unique_ptr<Network>(importExportJSON.importModel(app_params));
+    network_params = network->params;
+  } else {
+    network = std::make_unique<Network>(network_params);
+  }
+}
+
+bool SimpleMLP::shouldExportNetwork() {
+  return !app_params.network_to_export.empty() &&
+         (app_params.mode == EMode::TrainOnly ||
+          app_params.mode == EMode::TrainTestMonitored ||
+          app_params.mode == EMode::TrainThenTest);
+}
+
+void SimpleMLP::exportNetwork() {
+  logger.info("Exporting network model to ", app_params.network_to_export,
+              "...");
+  importExportJSON.exportModel(network.get(), app_params);
 }
