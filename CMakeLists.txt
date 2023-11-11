@@ -1,9 +1,14 @@
 cmake_minimum_required(VERSION 3.5.0)
 
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/i18n/en.json
-               ${CMAKE_CURRENT_BINARY_DIR}/i18n/en.json
-               COPYONLY)
+file(GLOB I18N_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/i18n/*")
+foreach(I18N_FILE ${I18N_FILES})
+    get_filename_component(FILENAME ${I18N_FILE} NAME)
+    configure_file(${I18N_FILE}
+                   ${CMAKE_CURRENT_BINARY_DIR}/i18n/${FILENAME}
+                   COPYONLY)
+endforeach()
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/smlp.conf
                ${CMAKE_CURRENT_BINARY_DIR}/smlp.conf
                COPYONLY)

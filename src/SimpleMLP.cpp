@@ -173,22 +173,22 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
     return app.add_flag(name, param, lang.get(name));
   };
 
-  addOption("-a,--import_network", app_params.network_to_import,
+  addOption("-i,--import_network", app_params.network_to_import,
             CLI::ExistingFile);
-  addOption("-b,--export_network", app_params.network_to_export, valid_path);
+  addOption("-e,--export_network", app_params.network_to_export, valid_path);
   addOption("-f,--file_input", app_params.data_file, CLI::ExistingFile);
-  addOption("-i,--input_size", network_params.input_size, CLI::PositiveNumber);
+  addOption("-s,--input_size", network_params.input_size, CLI::PositiveNumber);
   addOption("-o,--output_size", network_params.output_size,
             CLI::PositiveNumber);
   addOption("-d,--hidden_size", network_params.hidden_size,
             CLI::NonNegativeNumber);
   addOption("-c,--hiddens_count", network_params.hiddens_count,
             CLI::NonNegativeNumber);
-  addOption("-e,--epochs", app_params.num_epochs, CLI::NonNegativeNumber);
-  addOption("-r,--learning_rate", network_params.learning_rate,
+  addOption("-p,--epochs", app_params.num_epochs, CLI::NonNegativeNumber);
+  addOption("-l,--learning_rate", network_params.learning_rate,
             CLI::Range(0.0f, 1.0f), CLI::TypeValidator<float>());
-  addFlag("-s,--output_ends", app_params.output_at_end);
-  addOption("-t,--training_ratio", app_params.training_ratio,
+  addFlag("-t,--output_ends", app_params.output_at_end);
+  addOption("-r,--training_ratio", app_params.training_ratio,
             CLI::Range(0.0f, 1.0f), CLI::TypeValidator<float>());
   addOptionTransform("-m,--mode", app_params.mode,
                      CLI::CheckedTransformer(mode_map, CLI::ignore_case));
@@ -196,13 +196,13 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
                      CLI::CheckedTransformer(predictive_map, CLI::ignore_case));
   addOption("-y,--output_index_to_monitor", app_params.output_index_to_monitor,
             CLI ::NonNegativeNumber);
-  addOptionTransform("-j,--hidden_activation_function",
+  addOptionTransform("-a,--hidden_activation_function",
                      network_params.hidden_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
-  addOptionTransform("-k,--output_activation_function",
+  addOptionTransform("-b,--output_activation_function",
                      network_params.output_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
-  addOption("-p,--hidden_activation_alpha",
+  addOption("-k,--hidden_activation_alpha",
             network_params.hidden_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
   addOption("-q,--output_activation_alpha",

@@ -38,12 +38,12 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
 4. The `file_input` (`-f` parameter) must be the file path of your data file that will be used for training and testing.
-5. The `import_network` option (`-a` parameter) is used to import an existing smlp network model for TestOnly and Predictive modes, instead of creating a new network model. It must be a model that has been previously exported with export_network.
-6. The `export_network` option (`-b` parameter) allows you to export the trained model. This option can be used with the TrainOnly, TrainTestMonitored, and TrainThenTest modes.
-7. The `input_size` (`-i` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output columns are at the ends of your dataset, you can indicate it with the `output_ends` (`-s` parameter).
-8. `epochs` (`-e` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-9. The `training_ratio` (`-t` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
-10. The `learning_rate` (`-r` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
+5. The `import_network` option (`-i` parameter) is used to import an existing smlp network model for TestOnly and Predictive modes, instead of creating a new network model. It must be a model that has been previously exported with export_network.
+6. The `export_network` option (`-e` parameter) allows you to export the trained model. This option can be used with the TrainOnly, TrainTestMonitored, and TrainThenTest modes.
+7. The `input_size` (`-s` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output columns are at the ends of your dataset, you can indicate it with the `output_ends` (`-t` parameter).
+8. `epochs` (`-p` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
+9. The `training_ratio` (`-r` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
+10. The `learning_rate` (`-l` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
 11. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
 12. You can specify the running mode with the `mode` option (`-m` parameter):
     - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
@@ -56,15 +56,21 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
     - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values (float).
     - NumberOnly: This will show only the predicted outputs number.
     - RawOnly: This will only show the output(s) raw values (float).
-14. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-j` parameter) and for the output layer with `output_activation_function` (`-k` parameter):
-    - ELU: Exponential Linear Units, require an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
+14. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-a` parameter) and for the output layer with `output_activation_function` (`-b` parameter):
+    - ELU: Exponential Linear Units, require an `hidden_activation_alpha` parameter (`-k` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - LReLU: Leaky ReLU.
-    - PReLU: Parametric ReLU, require an an `hidden_activation_alpha` parameter (`-p` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
+    - PReLU: Parametric ReLU, require an an `hidden_activation_alpha` parameter (`-k` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
     - ReLU: Rectified Linear Unit.
     - Sigmoid (default).
     - Tanh: Hyperbolic Tangent.
 15. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
-    - `lang_file`: The language file to use for the messages (currently, only i18n/en.json is available).
+    - `lang_file`: The language file to use for the help. Currently available, by alphabetic order:
+      - `i18n/de.json` (german)
+      - `i18n/en.json` (english)
+      - `i18n/es.json` (spanish)
+      - `i18n/fr.json` (french)
+      - `i18n/it.json` (italian)
+      - `i18n/pt.json` (portuguese)
     - `file_input`: The dataset file to use, similar to the file_input option.
     - `import_network`: The model file to import, similar to the import_network option.
     - `export_network`: The model file to export, similar to the export_network option.
@@ -84,9 +90,9 @@ If you use the corresponding command line options, they will override the config
 
 ### Example 1: Training
 
-Training a new MLP with the mushroom dataset, 20 inputs (-i), 1 output (-o), 12 neurons by hidden layers (-d), 1 hidden layer (-c), during 100 epochs (-e), output at beginning of the dataset (-s), with a ReLU activation function on hidden layer (-j) and with monitored tests (-m). Then exporting the model to myMushroomMLP.json after the training (-b).
+Training a new MLP with the mushroom dataset, 20 inputs (-s), 1 output (-o), 12 neurons by hidden layers (-d), 1 hidden layer (-c), during 100 epochs (-p), output at beginning of the dataset (no -t), with a ReLU activation function on hidden layer (-a) and with monitored tests (-m). Then exporting the model to myMushroomMLP.json after the training (-e).
 
-`smlp -b myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100 -j ReLU -m TrainTestMonitored`
+`smlp -e myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -s 20 -o 1 -d 12 -c 1 -p 100 -a ReLU -m TrainTestMonitored`
 
 Output:
 
@@ -116,7 +122,7 @@ Good convergence total: 88.6% (16240/18321)
 
 Importing the previous myMushroomMLP.json and testing it with the mushroom dataset.
 
-`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
+`smlp -i myMushroomMLP.json -f ../data/mushroom/mushroom_data.csv -m TestOnly`
 
 Output:
 
@@ -132,7 +138,7 @@ High accuracy (correct at 90%): 79.6%
 ### Example 3: Predict
 
 Using a new data file that doesn't have outputs to predict the outputs with our previous mushroom mlp model.
-`smlp -a myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -m Predictive`
+`smlp -i myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -m Predictive`
 
 mushroom_data_to_predict.csv:
 
