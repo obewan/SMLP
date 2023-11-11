@@ -23,8 +23,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 # Roadmap to first release
 
-- Add a more language files (i18n). `[in progress]`
-- Add a pipe input.
+- Add a pipe input. `[in progress]`
 - Add a socket input.
 - Add an interactive testing (command line input).
 - Add an auto-training feature (searching for the best parameters).
