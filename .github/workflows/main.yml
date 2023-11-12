@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config Debug -- -j 2
       - name: Run unit tests
-        working-directory: ${{github.workspace}}/build/test
+        working-directory: ${{github.workspace}}/build/test/unit_tests
         run: ./tester
       - name: Run code coverage
         run: |
@@ -41,5 +41,5 @@ jobs:
       - name: Build Release
         run: cmake --build ${{github.workspace}}/build --config Release -- -j 2
       - name: Run integration tests
-        working-directory: ${{github.workspace}}/build/test
+        working-directory: ${{github.workspace}}/build/test/ctests
         run: ctest -C Release --output-on-failure
