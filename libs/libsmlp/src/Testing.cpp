@@ -10,12 +10,14 @@ using namespace std::string_view_literals;
 
 void Testing::test(const NetworkParameters &network_params,
                    const AppParameters &app_params, size_t epoch) {
-  if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->getTrainingRatioLine(app_params.training_ratio);
-  }
-  if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
-    throw TestingException("No data left for testing, check your "
-                           "training_ratio parameter. Aborting testing.");
+  if (app_params.use_testing_ratio_line) {
+    if (!fileParser_->isTrainingRatioLineProcessed) {
+      fileParser_->getTrainingRatioLine(app_params.training_ratio);
+    }
+    if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
+      throw TestingException("No data left for testing, check your "
+                             "training_ratio parameter. Aborting testing.");
+    }
   }
 
   if (!fileParser_->file.is_open()) {
@@ -26,8 +28,7 @@ void Testing::test(const NetworkParameters &network_params,
   bool isTesting = true;
   int output_neuron_to_monitor = (int)app_params.output_index_to_monitor - 1;
   while (isTesting) {
-    RecordResult result =
-        fileParser_->processLine(network_params, app_params, true);
+    RecordResult result = fileParser_->processLine(network_params, app_params);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
       // Using just one output neuron to monitor, or else there will be too much

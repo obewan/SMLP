@@ -80,13 +80,11 @@ public:
    *
    * @param network_params The parameters to use when processing the line.
    * @param app_params The application parameters.
-   * @param isTesting A boolean indicating whether the line is from testing data
-   * (default is false).
    * @return A RecordResult containing the processed data from the line.
    */
   RecordResult processLine(const NetworkParameters &network_params,
                            const AppParameters &app_params,
-                           bool isTesting = false);
+                           const std::string &line = "");
 
   /**
    * @brief Processes a record with input only.
@@ -124,6 +122,19 @@ public:
   Record processOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t output_size) const;
+
+  bool getNextLine(std::string &line, const AppParameters &app_params);
+  void parseLine(const std::string &line,
+                 std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
+  void
+  validateColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+                  const NetworkParameters &network_params,
+                  const AppParameters &app_params) const;
+
+  Record
+  processColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+                 const NetworkParameters &network_params,
+                 const AppParameters &app_params);
 
   std::ifstream file;
   Csv::Parser csv_parser;

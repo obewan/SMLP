@@ -67,6 +67,9 @@ struct AppParameters {
   float training_ratio = 0.7f;
   bool output_at_end = false;
   bool verbose = false;
+  bool use_stdin = false;
+  bool disable_stdin = false;
+  bool use_testing_ratio_line = false;
   EMode mode = EMode::TrainThenTest;
   EPredictiveMode predictive_mode = EPredictiveMode::CSV;
 };

@@ -17,6 +17,7 @@
     "-b,--output_activation_function": "Selecione a função de ativação dos neurônios de saída:\n  - ELU: Exponential Linear Units, requer um parâmetro output_activation_alpha.\n  - LReLU: Leaky ReLU.\n  - PReLU: Parametric ReLU, requer um parâmetro output_activation_alpha.\n  - ReLU: Rectified Linear Unit.\n  - Sigmoid (padrão).\n  - Tanh: Tangente Hiperbólica",
     "-k,--hidden_activation_alpha": "O valor do parâmetro alfa para as funções de ativação ELU e PReLU em camadas ocultas",
     "-q,--output_activation_alpha": "O valor do parâmetro alfa para as funções de ativação ELU e PReLU na camada de saída",
+    "-x,--disable_stdin": "Desativar a entrada stdin como tubos de comando e testes interativos",
     "-v,--version": "Mostrar a versão atual",
     "-w,--verbose": "Registros detalhados"
 }

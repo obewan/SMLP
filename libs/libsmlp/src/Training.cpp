@@ -11,29 +11,43 @@ using namespace std::string_view_literals;
 
 void Training::train(const NetworkParameters &network_params,
                      const AppParameters &app_params) {
-  if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->getTrainingRatioLine(app_params.training_ratio);
-  }
-  if (fileParser_->training_ratio_line == 0) {
-    throw TrainingException("invalid parameter: training_ratio is too small, "
-                            "no data for training.");
-  }
-  fileParser_->openFile();
-  for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
-    logger_.info("Training epoch ", epoch + 1, "/", app_params.num_epochs,
-                 "... ");
-    fileParser_->resetPos();
-    for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
-      RecordResult result =
-          fileParser_->processLine(network_params, app_params);
-      if (result.isSuccess) {
-        network_->forwardPropagation(result.record.first);
-        network_->backwardPropagation(result.record.second);
-        network_->updateWeights();
+
+  auto processInputLine = [this, &network_params, &app_params](auto &line) {
+    RecordResult result =
+        fileParser_->processLine(network_params, app_params, line);
+    if (result.isSuccess) {
+      network_->forwardPropagation(result.record.first);
+      network_->backwardPropagation(result.record.second);
+      network_->updateWeights();
+    }
+  };
+
+  if (app_params.use_stdin) {
+    // Read from stdin
+    std::string line;
+    while (std::getline(std::cin, line)) {
+      processInputLine(line);
+    }
+  } else {
+    // Read from file
+    if (!fileParser_->isTrainingRatioLineProcessed) {
+      fileParser_->getTrainingRatioLine(app_params.training_ratio);
+    }
+    if (fileParser_->training_ratio_line == 0) {
+      throw TrainingException("invalid parameter: training_ratio is too small, "
+                              "no data for training.");
+    }
+    fileParser_->openFile();
+    for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
+      logger_.info("Training epoch ", epoch + 1, "/", app_params.num_epochs,
+                   "... ");
+      fileParser_->resetPos();
+      for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
+        processInputLine("");
       }
     }
+    fileParser_->closeFile();
   }
-  fileParser_->closeFile();
 }
 
 void Training::trainTestMonitored(const NetworkParameters &network_params,

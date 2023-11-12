@@ -35,6 +35,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "SimpleLang.h"
 #include "Testing.h"
 #include "Training.h"
+#include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
 #include <cstddef>
 #include <cstdlib>
@@ -42,7 +43,18 @@ measures that legally restrict others from doing anything the license permits.
 #include <iostream>
 #include <ostream>
 #include <sstream>
+#include <stdio.h>
 #include <string>
+
+#ifdef _WIN32
+#include <io.h>
+#define ISATTY _isatty
+#define FILENO _fileno
+#else
+#include <unistd.h>
+#define ISATTY isatty
+#define FILENO fileno
+#endif
 
 int SimpleMLP::init(int argc, char **argv) {
   try {
@@ -54,17 +66,21 @@ int SimpleMLP::init(int argc, char **argv) {
       return init;
     }
 
+    checkStdin();
+
     // Some post validations
     if (app_params.data_file.empty()) {
       logger.error("A dataset file is required, but file_input is missing.");
       return EXIT_FAILURE;
     }
-
     if (app_params.mode == EMode::Predictive &&
         app_params.network_to_import.empty()) {
       logger.error("Predictive mode require a trained network to import, but "
                    "network_to_import is missing.");
       return EXIT_FAILURE;
+    }
+    if (app_params.disable_stdin && app_params.mode != EMode::Predictive) {
+      logger.info("Stdin disabled");
     }
 
     importOrBuildNetwork();
@@ -83,15 +99,22 @@ void SimpleMLP::predict() {
 }
 
 void SimpleMLP::train() {
-  logger.info("Training, using file ", app_params.data_file);
+  if (app_params.use_stdin) {
+    logger.info("Training using command pipe input...");
+  } else {
+    logger.info("Training, using file ", app_params.data_file);
+  }
   logger.info(showInlineHeader());
   Training training(network.get(), app_params.data_file, logger);
   training.train(network_params, app_params);
 }
 
-void SimpleMLP::test() {
+void SimpleMLP::test(bool fromRatioLine) {
   logger.info("Testing, using file ", app_params.data_file);
   Testing testing(network.get(), app_params.data_file);
+  if (fromRatioLine) {
+    app_params.use_testing_ratio_line = true;
+  }
   testing.test(network_params, app_params, 0);
   logger.out(testing.showResults(app_params.mode));
 }
@@ -105,7 +128,7 @@ void SimpleMLP::trainTestMonitored() {
   }
 
   logger.info("Train and testing, using file ", app_params.data_file);
-  logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+  logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
   Training training(network.get(), app_params.data_file, logger);
   training.trainTestMonitored(network_params, app_params);
@@ -113,7 +136,7 @@ void SimpleMLP::trainTestMonitored() {
 
 std::string SimpleMLP::showInlineHeader() const {
   std::stringstream sst;
-  sst << " InputSize:" << network_params.input_size
+  sst << "InputSize:" << network_params.input_size
       << " OutputSize:" << network_params.output_size
       << " HiddenSize:" << network_params.hidden_size
       << " HiddenLayers:" << network_params.hiddens_count
@@ -208,6 +231,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addOption("-q,--output_activation_alpha",
             network_params.output_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
+  addFlag("-x,--disable_stdin", app_params.disable_stdin);
   addFlag("-v,--version", version);
   addFlag("-w,--verbose", app_params.verbose);
 
@@ -268,10 +292,10 @@ void SimpleMLP::runMode() {
     break;
   case EMode::TrainThenTest:
     train();
-    test();
+    test(true);
     break;
   default:
-    throw std::runtime_error("Unimplemented mode.");
+    throw SmlpException("Unimplemented mode.");
   }
 }
 
@@ -293,7 +317,7 @@ void SimpleMLP::importOrBuildNetwork() {
   }
 }
 
-bool SimpleMLP::shouldExportNetwork() {
+bool SimpleMLP::shouldExportNetwork() const {
   return !app_params.network_to_export.empty() &&
          (app_params.mode == EMode::TrainOnly ||
           app_params.mode == EMode::TrainTestMonitored ||
@@ -304,4 +328,10 @@ void SimpleMLP::exportNetwork() {
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
   importExportJSON.exportModel(network.get(), app_params);
+}
+
+void SimpleMLP::checkStdin() {
+  if (!app_params.disable_stdin) {
+    app_params.use_stdin = !ISATTY(FILENO(stdin));
+  }
 }

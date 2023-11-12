@@ -41,7 +41,7 @@ public:
   /**
    * @brief This method tests the model.
    */
-  void test();
+  void test(bool fromRatioLine = false);
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
@@ -60,7 +60,7 @@ public:
    * @brief check if the network should export its model.
    */
 
-  bool shouldExportNetwork();
+  bool shouldExportNetwork() const;
 
   /**
    * @brief export the network model.
@@ -97,4 +97,5 @@ private:
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
   void importOrBuildNetwork();
+  void checkStdin();
 };

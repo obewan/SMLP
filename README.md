@@ -36,43 +36,23 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in data/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
-4. The `file_input` (`-f` parameter) must be the file path of your data file that will be used for training and testing.
-5. The `import_network` option (`-i` parameter) is used to import an existing smlp network model for TestOnly and Predictive modes, instead of creating a new network model. It must be a model that has been previously exported with export_network.
-6. The `export_network` option (`-e` parameter) allows you to export the trained model. This option can be used with the TrainOnly, TrainTestMonitored, and TrainThenTest modes.
-7. The `input_size` (`-s` parameter) should be equal to the number of input data of your dataset and the `output_size` (`-o` parameter) to the output data of your dataset. input_size + output_size should be equal to your data fields number. If your output columns are at the ends of your dataset, you can indicate it with the `output_ends` (`-t` parameter).
-8. `epochs` (`-p` parameter) will retrain the neural network with the dataset but after a backward propagation correction. It is better to set at least 100 epochs.
-9. The `training_ratio` (`-r` parameter) is the ratio of the data file that SMLP will use for training. The remaining lines of the dataset will be used for testing. In other words, the first part of the file is used for training and the second part for testing. The training_ratio should be a valid ratio between 0 and 1, with a recommended value of 0.7.
-10. The `learning_rate` (`-l` parameter) should be small enough to have a fine training but big enough to be efficient, a value of 0.01 is recommended with the mushroom example.
-11. Increasing the hidden neurons per hidden layers `hidden_size` (`-d` parameter) and the hidden layers count `hiddens_count` (`-c` parameter) will make the neural network more complex and the training will go slower. Using just one hidden layer with 10 neurons is fine with a simple dataset like our mushroom example.
-12. You can specify the running mode with the `mode` option (`-m` parameter):
-    - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
-    - TestOnly: Test an imported network without training.
-    - TrainOnly: Train the network without testing.
-    - TrainThenTest: Train and then test the network (default mode).
-    - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
-13. If using the Predictive mode, you can specify how to render the output with the `predictive_mode` option (`-n` parameter):
-    - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your `output_ends` option (default mode).
-    - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values (float).
-    - NumberOnly: This will show only the predicted outputs number.
-    - RawOnly: This will only show the output(s) raw values (float).
-14. You can specify the activation function for hidden layers neurons with `hidden_activation_function` (`-a` parameter) and for the output layer with `output_activation_function` (`-b` parameter):
-    - ELU: Exponential Linear Units, require an `hidden_activation_alpha` parameter (`-k` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
-    - LReLU: Leaky ReLU.
-    - PReLU: Parametric ReLU, require an an `hidden_activation_alpha` parameter (`-k` parameter) or an `output_activation_alpha` parameter (`-q` parameter).
-    - ReLU: Rectified Linear Unit.
-    - Sigmoid (default).
-    - Tanh: Hyperbolic Tangent.
-15. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
-    - `lang_file`: The language file to use for the help. Currently available, by alphabetic order:
-      - `i18n/de.json` (german)
-      - `i18n/en.json` (english)
-      - `i18n/es.json` (spanish)
-      - `i18n/fr.json` (french)
-      - `i18n/it.json` (italian)
-      - `i18n/pt.json` (portuguese)
-    - `file_input`: The dataset file to use, similar to the file_input option.
-    - `import_network`: The model file to import, similar to the import_network option.
-    - `export_network`: The model file to export, similar to the export_network option.
+4. You can specify the running mode with the `mode` option (`-m` parameter):
+   - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
+   - TestOnly: Test an imported network without training.
+   - TrainOnly: Train the network without testing.
+   - TrainThenTest: Train and then test the network (default mode).
+   - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
+5. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
+   - `lang_file`: The language file to use for the help. Currently available, by alphabetic order:
+     - `i18n/de.json` (german)
+     - `i18n/en.json` (english)
+     - `i18n/es.json` (spanish)
+     - `i18n/fr.json` (french)
+     - `i18n/it.json` (italian)
+     - `i18n/pt.json` (portuguese)
+   - `file_input`: The dataset file to use, similar to the file_input option.
+   - `import_network`: The model file to import, similar to the import_network option.
+   - `export_network`: The model file to export, similar to the export_network option.
 
 If you use the corresponding command line options, they will override the config file parameters. Here an example of `smlp.conf`:
 
@@ -83,6 +63,74 @@ If you use the corresponding command line options, they will override the config
   "import_network": "mushroom_model.json",
   "export_network": "mushroom_model_new.json"
 }
+```
+
+```
+SMLP - Simple Multilayer Perceptron
+Usage: ./smlp [OPTIONS]
+
+Options:
+  -h,--help                   Print this help message and exit
+  -i,--import_network TEXT:FILE
+                              Import a network model instead of creating a new one. This must be a valid model filepath, specifically a file generated by SMLP. If this option is used, there is no need to specify layer parameters as they are included in the model.
+  -e,--export_network TEXT    Export the network model after training. This must be a valid filepath. The exported model can be imported later, eliminating the need for retraining.
+  -f,--file_input TEXT:FILE   Specify the data file to be used for training and testing.
+  -s,--input_size UINT:POSITIVE [0]
+                              The numbers of input neurons
+  -o,--output_size UINT:POSITIVE [1]
+                              The numbers of output neurons
+  -d,--hidden_size UINT:NONNEGATIVE [10]
+                              The numbers of hidden neurons per hidden layer
+  -c,--hiddens_count UINT:NONNEGATIVE [1]
+                              The count of hidden layers
+  -p,--epochs UINT:NONNEGATIVE [3]
+                              The numbers of epochs retraining
+  -l,--learning_rate FLOAT:FLOAT in [0 - 1]:FLOAT [0.01]
+                              The network training learning rate
+  -t,--output_ends            Indicate that the output columns of the dataset are located at the end of the record.
+                              By default smlp will look at the firsts columns
+  -r,--training_ratio FLOAT:FLOAT in [0 - 1]:FLOAT [0.7]
+                              The training ratio of the file to switch between data for training and data for testing, should be around 0.7
+  -m,--mode ENUM:value in {Predictive->0,TestOnly->1,TrainOnly->2,TrainTestMonitored->3,TrainThenTest->4} OR {0,1,2,3,4} [4]
+                              Select the running mode:
+                                - Predictive:This mode uses an input file to predict the outputs.
+                                  If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file.
+                                  Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter.
+                                  This mode requires a network that has been imported and trained (be sure that the model has good testing results).
+                                - TestOnly: Test an imported network without training.
+                                - TrainOnly: Train the network without testing.
+                                - TrainThenTest: Train and then test the network (default).
+                                - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
+  -n,--predictive_mode ENUM:value in {CSV->0,NumberAndRaw->1,NumberOnly->2,RawOnly->3} OR {0,1,2,3} [0]
+                              If using Predictive mode, select the output render mode:
+                                - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your output_ends option (default).
+                                - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values.
+                                - NumberOnly: This will show only the predicted outputs number.
+                                - RawOnly: This will only show the output(s) raw values.
+  -y,--output_index_to_monitor UINT:NONNEGATIVE [1]
+                              Indicate the output neuron index to monitor during a TrainTestMonitored mode. If index = 0 there will be no progress monitoring. Default is 1, the first neuron output.
+  -a,--hidden_activation_function ENUM:value in {ELU->0,LReLU->1,PReLU->2,ReLU->3,Sigmoid->4,Tanh->5} OR {0,1,2,3,4,5} [4]
+                              Select the hidden neurons activation function:
+                                - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter.
+                                - LReLU: Leaky ReLU.
+                                - PReLU: Parametric ReLU, require an hidden_activation_alpha_parameter.
+                                - ReLU: Rectified Linear Unit.
+                                - Sigmoid (default).
+                                - Tanh: Hyperbolic Tangent
+  -b,--output_activation_function ENUM:value in {ELU->0,LReLU->1,PReLU->2,ReLU->3,Sigmoid->4,Tanh->5} OR {0,1,2,3,4,5} [4]
+                              Select the output neurons activation function:
+                                - ELU: Exponential Linear Units, require an output_activation_alpha parameter.
+                                - LReLU: Leaky ReLU.
+                                - PReLU: Parametric ReLU, require an output_activation_alpha parameter.
+                                - ReLU: Rectified Linear Unit.
+                                - Sigmoid (default).
+                                - Tanh: Hyperbolic Tangent
+  -k,--hidden_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+                              The alpha parameter value for ELU and PReLU activation functions on hidden layers
+  -q,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+                              The alpha parameter value for ELU and PReLU activation functions on output layer
+  -v,--version                Show current version
+  -w,--verbose                Verbose logs
 ```
 
 # Examples

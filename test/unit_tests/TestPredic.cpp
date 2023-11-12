@@ -10,7 +10,7 @@ TEST_CASE("Testing the Predict class") {
 
   SUBCASE("Test predict") {
     std::string modelJsonFile = "testModel.json";
-    std::string test_file = "data/test_file.csv";
+    std::string test_file = "../data/test_file.csv";
     AppParameters app_params{
         .version = "1.0.0",
         .network_to_import = modelJsonFile,

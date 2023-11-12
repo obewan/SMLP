@@ -40,24 +40,50 @@ void DataFileParser::resetPos() {
 
 RecordResult
 DataFileParser::processLine(const NetworkParameters &network_params,
-                            const AppParameters &app_params, bool isTesting) {
-  std::vector<std::vector<Csv::CellReference>> cell_refs;
-  std::string line;
-  current_line_number++;
+                            const AppParameters &app_params,
+                            const std::string &line) {
 
+  std::string nextline;
+  current_line_number++;
+  if (line.empty()) {
+    if (!getNextLine(nextline, app_params)) {
+      return {.isSuccess = false, .isEndOfFile = true};
+    }
+  } else {
+    nextline = line;
+  }
+
+  std::vector<std::vector<Csv::CellReference>> cell_refs;
+
+  parseLine(nextline, cell_refs);
+
+  validateColumns(cell_refs, network_params, app_params);
+
+  Record record = processColumns(cell_refs, network_params, app_params);
+
+  return {.isSuccess = true, .record = record};
+}
+
+bool DataFileParser::getNextLine(std::string &line,
+                                 const AppParameters &app_params) {
   // if isTesting, skipping lines until testing lines
-  if (isTesting && current_line_number < training_ratio_line) {
+  if (app_params.use_testing_ratio_line &&
+      current_line_number < training_ratio_line) {
     for (; current_line_number < training_ratio_line; ++current_line_number) {
       if (!std::getline(file, line)) {
-        return {.isSuccess = false, .isEndOfFile = true};
+        return false;
       }
     }
   }
-
   if (!std::getline(file, line)) {
-    return {.isSuccess = false, .isEndOfFile = true};
+    return false;
   }
+  return true;
+}
 
+void DataFileParser::parseLine(
+    const std::string &line,
+    std::vector<std::vector<Csv::CellReference>> &cell_refs) const {
   try {
     std::string_view data(line);
     csv_parser.parseTo(data, cell_refs);
@@ -67,7 +93,12 @@ DataFileParser::processLine(const NetworkParameters &network_params,
          << ex.what();
     throw FileParserException(sstr.str());
   }
+}
 
+void DataFileParser::validateColumns(
+    const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+    const NetworkParameters &network_params,
+    const AppParameters &app_params) const {
   if (cell_refs.empty()) {
     std::stringstream sstr;
     sstr << "Invalid columns at line " << current_line_number << ": empty line";
@@ -92,7 +123,11 @@ DataFileParser::processLine(const NetworkParameters &network_params,
          << network_params.input_size;
     throw FileParserException(sstr.str());
   }
+}
 
+Record DataFileParser::processColumns(
+    const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+    const NetworkParameters &network_params, const AppParameters &app_params) {
   Record record;
   try {
     if (app_params.mode == EMode::Predictive &&
@@ -109,8 +144,7 @@ DataFileParser::processLine(const NetworkParameters &network_params,
          << ": bad column format";
     throw FileParserException(sstr.str());
   }
-
-  return {.isSuccess = true, .record = record};
+  return record;
 }
 
 Record DataFileParser::processInputOnly(

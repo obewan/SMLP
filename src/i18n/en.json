@@ -17,6 +17,7 @@
     "-b,--output_activation_function": "Select the output neurons activation function:\n  - ELU: Exponential Linear Units, require an output_activation_alpha parameter.\n  - LReLU: Leaky ReLU.\n  - PReLU: Parametric ReLU, require an output_activation_alpha parameter.\n  - ReLU: Rectified Linear Unit.\n  - Sigmoid (default).\n  - Tanh: Hyperbolic Tangent",
     "-k,--hidden_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on hidden layers",
     "-q,--output_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on output layer",
+    "-x,--disable_stdin": "Disable stdin input like command pipes and interactive testing",
     "-v,--version": "Show current version",
     "-w,--verbose": "Verbose logs"
 }
