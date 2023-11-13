@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include <cstddef>
 #include <map>
 #include <string>
 #include <vector>
@@ -65,6 +66,7 @@ struct AppParameters {
   size_t num_epochs = 3;
   size_t output_index_to_monitor = 1;
   float training_ratio = 0.7f;
+  size_t training_ratio_line = 0;
   bool output_at_end = false;
   bool verbose = false;
   bool use_stdin = false;

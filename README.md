@@ -3,6 +3,8 @@
 A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
 Each neurons of a previous layer is connected with each neurons of its next layer.
 
+> "One of my most productive days was throwing away 1000 lines of code." _- Ken Thompson_
+
 # Features
 
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
@@ -129,6 +131,7 @@ Options:
                               The alpha parameter value for ELU and PReLU activation functions on hidden layers
   -q,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
                               The alpha parameter value for ELU and PReLU activation functions on output layer
+  -x,--disable_stdin          Disable stdin input like command pipes and interactive testing
   -v,--version                Show current version
   -w,--verbose                Verbose logs
 ```

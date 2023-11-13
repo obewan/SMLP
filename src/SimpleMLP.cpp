@@ -58,7 +58,9 @@ measures that legally restrict others from doing anything the license permits.
 
 int SimpleMLP::init(int argc, char **argv) {
   try {
-    if (argc == 1) {
+    checkStdin(); // check in case using defaults options
+
+    if (argc == 1 && !app_params.use_stdin) {
       argv[1] = (char *)"-h"; // showing help by default
       argc++;
     }
@@ -66,10 +68,10 @@ int SimpleMLP::init(int argc, char **argv) {
       return init;
     }
 
-    checkStdin();
+    checkStdin(); // check again but including -x param this time
 
     // Some post validations
-    if (app_params.data_file.empty()) {
+    if (app_params.data_file.empty() && !app_params.use_stdin) {
       logger.error("A dataset file is required, but file_input is missing.");
       return EXIT_FAILURE;
     }
@@ -100,7 +102,9 @@ void SimpleMLP::predict() {
 
 void SimpleMLP::train() {
   if (app_params.use_stdin) {
-    logger.info("Training using command pipe input...");
+    logger.info("Training, using command pipe input...")
+        .warn("Epochs and training ratio are disabled using command "
+              "pipe input.");
   } else {
     logger.info("Training, using file ", app_params.data_file);
   }
@@ -110,7 +114,11 @@ void SimpleMLP::train() {
 }
 
 void SimpleMLP::test(bool fromRatioLine) {
-  logger.info("Testing, using file ", app_params.data_file);
+  if (app_params.use_stdin) {
+    logger.info("Testing, using command pipe input... ", app_params.data_file);
+  } else {
+    logger.info("Testing, using file ", app_params.data_file);
+  }
   Testing testing(network.get(), app_params.data_file);
   if (fromRatioLine) {
     app_params.use_testing_ratio_line = true;
@@ -153,9 +161,11 @@ std::string SimpleMLP::showInlineHeader() const {
       network_params.output_activation_function == EActivationFunction::PReLU) {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
   }
-  sst << " Epochs:" << app_params.num_epochs
-      << " TrainingRatio:" << app_params.training_ratio
-      << " Mode:" << Common::getModeStr(app_params.mode)
+  if (!app_params.use_stdin) {
+    sst << " Epochs:" << app_params.num_epochs
+        << " TrainingRatio:" << app_params.training_ratio;
+  }
+  sst << " Mode:" << Common::getModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;
   return sst.str();
 }
@@ -213,6 +223,8 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addFlag("-t,--output_ends", app_params.output_at_end);
   addOption("-r,--training_ratio", app_params.training_ratio,
             CLI::Range(0.0f, 1.0f), CLI::TypeValidator<float>());
+  addOption("-R,--training_ratio_line", app_params.training_ratio_line,
+            CLI::NonNegativeNumber);
   addOptionTransform("-m,--mode", app_params.mode,
                      CLI::CheckedTransformer(mode_map, CLI::ignore_case));
   addOptionTransform("-n,--predictive_mode", app_params.predictive_mode,
@@ -331,6 +343,7 @@ void SimpleMLP::exportNetwork() {
 }
 
 void SimpleMLP::checkStdin() {
+  app_params.use_stdin = false; // important
   if (!app_params.disable_stdin) {
     app_params.use_stdin = !ISATTY(FILENO(stdin));
   }
