@@ -3,7 +3,7 @@
 A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
 Each neurons of a previous layer is connected with each neurons of its next layer.
 
-> "One of my most productive days was throwing away 1000 lines of code." _- Ken Thompson_
+> "Simplicity is the ultimate sophistication" _- Leonardo da Vinci (attributed)_
 
 # Features
 
@@ -93,6 +93,8 @@ Options:
                               By default smlp will look at the firsts columns
   -r,--training_ratio FLOAT:FLOAT in [0 - 1]:FLOAT [0.7]
                               The training ratio of the file to switch between data for training and data for testing, should be around 0.7
+  -R,--training_ratio_line UINT:NONNEGATIVE [0]
+                              The training ratio line number of the file to switch between data for training and data for testing, should be located at 70% of the file.
   -m,--mode ENUM:value in {Predictive->0,TestOnly->1,TrainOnly->2,TrainTestMonitored->3,TrainThenTest->4} OR {0,1,2,3,4} [4]
                               Select the running mode:
                                 - Predictive:This mode uses an input file to predict the outputs.
