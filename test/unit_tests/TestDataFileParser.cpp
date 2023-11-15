@@ -135,9 +135,9 @@ TEST_CASE("Testing the DataFileParser class") {
     parser.csv_parser.parseTo(data, cell_refs);
 
     const auto &[inputs1, outputs1] =
-        parser.processInputFirst(cell_refs, input_size);
+        parser.processInputFirst(cell_refs, input_size, output_size);
     const auto &[inputs2, outputs2] =
-        parser.processOutputFirst(cell_refs, output_size);
+        parser.processOutputFirst(cell_refs, input_size, output_size);
 
     CHECK(inputs1.size() == input_size);
     CHECK(outputs1.size() == output_size);

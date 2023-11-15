@@ -1,5 +1,6 @@
 #include "DataFileParser.h"
 #include "Common.h"
+#include <cstddef>
 #include <iostream>
 #include <limits>
 #include <optional>
@@ -127,16 +128,19 @@ void DataFileParser::validateColumns(
 
 Record DataFileParser::processColumns(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-    const NetworkParameters &network_params, const AppParameters &app_params) {
+    const NetworkParameters &network_params,
+    const AppParameters &app_params) const {
   Record record;
   try {
     if (app_params.mode == EMode::Predictive &&
         cell_refs.size() == network_params.input_size) {
       record = processInputOnly(cell_refs, network_params.input_size);
     } else if (app_params.output_at_end) {
-      record = processInputFirst(cell_refs, network_params.input_size);
+      record = processInputFirst(cell_refs, network_params.input_size,
+                                 network_params.output_size);
     } else {
-      record = processOutputFirst(cell_refs, network_params.output_size);
+      record = processOutputFirst(cell_refs, network_params.input_size,
+                                  network_params.output_size);
     }
   } catch (std::bad_optional_access &) {
     std::stringstream sstr;
@@ -150,61 +154,41 @@ Record DataFileParser::processColumns(
 Record DataFileParser::processInputOnly(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
-  std::vector<float> input;
+  std::vector<float> input(input_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
-  for (auto const &value :
-       std::ranges::subrange(cell_refs.begin(),
-                             cell_refs.begin() + input_size) |
-           std::views::transform(getValue)) {
-    input.push_back(value);
-  }
+  std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
+                 input.begin(), getValue);
   return std::make_pair(input, std::vector<float>{});
 }
 
 Record DataFileParser::processInputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-    size_t input_size) const {
-  std::vector<float> input;
-  std::vector<float> expected_output;
+    size_t input_size, size_t output_size) const {
+  std::vector<float> input(input_size);
+  std::vector<float> expected_output(output_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
-
-  for (auto const &value :
-       std::ranges::subrange(cell_refs.begin(),
-                             cell_refs.begin() + input_size) |
-           std::views::transform(getValue)) {
-    input.push_back(value);
-  }
-  for (auto const &value :
-       std::ranges::subrange(cell_refs.begin() + input_size, cell_refs.end()) |
-           std::views::transform(getValue)) {
-    expected_output.push_back(value);
-  }
+  std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
+                 input.begin(), getValue);
+  std::transform(cell_refs.begin() + input_size, cell_refs.end(),
+                 expected_output.begin(), getValue);
   return std::make_pair(input, expected_output);
 }
 
 Record DataFileParser::processOutputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-    size_t output_size) const {
-  std::vector<float> input;
-  std::vector<float> expected_output;
+    size_t input_size, size_t output_size) const {
+  std::vector<float> input(input_size);
+  std::vector<float> expected_output(output_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
-
-  for (auto const &value :
-       std::ranges::subrange(cell_refs.begin(),
-                             cell_refs.begin() + output_size) |
-           std::views::transform(getValue)) {
-    expected_output.push_back(value);
-  }
-  for (auto const &value :
-       std::ranges::subrange(cell_refs.begin() + output_size, cell_refs.end()) |
-           std::views::transform(getValue)) {
-    input.push_back(value);
-  }
+  std::transform(cell_refs.begin(), cell_refs.begin() + output_size,
+                 expected_output.begin(), getValue);
+  std::transform(cell_refs.begin() + output_size, cell_refs.end(),
+                 input.begin(), getValue);
   return std::make_pair(input, expected_output);
 }

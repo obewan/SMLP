@@ -104,11 +104,12 @@ public:
    * @param cell_refs A 2D vector containing Csv::CellReference objects for each
    * cell in the record.
    * @param input_size The size of the input data in the record.
+   * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
   Record processInputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      size_t input_size) const;
+      size_t input_size, size_t output_size) const;
 
   /**
    * @brief Processes a record with output first. This method is used when the
@@ -116,12 +117,13 @@ public:
    *
    * @param cell_refs A 2D vector containing Csv::CellReference objects for each
    * cell in the record.
+   * @param input_size The size of the input data in the record.
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
   Record processOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      size_t output_size) const;
+      size_t input_size, size_t output_size) const;
 
   bool getNextLine(std::string &line, const AppParameters &app_params);
   void parseLine(const std::string &line,
@@ -134,7 +136,7 @@ public:
   Record
   processColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
                  const NetworkParameters &network_params,
-                 const AppParameters &app_params);
+                 const AppParameters &app_params) const;
 
   std::ifstream file;
   Csv::Parser csv_parser;

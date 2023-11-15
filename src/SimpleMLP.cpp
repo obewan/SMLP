@@ -102,9 +102,12 @@ void SimpleMLP::predict() {
 
 void SimpleMLP::train() {
   if (app_params.use_stdin) {
-    logger.info("Training, using command pipe input...")
-        .warn("Epochs and training ratio are disabled using command "
-              "pipe input.");
+    logger.info("Training, using command pipe input...");
+    if (app_params.use_testing_ratio_line == 0) {
+      logger.warn("Epochs and training ratio are disabled using command "
+                  "pipe input. Use training_ratio_line parameter instead, and "
+                  "up to you to do some epochs.");
+    }
   } else {
     logger.info("Training, using file ", app_params.data_file);
   }
@@ -162,8 +165,14 @@ std::string SimpleMLP::showInlineHeader() const {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
   }
   if (!app_params.use_stdin) {
-    sst << " Epochs:" << app_params.num_epochs
-        << " TrainingRatio:" << app_params.training_ratio;
+    sst << " Epochs:" << app_params.num_epochs;
+    if (app_params.training_ratio_line > 0) {
+      sst << " TrainingRatioLine:" << app_params.training_ratio_line;
+    } else {
+      sst << " TrainingRatio:" << app_params.training_ratio;
+    }
+  } else {
+    sst << " TrainingRatioLine:" << app_params.training_ratio_line;
   }
   sst << " Mode:" << Common::getModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;

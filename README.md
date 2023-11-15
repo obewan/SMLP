@@ -20,6 +20,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - [Github Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test and a integration test checks.
 - [Github CodeQL](https://github.com/features/security/code) security analysis.
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
+- [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
 - [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 
