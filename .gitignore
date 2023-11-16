@@ -54,4 +54,6 @@ changelog_refresh.sh
 coverage/
 .codeql
 .cppcheck
+.cccc
+.valgrind
 

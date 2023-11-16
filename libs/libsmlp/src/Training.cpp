@@ -61,7 +61,8 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
                             "no data for training.");
   }
   fileParser_->openFile();
-  setTesting(new Testing(network_, fileParser_));
+  auto testing = std::make_shared<Testing>(network_, fileParser_);
+  setTesting(testing);
 
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {

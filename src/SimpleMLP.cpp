@@ -96,8 +96,8 @@ int SimpleMLP::init(int argc, char **argv) {
 }
 
 void SimpleMLP::predict() {
-  auto predic = std::make_unique<Predict>(network.get(), app_params, logger);
-  predic->predict();
+  Predict predict(network, app_params, logger);
+  predict.predict();
 }
 
 void SimpleMLP::train() {
@@ -112,7 +112,7 @@ void SimpleMLP::train() {
     logger.info("Training, using file ", app_params.data_file);
   }
   logger.info(showInlineHeader());
-  Training training(network.get(), app_params.data_file, logger);
+  Training training(network, app_params.data_file, logger);
   training.train(network_params, app_params);
 }
 
@@ -122,7 +122,7 @@ void SimpleMLP::test(bool fromRatioLine) {
   } else {
     logger.info("Testing, using file ", app_params.data_file);
   }
-  Testing testing(network.get(), app_params.data_file);
+  Testing testing(network, app_params.data_file);
   if (fromRatioLine) {
     app_params.use_testing_ratio_line = true;
   }
@@ -141,7 +141,7 @@ void SimpleMLP::trainTestMonitored() {
   logger.info("Train and testing, using file ", app_params.data_file);
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
-  Training training(network.get(), app_params.data_file, logger);
+  Training training(network, app_params.data_file, logger);
   training.trainTestMonitored(network_params, app_params);
 }
 
@@ -331,10 +331,10 @@ void SimpleMLP::importOrBuildNetwork() {
                   "...");
     }
     network =
-        std::unique_ptr<Network>(importExportJSON.importModel(app_params));
+        std::shared_ptr<Network>(importExportJSON.importModel(app_params));
     network_params = network->params;
   } else {
-    network = std::make_unique<Network>(network_params);
+    network = std::make_shared<Network>(network_params);
   }
 }
 

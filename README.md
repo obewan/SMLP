@@ -21,6 +21,8 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - [Github CodeQL](https://github.com/features/security/code) security analysis.
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
+- [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) for code metrics.
+- [Valgrind](https://valgrind.org/) for memory check.
 - [Doxygen](https://www.doxygen.nl) documentation.
 - Includes a mushroom edibility dataset example.
 

@@ -13,6 +13,7 @@
 #include "Network.h"
 #include "exception/TestingException.h"
 #include <map>
+#include <memory>
 
 /**
  * @brief The Testing class is responsible for testing the neural network model.
@@ -28,7 +29,8 @@ public:
    * @param network Pointer to the network.
    * @param fileparser Pointer to the file parser.
    */
-  Testing(Network *network, DataFileParser *fileparser)
+  Testing(std::shared_ptr<Network> network,
+          std::shared_ptr<DataFileParser> fileparser)
       : network_(network), fileParser_(fileparser) {}
 
   /**
@@ -38,8 +40,9 @@ public:
    * @param network Pointer to the network.
    * @param file_path File path to the testing data.
    */
-  Testing(Network *network, const std::string &file_path)
-      : network_(network), fileParser_(new DataFileParser(file_path)) {}
+  Testing(std::shared_ptr<Network> network, const std::string &file_path)
+      : network_(network),
+        fileParser_(std::make_shared<DataFileParser>(file_path)) {}
 
   /**
    * @brief This method tests the model with the given parameters.
@@ -132,35 +135,37 @@ public:
    *
    * @param network Pointer to the network.
    */
-  void setNetwork(Network *network) { network_ = network; }
+  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
 
   /**
    * @brief Gets the network used for testing.
    *
    * @return Pointer to the network.
    */
-  Network *getNetwork() { return network_; }
+  std::shared_ptr<Network> getNetwork() const { return network_; }
 
   /**
    * @brief Sets the file parser for testing data.
    *
    * @param fileparser Pointer to the file parser.
    */
-  void setFileParser(DataFileParser *fileparser) { fileParser_ = fileparser; }
+  void setFileParser(std::shared_ptr<DataFileParser> fileparser) {
+    fileParser_ = fileparser;
+  }
 
   /**
    * @brief Gets the file parser used for testing data.
    *
    * @return Pointer to the file parser.
    */
-  DataFileParser *getFileParser() { return fileParser_; }
+  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
   std::vector<TestResultsExt> testResultExts;
   std::map<size_t, std::vector<float>> progress;
 
 private:
-  Network *network_;
-  DataFileParser *fileParser_;
+  std::shared_ptr<Network> network_ = nullptr;
+  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::vector<TestResults> lastEpochTestResultTemp_;
   size_t last_epoch_ = 0;
 };

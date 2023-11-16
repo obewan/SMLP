@@ -80,7 +80,7 @@ public:
   /**
    * @brief The neural network
    */
-  std::unique_ptr<Network> network;
+  std::shared_ptr<Network> network = nullptr;
 
   /**
    * @brief ImportExportJSON tool.

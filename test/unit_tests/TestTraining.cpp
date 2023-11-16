@@ -2,6 +2,7 @@
 #include "SimpleLogger.h"
 #include "Training.h"
 #include "doctest.h"
+#include <memory>
 
 TEST_CASE("Testing the Training class") {
   SimpleLogger logger;
@@ -12,7 +13,7 @@ TEST_CASE("Testing the Training class") {
   NetworkParameters network_params{.input_size = 20, .output_size = 1};
   AppParameters app_params{.data_file = test_file};
 
-  auto network = new Network(network_params);
+  auto network = std::make_shared<Network>(network_params);
   Training training(network, test_file, logger);
 
   SUBCASE("Test train function") {

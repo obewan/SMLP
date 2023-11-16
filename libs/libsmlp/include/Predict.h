@@ -13,21 +13,23 @@
 #include "Network.h"
 #include "SimpleLogger.h"
 #include "exception/PredictException.h"
+#include <memory>
 
 /**
  * @brief Predict class for predictive operations.
  */
 class Predict {
 public:
-  Predict(Network *network, DataFileParser *fileparser,
+  Predict(std::shared_ptr<Network> network,
+          std::shared_ptr<DataFileParser> fileparser,
           const AppParameters &app_params, const SimpleLogger &logger)
       : network_(network), fileParser_(fileparser), app_params_(app_params),
         logger_(logger) {}
 
-  Predict(Network *network, const AppParameters &app_params,
+  Predict(std::shared_ptr<Network> network, const AppParameters &app_params,
           const SimpleLogger &logger)
       : network_(network),
-        fileParser_(new DataFileParser(app_params.data_file)),
+        fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
         app_params_(app_params), logger_(logger) {}
 
   void predict();
@@ -42,28 +44,30 @@ public:
    *
    * @param network Pointer to the network.
    */
-  void setNetwork(Network *network) { network_ = network; }
+  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
 
   /**
    * @brief Gets the network used for testing.
    *
    * @return Pointer to the network.
    */
-  Network *getNetwork() { return network_; }
+  std::shared_ptr<Network> getNetwork() const { return network_; }
 
   /**
    * @brief Sets the file parser for testing data.
    *
    * @param fileparser Pointer to the file parser.
    */
-  void setFileParser(DataFileParser *fileparser) { fileParser_ = fileparser; }
+  void setFileParser(std::shared_ptr<DataFileParser> fileparser) {
+    fileParser_ = fileparser;
+  }
 
   /**
    * @brief Gets the file parser used for testing data.
    *
    * @return Pointer to the file parser.
    */
-  DataFileParser *getFileParser() { return fileParser_; }
+  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
   /**
    * @brief Truncate to zero if close to zero, to avoid scientific notation.
@@ -76,8 +80,8 @@ public:
   }
 
 private:
-  Network *network_;
-  DataFileParser *fileParser_;
+  std::shared_ptr<Network> network_ = nullptr;
+  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   const AppParameters &app_params_;
   const SimpleLogger &logger_;
 };

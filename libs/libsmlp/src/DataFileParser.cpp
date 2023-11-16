@@ -15,7 +15,11 @@ DataFileParser::~DataFileParser() {
 
 void DataFileParser::openFile(const std::string &filepath) {
   if (file.is_open()) {
-    return;
+    if (filepath.empty()) {
+      return;
+    } else {
+      file.close();
+    }
   }
   if (!filepath.empty()) {
     path = filepath;

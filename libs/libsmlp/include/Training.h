@@ -15,6 +15,7 @@
 #include "Testing.h"
 #include "exception/TrainingException.h"
 #include <bits/types/FILE.h>
+#include <memory>
 #include <string>
 
 /**
@@ -61,9 +62,10 @@ public:
    * @param network Pointer to the network.
    * @param file_path File path to the training data.
    */
-  Training(Network *network, const std::string &file_path,
+  Training(std::shared_ptr<Network> network, const std::string &file_path,
            const SimpleLogger &logger)
-      : network_(network), fileParser_(new DataFileParser(file_path)),
+      : network_(network),
+        fileParser_(std::make_shared<DataFileParser>(file_path)),
         logger_(logger) {}
 
   /**
@@ -92,46 +94,48 @@ public:
    *
    * @param network Pointer to the network.
    */
-  void setNetwork(Network *network) { network_ = network; }
+  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
 
   /**
    * @brief Gets the network used for training.
    *
    * @return Pointer to the network.
    */
-  Network *getNetwork() { return network_; }
+  std::shared_ptr<Network> getNetwork() const { return network_; }
 
   /**
    * @brief Sets the file parser for training data.
    *
    * @param fileParser Pointer to the file parser.
    */
-  void setFileParser(DataFileParser *fileParser) { fileParser_ = fileParser; }
+  void setFileParser(std::shared_ptr<DataFileParser> fileParser) {
+    fileParser_ = fileParser;
+  }
 
   /**
    * @brief Gets the file parser used for training data.
    *
    * @return Pointer to the file parser.
    */
-  DataFileParser *getFileParser() { return fileParser_; }
+  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
   /**
    * @brief Sets the tester for testing during training.
    *
    * @param tester Pointer to the tester.
    */
-  void setTesting(Testing *tester) { testing_ = tester; }
+  void setTesting(std::shared_ptr<Testing> tester) { testing_ = tester; }
 
   /**
    * @brief Gets the tester used for testing during training.
    *
    * @return Pointer to the tester.
    */
-  Testing *getTesting() { return testing_; }
+  std::shared_ptr<Testing> getTesting() const { return testing_; }
 
 private:
-  Network *network_ = nullptr;
-  DataFileParser *fileParser_ = nullptr;
-  Testing *testing_ = nullptr;
-  [[no_unique_address]] SimpleLogger logger_;
+  std::shared_ptr<Network> network_ = nullptr;
+  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
+  std::shared_ptr<Testing> testing_ = nullptr;
+  SimpleLogger logger_;
 };

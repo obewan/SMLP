@@ -1,7 +1,9 @@
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "doctest.h"
+#include <cstddef>
 #include <filesystem>
+#include <memory>
 
 TEST_CASE("Testing the Predict class") {
   SUBCASE("Test constructor") {
@@ -20,9 +22,12 @@ TEST_CASE("Testing the Predict class") {
     NetworkImportExportJSON importExportJSON;
     CHECK(std::filesystem::exists(modelJsonFile) == true);
 
-    Network *network = nullptr;
-    CHECK_NOTHROW(network = importExportJSON.importModel(app_params));
-    Predict predict(network, app_params, SimpleLogger());
-    CHECK_NOTHROW(predict.predict());
+    std::shared_ptr<Network> network = nullptr;
+    CHECK_NOTHROW({
+      network =
+          std::shared_ptr<Network>(importExportJSON.importModel(app_params));
+      Predict predict(network, app_params, SimpleLogger());
+      predict.predict();
+    });
   }
 }
