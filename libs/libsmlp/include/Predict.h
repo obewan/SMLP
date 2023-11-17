@@ -32,7 +32,7 @@ public:
         fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
         app_params_(app_params), logger_(logger) {}
 
-  void predict();
+  void predict() const;
 
   void appendValues(const std::vector<float> &values, bool roundValues) const;
 

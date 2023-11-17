@@ -26,8 +26,12 @@ void Training::train(const NetworkParameters &network_params,
   if (app_params.use_stdin) {
     // Read from stdin
     std::string line;
-    while (std::getline(std::cin, line)) {
+    size_t current_line_number = 0;
+    while (std::getline(std::cin, line) &&
+           (app_params.training_ratio_line == 0 ||
+            current_line_number < app_params.training_ratio_line)) {
       processInputLine(line);
+      current_line_number++;
     }
   } else {
     // Read from file

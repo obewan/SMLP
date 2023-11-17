@@ -42,6 +42,7 @@ measures that legally restrict others from doing anything the license permits.
 #include <cstdlib>
 #include <filesystem>
 #include <iostream>
+#include <memory>
 #include <ostream>
 #include <sstream>
 #include <stdio.h>
@@ -104,14 +105,14 @@ int SimpleMLP::init(int argc, char **argv) {
 }
 
 void SimpleMLP::predict() {
-  Predict predict(network, app_params, logger);
-  predict.predict();
+  auto predict = std::make_unique<Predict>(network, app_params, logger);
+  predict->predict();
 }
 
 void SimpleMLP::train() {
   if (app_params.use_stdin) {
     logger.info("Training, using command pipe input...");
-    if (app_params.use_testing_ratio_line == 0 || app_params.num_epochs > 1) {
+    if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
       logger.warn("Epochs and training ratio are disabled using command "
                   "pipe input. Use training_ratio_line parameter instead.");
     }
@@ -124,17 +125,34 @@ void SimpleMLP::train() {
 }
 
 void SimpleMLP::test(bool fromRatioLine) {
+  auto testing = std::make_unique<Testing>(network, app_params.data_file);
+  size_t current_line = 0;
+  std::string line;
   if (app_params.use_stdin) {
+    if (fromRatioLine) {
+      current_line = app_params.training_ratio_line;
+    }
     logger.info("Testing, using command pipe input... ", app_params.data_file);
+    std::vector<Testing::TestResults> testResults;
+    auto fileParser = testing->getFileParser();
+    while (std::getline(std::cin, line)) {
+
+      fileParser->current_line_number = current_line - 1;
+      RecordResult result =
+          fileParser->processLine(network_params, app_params, line);
+      testing->testLine(network_params, app_params, result, current_line,
+                        testResults);
+      current_line++;
+    }
+    testing->processResults(testResults);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
+    if (fromRatioLine) {
+      app_params.use_testing_ratio_line = true;
+    }
+    testing->test(network_params, app_params, 0);
   }
-  Testing testing(network, app_params.data_file);
-  if (fromRatioLine) {
-    app_params.use_testing_ratio_line = true;
-  }
-  testing.test(network_params, app_params, 0);
-  logger.out(testing.showResults(app_params.mode));
+  logger.out(testing->showResults(app_params.mode));
 }
 
 void SimpleMLP::trainTestMonitored() {
@@ -328,17 +346,29 @@ void SimpleMLP::runMode() {
 }
 
 void SimpleMLP::importOrBuildNetwork() {
-  if (!app_params.network_to_import.empty()) {
-    if (app_params.mode !=
-        EMode::Predictive) { // avoiding header lines on
-                             // this mode, for commands chaining with pipes
+  // avoiding header lines on Predictive mode, for commands chaining with pipes
+  auto logNetworkImport = [this]() {
+    if (app_params.mode != EMode::Predictive) {
       logger.info("Importing network model from ", app_params.network_to_import,
                   "...");
     }
+  };
+  auto logNetworkCreation = [this]() {
+    if (!app_params.network_to_import.empty() &&
+        app_params.mode != EMode::Predictive) {
+      logger.info("Network model ", app_params.network_to_import,
+                  " not found, creating a new one...");
+    }
+  };
+
+  if (!app_params.network_to_import.empty() &&
+      std::filesystem::exists(app_params.network_to_import)) {
+    logNetworkImport();
     network =
         std::shared_ptr<Network>(importExportJSON.importModel(app_params));
     network_params = network->params;
   } else {
+    logNetworkCreation();
     network = std::make_shared<Network>(network_params);
   }
 }
