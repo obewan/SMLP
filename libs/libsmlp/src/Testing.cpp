@@ -128,9 +128,9 @@ std::string Testing::showResultsLine(bool withConvergence) {
   std::stringstream sstr;
 
   sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
-       << stats.accuracy << " " << stats.accuracy_high << "] ";
+       << stats.accuracy << " " << stats.accuracy_high << "]";
   if (withConvergence) {
-    sstr << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero
+    sstr << std::setprecision(2) << " conv(01t)[" << stats.convergence_zero
          << " " << stats.convergence_one << " " << stats.convergence << "]";
   }
 

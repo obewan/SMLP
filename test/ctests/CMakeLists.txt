@@ -1,3 +1,6 @@
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/smlp.conf
+              ${CMAKE_BINARY_DIR}/test/ctests/smlp.conf
+              COPYONLY)
 
 #### CTEST - INTEGRATION TESTS
 include(CTest) 
@@ -54,15 +57,15 @@ set_tests_properties(test_predictive PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0"
 )
 # Test config 
-# Restore the config file
-add_test(NAME restore_config_file
-         COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/smlp.conf.tmp ${CMAKE_BINARY_DIR}/smlp.conf)
+add_my_test(check_smlpConfig_create ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/test/ctests/smlp.conf ${CMAKE_BINARY_DIR}/smlp.conf)
 add_my_test(check_smlpConfig_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/smlp.conf)
 add_my_test(test_trainonly_withconfig smlp -s 20 -o 1 -d 12 -c 1 -p 1 -a ReLU -m TrainOnly -x)
 set_tests_properties(test_trainonly_withconfig PROPERTIES
-  PASS_REGULAR_EXPRESSION "Using config file .*smlp.conf..."
+PASS_REGULAR_EXPRESSION "Using config file .*smlp.conf..."
 )
 set_tests_properties(test_trainonly_withconfig PROPERTIES
-  PASS_REGULAR_EXPRESSION "InputSize:20 OutputSize:1 HiddenSize:12 HiddenLayers:1 LearningRate:0.01 HiddenActivationFunction:ReLU OutputActivationFunction:Sigmoid Epochs:1 TrainingRatio:0.7 Mode:TrainOnly Verbose:0"
+PASS_REGULAR_EXPRESSION "InputSize:20 OutputSize:1 HiddenSize:12 HiddenLayers:1 LearningRate:0.01 HiddenActivationFunction:ReLU OutputActivationFunction:Sigmoid Epochs:1 TrainingRatio:0.7 Mode:TrainOnly Verbose:0"
 )
-add_my_test(check_modelSmlpConfig_exists ${CMAKE_COMMAND} -E cat ${CMAKE_BINARY_DIR}/mushroom_model.json)
+# Restore the config file
+add_test(NAME restore_config_file
+         COMMAND ${CMAKE_COMMAND} -E rename ${CMAKE_BINARY_DIR}/smlp.conf.tmp ${CMAKE_BINARY_DIR}/smlp.conf)
