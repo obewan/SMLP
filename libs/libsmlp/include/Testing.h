@@ -12,6 +12,7 @@
 #include "DataFileParser.h"
 #include "Network.h"
 #include "exception/TestingException.h"
+#include <cstddef>
 #include <map>
 #include <memory>
 
@@ -43,16 +44,6 @@ public:
   Testing(std::shared_ptr<Network> network, const std::string &file_path)
       : network_(network),
         fileParser_(std::make_shared<DataFileParser>(file_path)) {}
-
-  /**
-   * @brief This method tests the model with the given parameters.
-   *
-   * @param network_params Network parameters.
-   * @param app_params Application parameters.
-   * @param epoch The current epoch (default is 0).
-   */
-  void test(const NetworkParameters &network_params,
-            const AppParameters &app_params, size_t epoch = 0);
 
   /**
    * @brief TestResults structure that holds the epoch, line, expected output,
@@ -102,9 +93,53 @@ public:
   };
 
   /**
+   * @brief This method tests the model with the given parameters.
+   *
+   * @param network_params Network parameters.
+   * @param app_params Application parameters.
+   * @param epoch The current epoch (default is 0).
+   */
+  void test(const NetworkParameters &network_params,
+            const AppParameters &app_params, size_t epoch = 0);
+
+  /**
+   * @brief For testing a line only, used with stdin pipe
+   *
+   * @param network_params
+   * @param app_params
+   * @param record_result
+   * @param line_number
+   * @param testResults
+   */
+  void testLine(const NetworkParameters &network_params,
+                const AppParameters &app_params,
+                const RecordResult &record_result, const size_t line_number,
+                std::vector<Testing::TestResults> &testResults) const;
+
+  /**
+   * @brief process the results to get the training progress
+   *
+   * @param testResults
+   * @param last_epoch
+   */
+  void processResults(const std::vector<Testing::TestResults> &testResults,
+                      size_t last_epoch = 0) {
+    for (auto const &result : testResults) {
+      if (!progress.contains(result.line)) {
+        progress[result.line] = {result.output};
+      } else {
+        progress.at(result.line).push_back(result.output);
+      }
+    }
+
+    lastEpochTestResultTemp_ = testResults;
+    last_epoch_ = last_epoch;
+  }
+
+  /**
    * @brief Displays a summary of the test results on a single line.
    */
-  std::string showResultsLine();
+  std::string showResultsLine(bool withConvergence = true);
 
   /**
    * @brief Displays detailed test results. If the verbose parameter is set to

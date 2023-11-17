@@ -13,7 +13,8 @@ void Testing::test(const NetworkParameters &network_params,
   if (app_params.use_testing_ratio_line) {
     if (!fileParser_->isTrainingRatioLineProcessed) {
       fileParser_->getTrainingRatioLine(app_params.training_ratio,
-                                        app_params.training_ratio_line);
+                                        app_params.training_ratio_line,
+                                        app_params.use_stdin);
     }
     if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
       throw TestingException("No data left for testing, check your "
@@ -45,17 +46,27 @@ void Testing::test(const NetworkParameters &network_params,
     }
   }
 
-  // Process Results
-  for (auto const &result : testResults) {
-    if (!progress.contains(result.line)) {
-      progress[result.line] = {result.output};
-    } else {
-      progress.at(result.line).push_back(result.output);
-    }
-  }
+  processResults(testResults, epoch);
+}
 
-  lastEpochTestResultTemp_ = testResults;
-  last_epoch_ = epoch;
+void Testing::testLine(const NetworkParameters &network_params,
+                       const AppParameters &app_params,
+                       const RecordResult &record_result,
+                       const size_t line_number,
+                       std::vector<Testing::TestResults> &testResults) const {
+  if (!record_result.isSuccess) {
+    return;
+  }
+  int output_neuron_to_monitor = (int)app_params.output_index_to_monitor - 1;
+  auto predicteds = network_->forwardPropagation(record_result.record.first);
+  // Using just one output neuron to monitor, or else there will be too much
+  // memory used.
+  if (output_neuron_to_monitor >= 0 &&
+      output_neuron_to_monitor < (int)network_params.output_size) {
+    testResults.emplace_back(
+        0, line_number, record_result.record.second[output_neuron_to_monitor],
+        predicteds[output_neuron_to_monitor]);
+  }
 }
 
 Testing::Stat Testing::calcStats() {
@@ -112,14 +123,16 @@ Testing::Stat Testing::calcStats() {
   return stats;
 }
 
-std::string Testing::showResultsLine() {
+std::string Testing::showResultsLine(bool withConvergence) {
   auto stats = calcStats();
   std::stringstream sstr;
 
   sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
        << stats.accuracy << " " << stats.accuracy_high << "] ";
-  sstr << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero << " "
-       << stats.convergence_one << " " << stats.convergence << "]";
+  if (withConvergence) {
+    sstr << std::setprecision(2) << "conv(01t)[" << stats.convergence_zero
+         << " " << stats.convergence_one << " " << stats.convergence << "]";
+  }
 
   return sstr.str();
 }

@@ -32,6 +32,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "Common.h"
 #include "Network.h"
 #include "Predict.h"
+#include "SimpleConfig.h"
 #include "SimpleLang.h"
 #include "Testing.h"
 #include "Training.h"
@@ -64,11 +65,18 @@ int SimpleMLP::init(int argc, char **argv) {
       argv[1] = (char *)"-h"; // showing help by default
       argc++;
     }
-    if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
+
+    SimpleConfig config(app_params.config_file);
+    SimpleLang lang(config.lang_file);
+
+    if (int init = parseArgs(argc, argv, lang); init != EXIT_SUCCESS) {
       return init;
     }
 
-    checkStdin(); // check again but including -x param this time
+    // check again but including -x param this time
+    checkStdin();
+    // Config file settings, must be after this second checkStdin()
+    ConfigSettings(config);
 
     // Some post validations
     if (app_params.data_file.empty() && !app_params.use_stdin) {
@@ -137,7 +145,11 @@ void SimpleMLP::trainTestMonitored() {
     return;
   }
 
-  logger.info("Train and testing, using file ", app_params.data_file);
+  if (app_params.use_stdin) {
+    logger.info("Train and testing, using command pipe input...");
+  } else {
+    logger.info("Train and testing, using file ", app_params.data_file);
+  }
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
   Training training(network, app_params.data_file, logger);
@@ -178,9 +190,7 @@ std::string SimpleMLP::showInlineHeader() const {
   return sst.str();
 }
 
-int SimpleMLP::parseArgs(int argc, char **argv) {
-  SimpleConfig config(app_params.config_file);
-  SimpleLang lang(config.lang_file);
+int SimpleMLP::parseArgs(int argc, char **argv, SimpleLang &lang) {
   CLI::App app{app_params.title};
   bool version = false;
 
@@ -273,9 +283,6 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
     return EXIT_VERSION;
   }
 
-  // Config file settings
-  ConfigSettings(config);
-
   return EXIT_SUCCESS;
 }
 
@@ -285,7 +292,8 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   } else {
     logger.info("No valid config file ", config.config_file, " found...");
   }
-  if (!config.file_input.empty() && app_params.data_file.empty()) {
+  if (!config.file_input.empty() && app_params.data_file.empty() &&
+      !app_params.use_stdin) {
     app_params.data_file = config.file_input;
   }
   if (!config.import_network.empty() && app_params.network_to_import.empty()) {
@@ -320,9 +328,7 @@ void SimpleMLP::runMode() {
 }
 
 void SimpleMLP::importOrBuildNetwork() {
-  if (!app_params.network_to_import.empty() &&
-      (app_params.mode == EMode::Predictive ||
-       app_params.mode == EMode::TestOnly)) {
+  if (!app_params.network_to_import.empty()) {
     if (app_params.mode !=
         EMode::Predictive) { // avoiding header lines on
                              // this mode, for commands chaining with pipes

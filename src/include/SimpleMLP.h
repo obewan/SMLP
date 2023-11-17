@@ -12,6 +12,7 @@
 #include "Network.h"
 #include "NetworkImportExportJSON.h"
 #include "SimpleConfig.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include <memory>
 #include <string>
@@ -93,7 +94,7 @@ public:
   SimpleLogger logger;
 
 private:
-  int parseArgs(int argc, char **argv);
+  int parseArgs(int argc, char **argv, SimpleLang &lang);
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
   void importOrBuildNetwork();

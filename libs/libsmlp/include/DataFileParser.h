@@ -54,8 +54,9 @@ public:
    * @param trainingRatioLine A training ratio line to use instead.
    * @return The line number that corresponds to the training ratio.
    */
-  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine) {
-    if (trainingRatioLine > 0) {
+  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine,
+                              bool use_stdin) {
+    if (use_stdin) {
       training_ratio_line = trainingRatioLine;
     } else {
       total_lines = countLine();

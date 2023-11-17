@@ -45,7 +45,7 @@ TEST_CASE("Testing the DataFileParser class") {
 
   SUBCASE("Test getTrainingRatioLine") {
     CHECK(parser.isTrainingRatioLineProcessed == false);
-    auto trainingRatioLine = parser.getTrainingRatioLine(0.6f, 0);
+    auto trainingRatioLine = parser.getTrainingRatioLine(0.6f, 0, false);
     CHECK(trainingRatioLine == 6);
     CHECK(parser.training_ratio_line == trainingRatioLine);
     CHECK(parser.total_lines == 10);
