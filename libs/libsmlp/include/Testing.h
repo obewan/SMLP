@@ -11,6 +11,7 @@
 #include "Common.h"
 #include "DataFileParser.h"
 #include "Network.h"
+#include "TestingResult.h"
 #include "exception/TestingException.h"
 #include <cstddef>
 #include <map>
@@ -32,54 +33,20 @@ public:
    */
   Testing(std::shared_ptr<Network> network,
           std::shared_ptr<DataFileParser> fileparser)
-      : network_(network), fileParser_(fileparser) {}
+      : network_(network), fileParser_(fileparser),
+        testingResults_(std::make_shared<TestingResult>()) {}
 
   /**
-   * @brief Constructor that takes a pointer to the network and the file path to
-   * testing data as arguments.
+   * @brief Constructor that takes a pointer to the network and the file
+   * path to testing data as arguments.
    *
    * @param network Pointer to the network.
    * @param file_path File path to the testing data.
    */
   Testing(std::shared_ptr<Network> network, const std::string &file_path)
       : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(file_path)) {}
-
-  /**
-   * @brief TestResults structure that holds the epoch, line, expected output,
-   * and actual output of a test.
-   */
-  struct TestResults {
-    size_t epoch = 0;
-    size_t line = 0;
-    float expected = 0.0f;
-    float output = 0.0f;
-    std::vector<float> progress; // This will be empty for unmonitored data
-  };
-
-  /**
-   * @brief Stat structure that holds various statistics related to the test
-   * results, such as total samples, correct predictions, good convergence,
-   * total expected values, and accuracy.
-   */
-  struct Stat {
-    size_t total_samples = 0;
-    size_t correct_predictions_low = 0;
-    size_t correct_predictions = 0;
-    size_t correct_predictions_high = 0;
-    size_t good_convergence = 0;
-    size_t good_convergence_zero = 0;
-    size_t good_convergence_one = 0;
-    size_t total_expected_zero = 0;
-    size_t total_expected_one = 0;
-
-    float accuracy = 0.0f;
-    float accuracy_low = 0.0f;
-    float accuracy_high = 0.0f;
-    float convergence = 0.0f;
-    float convergence_zero = 0.0f;
-    float convergence_one = 0.0f;
-  };
+        fileParser_(std::make_shared<DataFileParser>(file_path)),
+        testingResults_(std::make_shared<TestingResult>()) {}
 
   /**
    * @brief This method tests the model with the given parameters.
@@ -103,60 +70,7 @@ public:
   void testLine(const NetworkParameters &network_params,
                 const AppParameters &app_params,
                 const RecordResult &record_result, const size_t line_number,
-                std::vector<Testing::TestResults> &testResults) const;
-
-  /**
-   * @brief process the results to get the training progress
-   *
-   * @param testResults
-   * @param last_epoch
-   */
-  void processResults(const std::vector<Testing::TestResults> &testResults,
-                      EMode mode, size_t last_epoch = 0) {
-    if (mode == EMode::TrainTestMonitored) {
-      // record the progress of an output neuron
-      for (auto const &result : testResults) {
-        if (!progress.contains(result.line)) {
-          progress[result.line] = {result.output};
-        } else {
-          progress.at(result.line).push_back(result.output);
-        }
-      }
-    }
-
-    lastEpochTestResultTemp_ = testResults;
-    last_epoch_ = last_epoch;
-  }
-
-  /**
-   * @brief Displays a summary of the test results on a single line.
-   */
-  std::string showResultsLine(bool withConvergence);
-
-  /**
-   * @brief Displays detailed test results. If the verbose parameter is set to
-   * true, additional information will be displayed.
-   *
-   * @param mode Mode of the training.
-   * @param verbose If true, additional details are displayed (default is
-   * false).
-   */
-  std::string showDetailledResults(EMode mode, bool verbose = false);
-
-  /**
-   * @brief Display some verbose results.
-   *
-   */
-  std::string showResultsVerbose(const TestResults &result, EMode mode) const;
-
-  /**
-   * @brief Calculates and returns the statistics of the test results, including
-   * monitored progress if monitored is true.
-   *
-   * @param monitored If true, return stats with progress
-   * @return A Stat object containing the calculated statistics.
-   */
-  Stat calcStats(bool monitored);
+                std::vector<TestingResult::TestResults> &testResults) const;
 
   /**
    * @brief Sets the network for testing.
@@ -188,12 +102,17 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  std::vector<TestResults> testResultExts;
-  std::map<size_t, std::vector<float>> progress;
+  /**
+   * @brief Get the Testing Results object
+   *
+   * @return std::shared_ptr<TestingResult>
+   */
+  std::shared_ptr<TestingResult> getTestingResults() const {
+    return testingResults_;
+  }
 
 private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
-  std::vector<TestResults> lastEpochTestResultTemp_;
-  size_t last_epoch_ = 0;
+  std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };

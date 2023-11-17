@@ -55,7 +55,7 @@ TEST_CASE("Testing the Training class") {
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);
-      auto testProgress = testing->progress;
+      auto testProgress = testing->getTestingResults()->getProgress();
       CHECK(testProgress.empty() == false);
       CHECK(testProgress.size() ==
             training.getFileParser()->total_lines -
@@ -78,7 +78,7 @@ TEST_CASE("Testing the Training class") {
       CHECK(lastKey > firstKey);
       CHECK(lastValue.back() > firstValue.front());
 
-      auto stats = testing->calcStats(true);
+      auto stats = testing->getTestingResults()->calcStats(true);
       CHECK(stats.convergence > 0);
     }
   }

@@ -1,5 +1,6 @@
 #include "Testing.h"
 #include "Common.h"
+#include "TestingResult.h"
 #include "exception/TestingException.h"
 #include <iomanip>
 #include <iostream>
@@ -26,7 +27,7 @@ void Testing::test(const NetworkParameters &network_params,
     fileParser_->openFile();
   }
 
-  std::vector<TestResults> testResults;
+  std::vector<TestingResult::TestResults> testResults;
   bool isTesting = true;
   int output_neuron_to_monitor = (int)app_params.output_index_to_monitor - 1;
   bool isValidOutputNeuronToMonitor =
@@ -48,14 +49,13 @@ void Testing::test(const NetworkParameters &network_params,
     }
   }
 
-  processResults(testResults, app_params.mode, epoch);
+  testingResults_->processResults(testResults, app_params.mode, epoch);
 }
 
-void Testing::testLine(const NetworkParameters &network_params,
-                       const AppParameters &app_params,
-                       const RecordResult &record_result,
-                       const size_t line_number,
-                       std::vector<Testing::TestResults> &testResults) const {
+void Testing::testLine(
+    const NetworkParameters &network_params, const AppParameters &app_params,
+    const RecordResult &record_result, const size_t line_number,
+    std::vector<TestingResult::TestResults> &testResults) const {
   if (!record_result.isSuccess) {
     return;
   }
@@ -69,135 +69,4 @@ void Testing::testLine(const NetworkParameters &network_params,
         0, line_number, record_result.record.second[output_neuron_to_monitor],
         predicteds[output_neuron_to_monitor]);
   }
-}
-
-Testing::Stat Testing::calcStats(bool monitored) {
-  if (monitored) {
-    testResultExts.clear();
-    for (auto const &result : lastEpochTestResultTemp_) {
-      testResultExts.emplace_back(result.epoch, result.line, result.expected,
-                                  result.output, progress.at(result.line));
-    }
-  }
-
-  Testing::Stat stats;
-  stats.total_samples =
-      monitored ? testResultExts.size() : lastEpochTestResultTemp_.size();
-  auto const &results = monitored ? testResultExts : lastEpochTestResultTemp_;
-
-  for (auto const &result : results) {
-    if (result.expected == 1) {
-      stats.total_expected_one++;
-    } else {
-      stats.total_expected_zero++;
-    }
-
-    if (monitored && result.progress.size() > 1) {
-      if (result.expected == 1 &&
-          result.progress.back() > result.progress.front()) {
-        stats.good_convergence_one++;
-        stats.good_convergence++;
-      } else if (result.expected == 0 &&
-                 result.progress.back() < result.progress.front()) {
-        stats.good_convergence_zero++;
-        stats.good_convergence++;
-      }
-    }
-
-    if (abs(result.expected - result.output) < 0.30) {
-      stats.correct_predictions_low++;
-    }
-    if (abs(result.expected - result.output) < 0.20) {
-      stats.correct_predictions++;
-    }
-    if (abs(result.expected - result.output) < 0.10) {
-      stats.correct_predictions_high++;
-    }
-  }
-
-  if (stats.total_samples > 0) {
-    stats.accuracy = static_cast<float>(stats.correct_predictions) /
-                     (float)stats.total_samples * 100.0f;
-    stats.accuracy_low = static_cast<float>(stats.correct_predictions_low) /
-                         (float)stats.total_samples * 100.0f;
-    stats.accuracy_high = static_cast<float>(stats.correct_predictions_high) /
-                          (float)stats.total_samples * 100.0f;
-    if (monitored) {
-      stats.convergence = static_cast<float>(stats.good_convergence) /
-                          (float)stats.total_samples * 100.0f;
-      stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /
-                               (float)stats.total_expected_zero * 100.0f;
-      stats.convergence_one = static_cast<float>(stats.good_convergence_one) /
-                              (float)stats.total_expected_one * 100.0f;
-    }
-  }
-  return stats;
-}
-
-std::string Testing::showResultsLine(bool withConvergence) {
-  auto stats = calcStats(withConvergence);
-  std::stringstream sstr;
-
-  sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
-       << stats.accuracy << " " << stats.accuracy_high << "]";
-  if (withConvergence) {
-    sstr << std::setprecision(2) << " conv(01t)[" << stats.convergence_zero
-         << " " << stats.convergence_one << " " << stats.convergence << "]";
-  }
-
-  return sstr.str();
-}
-
-std::string Testing::showResultsVerbose(const TestResults &result,
-                                        EMode mode) const {
-  std::stringstream sstr;
-  sstr << "Expected:" << result.expected << " Predicted:" << result.output;
-  if (mode == EMode::TrainTestMonitored) {
-    sstr << " [ ";
-    for (auto &progres : result.progress) {
-      sstr << progres << " ";
-    }
-    sstr << "] (" << result.progress.back() - result.progress.front() << ")";
-  }
-  return sstr.str();
-}
-
-std::string Testing::showDetailledResults(EMode mode, bool verbose) {
-  auto stats = calcStats(mode == EMode::TrainTestMonitored);
-  std::stringstream sstr;
-
-  sstr << "Testing results: " << std::endl;
-
-  if (verbose) {
-    for (auto const &result : testResultExts) {
-      sstr << showResultsVerbose(result, mode) << std::endl;
-    }
-    sstr << std::endl;
-  }
-
-  sstr << std::setprecision(3)
-       << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
-       << std::endl;
-  sstr << std::setprecision(3)
-       << "Avg accuracy (correct at 80%): " << stats.accuracy << "%"
-       << std::endl;
-  sstr << std::setprecision(3)
-       << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
-       << std::endl;
-
-  if (mode == EMode::TrainTestMonitored) {
-    sstr << std::setprecision(3)
-         << "Good convergence toward zero: " << stats.convergence_zero << "% ("
-         << stats.good_convergence_zero << "/" << stats.total_expected_zero
-         << ")" << std::endl;
-    sstr << std::setprecision(3)
-         << "Good convergence toward one: " << stats.convergence_one << "%  ("
-         << stats.good_convergence_one << "/" << stats.total_expected_one << ")"
-         << std::endl;
-    sstr << std::setprecision(3)
-         << "Good convergence total: " << stats.convergence << "% ("
-         << stats.good_convergence << "/" << stats.total_samples << ")"
-         << std::endl;
-  }
-  return sstr.str();
 }

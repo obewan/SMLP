@@ -35,6 +35,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "SimpleConfig.h"
 #include "SimpleLang.h"
 #include "Testing.h"
+#include "TestingResult.h"
 #include "Training.h"
 #include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
@@ -134,7 +135,7 @@ void SimpleMLP::test(bool fromRatioLine) {
       current_line = app_params.training_ratio_line;
     }
     logger.info("Testing, using command pipe input... ", app_params.data_file);
-    std::vector<Testing::TestResults> testResults;
+    std::vector<TestingResult::TestResults> testResults;
     auto fileParser = testing->getFileParser();
     while (std::getline(std::cin, line)) {
 
@@ -145,7 +146,7 @@ void SimpleMLP::test(bool fromRatioLine) {
                         testResults);
       current_line++;
     }
-    testing->processResults(testResults, app_params.mode);
+    testing->getTestingResults()->processResults(testResults, app_params.mode);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
     if (fromRatioLine) {
@@ -153,7 +154,8 @@ void SimpleMLP::test(bool fromRatioLine) {
     }
     testing->test(network_params, app_params, 0);
   }
-  logger.out(testing->showDetailledResults(app_params.mode));
+  logger.out(
+      testing->getTestingResults()->showDetailledResults(app_params.mode));
 }
 
 void SimpleMLP::trainTestMonitored() {

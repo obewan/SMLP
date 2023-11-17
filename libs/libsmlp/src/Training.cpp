@@ -1,6 +1,7 @@
 #include "Training.h"
 #include "Common.h"
 #include "SimpleLogger.h"
+#include "TestingResult.h"
 #include <chrono>
 #include <cstddef>
 #include <iostream>
@@ -95,7 +96,7 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
       current_line++;
     }
     logger_.append("testing... ");
-    std::vector<Testing::TestResults> testResults;
+    std::vector<TestingResult::TestResults> testResults;
     while (std::getline(std::cin, line)) {
       fileParser_->current_line_number = current_line - 1;
       RecordResult result =
@@ -104,8 +105,8 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
                         testResults);
       current_line++;
     }
-    testing->processResults(testResults, app_params.mode);
-    logger_.out(testing_->showResultsLine(false));
+    testing->getTestingResults()->processResults(testResults, app_params.mode);
+    logger_.out(testing_->getTestingResults()->showResultsLine(false));
 
   } else {
     // Read from file
@@ -122,15 +123,15 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
 
       logger_.append("testing... ");
       testing_->test(network_params, app_params, epoch);
-      logger_.out(testing_->showResultsLine(app_params.mode ==
-                                            EMode::TrainTestMonitored));
+      logger_.out(testing_->getTestingResults()->showResultsLine(
+          app_params.mode == EMode::TrainTestMonitored));
     }
     const auto end{std::chrono::steady_clock::now()};
 
     const std::chrono::duration<double> elapsed_seconds{end - start};
     logger_.info("Elapsed time: ", elapsed_seconds.count(), "s");
-    logger_.info(
-        testing_->showDetailledResults(app_params.mode, app_params.verbose));
+    logger_.info(testing_->getTestingResults()->showDetailledResults(
+        app_params.mode, app_params.verbose));
     fileParser_->closeFile();
   }
 }
