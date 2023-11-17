@@ -28,11 +28,10 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 # Roadmap to first release
 
-- Add a pipe input. `[in progress]`
-- Add a socket input.
+- Add a socket input. `[in progress]`
 - Add an interactive testing (command line input).
 - Add an auto-training feature (searching for the best parameters).
-- Add a GUI (but probably on a more advanced project).
+- Prepare the release (cleaning, refactoring, testing, documentation, packaging).
 
 _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
@@ -226,6 +225,32 @@ Output:
 ```
 
 The first column represents the predicted result: 1 signifies that the mushroom is likely edible, while 0 indicates it is likely not edible. These predictions are made with an accuracy of 80%, meaning that there is an 80% confidence in these predictions. However, caution is advised. While we can strive to improve the accuracy of the model, it’s important to remember that predictions are inherently probabilistic and will never reach 100% certainty, mirroring the inherent uncertainties of real life.
+
+### Example 4: Using pipes
+
+You can chain commands with pipes, for example having a parser command before then predict the data with a neural network, then chain the output with another command. Beware to use the `-R,--training_ratio_line` option with pipes, instead of `training_ratio`, and there's no `epoch` with pipes as well but you can use a loop in a script for that. Here some examples:
+
+```bash
+# create a new network model
+$ cat ../data/mushroom/mushroom_data.csv | ./smlp -e mushroom_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
+[2023-11-17 20:56:16] [INFO] Training...testing... acc(lah)[30 13 5.1]
+
+# train the network model again, the model accuracy (low, average, high) augment
+$ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mushroom_model.json -R 40000 -m TrainTestMonitored
+[2023-11-17 21:00:14] [INFO] Training...testing... acc(lah)[52 36 20]
+
+# test the model with some data (here the last 1000 lines) that shouldn't have been used during the training:
+$ tail -n 1000 ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -R 40000 -m TestOnly
+
+# train then test the model (no monitored):
+$ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mushroom_model.json -R 40000 -m TrainThenTest
+
+# just train the model with the first 40000 lines (for the whole file, don't use the -R parameter), no test:
+$ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mushroom_model.json -R 40000 -m TrainOnly
+
+# do some prediction then chain the output with another command, for example here to train a new model.
+$ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.json -m Predictive | ./smlp -e new_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
+```
 
 ## License
 

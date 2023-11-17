@@ -69,16 +69,6 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  /**
-   * @brief Truncate to zero if close to zero, to avoid scientific notation.
-   *
-   * @param value
-   * @return float
-   */
-  float truncZero(const float &value) const {
-    return value < 1e-4 ? 0.0f : value;
-  }
-
 private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;

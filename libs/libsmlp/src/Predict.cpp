@@ -34,6 +34,11 @@ void Predict::predict() const {
 
 void Predict::appendValues(const std::vector<float> &values,
                            bool roundValues) const {
+  // Truncate to zero if close to zero, to avoid scientific notation.
+  auto truncZero = [](const float &value) {
+    return value < 1e-4 ? 0.0f : value;
+  };
+
   if (!values.empty()) {
     logger_.append(roundValues ? round(values.front())
                                : truncZero(values.front()));

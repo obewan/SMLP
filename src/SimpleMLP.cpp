@@ -120,8 +120,9 @@ void SimpleMLP::train() {
     logger.info("Training, using file ", app_params.data_file);
   }
   logger.info(showInlineHeader());
-  Training training(network, app_params.data_file, logger);
-  training.train(network_params, app_params);
+  auto training =
+      std::make_unique<Training>(network, app_params.data_file, logger);
+  training->train(network_params, app_params);
 }
 
 void SimpleMLP::test(bool fromRatioLine) {
@@ -305,10 +306,12 @@ int SimpleMLP::parseArgs(int argc, char **argv, SimpleLang &lang) {
 }
 
 void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
-  if (config.isValidConfig) {
-    logger.info("Using config file ", config.config_file, "...");
-  } else {
-    logger.info("No valid config file ", config.config_file, " found...");
+  if (app_params.mode != EMode::Predictive) {
+    if (config.isValidConfig) {
+      logger.info("Using config file ", config.config_file, "...");
+    } else {
+      logger.info("No valid config file ", config.config_file, " found...");
+    }
   }
   if (!config.file_input.empty() && app_params.data_file.empty() &&
       !app_params.use_stdin) {
