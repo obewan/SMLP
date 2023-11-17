@@ -51,11 +51,16 @@ public:
    * ratio.
    *
    * @param trainingRatio The ratio of training data to total data.
+   * @param trainingRatioLine A training ratio line to use instead.
    * @return The line number that corresponds to the training ratio.
    */
-  size_t getTrainingRatioLine(float trainingRatio) {
-    total_lines = countLine();
-    training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine) {
+    if (trainingRatioLine > 0) {
+      training_ratio_line = trainingRatioLine;
+    } else {
+      total_lines = countLine();
+      training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+    }
     isTrainingRatioLineProcessed = true;
     return training_ratio_line;
   }

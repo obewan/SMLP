@@ -31,7 +31,8 @@ void Training::train(const NetworkParameters &network_params,
   } else {
     // Read from file
     if (!fileParser_->isTrainingRatioLineProcessed) {
-      fileParser_->getTrainingRatioLine(app_params.training_ratio);
+      fileParser_->getTrainingRatioLine(app_params.training_ratio,
+                                        app_params.training_ratio_line);
     }
     if (fileParser_->training_ratio_line == 0) {
       throw TrainingException("invalid parameter: training_ratio is too small, "
@@ -54,7 +55,8 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
                                   const AppParameters &app_params) {
 
   if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->getTrainingRatioLine(app_params.training_ratio);
+    fileParser_->getTrainingRatioLine(app_params.training_ratio,
+                                      app_params.training_ratio_line);
   }
   if (fileParser_->training_ratio_line == 0) {
     throw TrainingException("invalid parameter: training_ratio is too small, "

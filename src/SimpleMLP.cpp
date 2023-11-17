@@ -103,10 +103,9 @@ void SimpleMLP::predict() {
 void SimpleMLP::train() {
   if (app_params.use_stdin) {
     logger.info("Training, using command pipe input...");
-    if (app_params.use_testing_ratio_line == 0) {
+    if (app_params.use_testing_ratio_line == 0 || app_params.num_epochs > 1) {
       logger.warn("Epochs and training ratio are disabled using command "
-                  "pipe input. Use training_ratio_line parameter instead, and "
-                  "up to you to do some epochs.");
+                  "pipe input. Use training_ratio_line parameter instead.");
     }
   } else {
     logger.info("Training, using file ", app_params.data_file);

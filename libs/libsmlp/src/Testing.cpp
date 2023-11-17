@@ -12,7 +12,8 @@ void Testing::test(const NetworkParameters &network_params,
                    const AppParameters &app_params, size_t epoch) {
   if (app_params.use_testing_ratio_line) {
     if (!fileParser_->isTrainingRatioLineProcessed) {
-      fileParser_->getTrainingRatioLine(app_params.training_ratio);
+      fileParser_->getTrainingRatioLine(app_params.training_ratio,
+                                        app_params.training_ratio_line);
     }
     if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
       throw TestingException("No data left for testing, check your "
