@@ -228,7 +228,8 @@ The first column represents the predicted result: 1 signifies that the mushroom 
 
 ### Example 4: Using pipes
 
-You can chain commands with pipes, for example having a parser command before then predict the data with a neural network, then chain the output with another command. Beware to use the `-R,--training_ratio_line` option with pipes, instead of `training_ratio`, and there's no `epoch` with pipes as well but you can use a loop in a script for that. Here some examples:
+You can chain commands with pipes. This allows you to, for example, have a parser command before predicting the data with a neural network, and then chain the output with another command. Please note that when using pipes, you should use the `-R,--training_ratio_line` option instead of `training_ratio`. Also, be aware that there’s no `epoch` option available with pipes. However, you can use a loop in a script for that purpose.
+Here some examples:
 
 ```bash
 # create a new network model

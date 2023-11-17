@@ -104,7 +104,7 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
                         testResults);
       current_line++;
     }
-    testing->processResults(testResults);
+    testing->processResults(testResults, app_params.mode);
     logger_.out(testing_->showResultsLine(false));
 
   } else {
@@ -122,13 +122,15 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
 
       logger_.append("testing... ");
       testing_->test(network_params, app_params, epoch);
-      logger_.out(testing_->showResultsLine());
+      logger_.out(testing_->showResultsLine(app_params.mode ==
+                                            EMode::TrainTestMonitored));
     }
     const auto end{std::chrono::steady_clock::now()};
 
     const std::chrono::duration<double> elapsed_seconds{end - start};
     logger_.info("Elapsed time: ", elapsed_seconds.count(), "s");
-    logger_.info(testing_->showResults(app_params.mode, app_params.verbose));
+    logger_.info(
+        testing_->showDetailledResults(app_params.mode, app_params.verbose));
     fileParser_->closeFile();
   }
 }

@@ -78,7 +78,7 @@ TEST_CASE("Testing the Training class") {
       CHECK(lastKey > firstKey);
       CHECK(lastValue.back() > firstValue.front());
 
-      auto stats = testing->calcStats();
+      auto stats = testing->calcStats(true);
       CHECK(stats.convergence > 0);
     }
   }

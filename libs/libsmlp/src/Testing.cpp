@@ -29,14 +29,16 @@ void Testing::test(const NetworkParameters &network_params,
   std::vector<TestResults> testResults;
   bool isTesting = true;
   int output_neuron_to_monitor = (int)app_params.output_index_to_monitor - 1;
+  bool isValidOutputNeuronToMonitor =
+      output_neuron_to_monitor >= 0 &&
+      output_neuron_to_monitor < (int)network_params.output_size;
   while (isTesting) {
     RecordResult result = fileParser_->processLine(network_params, app_params);
     if (result.isSuccess) {
       auto predicteds = network_->forwardPropagation(result.record.first);
       // Using just one output neuron to monitor, or else there will be too much
       // memory used.
-      if (output_neuron_to_monitor >= 0 &&
-          output_neuron_to_monitor < (int)network_params.output_size) {
+      if (isValidOutputNeuronToMonitor) {
         testResults.emplace_back(epoch, fileParser_->current_line_number,
                                  result.record.second[output_neuron_to_monitor],
                                  predicteds[output_neuron_to_monitor]);
@@ -46,7 +48,7 @@ void Testing::test(const NetworkParameters &network_params,
     }
   }
 
-  processResults(testResults, epoch);
+  processResults(testResults, app_params.mode, epoch);
 }
 
 void Testing::testLine(const NetworkParameters &network_params,
@@ -69,22 +71,28 @@ void Testing::testLine(const NetworkParameters &network_params,
   }
 }
 
-Testing::Stat Testing::calcStats() {
-  testResultExts.clear();
-  for (auto const &result : lastEpochTestResultTemp_) {
-    testResultExts.emplace_back(result.epoch, result.line, result.expected,
-                                result.output, progress.at(result.line));
+Testing::Stat Testing::calcStats(bool monitored) {
+  if (monitored) {
+    testResultExts.clear();
+    for (auto const &result : lastEpochTestResultTemp_) {
+      testResultExts.emplace_back(result.epoch, result.line, result.expected,
+                                  result.output, progress.at(result.line));
+    }
   }
+
   Testing::Stat stats;
-  stats.total_samples = testResultExts.size();
-  for (auto const &result : testResultExts) {
+  stats.total_samples =
+      monitored ? testResultExts.size() : lastEpochTestResultTemp_.size();
+  auto const &results = monitored ? testResultExts : lastEpochTestResultTemp_;
+
+  for (auto const &result : results) {
     if (result.expected == 1) {
       stats.total_expected_one++;
     } else {
       stats.total_expected_zero++;
     }
 
-    if (result.progress.size() > 1) {
+    if (monitored && result.progress.size() > 1) {
       if (result.expected == 1 &&
           result.progress.back() > result.progress.front()) {
         stats.good_convergence_one++;
@@ -95,6 +103,7 @@ Testing::Stat Testing::calcStats() {
         stats.good_convergence++;
       }
     }
+
     if (abs(result.expected - result.output) < 0.30) {
       stats.correct_predictions_low++;
     }
@@ -113,18 +122,20 @@ Testing::Stat Testing::calcStats() {
                          (float)stats.total_samples * 100.0f;
     stats.accuracy_high = static_cast<float>(stats.correct_predictions_high) /
                           (float)stats.total_samples * 100.0f;
-    stats.convergence = static_cast<float>(stats.good_convergence) /
-                        (float)stats.total_samples * 100.0f;
-    stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /
-                             (float)stats.total_expected_zero * 100.0f;
-    stats.convergence_one = static_cast<float>(stats.good_convergence_one) /
-                            (float)stats.total_expected_one * 100.0f;
+    if (monitored) {
+      stats.convergence = static_cast<float>(stats.good_convergence) /
+                          (float)stats.total_samples * 100.0f;
+      stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /
+                               (float)stats.total_expected_zero * 100.0f;
+      stats.convergence_one = static_cast<float>(stats.good_convergence_one) /
+                              (float)stats.total_expected_one * 100.0f;
+    }
   }
   return stats;
 }
 
 std::string Testing::showResultsLine(bool withConvergence) {
-  auto stats = calcStats();
+  auto stats = calcStats(withConvergence);
   std::stringstream sstr;
 
   sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
@@ -137,7 +148,7 @@ std::string Testing::showResultsLine(bool withConvergence) {
   return sstr.str();
 }
 
-std::string Testing::showResultsVerbose(const TestResultsExt &result,
+std::string Testing::showResultsVerbose(const TestResults &result,
                                         EMode mode) const {
   std::stringstream sstr;
   sstr << "Expected:" << result.expected << " Predicted:" << result.output;
@@ -151,8 +162,8 @@ std::string Testing::showResultsVerbose(const TestResultsExt &result,
   return sstr.str();
 }
 
-std::string Testing::showResults(EMode mode, bool verbose) {
-  auto stats = calcStats();
+std::string Testing::showDetailledResults(EMode mode, bool verbose) {
+  auto stats = calcStats(mode == EMode::TrainTestMonitored);
   std::stringstream sstr;
 
   sstr << "Testing results: " << std::endl;

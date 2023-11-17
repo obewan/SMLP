@@ -145,7 +145,7 @@ void SimpleMLP::test(bool fromRatioLine) {
                         testResults);
       current_line++;
     }
-    testing->processResults(testResults);
+    testing->processResults(testResults, app_params.mode);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
     if (fromRatioLine) {
@@ -153,7 +153,7 @@ void SimpleMLP::test(bool fromRatioLine) {
     }
     testing->test(network_params, app_params, 0);
   }
-  logger.out(testing->showResults(app_params.mode));
+  logger.out(testing->showDetailledResults(app_params.mode));
 }
 
 void SimpleMLP::trainTestMonitored() {

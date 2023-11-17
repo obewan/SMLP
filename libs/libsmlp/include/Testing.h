@@ -54,18 +54,7 @@ public:
     size_t line = 0;
     float expected = 0.0f;
     float output = 0.0f;
-  };
-
-  /**
-   * @brief TestResultsExt structure that extends TestResults with a progress
-   * vector, which can be used to monitor the progress of the test.
-   */
-  struct TestResultsExt {
-    size_t epoch = 0;
-    size_t line = 0;
-    float expected = 0.0f;
-    float output = 0.0f;
-    std::vector<float> progress;
+    std::vector<float> progress; // This will be empty for unmonitored data
   };
 
   /**
@@ -123,12 +112,15 @@ public:
    * @param last_epoch
    */
   void processResults(const std::vector<Testing::TestResults> &testResults,
-                      size_t last_epoch = 0) {
-    for (auto const &result : testResults) {
-      if (!progress.contains(result.line)) {
-        progress[result.line] = {result.output};
-      } else {
-        progress.at(result.line).push_back(result.output);
+                      EMode mode, size_t last_epoch = 0) {
+    if (mode == EMode::TrainTestMonitored) {
+      // record the progress of an output neuron
+      for (auto const &result : testResults) {
+        if (!progress.contains(result.line)) {
+          progress[result.line] = {result.output};
+        } else {
+          progress.at(result.line).push_back(result.output);
+        }
       }
     }
 
@@ -139,7 +131,7 @@ public:
   /**
    * @brief Displays a summary of the test results on a single line.
    */
-  std::string showResultsLine(bool withConvergence = true);
+  std::string showResultsLine(bool withConvergence);
 
   /**
    * @brief Displays detailed test results. If the verbose parameter is set to
@@ -149,21 +141,22 @@ public:
    * @param verbose If true, additional details are displayed (default is
    * false).
    */
-  std::string showResults(EMode mode, bool verbose = false);
+  std::string showDetailledResults(EMode mode, bool verbose = false);
 
   /**
    * @brief Display some verbose results.
    *
    */
-  std::string showResultsVerbose(const TestResultsExt &result,
-                                 EMode mode) const;
+  std::string showResultsVerbose(const TestResults &result, EMode mode) const;
 
   /**
-   * @brief Calculates and returns the statistics of the test results.
+   * @brief Calculates and returns the statistics of the test results, including
+   * monitored progress if monitored is true.
    *
+   * @param monitored If true, return stats with progress
    * @return A Stat object containing the calculated statistics.
    */
-  Stat calcStats();
+  Stat calcStats(bool monitored);
 
   /**
    * @brief Sets the network for testing.
@@ -195,7 +188,7 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  std::vector<TestResultsExt> testResultExts;
+  std::vector<TestResults> testResultExts;
   std::map<size_t, std::vector<float>> progress;
 
 private:
