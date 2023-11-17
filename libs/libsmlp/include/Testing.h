@@ -59,18 +59,12 @@ public:
             const AppParameters &app_params, size_t epoch = 0);
 
   /**
-   * @brief For testing a line only, used with stdin pipe
+   * @brief For testing a with a stdin pipe
    *
-   * @param network_params
-   * @param app_params
-   * @param record_result
-   * @param line_number
-   * @param testResults
    */
-  void testLine(const NetworkParameters &network_params,
-                const AppParameters &app_params,
-                const RecordResult &record_result, const size_t line_number,
-                std::vector<TestingResult::TestResults> &testResults) const;
+  void testLines(const NetworkParameters &network_params,
+                 const AppParameters &app_params, bool from_ratio_line,
+                 size_t current_line_number);
 
   /**
    * @brief Sets the network for testing.
@@ -112,6 +106,11 @@ public:
   }
 
 private:
+  void testLine(const NetworkParameters &network_params,
+                const AppParameters &app_params,
+                const RecordResult &record_result, const size_t line_number,
+                std::vector<TestingResult::TestResults> &testResults) const;
+
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<TestingResult> testingResults_ = nullptr;

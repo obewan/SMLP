@@ -96,16 +96,7 @@ void Training::trainTestMonitored(const NetworkParameters &network_params,
       current_line++;
     }
     logger_.append("testing... ");
-    std::vector<TestingResult::TestResults> testResults;
-    while (std::getline(std::cin, line)) {
-      fileParser_->current_line_number = current_line - 1;
-      RecordResult result =
-          fileParser_->processLine(network_params, app_params, line);
-      testing->testLine(network_params, app_params, result, current_line,
-                        testResults);
-      current_line++;
-    }
-    testing->getTestingResults()->processResults(testResults, app_params.mode);
+    testing->testLines(network_params, app_params, false, current_line);
     logger_.out(testing_->getTestingResults()->showResultsLine(false));
 
   } else {

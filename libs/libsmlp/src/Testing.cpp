@@ -52,6 +52,25 @@ void Testing::test(const NetworkParameters &network_params,
   testingResults_->processResults(testResults, app_params.mode, epoch);
 }
 
+void Testing::testLines(const NetworkParameters &network_params,
+                        const AppParameters &app_params, bool fromRatioLine,
+                        size_t current_line) {
+  std::string line;
+  if (fromRatioLine) {
+    current_line = app_params.training_ratio_line;
+  }
+  std::vector<TestingResult::TestResults> testResults;
+
+  while (std::getline(std::cin, line)) {
+    fileParser_->current_line_number = current_line - 1;
+    RecordResult result =
+        fileParser_->processLine(network_params, app_params, line);
+    testLine(network_params, app_params, result, current_line, testResults);
+    current_line++;
+  }
+  testingResults_->processResults(testResults, app_params.mode);
+}
+
 void Testing::testLine(
     const NetworkParameters &network_params, const AppParameters &app_params,
     const RecordResult &record_result, const size_t line_number,

@@ -128,30 +128,12 @@ void SimpleMLP::train() {
 
 void SimpleMLP::test(bool fromRatioLine) {
   auto testing = std::make_unique<Testing>(network, app_params.data_file);
-  size_t current_line = 0;
-  std::string line;
   if (app_params.use_stdin) {
-    if (fromRatioLine) {
-      current_line = app_params.training_ratio_line;
-    }
     logger.info("Testing, using command pipe input... ", app_params.data_file);
-    std::vector<TestingResult::TestResults> testResults;
-    auto fileParser = testing->getFileParser();
-    while (std::getline(std::cin, line)) {
-
-      fileParser->current_line_number = current_line - 1;
-      RecordResult result =
-          fileParser->processLine(network_params, app_params, line);
-      testing->testLine(network_params, app_params, result, current_line,
-                        testResults);
-      current_line++;
-    }
-    testing->getTestingResults()->processResults(testResults, app_params.mode);
+    testing->testLines(network_params, app_params, fromRatioLine, 0);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
-    if (fromRatioLine) {
-      app_params.use_testing_ratio_line = true;
-    }
+    app_params.use_testing_ratio_line = fromRatioLine;
     testing->test(network_params, app_params, 0);
   }
   logger.out(
