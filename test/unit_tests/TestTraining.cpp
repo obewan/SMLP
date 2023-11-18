@@ -32,13 +32,13 @@ TEST_CASE("Testing the Training class") {
   SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.trainTestMonitored(network_params, app_params),
+      CHECK_THROWS_AS(training.train(network_params, app_params),
                       TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       app_params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
+      CHECK_NOTHROW(training.train(network_params, app_params));
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
@@ -51,7 +51,7 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
-      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
+      CHECK_NOTHROW(training.train(network_params, app_params));
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);

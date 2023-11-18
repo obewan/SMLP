@@ -15,6 +15,7 @@
 #include "Testing.h"
 #include "exception/TrainingException.h"
 #include <bits/types/FILE.h>
+#include <cstddef>
 #include <memory>
 #include <string>
 
@@ -78,18 +79,6 @@ public:
              const AppParameters &app_params);
 
   /**
-   * @brief This method trains the model, testing at each epoch and monitoring
-   * the progress of an output neuron. Be aware that this mode consumes more
-   * memory with each epoch to save the monitoring progress. Therefore, it is
-   * recommended for use with smaller datasets and a lower number of epochs.
-   *
-   * @param network_params Network parameters.
-   * @param app_params Application parameters.
-   */
-  void trainTestMonitored(const NetworkParameters &network_params,
-                          const AppParameters &app_params);
-
-  /**
    * @brief Sets the network for training.
    *
    * @param network Pointer to the network.
@@ -127,6 +116,16 @@ public:
   void setTesting(std::shared_ptr<Testing> tester) { testing_ = tester; }
 
   /**
+   * @brief Create a Testing object
+   *
+   * @param network_params
+   * @param app_params
+   */
+  void createTesting() {
+    testing_ = std::make_shared<Testing>(network_, fileParser_);
+  }
+
+  /**
    * @brief Gets the tester used for testing during training.
    *
    * @return Pointer to the tester.
@@ -134,6 +133,13 @@ public:
   std::shared_ptr<Testing> getTesting() const { return testing_; }
 
 private:
+  void trainFromStdin(const NetworkParameters &network_params,
+                      const AppParameters &app_params);
+  void trainFromFile(const NetworkParameters &network_params,
+                     const AppParameters &app_params);
+  void processInputLine(const NetworkParameters &network_params,
+                        const AppParameters &app_params,
+                        const std::string &line = "") const;
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;

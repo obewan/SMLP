@@ -156,7 +156,7 @@ void SimpleMLP::trainTestMonitored() {
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
   Training training(network, app_params.data_file, logger);
-  training.trainTestMonitored(network_params, app_params);
+  training.train(network_params, app_params);
 }
 
 std::string SimpleMLP::showInlineHeader() const {
