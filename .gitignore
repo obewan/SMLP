@@ -52,4 +52,8 @@ CMakeCache.txt
 data/ai/
 changelog_refresh.sh
 coverage/
+.codeql
+.cppcheck
+.cccc
+.valgrind
 

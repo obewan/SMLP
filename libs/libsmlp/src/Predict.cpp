@@ -1,29 +1,44 @@
-#include "Common.h"
 #include "Predict.h"
+#include "Common.h"
 #include "exception/PredictException.h"
 #include <math.h>
 
-void Predict::predict() {
-  if (!fileParser_->file.is_open()) {
-    fileParser_->openFile();
-  }
-
-  bool isParsing = true;
-  while (isParsing) {
-    RecordResult result =
-        fileParser_->processLine(network_->params, app_params_);
-    if (result.isSuccess) {
-      auto predicteds = network_->forwardPropagation(result.record.first);
-      showOutput(result.record.first, predicteds);
+void Predict::predict() const {
+  if (app_params_.use_stdin) {
+    std::string line;
+    while (std::getline(std::cin, line)) {
+      RecordResult result =
+          fileParser_->processLine(network_->params, app_params_, line);
+      if (result.isSuccess) {
+        auto predicteds = network_->forwardPropagation(result.record.first);
+        showOutput(result.record.first, predicteds);
+      }
     }
-    isParsing = result.isSuccess && !result.isEndOfFile;
+  } else {
+    if (!fileParser_->file.is_open()) {
+      fileParser_->openFile();
+    }
+    bool isParsing = true;
+    while (isParsing) {
+      RecordResult result =
+          fileParser_->processLine(network_->params, app_params_);
+      if (result.isSuccess) {
+        auto predicteds = network_->forwardPropagation(result.record.first);
+        showOutput(result.record.first, predicteds);
+      }
+      isParsing = result.isSuccess && !result.isEndOfFile;
+    }
+    fileParser_->closeFile();
   }
-
-  fileParser_->closeFile();
 }
 
 void Predict::appendValues(const std::vector<float> &values,
                            bool roundValues) const {
+  // Truncate to zero if close to zero, to avoid scientific notation.
+  auto truncZero = [](const float &value) {
+    return value < 1e-4 ? 0.0f : value;
+  };
+
   if (!values.empty()) {
     logger_.append(roundValues ? round(values.front())
                                : truncZero(values.front()));

@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include <cstddef>
 #include <map>
 #include <string>
 #include <vector>
@@ -62,11 +63,15 @@ struct AppParameters {
   std::string network_to_export = "";
   std::string data_file = "";
   std::string config_file = "smlp.conf";
-  size_t num_epochs = 3;
+  size_t num_epochs = 1;
   size_t output_index_to_monitor = 1;
   float training_ratio = 0.7f;
+  size_t training_ratio_line = 0;
   bool output_at_end = false;
   bool verbose = false;
+  bool use_stdin = false;
+  bool disable_stdin = false;
+  bool use_testing_ratio_line = false;
   EMode mode = EMode::TrainThenTest;
   EPredictiveMode predictive_mode = EPredictiveMode::CSV;
 };

@@ -12,6 +12,7 @@
 #include "Network.h"
 #include "NetworkImportExportJSON.h"
 #include "SimpleConfig.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include <memory>
 #include <string>
@@ -41,7 +42,7 @@ public:
   /**
    * @brief This method tests the model.
    */
-  void test();
+  void test(bool fromRatioLine = false);
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
@@ -60,7 +61,7 @@ public:
    * @brief check if the network should export its model.
    */
 
-  bool shouldExportNetwork();
+  bool shouldExportNetwork() const;
 
   /**
    * @brief export the network model.
@@ -80,7 +81,7 @@ public:
   /**
    * @brief The neural network
    */
-  std::unique_ptr<Network> network;
+  std::shared_ptr<Network> network = nullptr;
 
   /**
    * @brief ImportExportJSON tool.
@@ -93,8 +94,9 @@ public:
   SimpleLogger logger;
 
 private:
-  int parseArgs(int argc, char **argv);
+  int parseArgs(int argc, char **argv, SimpleLang &lang);
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
   void importOrBuildNetwork();
+  void checkStdin();
 };

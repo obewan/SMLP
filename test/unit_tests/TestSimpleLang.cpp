@@ -8,6 +8,6 @@ TEST_CASE("Testing the SimpleLang class") {
                          "Failed to open file for reading: ./test",
                          SimpleLangException);
 
-    CHECK_NOTHROW(SimpleLang("../i18n/en.json"));
+    CHECK_NOTHROW(SimpleLang("../../i18n/en.json"));
   }
 }

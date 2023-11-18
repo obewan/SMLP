@@ -51,11 +51,17 @@ public:
    * ratio.
    *
    * @param trainingRatio The ratio of training data to total data.
+   * @param trainingRatioLine A training ratio line to use instead.
    * @return The line number that corresponds to the training ratio.
    */
-  size_t getTrainingRatioLine(float trainingRatio) {
-    total_lines = countLine();
-    training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine,
+                              bool use_stdin) {
+    if (use_stdin) {
+      training_ratio_line = trainingRatioLine;
+    } else {
+      total_lines = countLine();
+      training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+    }
     isTrainingRatioLineProcessed = true;
     return training_ratio_line;
   }
@@ -80,13 +86,11 @@ public:
    *
    * @param network_params The parameters to use when processing the line.
    * @param app_params The application parameters.
-   * @param isTesting A boolean indicating whether the line is from testing data
-   * (default is false).
    * @return A RecordResult containing the processed data from the line.
    */
   RecordResult processLine(const NetworkParameters &network_params,
                            const AppParameters &app_params,
-                           bool isTesting = false);
+                           const std::string &line = "");
 
   /**
    * @brief Processes a record with input only.
@@ -106,11 +110,12 @@ public:
    * @param cell_refs A 2D vector containing Csv::CellReference objects for each
    * cell in the record.
    * @param input_size The size of the input data in the record.
+   * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
   Record processInputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      size_t input_size) const;
+      size_t input_size, size_t output_size) const;
 
   /**
    * @brief Processes a record with output first. This method is used when the
@@ -118,12 +123,26 @@ public:
    *
    * @param cell_refs A 2D vector containing Csv::CellReference objects for each
    * cell in the record.
+   * @param input_size The size of the input data in the record.
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
   Record processOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-      size_t output_size) const;
+      size_t input_size, size_t output_size) const;
+
+  bool getNextLine(std::string &line, const AppParameters &app_params);
+  void parseLine(const std::string &line,
+                 std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
+  void
+  validateColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+                  const NetworkParameters &network_params,
+                  const AppParameters &app_params) const;
+
+  Record
+  processColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
+                 const NetworkParameters &network_params,
+                 const AppParameters &app_params) const;
 
   std::ifstream file;
   Csv::Parser csv_parser;

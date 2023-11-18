@@ -1,7 +1,7 @@
 /**
  * @file SimpleLang.h
  * @author Damien Balima (www.dams-labs.net)
- * @brief Simple i18n class
+ * @brief Simple i18n language parser class
  * @date 2023-11-08
  *
  * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2023
@@ -20,10 +20,35 @@ using json = nlohmann::json;
 class SimpleLang {
 public:
   explicit SimpleLang(const std::string &filename) { parseFile(filename); };
-  std::string get(const std::string &key) {
+
+  /**
+   * @brief Fetches a localized string for a given key from the parsed JSON
+   * file.
+   *
+   * If variables are provided, the function replaces placeholders in the format
+   * of %%variable%% in the string with their corresponding values.
+   *
+   * @param key The key for the localized string to fetch.
+   * @param variables Optional map of variable names and their corresponding
+   * replacement values.
+   * @return Localized string corresponding to the given key. If the key does
+   * not exist, returns an empty string.
+   */
+  std::string
+  get(const std::string &key,
+      const std::map<std::string, std::string, std::less<>> &variables = {}) {
     auto it = strings.find(key);
     if (it != strings.end()) {
-      return it->second;
+      std::string str = it->second;
+      for (const auto &[varkey, varval] : variables) {
+        std::string varKey = "%%" + varkey + "%%";
+        size_t start_pos = 0;
+        while ((start_pos = str.find(varKey, start_pos)) != std::string::npos) {
+          str.replace(start_pos, varKey.length(), varval);
+          start_pos += varval.length();
+        }
+      }
+      return str;
     } else {
       return "";
     }
