@@ -10,21 +10,28 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - Simplicity (the "S" of SMLP) for better understanding and for studying purpose, for improved maintainance and performance, and for compliance with best software development practices (low complexity, KISS principle). It can also be used as base for more complex projects.
 - Functionality: operational, including forward propagation, backward propagation and weight update.
 - Performance: uses C++ for optimal performance, and less CPU and memory usage.
+
+**Including:**
+
 - [Csv-parser](https://github.com/ashaduri/csv-parser) for CSV parsing. Dataset learning on the fly line by line (instead of loading the entire dataset into memory), resulting in low memory usage.
 - [CLI11](https://github.com/CLIUtils/CLI11) for command line parsing.
 - [JSON for Modern C++](https://github.com/nlohmann/json) for Json export/import.
 - [Cmake](https://cmake.org) compilation, tested on Linux, but should be portable to other systems.
-- [Doctest](https://github.com/doctest/doctest) for unit tests.
-- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) for code coverage, with 80% of minimum coverage validation.
-- [Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html) for integration tests.
+- [Doctest](https://github.com/doctest/doctest) unit tests.
+- [Ctest](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Testing%20With%20CMake%20and%20CTest.html) integration tests.
+- [Gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html) and [Lcov](https://github.com/linux-test-project/lcov) code coverage, with 80% of minimum coverage validation.
+- [Doxygen](https://www.doxygen.nl) documentation.
 - [Github Continuous Integration](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration) with an unit test and a integration test checks.
 - [Github CodeQL](https://github.com/features/security/code) security analysis.
+
+**Also used:**
+
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
-- [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) for code metrics.
-- [Valgrind](https://valgrind.org/) for memory check.
-- [Doxygen](https://www.doxygen.nl) documentation.
-- Includes a mushroom edibility dataset example.
+- [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) code metrics.
+- [Valgrind](https://valgrind.org/) memory check.
+
+Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
