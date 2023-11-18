@@ -10,7 +10,6 @@
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
-#include "exception/FileParserException.h"
 #include <cstddef>
 #include <fstream>
 

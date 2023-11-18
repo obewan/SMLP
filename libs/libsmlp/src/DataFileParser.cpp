@@ -1,9 +1,7 @@
 #include "DataFileParser.h"
 #include "Common.h"
-#include <cstddef>
+#include "exception/FileParserException.h"
 #include <iostream>
-#include <limits>
-#include <optional>
 #include <sstream>
 #include <string>
 

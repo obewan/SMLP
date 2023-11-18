@@ -9,5 +9,6 @@
     <max-template-recursion>100</max-template-recursion>
     <paths>
         <dir name="libs/libsmlp"/>
+        <dir name="src"/>
     </paths>
 </project>

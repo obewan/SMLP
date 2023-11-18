@@ -8,8 +8,6 @@
  *
  */
 #pragma once
-#include "Common.h"
-#include "Network.h"
 #include "NetworkImportExportJSON.h"
 #include "SimpleConfig.h"
 #include "SimpleLang.h"

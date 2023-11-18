@@ -1,9 +1,4 @@
-#include "Common.h"
 #include "include/SimpleMLP.h"
-#include <cstdlib>
-#include <iostream>
-#include <memory>
-#include <ostream>
 
 /**
  * @brief main function

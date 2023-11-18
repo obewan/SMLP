@@ -15,7 +15,6 @@
 #include "InputLayer.h"
 #include "OutputLayer.h"
 #include "exception/NetworkException.h"
-#include <cstddef>
 
 /**
  * @brief The Network class represents a neural network model. It contains an

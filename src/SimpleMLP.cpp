@@ -39,15 +39,8 @@ measures that legally restrict others from doing anything the license permits.
 #include "Training.h"
 #include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
-#include <cstddef>
-#include <cstdlib>
 #include <filesystem>
-#include <iostream>
-#include <memory>
-#include <ostream>
 #include <sstream>
-#include <stdio.h>
-#include <string>
 
 #ifdef _WIN32
 #include <io.h>
