@@ -83,6 +83,7 @@ public:
    * @brief process the results to get the training progress
    *
    * @param testResults
+   * @param mode
    * @param last_epoch
    */
   void

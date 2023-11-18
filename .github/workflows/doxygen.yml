@@ -10,9 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+      pages: write
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Doxygen
         run: |
@@ -24,8 +28,8 @@ jobs:
           cd ${{github.workspace}}/doc
           doxygen Doxyfile
 
-      - name: Upload Documentation
-        uses: actions/upload-artifact@v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: Documentation
-          path: ${{github.workspace}}/doc/html
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doc/html
