@@ -35,6 +35,10 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
+# API doc
+
+The API documentation can be found on [obewan.github.io/SMLP](https://obewan.github.io/SMLP/index.html).
+
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in data/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
