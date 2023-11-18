@@ -1,5 +1,5 @@
 /**
- * @file NetworkImportExportJson.h
+ * @file NetworkImportExportJSON.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief Model Import/Export using JSON format
  * @see https://github.com/nlohmann/json

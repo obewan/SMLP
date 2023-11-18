@@ -52,6 +52,7 @@ public:
    *
    * @param trainingRatio The ratio of training data to total data.
    * @param trainingRatioLine A training ratio line to use instead.
+   * @param use_stdin if true this will use training_ratio_line
    * @return The line number that corresponds to the training ratio.
    */
   size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine,
@@ -86,6 +87,8 @@ public:
    *
    * @param network_params The parameters to use when processing the line.
    * @param app_params The application parameters.
+   * @param line if not empty it will use this line to process, else it will
+   * process the next line of the fileparser.
    * @return A RecordResult containing the processed data from the line.
    */
   RecordResult processLine(const NetworkParameters &network_params,
