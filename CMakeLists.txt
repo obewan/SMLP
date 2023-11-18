@@ -47,8 +47,6 @@ project(${PROJECT_NAME})
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-add_subdirectory(test)
-
 foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
@@ -56,3 +54,4 @@ target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 
 enable_testing()
+add_subdirectory(test)

@@ -2,17 +2,18 @@
 #include "SimpleLogger.h"
 #include "Training.h"
 #include "doctest.h"
+#include <memory>
 
 TEST_CASE("Testing the Training class") {
   SimpleLogger logger;
   SUBCASE("Test Constructor") { CHECK_NOTHROW(Training(nullptr, "", logger)); }
 
-  std::string test_file = "data/test_file.csv";
+  std::string test_file = "../data/test_file.csv";
 
   NetworkParameters network_params{.input_size = 20, .output_size = 1};
   AppParameters app_params{.data_file = test_file};
 
-  auto network = new Network(network_params);
+  auto network = std::make_shared<Network>(network_params);
   Training training(network, test_file, logger);
 
   SUBCASE("Test train function") {
@@ -31,13 +32,13 @@ TEST_CASE("Testing the Training class") {
   SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.trainTestMonitored(network_params, app_params),
+      CHECK_THROWS_AS(training.train(network_params, app_params),
                       TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       app_params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
+      CHECK_NOTHROW(training.train(network_params, app_params));
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
@@ -50,11 +51,11 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
-      CHECK_NOTHROW(training.trainTestMonitored(network_params, app_params));
+      CHECK_NOTHROW(training.train(network_params, app_params));
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);
-      auto testProgress = testing->progress;
+      auto testProgress = testing->getTestingResults()->getProgress();
       CHECK(testProgress.empty() == false);
       CHECK(testProgress.size() ==
             training.getFileParser()->total_lines -
@@ -77,7 +78,7 @@ TEST_CASE("Testing the Training class") {
       CHECK(lastKey > firstKey);
       CHECK(lastValue.back() > firstValue.front());
 
-      auto stats = testing->calcStats();
+      auto stats = testing->getTestingResults()->calcStats(true);
       CHECK(stats.convergence > 0);
     }
   }

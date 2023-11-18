@@ -8,7 +8,7 @@
 #include <string>
 
 TEST_CASE("Testing the DataFileParser class") {
-  std::string test_file = "data/test_file.csv";
+  std::string test_file = "../data/test_file.csv";
   const float eps = 1e-6f; // epsilon for float testing
 
   SUBCASE("Test Constructor") { CHECK_NOTHROW(DataFileParser("")); }
@@ -45,7 +45,7 @@ TEST_CASE("Testing the DataFileParser class") {
 
   SUBCASE("Test getTrainingRatioLine") {
     CHECK(parser.isTrainingRatioLineProcessed == false);
-    auto trainingRatioLine = parser.getTrainingRatioLine(0.6f);
+    auto trainingRatioLine = parser.getTrainingRatioLine(0.6f, 0, false);
     CHECK(trainingRatioLine == 6);
     CHECK(parser.training_ratio_line == trainingRatioLine);
     CHECK(parser.total_lines == 10);
@@ -114,7 +114,7 @@ TEST_CASE("Testing the DataFileParser class") {
     // optional in dataset entry, but inputs are mandatory ofc.
     parser.closeFile();
     app_params.mode = EMode::Predictive;
-    parser.openFile("data/test_file_input_only.csv");
+    parser.openFile("../data/test_file_input_only.csv");
     CHECK_NOTHROW(parser.processLine(network_params, app_params));
     RecordResult result3 = parser.processLine(network_params, app_params);
     const auto &[inputs3, outputs3] = result3.record;
@@ -135,9 +135,9 @@ TEST_CASE("Testing the DataFileParser class") {
     parser.csv_parser.parseTo(data, cell_refs);
 
     const auto &[inputs1, outputs1] =
-        parser.processInputFirst(cell_refs, input_size);
+        parser.processInputFirst(cell_refs, input_size, output_size);
     const auto &[inputs2, outputs2] =
-        parser.processOutputFirst(cell_refs, output_size);
+        parser.processOutputFirst(cell_refs, input_size, output_size);
 
     CHECK(inputs1.size() == input_size);
     CHECK(outputs1.size() == output_size);
@@ -161,7 +161,7 @@ TEST_CASE("Testing the DataFileParser class") {
     CHECK(network_params.input_size == 20);
     CHECK(network_params.hidden_size == 12);
 
-    parser.openFile("data/test_file_bad_line.csv");
+    parser.openFile("../data/test_file_bad_line.csv");
     CHECK_NOTHROW(parser.processLine(network_params, app_params));
     CHECK_THROWS_WITH_AS(
         parser.processLine(network_params, app_params),
@@ -169,7 +169,7 @@ TEST_CASE("Testing the DataFileParser class") {
         FileParserException);
     parser.closeFile();
 
-    parser.openFile("data/test_file_bad_format.csv");
+    parser.openFile("../data/test_file_bad_format.csv");
     CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
                          "CSV parsing error at line 1: bad column format",
                          FileParserException);
@@ -177,7 +177,7 @@ TEST_CASE("Testing the DataFileParser class") {
 
     // Special Predictive mode tests
     app_params.mode = EMode::Predictive;
-    parser.openFile("data/test_file_short_line.csv");
+    parser.openFile("../data/test_file_short_line.csv");
     CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
                          "Invalid columns at line 1: found 19 columns instead "
                          "of a minimum of 20",

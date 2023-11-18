@@ -1,0 +1,31 @@
+name: Doxygen
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Doxygen
+        run: |
+          sudo apt-get update
+          sudo apt-get install doxygen
+
+      - name: Generate Documentation
+        run: |
+          cd ${{github.workspace}}/doc
+          doxygen Doxyfile
+
+      - name: Upload Documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: Documentation
+          path: ${{github.workspace}}/doc/html

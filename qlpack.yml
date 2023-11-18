@@ -1,0 +1,3 @@
+name: smlp-pack
+dependencies:
+  codeql/cpp-all: '*'

@@ -12,7 +12,7 @@
  * @param argv table of arguments
  * @code {.bash}
  * smlp -h
- * smlp -f ../data/mushroom/mushroom_data.csv -i 20 -o 1 -d 12 -c 1 -e 100
+ * smlp -f ../data/mushroom/mushroom_data.csv -s 20 -o 1 -d 12 -c 1 -p 100
  * @endcode
  *
  * @return int
