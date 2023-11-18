@@ -3,7 +3,6 @@
 #include "SimpleLogger.h"
 #include "TestingResult.h"
 #include <chrono>
-#include <cstddef>
 #include <iostream>
 #include <ranges>
 #include <string>

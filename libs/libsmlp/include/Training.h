@@ -14,8 +14,6 @@
 #include "SimpleLogger.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
-#include <bits/types/FILE.h>
-#include <cstddef>
 #include <memory>
 #include <string>
 

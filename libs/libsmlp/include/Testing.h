@@ -13,8 +13,6 @@
 #include "Network.h"
 #include "TestingResult.h"
 #include "exception/TestingException.h"
-#include <cstddef>
-#include <map>
 #include <memory>
 
 /**

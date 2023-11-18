@@ -1,9 +1,9 @@
 # SMLP
 
+> "Simplicity is the ultimate sophistication" _- Leonardo da Vinci (attributed)_
+
 A Simple Multi-Layer Perceptron, by [Dams](https://dams-labs.net/).  
 Each neurons of a previous layer is connected with each neurons of its next layer.
-
-> "Simplicity is the ultimate sophistication" _- Leonardo da Vinci (attributed)_
 
 # Features
 
