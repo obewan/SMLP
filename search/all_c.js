@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['network_127',['Network',['../classNetwork.html',1,'']]],
+  ['network_127',['Network',['../classNetwork.html',1,'Network'],['../classNetwork.html#a5bd901b8eebe7a3e690d47c306d8eb78',1,'Network::Network(const NetworkParameters &amp;params)'],['../classNetwork.html#a22366a210c0fb05448d1802a0e98452a',1,'Network::Network()=default']]],
   ['network_128',['network',['../classSimpleMLP.html#a0934ea2e34aa40f0d72147e83015c321',1,'SimpleMLP']]],
-  ['network_129',['Network',['../classNetwork.html#a5bd901b8eebe7a3e690d47c306d8eb78',1,'Network::Network(const NetworkParameters &amp;params)'],['../classNetwork.html#a3043240c3adcef445e8f5d21eb61eb0a',1,'Network::Network(const Network &amp;other)=delete'],['../classNetwork.html#ad2333cf79061fe62dc5980c83fea41e9',1,'Network::Network(Network &amp;&amp;other)=default'],['../classNetwork.html#a22366a210c0fb05448d1802a0e98452a',1,'Network::Network()=default']]],
+  ['network_129',['Network',['../classNetwork.html#a3043240c3adcef445e8f5d21eb61eb0a',1,'Network::Network(const Network &amp;other)=delete'],['../classNetwork.html#ad2333cf79061fe62dc5980c83fea41e9',1,'Network::Network(Network &amp;&amp;other)=default']]],
   ['network_2eh_130',['Network.h',['../Network_8h.html',1,'']]],
   ['network_5fparams_131',['network_params',['../classSimpleMLP.html#a9d8c189fcb3ae9a82fdacda6b323e557',1,'SimpleMLP']]],
   ['network_5fto_5fexport_132',['network_to_export',['../structAppParameters.html#aa48ee7d1bc303e2a8a73ae2cc893635e',1,'AppParameters']]],
