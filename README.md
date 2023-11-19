@@ -247,7 +247,7 @@ Here some examples:
 $ cat ../data/mushroom/mushroom_data.csv | ./smlp -e mushroom_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
 [2023-11-17 20:56:16] [INFO] Training...testing... acc(lah)[30 13 5.1]
 
-# train the network model again, the model accuracy (low, average, high) augment
+# train the network model again, the model accuracy (low, average, high) increase
 $ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mushroom_model.json -R 40000 -m TrainTestMonitored
 [2023-11-17 21:00:14] [INFO] Training...testing... acc(lah)[52 36 20]
 

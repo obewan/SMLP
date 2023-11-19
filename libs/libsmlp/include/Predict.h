@@ -70,6 +70,8 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
+  void processStdin() const;
+  void processFile() const;
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   const AppParameters &app_params_;

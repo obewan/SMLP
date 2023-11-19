@@ -28,7 +28,7 @@ jobs:
         run: cmake --build ${{github.workspace}}/build --config Debug -- -j 2
 
       - name: Run unit tests
-        working-directory: ${{github.workspace}}/build/test/unit_tests
+        working-directory: ${{github.workspace}}/build/test/doctests
         run: ./tester
 
       - name: Run code coverage
