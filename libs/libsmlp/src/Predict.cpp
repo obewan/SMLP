@@ -5,31 +5,39 @@
 
 void Predict::predict() const {
   if (app_params_.use_stdin) {
-    std::string line;
-    while (std::getline(std::cin, line)) {
-      RecordResult result =
-          fileParser_->processLine(network_->params, app_params_, line);
-      if (result.isSuccess) {
-        auto predicteds = network_->forwardPropagation(result.record.first);
-        showOutput(result.record.first, predicteds);
-      }
-    }
+    processStdin();
   } else {
-    if (!fileParser_->file.is_open()) {
-      fileParser_->openFile();
-    }
-    bool isParsing = true;
-    while (isParsing) {
-      RecordResult result =
-          fileParser_->processLine(network_->params, app_params_);
-      if (result.isSuccess) {
-        auto predicteds = network_->forwardPropagation(result.record.first);
-        showOutput(result.record.first, predicteds);
-      }
-      isParsing = result.isSuccess && !result.isEndOfFile;
-    }
-    fileParser_->closeFile();
+    processFile();
   }
+}
+
+void Predict::processStdin() const {
+  std::string line;
+  while (std::getline(std::cin, line)) {
+    RecordResult result =
+        fileParser_->processLine(network_->params, app_params_, line);
+    if (result.isSuccess) {
+      auto predicteds = network_->forwardPropagation(result.record.first);
+      showOutput(result.record.first, predicteds);
+    }
+  }
+}
+
+void Predict::processFile() const {
+  if (!fileParser_->file.is_open()) {
+    fileParser_->openFile();
+  }
+  bool isParsing = true;
+  while (isParsing) {
+    RecordResult result =
+        fileParser_->processLine(network_->params, app_params_);
+    if (result.isSuccess) {
+      auto predicteds = network_->forwardPropagation(result.record.first);
+      showOutput(result.record.first, predicteds);
+    }
+    isParsing = result.isSuccess && !result.isEndOfFile;
+  }
+  fileParser_->closeFile();
 }
 
 void Predict::appendValues(const std::vector<float> &values,

@@ -7,4 +7,4 @@ foreach(DATA_FILE ${TEST_DATA_FILES})
 endforeach()
 
 add_subdirectory(ctests)
-add_subdirectory(unit_tests)
+add_subdirectory(doctests)
