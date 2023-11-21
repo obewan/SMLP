@@ -2,13 +2,26 @@
 #include "Common.h"
 #include "TestingResult.h"
 #include "exception/TestingException.h"
+#include <cstddef>
 #include <iostream>
 
 using namespace std::string_view_literals;
 
 void Testing::test(const NetworkParameters &network_params,
-                   const AppParameters &app_params, size_t epoch) {
-  if (app_params.use_testing_ratio_line) {
+                   const AppParameters &app_params, size_t epoch,
+                   size_t current_line) {
+  if (app_params.use_stdin) {
+    testFromStdin(network_params, app_params, current_line);
+  } else {
+    testFromFile(network_params, app_params, epoch);
+  }
+}
+
+void Testing::testFromFile(const NetworkParameters &network_params,
+                           const AppParameters &app_params,
+                           size_t epoch) const {
+  if (app_params.mode == EMode::TrainThenTest ||
+      app_params.use_training_ratio_line) {
     if (!fileParser_->isTrainingRatioLineProcessed) {
       fileParser_->getTrainingRatioLine(app_params.training_ratio,
                                         app_params.training_ratio_line,
@@ -49,11 +62,12 @@ void Testing::test(const NetworkParameters &network_params,
   testingResults_->processResults(testResults, app_params.mode, epoch);
 }
 
-void Testing::testLines(const NetworkParameters &network_params,
-                        const AppParameters &app_params, bool fromRatioLine,
-                        size_t current_line) {
+void Testing::testFromStdin(const NetworkParameters &network_params,
+                            const AppParameters &app_params,
+                            size_t current_line) const {
   std::string line;
-  if (fromRatioLine) {
+  if (app_params.mode == EMode::TrainThenTest ||
+      app_params.use_training_ratio_line) {
     current_line = app_params.training_ratio_line;
   }
   std::vector<TestingResult::TestResults> testResults;

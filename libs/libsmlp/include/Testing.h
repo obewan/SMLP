@@ -47,22 +47,34 @@ public:
         testingResults_(std::make_shared<TestingResult>()) {}
 
   /**
+   * @brief test from stdin or from file, depending of parameters
+   *
+   * @param network_params
+   * @param app_params
+   * @param epoch
+   * @param current_line
+   */
+  void test(const NetworkParameters &network_params,
+            const AppParameters &app_params, size_t epoch = 0,
+            size_t current_line = 0);
+
+  /**
    * @brief This method tests the model with the given parameters.
    *
    * @param network_params Network parameters.
    * @param app_params Application parameters.
    * @param epoch The current epoch (default is 0).
    */
-  void test(const NetworkParameters &network_params,
-            const AppParameters &app_params, size_t epoch = 0);
+  void testFromFile(const NetworkParameters &network_params,
+                    const AppParameters &app_params, size_t epoch = 0) const;
 
   /**
    * @brief For testing a with a stdin pipe
    *
    */
-  void testLines(const NetworkParameters &network_params,
-                 const AppParameters &app_params, bool from_ratio_line,
-                 size_t current_line_number);
+  void testFromStdin(const NetworkParameters &network_params,
+                     const AppParameters &app_params,
+                     size_t current_line_number) const;
 
   /**
    * @brief Sets the network for testing.

@@ -70,7 +70,7 @@ DataFileParser::processLine(const NetworkParameters &network_params,
 bool DataFileParser::getNextLine(std::string &line,
                                  const AppParameters &app_params) {
   // if isTesting, skipping lines until testing lines
-  if (app_params.use_testing_ratio_line &&
+  if (app_params.use_training_ratio_line &&
       current_line_number < training_ratio_line) {
     for (; current_line_number < training_ratio_line; ++current_line_number) {
       if (!std::getline(file, line)) {

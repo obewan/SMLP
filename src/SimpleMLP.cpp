@@ -123,12 +123,10 @@ void SimpleMLP::test(bool fromRatioLine) {
   auto testing = std::make_unique<Testing>(network, app_params.data_file);
   if (app_params.use_stdin) {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
-    testing->testLines(network_params, app_params, fromRatioLine, 0);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
-    app_params.use_testing_ratio_line = fromRatioLine;
-    testing->test(network_params, app_params, 0);
   }
+  testing->test(network_params, app_params, fromRatioLine);
   logger.out(
       testing->getTestingResults()->showDetailledResults(app_params.mode));
 }

@@ -71,7 +71,7 @@ struct AppParameters {
   bool verbose = false;
   bool use_stdin = false;
   bool disable_stdin = false;
-  bool use_testing_ratio_line = false;
+  bool use_training_ratio_line = false;
   EMode mode = EMode::TrainThenTest;
   EPredictiveMode predictive_mode = EPredictiveMode::CSV;
 };

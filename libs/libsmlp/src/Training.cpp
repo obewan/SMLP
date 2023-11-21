@@ -35,7 +35,7 @@ void Training::trainFromStdin(const NetworkParameters &network_params,
   }
   if (app_params.mode == EMode::TrainTestMonitored) {
     logger_.append("testing... ");
-    testing_->testLines(network_params, app_params, false, current_line);
+    testing_->testFromStdin(network_params, app_params, current_line);
     logger_.out(testing_->getTestingResults()->showResultsLine(false));
   }
 }
@@ -65,7 +65,7 @@ void Training::trainFromFile(const NetworkParameters &network_params,
     }
     if (app_params.mode == EMode::TrainTestMonitored) {
       logger_.append("testing... ");
-      testing_->test(network_params, app_params, epoch);
+      testing_->testFromFile(network_params, app_params, epoch);
       logger_.out(testing_->getTestingResults()->showResultsLine(
           app_params.mode == EMode::TrainTestMonitored));
     }
