@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['test_417',['test',['../classSimpleMLP.html#abae8c2013e871b7c5e3fd3994a73feb4',1,'SimpleMLP::test()'],['../classTesting.html#a91eacd27b5e1333f7233b4c3905d4945',1,'Testing::test(const NetworkParameters &amp;network_params, const AppParameters &amp;app_params, size_t epoch=0, size_t current_line=0)']]],
+  ['test_417',['test',['../classSimpleMLP.html#a583f3259110a84581dbeea140e8cbd0e',1,'SimpleMLP::test()'],['../classTesting.html#a91eacd27b5e1333f7233b4c3905d4945',1,'Testing::test(const NetworkParameters &amp;network_params, const AppParameters &amp;app_params, size_t epoch=0, size_t current_line=0)']]],
   ['testfromfile_418',['testFromFile',['../classTesting.html#a6499d9660cf10ea55de29da2e2d64b54',1,'Testing']]],
   ['testfromstdin_419',['testFromStdin',['../classTesting.html#a5c985a723d3b039934b027602dd6bb84',1,'Testing']]],
   ['testing_420',['Testing',['../classTesting.html#ae8c28329e0b07e3cc982e779907d2049',1,'Testing::Testing(std::shared_ptr&lt; Network &gt; network, std::shared_ptr&lt; DataFileParser &gt; fileparser)'],['../classTesting.html#abd738f899ad00fb883eb24d4c1ebabfa',1,'Testing::Testing(std::shared_ptr&lt; Network &gt; network, const std::string &amp;file_path)']]],

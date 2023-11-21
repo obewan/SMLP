@@ -3,7 +3,7 @@ var searchData=
   ['tanh_224',['Tanh',['../Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7acc132a41cab5676334f353a22a0aa5c5',1,'Common.h']]],
   ['tanhderivative_225',['tanhDerivative',['../ActivationFunctions_8h.html#a254426ace42ff806d291c4fd28e88bb4',1,'ActivationFunctions.h']]],
   ['tanhfunc_226',['tanhFunc',['../ActivationFunctions_8h.html#ac1cf4d56656400178f9c4834ecc94b00',1,'ActivationFunctions.h']]],
-  ['test_227',['test',['../classTesting.html#a91eacd27b5e1333f7233b4c3905d4945',1,'Testing::test()'],['../classSimpleMLP.html#abae8c2013e871b7c5e3fd3994a73feb4',1,'SimpleMLP::test()']]],
+  ['test_227',['test',['../classTesting.html#a91eacd27b5e1333f7233b4c3905d4945',1,'Testing::test()'],['../classSimpleMLP.html#a583f3259110a84581dbeea140e8cbd0e',1,'SimpleMLP::test()']]],
   ['testfromfile_228',['testFromFile',['../classTesting.html#a6499d9660cf10ea55de29da2e2d64b54',1,'Testing']]],
   ['testfromstdin_229',['testFromStdin',['../classTesting.html#a5c985a723d3b039934b027602dd6bb84',1,'Testing']]],
   ['testing_230',['Testing',['../classTesting.html#abd738f899ad00fb883eb24d4c1ebabfa',1,'Testing::Testing(std::shared_ptr&lt; Network &gt; network, const std::string &amp;file_path)'],['../classTesting.html#ae8c28329e0b07e3cc982e779907d2049',1,'Testing::Testing(std::shared_ptr&lt; Network &gt; network, std::shared_ptr&lt; DataFileParser &gt; fileparser)'],['../classTesting.html',1,'Testing']]],
