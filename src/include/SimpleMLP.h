@@ -40,7 +40,7 @@ public:
   /**
    * @brief This method tests the model.
    */
-  void test(bool fromRatioLine = false);
+  void test();
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring

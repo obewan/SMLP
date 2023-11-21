@@ -119,14 +119,14 @@ void SimpleMLP::train() {
   training->train(network_params, app_params);
 }
 
-void SimpleMLP::test(bool fromRatioLine) {
+void SimpleMLP::test() {
   auto testing = std::make_unique<Testing>(network, app_params.data_file);
   if (app_params.use_stdin) {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
   }
-  testing->test(network_params, app_params, fromRatioLine);
+  testing->test(network_params, app_params);
   logger.out(
       testing->getTestingResults()->showDetailledResults(app_params.mode));
 }
@@ -316,7 +316,7 @@ void SimpleMLP::runMode() {
     break;
   case EMode::TrainThenTest:
     train();
-    test(true);
+    test();
     break;
   default:
     throw SmlpException("Unimplemented mode.");
