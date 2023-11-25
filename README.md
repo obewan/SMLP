@@ -80,7 +80,8 @@ If you use the corresponding command line options, they will override the config
 }
 ```
 
-```
+```bash
+$ ./smlp -h
 SMLP - Simple Multilayer Perceptron
 Usage: ./smlp [OPTIONS]
 

@@ -35,7 +35,7 @@ void Training::trainFromStdin(const NetworkParameters &network_params,
   }
   if (app_params.mode == EMode::TrainTestMonitored) {
     logger_.append("testing... ");
-    testing_->testLines(network_params, app_params, false, current_line);
+    testing_->testFromStdin(network_params, app_params, current_line);
     logger_.out(testing_->getTestingResults()->showResultsLine(false));
   }
 }
@@ -57,17 +57,19 @@ void Training::trainFromFile(const NetworkParameters &network_params,
   fileParser_->openFile();
   const auto start{std::chrono::steady_clock::now()};
   for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
-    logger_.info("Training epoch ", epoch + 1, "/", app_params.num_epochs,
-                 "... ");
+    logger_.log(LogLevel::INFO, false, "Training epoch ", epoch + 1, "/",
+                app_params.num_epochs, "... ");
     fileParser_->resetPos();
     for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
       processInputLine(network_params, app_params);
     }
     if (app_params.mode == EMode::TrainTestMonitored) {
       logger_.append("testing... ");
-      testing_->test(network_params, app_params, epoch);
+      testing_->testFromFile(network_params, app_params, epoch);
       logger_.out(testing_->getTestingResults()->showResultsLine(
           app_params.mode == EMode::TrainTestMonitored));
+    } else {
+      logger_.endl();
     }
   }
   const auto end{std::chrono::steady_clock::now()};
