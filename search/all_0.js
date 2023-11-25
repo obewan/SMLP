@@ -9,6 +9,7 @@ var searchData=
   ['activationfunctions_2eh_6',['ActivationFunctions.h',['../ActivationFunctions_8h.html',1,'']]],
   ['app_5fparams_7',['app_params',['../classSimpleMLP.html#aef6fa500b165b172eedffa78846420e6',1,'SimpleMLP']]],
   ['append_8',['append',['../classSimpleLogger.html#a3cb82f52e8487761539f1025be23a500',1,'SimpleLogger']]],
-  ['appendvalues_9',['appendValues',['../classPredict.html#aa4f66963e9147304621efdc131cde807',1,'Predict']]],
-  ['appparameters_10',['AppParameters',['../structAppParameters.html',1,'']]]
+  ['appenderror_9',['appendError',['../classSimpleLogger.html#adf1f7c48e2d7bd636b249e5bef8b4fb5',1,'SimpleLogger']]],
+  ['appendvalues_10',['appendValues',['../classPredict.html#aa4f66963e9147304621efdc131cde807',1,'Predict']]],
+  ['appparameters_11',['AppParameters',['../structAppParameters.html',1,'']]]
 ];
