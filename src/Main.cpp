@@ -1,4 +1,5 @@
 #include "include/SimpleMLP.h"
+#include <cstdlib>
 
 /**
  * @brief main function
@@ -17,11 +18,10 @@ int main(int argc, char *argv[]) {
 
   try {
     int init = smlp->init(argc, argv);
-    if (init == EXIT_FAILURE) {
-      return EXIT_FAILURE;
-    } else if (init == SimpleMLP::EXIT_HELP ||
-               init == SimpleMLP::EXIT_VERSION) {
+    if (init == SimpleMLP::EXIT_HELP || init == SimpleMLP::EXIT_VERSION) {
       return EXIT_SUCCESS;
+    } else if (init != EXIT_SUCCESS) {
+      return init;
     }
 
     smlp->runMode();
