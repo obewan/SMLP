@@ -107,6 +107,12 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> { <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">UnknownKey</a>
+, <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">FailedToOpenFile</a>
+, <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">InvalidJsonFile</a>
+, <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">JsonParsingError</a>
+ }</td></tr>
+<tr class="separator:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a837590fd5310ff5df56ffcf7c394787e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a> { <br />
 &#160;&#160;<a class="el" href="Common_8h.html#a837590fd5310ff5df56ffcf7c394787eaf17d2bb0973eab9d31d811bb7da85373">Predictive</a>
 , <a class="el" href="Common_8h.html#a837590fd5310ff5df56ffcf7c394787eaa9463c9f72315953501239b6c265ecb1">TestOnly</a>
@@ -137,6 +143,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a85fb25f0d9624480b3e21eaeab3fd6ab"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab">errorMessages</a></td></tr>
+<tr class="separator:a85fb25f0d9624480b3e21eaeab3fd6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b94e81f835628646724d1cfe8db1a6a"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a7b94e81f835628646724d1cfe8db1a6a">defaultErrorMessages</a></td></tr>
+<tr class="separator:a7b94e81f835628646724d1cfe8db1a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9aef9742881b9e63b798fa2d7cb93c"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="Common_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a2d9aef9742881b9e63b798fa2d7cb93c">mode_map</a></td></tr>
 <tr class="separator:a2d9aef9742881b9e63b798fa2d7cb93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6e1bc673afac8da9654eab52bae04a5"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="Common_8h.html#ab5512b190eabd5c12e80988e6b4b1c81">EPredictiveMode</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#ad6e1bc673afac8da9654eab52bae04a5">predictive_map</a></td></tr>
@@ -254,6 +264,34 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a2c3e4bb40f36b262a5214e2da2bca9c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c3e4bb40f36b262a5214e2da2bca9c5">&#9670;&nbsp;</a></span>Error</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121"></a>UnknownKey&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5"></a>FailedToOpenFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663"></a>InvalidJsonFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc"></a>JsonParsingError&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a11e1512cb716ac4b2a2d277817ecc56a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a11e1512cb716ac4b2a2d277817ecc56a">&#9670;&nbsp;</a></span>activation_map</h2>
@@ -279,6 +317,48 @@ Variables</h2></td></tr>
 <div class="ttc" id="aCommon_8h_html_a89939c8c374f8b73d6038b7adaee95e7a601049e29a4481e658f6745a54aa3ad9"><div class="ttname"><a href="Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7a601049e29a4481e658f6745a54aa3ad9">EActivationFunction::LReLU</a></div><div class="ttdeci">@ LReLU</div></div>
 <div class="ttc" id="aCommon_8h_html_a89939c8c374f8b73d6038b7adaee95e7acc132a41cab5676334f353a22a0aa5c5"><div class="ttname"><a href="Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7acc132a41cab5676334f353a22a0aa5c5">EActivationFunction::Tanh</a></div><div class="ttdeci">@ Tanh</div></div>
 <div class="ttc" id="aCommon_8h_html_a89939c8c374f8b73d6038b7adaee95e7add10d919fa85cf27fc78c0e06fe0b378"><div class="ttname"><a href="Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7add10d919fa85cf27fc78c0e06fe0b378">EActivationFunction::ReLU</a></div><div class="ttdeci">@ ReLU</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7b94e81f835628646724d1cfe8db1a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b94e81f835628646724d1cfe8db1a6a">&#9670;&nbsp;</a></span>defaultErrorMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>, std::string&gt; defaultErrorMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>, <span class="stringliteral">&quot;Unknown key&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>, <span class="stringliteral">&quot;Failed to open file&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>, <span class="stringliteral">&quot;Invalid JSON file&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JSON parsing error&quot;</span>}}</div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a></div><div class="ttdeci">@ JsonParsingError</div></div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a></div><div class="ttdeci">@ FailedToOpenFile</div></div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a></div><div class="ttdeci">@ UnknownKey</div></div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a></div><div class="ttdeci">@ InvalidJsonFile</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a85fb25f0d9624480b3e21eaeab3fd6ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85fb25f0d9624480b3e21eaeab3fd6ab">&#9670;&nbsp;</a></span>errorMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>, std::string&gt; errorMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>, <span class="stringliteral">&quot;UnknownKey&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>, <span class="stringliteral">&quot;FailedToOpenFile&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>, <span class="stringliteral">&quot;InvalidJsonFile&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JsonParsingError&quot;</span>}}</div>
 </div><!-- fragment -->
 </div>
 </div>

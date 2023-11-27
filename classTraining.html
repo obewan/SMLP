@@ -78,9 +78,9 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acedb50b9e99668d051fa14c46f05db93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#acedb50b9e99668d051fa14c46f05db93">Training</a> ()=default</td></tr>
 <tr class="separator:acedb50b9e99668d051fa14c46f05db93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95eb4102c23aa1611b60ed215de49cab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a95eb4102c23aa1611b60ed215de49cab">Training</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const std::string &amp;file_path, const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;logger)</td></tr>
-<tr class="memdesc:a95eb4102c23aa1611b60ed215de49cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and the file path to training data as arguments.  <a href="classTraining.html#a95eb4102c23aa1611b60ed215de49cab">More...</a><br /></td></tr>
-<tr class="separator:a95eb4102c23aa1611b60ed215de49cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d1907ef0eaf3432f0ac1615ffcce40b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a7d1907ef0eaf3432f0ac1615ffcce40b">Training</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const std::string &amp;file_path, std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt; logger)</td></tr>
+<tr class="memdesc:a7d1907ef0eaf3432f0ac1615ffcce40b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and the file path to training data as arguments.  <a href="classTraining.html#a7d1907ef0eaf3432f0ac1615ffcce40b">More...</a><br /></td></tr>
+<tr class="separator:a7d1907ef0eaf3432f0ac1615ffcce40b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a6039d7eca1aa16057e5b6645e7f4ee57">train</a> (const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;network_params, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params)</td></tr>
 <tr class="memdesc:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method trains the model with the given parameters.  <a href="classTraining.html#a6039d7eca1aa16057e5b6645e7f4ee57">More...</a><br /></td></tr>
 <tr class="separator:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +141,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a95eb4102c23aa1611b60ed215de49cab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95eb4102c23aa1611b60ed215de49cab">&#9670;&nbsp;</a></span>Training() <span class="overload">[2/2]</span></h2>
+<a id="a7d1907ef0eaf3432f0ac1615ffcce40b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d1907ef0eaf3432f0ac1615ffcce40b">&#9670;&nbsp;</a></span>Training() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt;&#160;</td>
           <td class="paramname"><em>logger</em>&#160;</td>
         </tr>
         <tr>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputlayer_554',['OutputLayer',['../Layer_8h.html#a56943a0946e5f15e5e58054b8e7a04a4a500cef5499f984f348ea5eabd57ee667',1,'Layer.h']]]
+  ['lrelu_569',['LReLU',['../Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7a601049e29a4481e658f6745a54aa3ad9',1,'Common.h']]]
 ];

@@ -76,10 +76,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2334cb319c5499942f760319e1bf3279"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#a2334cb319c5499942f760319e1bf3279">Predict</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt; fileparser, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;logger)</td></tr>
-<tr class="separator:a2334cb319c5499942f760319e1bf3279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a187e570256373ec29c0093cb065640aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#a187e570256373ec29c0093cb065640aa">Predict</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;logger)</td></tr>
-<tr class="separator:a187e570256373ec29c0093cb065640aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae61024d30c8b42d286de968fd274feaf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#ae61024d30c8b42d286de968fd274feaf">Predict</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt; fileparser, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt; logger)</td></tr>
+<tr class="separator:ae61024d30c8b42d286de968fd274feaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2603e14b9e707fe673c2a5646f6c509"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#ac2603e14b9e707fe673c2a5646f6c509">Predict</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt; logger)</td></tr>
+<tr class="separator:ac2603e14b9e707fe673c2a5646f6c509"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ea83cf12299b6caac5b23d81b88f938"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#a2ea83cf12299b6caac5b23d81b88f938">predict</a> () const</td></tr>
 <tr class="separator:a2ea83cf12299b6caac5b23d81b88f938"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4f66963e9147304621efdc131cde807"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPredict.html#aa4f66963e9147304621efdc131cde807">appendValues</a> (const std::vector&lt; float &gt; &amp;values, bool roundValues) const</td></tr>
@@ -102,8 +102,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classPredict.html" title="Predict class for predictive operations.">Predict</a> class for predictive operations. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2334cb319c5499942f760319e1bf3279"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2334cb319c5499942f760319e1bf3279">&#9670;&nbsp;</a></span>Predict() <span class="overload">[1/2]</span></h2>
+<a id="ae61024d30c8b42d286de968fd274feaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae61024d30c8b42d286de968fd274feaf">&#9670;&nbsp;</a></span>Predict() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -132,7 +132,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt;&#160;</td>
           <td class="paramname"><em>logger</em>&#160;</td>
         </tr>
         <tr>
@@ -150,8 +150,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a187e570256373ec29c0093cb065640aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a187e570256373ec29c0093cb065640aa">&#9670;&nbsp;</a></span>Predict() <span class="overload">[2/2]</span></h2>
+<a id="ac2603e14b9e707fe673c2a5646f6c509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2603e14b9e707fe673c2a5646f6c509">&#9670;&nbsp;</a></span>Predict() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,7 +174,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &amp;&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt;&#160;</td>
           <td class="paramname"><em>logger</em>&#160;</td>
         </tr>
         <tr>

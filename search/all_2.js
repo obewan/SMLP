@@ -17,5 +17,6 @@ var searchData=
   ['createtesting_29',['createTesting',['../classTraining.html#a010df181591bc10641c51811b1069ade',1,'Training']]],
   ['csv_30',['CSV',['../Common_8h.html#ab5512b190eabd5c12e80988e6b4b1c81acc8d68c551c4a9a6d5313e07de4deafd',1,'Common.h']]],
   ['csv_5fparser_31',['csv_parser',['../classDataFileParser.html#aaa0e44b29696f93b8049bdc52a6483cd',1,'DataFileParser']]],
-  ['current_5fline_5fnumber_32',['current_line_number',['../classDataFileParser.html#ad013955f94ac060e397854bee332cbd2',1,'DataFileParser']]]
+  ['current_5fline_5fnumber_32',['current_line_number',['../classDataFileParser.html#ad013955f94ac060e397854bee332cbd2',1,'DataFileParser']]],
+  ['currentfile_33',['currentFile',['../classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8',1,'SimpleLang']]]
 ];

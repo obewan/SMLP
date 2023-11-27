@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['predictive_555',['Predictive',['../Common_8h.html#a837590fd5310ff5df56ffcf7c394787eaf17d2bb0973eab9d31d811bb7da85373',1,'Common.h']]],
-  ['prelu_556',['PReLU',['../Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7a474e0c94ac3a455d2b98a72feba8fba4',1,'Common.h']]]
+  ['numberandraw_570',['NumberAndRaw',['../Common_8h.html#ab5512b190eabd5c12e80988e6b4b1c81a8a678d827202baf74f57ce223a95ff4d',1,'Common.h']]],
+  ['numberonly_571',['NumberOnly',['../Common_8h.html#ab5512b190eabd5c12e80988e6b4b1c81ae6634b3f3e0f5da6ab274a12812f6f7e',1,'Common.h']]]
 ];

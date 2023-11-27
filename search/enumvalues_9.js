@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['rawonly_557',['RawOnly',['../Common_8h.html#ab5512b190eabd5c12e80988e6b4b1c81a15dbef581f86708d2bc23c6cf8221ec2',1,'Common.h']]],
-  ['relu_558',['ReLU',['../Common_8h.html#a89939c8c374f8b73d6038b7adaee95e7add10d919fa85cf27fc78c0e06fe0b378',1,'Common.h']]]
+  ['outputlayer_572',['OutputLayer',['../Layer_8h.html#a56943a0946e5f15e5e58054b8e7a04a4a500cef5499f984f348ea5eabd57ee667',1,'Layer.h']]]
 ];

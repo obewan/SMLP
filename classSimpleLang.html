@@ -63,6 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classSimpleLang-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SimpleLang Class Reference</div>  </div>
@@ -78,6 +79,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af94f900509702ffd81ba3a0d31648663"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a> (const std::string &amp;key, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={})</td></tr>
 <tr class="memdesc:af94f900509702ffd81ba3a0d31648663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a localized string for a given key from the parsed JSON file.  <a href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">More...</a><br /></td></tr>
 <tr class="separator:af94f900509702ffd81ba3a0d31648663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a2608ad33996160afbf633b7aa5b32"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">get</a> (<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> error) const</td></tr>
+<tr class="memdesc:a54a2608ad33996160afbf633b7aa5b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a string associated with a given error from the i18n file.  <a href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">More...</a><br /></td></tr>
+<tr class="separator:a54a2608ad33996160afbf633b7aa5b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a5c3d6c2c7676c2ecf155b46876837dc8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">currentFile</a> = &quot;&quot;</td></tr>
+<tr class="separator:a5c3d6c2c7676c2ecf155b46876837dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8397f8d1322106b3cd396dc4a93d8353"></a>
@@ -108,7 +117,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="af94f900509702ffd81ba3a0d31648663"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af94f900509702ffd81ba3a0d31648663">&#9670;&nbsp;</a></span>get()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af94f900509702ffd81ba3a0d31648663">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -151,6 +160,57 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Localized string corresponding to the given key. If the key does not exist, returns an empty string. </dd></dl>
+
+</div>
+</div>
+<a id="a54a2608ad33996160afbf633b7aa5b32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a2608ad33996160afbf633b7aa5b32">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SimpleLang::get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a>&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fetches a string associated with a given error from the i18n file. </p>
+<p>This method retrieves the string associated with a given error from the i18n file. If the error does not exist in the i18n file, it returns a default error message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">error</td><td>The error for which to fetch the associated string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string associated with the error if it exists in the i18n file, otherwise a default error message. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a5c3d6c2c7676c2ecf155b46876837dc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c3d6c2c7676c2ecf155b46876837dc8">&#9670;&nbsp;</a></span>currentFile</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SimpleLang::currentFile = &quot;&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

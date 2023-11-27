@@ -78,7 +78,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a084499488f3744cca67e8255a949c4a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#a084499488f3744cca67e8255a949c4a6">SimpleMLP</a> ()</td></tr>
+<tr class="separator:a084499488f3744cca67e8255a949c4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbdd8752f7360e63e2a5f45dd73eb720"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#adbdd8752f7360e63e2a5f45dd73eb720">init</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:adbdd8752f7360e63e2a5f45dd73eb720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise the application.  <a href="classSimpleMLP.html#adbdd8752f7360e63e2a5f45dd73eb720">More...</a><br /></td></tr>
 <tr class="separator:adbdd8752f7360e63e2a5f45dd73eb720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19115101436186097478a7a0edc85532"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#a19115101436186097478a7a0edc85532">predict</a> ()</td></tr>
 <tr class="memdesc:a19115101436186097478a7a0edc85532"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method apply the model on inputs to predict the outputs.  <a href="classSimpleMLP.html#a19115101436186097478a7a0edc85532">More...</a><br /></td></tr>
@@ -116,9 +119,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a3b9ce46a40aacfaf08cda4c0b41902ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classNetworkImportExportJSON.html">NetworkImportExportJSON</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#a3b9ce46a40aacfaf08cda4c0b41902ca">importExportJSON</a></td></tr>
 <tr class="memdesc:a3b9ce46a40aacfaf08cda4c0b41902ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">ImportExportJSON tool.  <a href="classSimpleMLP.html#a3b9ce46a40aacfaf08cda4c0b41902ca">More...</a><br /></td></tr>
 <tr class="separator:a3b9ce46a40aacfaf08cda4c0b41902ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58c316b2c481abe027f5829bc8f8f8d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSimpleLogger.html">SimpleLogger</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#a58c316b2c481abe027f5829bc8f8f8d4">logger</a></td></tr>
-<tr class="memdesc:a58c316b2c481abe027f5829bc8f8f8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple logger.  <a href="classSimpleMLP.html#a58c316b2c481abe027f5829bc8f8f8d4">More...</a><br /></td></tr>
-<tr class="separator:a58c316b2c481abe027f5829bc8f8f8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a316e39f4579e72639b002799bb4539ca"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classSimpleLogger.html">SimpleLogger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#a316e39f4579e72639b002799bb4539ca">logger</a> = nullptr</td></tr>
+<tr class="memdesc:a316e39f4579e72639b002799bb4539ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple logger.  <a href="classSimpleMLP.html#a316e39f4579e72639b002799bb4539ca">More...</a><br /></td></tr>
+<tr class="separator:a316e39f4579e72639b002799bb4539ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8eafedb6a4d894475123dfe4330394f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classSimpleLang.html">SimpleLang</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleMLP.html#af8eafedb6a4d894475123dfe4330394f">lang</a> = nullptr</td></tr>
+<tr class="memdesc:af8eafedb6a4d894475123dfe4330394f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple i18n lang.  <a href="classSimpleMLP.html#af8eafedb6a4d894475123dfe4330394f">More...</a><br /></td></tr>
+<tr class="separator:af8eafedb6a4d894475123dfe4330394f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -129,7 +135,33 @@ Static Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main class to train and test the neural network after parsing the arguments. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a084499488f3744cca67e8255a949c4a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a084499488f3744cca67e8255a949c4a6">&#9670;&nbsp;</a></span>SimpleMLP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SimpleMLP::SimpleMLP </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7680a2077247faa89faf4fb903d8bc0f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7680a2077247faa89faf4fb903d8bc0f">&#9670;&nbsp;</a></span>exportNetwork()</h2>
 
@@ -174,6 +206,16 @@ Static Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initialise the application. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td>command line arguments counter </td></tr>
+    <tr><td class="paramname">argv</td><td>command line arguments array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int error code, EXIT_SUCCESS (0) if success </dd></dl>
 
 </div>
 </div>
@@ -368,14 +410,30 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a58c316b2c481abe027f5829bc8f8f8d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58c316b2c481abe027f5829bc8f8f8d4">&#9670;&nbsp;</a></span>logger</h2>
+<a id="af8eafedb6a4d894475123dfe4330394f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8eafedb6a4d894475123dfe4330394f">&#9670;&nbsp;</a></span>lang</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classSimpleLogger.html">SimpleLogger</a> SimpleMLP::logger</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classSimpleLang.html">SimpleLang</a>&gt; SimpleMLP::lang = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A simple i18n lang. </p>
+
+</div>
+</div>
+<a id="a316e39f4579e72639b002799bb4539ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a316e39f4579e72639b002799bb4539ca">&#9670;&nbsp;</a></span>logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classSimpleLogger.html">SimpleLogger</a>&gt; SimpleMLP::logger = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">
