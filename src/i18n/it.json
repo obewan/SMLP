@@ -20,5 +20,10 @@
     "-q,--output_activation_alpha": "Il valore del parametro alpha per le funzioni di attivazione ELU e PReLU sul livello di output",
     "-x,--disable_stdin": "Disabilita l'input stdin come pipe di comando e test interattivi",
     "-v,--version": "Mostra la versione corrente",
-    "-w,--verbose": "Log dettagliati"
+    "-w,--verbose": "Log dettagliati",
+
+    "UnknownKey": "Chiave sconosciuta",
+    "FailedToOpenFile": "Impossibile aprire il file",
+    "InvalidJsonFile": "File JSON non valido",
+    "JsonParsingError": "Errore di parsing JSON"
 }

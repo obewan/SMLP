@@ -22,10 +22,19 @@
  */
 class SimpleMLP {
 public:
-  int init(int argc, char **argv);
+  SimpleMLP() { logger = std::make_shared<SimpleLogger>(); }
 
   static const int EXIT_HELP = 2;
   static const int EXIT_VERSION = 3;
+
+  /**
+   * @brief Initialise the application
+   *
+   * @param argc command line arguments counter
+   * @param argv command line arguments array
+   * @return int error code, EXIT_SUCCESS (0) if success
+   */
+  int init(int argc, char **argv);
 
   /**
    * @brief This method apply the model on inputs to predict the outputs
@@ -89,10 +98,16 @@ public:
   /**
    * @brief A simple logger
    */
-  SimpleLogger logger;
+  std::shared_ptr<SimpleLogger> logger = nullptr;
+
+  /**
+   * @brief A simple i18n lang
+   *
+   */
+  std::shared_ptr<SimpleLang> lang = nullptr;
 
 private:
-  int parseArgs(int argc, char **argv, SimpleLang &lang);
+  int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;
   void ConfigSettings(const SimpleConfig &config);
   void importOrBuildNetwork();

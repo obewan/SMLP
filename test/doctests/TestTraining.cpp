@@ -5,7 +5,7 @@
 #include <memory>
 
 TEST_CASE("Testing the Training class") {
-  SimpleLogger logger;
+  auto logger = std::make_shared<SimpleLogger>();
   SUBCASE("Test Constructor") {
     CHECK_NOTHROW({
       auto training = new Training(nullptr, "", logger);

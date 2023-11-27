@@ -22,12 +22,12 @@ class Predict {
 public:
   Predict(std::shared_ptr<Network> network,
           std::shared_ptr<DataFileParser> fileparser,
-          const AppParameters &app_params, const SimpleLogger &logger)
+          const AppParameters &app_params, std::shared_ptr<SimpleLogger> logger)
       : network_(network), fileParser_(fileparser), app_params_(app_params),
         logger_(logger) {}
 
   Predict(std::shared_ptr<Network> network, const AppParameters &app_params,
-          const SimpleLogger &logger)
+          std::shared_ptr<SimpleLogger> logger)
       : network_(network),
         fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
         app_params_(app_params), logger_(logger) {}
@@ -75,5 +75,5 @@ private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   const AppParameters &app_params_;
-  const SimpleLogger &logger_;
+  std::shared_ptr<SimpleLogger> logger_ = nullptr;
 };

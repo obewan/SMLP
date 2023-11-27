@@ -7,7 +7,7 @@
 
 TEST_CASE("Testing the Predict class") {
   SUBCASE("Test constructor") {
-    CHECK_NOTHROW(Predict(nullptr, {}, SimpleLogger()));
+    CHECK_NOTHROW(Predict(nullptr, {}, std::make_shared<SimpleLogger>()));
   }
 
   SUBCASE("Test predict") {
@@ -26,7 +26,7 @@ TEST_CASE("Testing the Predict class") {
     CHECK_NOTHROW({
       network =
           std::shared_ptr<Network>(importExportJSON.importModel(app_params));
-      Predict predict(network, app_params, SimpleLogger());
+      Predict predict(network, app_params, std::make_shared<SimpleLogger>());
       predict.predict();
     });
   }

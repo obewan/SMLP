@@ -63,7 +63,7 @@ public:
    * @param logger
    */
   Training(std::shared_ptr<Network> network, const std::string &file_path,
-           const SimpleLogger &logger)
+           std::shared_ptr<SimpleLogger> logger)
       : network_(network),
         fileParser_(std::make_shared<DataFileParser>(file_path)),
         logger_(logger) {}
@@ -142,5 +142,5 @@ private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
-  SimpleLogger logger_;
+  std::shared_ptr<SimpleLogger> logger_ = nullptr;
 };

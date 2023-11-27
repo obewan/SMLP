@@ -19,6 +19,25 @@
  */
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
+enum class Error {
+  UnknownKey,
+  FailedToOpenFile,
+  InvalidJsonFile,
+  JsonParsingError
+};
+
+const std::map<Error, std::string> errorMessages = {
+    {Error::UnknownKey, "UnknownKey"},
+    {Error::FailedToOpenFile, "FailedToOpenFile"},
+    {Error::InvalidJsonFile, "InvalidJsonFile"},
+    {Error::JsonParsingError, "JsonParsingError"}};
+
+const std::map<Error, std::string> defaultErrorMessages = {
+    {Error::UnknownKey, "Unknown key"},
+    {Error::FailedToOpenFile, "Failed to open file"},
+    {Error::InvalidJsonFile, "Invalid JSON file"},
+    {Error::JsonParsingError, "JSON parsing error"}};
+
 enum class EMode {
   Predictive,
   TestOnly,

@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "../../json/include/json.hpp"
+#include "Common.h"
 #include "exception/SimpleLangException.h"
 #include <filesystem>
 #include <fstream>
@@ -19,7 +20,9 @@ using json = nlohmann::json;
 
 class SimpleLang {
 public:
-  explicit SimpleLang(const std::string &filename) { parseFile(filename); };
+  explicit SimpleLang(const std::string &filename) : currentFile(filename) {
+    parseFile(filename);
+  };
 
   /**
    * @brief Fetches a localized string for a given key from the parsed JSON
@@ -50,9 +53,32 @@ public:
       }
       return str;
     } else {
-      return "";
+      return get(Error::UnknownKey) + ": " + key;
     }
   };
+
+  /**
+   * @brief Fetches a string associated with a given error from the i18n file.
+   *
+   * This method retrieves the string associated with a given error from the
+   * i18n file. If the error does not exist in the i18n file, it returns a
+   * default error message.
+   *
+   * @param error The error for which to fetch the associated string.
+   * @return The string associated with the error if it exists in the i18n file,
+   * otherwise a default error message.
+   */
+  std::string get(Error error) const {
+    auto it = strings.find(errorMessages.at(error));
+    if (it != strings.end()) {
+      return it->second;
+    } else {
+      // Fallback error message
+      return defaultErrorMessages.at(error);
+    }
+  }
+
+  std::string currentFile = "";
 
 private:
   void parseFile(const std::string &filename) {
@@ -64,13 +90,13 @@ private:
     json json_model;
 
     if (!file.is_open()) {
-      throw SimpleLangException("Failed to open file for reading: " +
+      throw SimpleLangException(get(Error::FailedToOpenFile) + ": " +
                                 path_in_ext);
     }
 
     if (!json::accept(file)) {
       file.close();
-      throw SimpleLangException("JSON parsing error: invalid JSON file:" +
+      throw SimpleLangException(get(Error::InvalidJsonFile) + ": " +
                                 path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
@@ -85,7 +111,8 @@ private:
 
     } catch (const json::parse_error &e) {
       file.close();
-      throw SimpleLangException("JSON parsing error: " + std::string(e.what()));
+      throw SimpleLangException(get(Error::JsonParsingError) + ": " +
+                                std::string(e.what()));
     }
   }
   std::map<std::string, std::string, std::less<>> strings;

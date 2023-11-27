@@ -3,9 +3,10 @@
 #include "SimpleLogger.h"
 #include "doctest.h"
 #include <math.h>
+#include <memory>
 
 TEST_CASE("Testing the SimpleLogger class") {
-  const SimpleLogger logger;
+  auto logger = std::make_shared<SimpleLogger>();
   const Predict predict(
       nullptr, {.predictive_mode = EPredictiveMode::NumberAndRaw}, logger);
   float f = 0.1234567890123456789f;
@@ -13,14 +14,14 @@ TEST_CASE("Testing the SimpleLogger class") {
 
   // CHECK THE LOG OUTPUT
   SUBCASE("Test precision") {
-    logger.out("before: ", std::round(f), " [", f, "]");
-    logger.setPrecision(3);
-    logger.out("after: ", std::round(f), " [", f, "]");
-    logger.append("after2: ", std::round(f));
-    logger.append(" [");
-    logger.append(f);
-    logger.append("]");
-    logger.endl();
+    logger->out("before: ", std::round(f), " [", f, "]");
+    logger->setPrecision(3);
+    logger->out("after: ", std::round(f), " [", f, "]");
+    logger->append("after2: ", std::round(f));
+    logger->append(" [");
+    logger->append(f);
+    logger->append("]");
+    logger->endl();
   }
 
   // CHECK THE LOG OUTPUT

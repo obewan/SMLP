@@ -20,5 +20,10 @@
     "-q,--output_activation_alpha": "El valor del parámetro alfa para las funciones de activación ELU y PReLU en la capa de salida",
     "-x,--disable_stdin": "Deshabilitar la entrada stdin como tuberías de comando (pipes) y pruebas interactivas",
     "-v,--version": "Mostrar la versión actual",
-    "-w,--verbose": "Registros detallados"
+    "-w,--verbose": "Registros detallados",
+
+    "UnknownKey": "Clave desconocida",
+    "FailedToOpenFile": "Error al abrir el archivo",
+    "InvalidJsonFile": "Archivo JSON no válido",
+    "JsonParsingError": "Error de análisis JSON"
 }

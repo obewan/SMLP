@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
       smlp->exportNetwork();
     }
   } catch (const std::exception &e) {
-    smlp->logger.error(e.what());
+    smlp->logger->error(e.what());
     return EXIT_FAILURE;
   }
 
