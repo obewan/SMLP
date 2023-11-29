@@ -58,9 +58,9 @@ The API documentation can be found on [obewan.github.io/SMLP](https://obewan.git
    - TrainThenTest: Train and then test the network (default mode).
    - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
 5. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
-   - `lang_file`: The language file to use for the help. Currently available, by alphabetic order:
+   - `lang_file`: The language file to use, for the help and other messages. Currently available, by alphabetic order:
      - `i18n/de.json` (german)
-     - `i18n/en.json` (english)
+     - `i18n/en.json` (english - default)
      - `i18n/es.json` (spanish)
      - `i18n/fr.json` (french)
      - `i18n/it.json` (italian)

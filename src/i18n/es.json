@@ -25,5 +25,6 @@
     "UnknownKey": "Clave desconocida",
     "FailedToOpenFile": "Error al abrir el archivo",
     "InvalidJsonFile": "Archivo JSON no válido",
-    "JsonParsingError": "Error de análisis JSON"
+    "JsonParsingError": "Error de análisis JSON",
+    "InvalidTotalInput": "Número inválido de valores de entrada"
 }

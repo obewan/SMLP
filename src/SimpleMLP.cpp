@@ -63,7 +63,7 @@ int SimpleMLP::init(int argc, char **argv) {
     }
 
     SimpleConfig config(app_params.config_file);
-    lang = std::make_shared<SimpleLang>(config.lang_file);
+    SimpleLang::getInstance().parseFile(config.lang_file);
 
     if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
       return init;
@@ -188,6 +188,7 @@ std::string SimpleMLP::showInlineHeader() const {
 int SimpleMLP::parseArgs(int argc, char **argv) {
   CLI::App app{app_params.title};
   bool version = false;
+  const auto &lang = SimpleLang::getInstance();
 
   // valid a parent path, if there is a path, that include a futur filename (not
   // like CLI::ExistingPath, CLI::ExistingDirectory or CLI::ExistingFile)
@@ -199,24 +200,24 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
     return std::string();
   };
 
-  auto addOption = [&app, this](const auto &name, auto &param,
-                                auto... validators) {
-    auto option = app.add_option(name, param, lang->get(name));
+  auto addOption = [&app, &lang](const auto &name, auto &param,
+                                 auto... validators) {
+    auto option = app.add_option(name, param, lang.get(name));
     option->default_val(param);
     (option->check(validators), ...);
     return option;
   };
 
-  auto addOptionTransform = [&app, this](const auto &name, auto &param,
-                                         auto transform) {
-    auto option = app.add_option(name, param, lang->get(name));
+  auto addOptionTransform = [&app, &lang](const auto &name, auto &param,
+                                          auto transform) {
+    auto option = app.add_option(name, param, lang.get(name));
     option->default_val(param);
     option->transform(transform);
     return option;
   };
 
-  auto addFlag = [&app, this](const auto &name, auto &param) {
-    return app.add_flag(name, param, lang->get(name));
+  auto addFlag = [&app, &lang](const auto &name, auto &param) {
+    return app.add_flag(name, param, lang.get(name));
   };
 
   addOption("-i,--import_network", app_params.network_to_import,

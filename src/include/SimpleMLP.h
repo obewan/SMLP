@@ -100,12 +100,6 @@ public:
    */
   std::shared_ptr<SimpleLogger> logger = nullptr;
 
-  /**
-   * @brief A simple i18n lang
-   *
-   */
-  std::shared_ptr<SimpleLang> lang = nullptr;
-
 private:
   int parseArgs(int argc, char **argv);
   std::string showInlineHeader() const;

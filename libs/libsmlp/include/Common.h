@@ -10,6 +10,7 @@
 #pragma once
 #include <cstddef>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,20 +24,23 @@ enum class Error {
   UnknownKey,
   FailedToOpenFile,
   InvalidJsonFile,
-  JsonParsingError
+  JsonParsingError,
+  InvalidTotalInput,
 };
 
 const std::map<Error, std::string> errorMessages = {
     {Error::UnknownKey, "UnknownKey"},
     {Error::FailedToOpenFile, "FailedToOpenFile"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
-    {Error::JsonParsingError, "JsonParsingError"}};
+    {Error::JsonParsingError, "JsonParsingError"},
+    {Error::InvalidTotalInput, "InvalidTotalInput"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
     {Error::UnknownKey, "Unknown key"},
     {Error::FailedToOpenFile, "Failed to open file"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
-    {Error::JsonParsingError, "JSON parsing error"}};
+    {Error::JsonParsingError, "JSON parsing error"},
+    {Error::InvalidTotalInput, "Invalid number of input values"}};
 
 enum class EMode {
   Predictive,

@@ -20,9 +20,12 @@ using json = nlohmann::json;
 
 class SimpleLang {
 public:
-  explicit SimpleLang(const std::string &filename) : currentFile(filename) {
-    parseFile(filename);
-  };
+  static SimpleLang &getInstance() {
+    static SimpleLang instance;
+    return instance;
+  }
+  SimpleLang(SimpleLang const &) = delete;
+  void operator=(SimpleLang const &) = delete;
 
   /**
    * @brief Fetches a localized string for a given key from the parsed JSON
@@ -37,9 +40,9 @@ public:
    * @return Localized string corresponding to the given key. If the key does
    * not exist, returns an empty string.
    */
-  std::string
-  get(const std::string &key,
-      const std::map<std::string, std::string, std::less<>> &variables = {}) {
+  std::string get(const std::string &key,
+                  const std::map<std::string, std::string, std::less<>>
+                      &variables = {}) const {
     auto it = strings.find(key);
     if (it != strings.end()) {
       std::string str = it->second;
@@ -78,10 +81,9 @@ public:
     }
   }
 
-  std::string currentFile = "";
-
-private:
-  void parseFile(const std::string &filename) {
+  void parseFile(const std::string &filename) const {
+    strings.clear();
+    currentFile = filename;
     std::string path_in_ext = filename;
     if (std::filesystem::path p(path_in_ext); p.parent_path().empty()) {
       path_in_ext = "./" + path_in_ext;
@@ -115,5 +117,11 @@ private:
                                 std::string(e.what()));
     }
   }
-  std::map<std::string, std::string, std::less<>> strings;
+
+  std::string getCurrentFile() const { return currentFile; }
+
+private:
+  SimpleLang() = default;
+  mutable std::map<std::string, std::string, std::less<>> strings;
+  mutable std::string currentFile = "";
 };
