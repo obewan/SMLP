@@ -22,6 +22,13 @@ enum class LogLevel { INFO, WARN, ERROR, DEBUG };
  */
 class SimpleLogger {
 public:
+  const static SimpleLogger &getIntance() {
+    static SimpleLogger instance;
+    return instance;
+  }
+  SimpleLogger(SimpleLogger const &) = delete;
+  void operator=(SimpleLogger const &) = delete;
+
   /**
    * @brief Logs messages with a timestamp and log level.
    *
@@ -266,6 +273,7 @@ public:
   }
 
 private:
+  SimpleLogger() = default;
   std::streamsize default_precision = std::cout.precision();
   mutable std::streamsize current_precision = std::cout.precision();
 };

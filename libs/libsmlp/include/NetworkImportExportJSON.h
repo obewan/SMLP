@@ -29,8 +29,6 @@ using json = nlohmann::json;
  */
 class NetworkImportExportJSON {
 public:
-  void setLogger(std::shared_ptr<SimpleLogger> logger) { logger_ = logger; }
-
   /**
    * @brief Parse a json file into a network model.
    *
@@ -38,6 +36,8 @@ public:
    * @return Network*
    */
   Network *importModel(const AppParameters &app_params) {
+    const auto &logger = SimpleLogger::getIntance();
+
     if (app_params.network_to_import.empty()) {
       throw ImportExportException("Missing file to import.");
     }
@@ -66,10 +66,10 @@ public:
       json_model = json::parse(file);
 
       if (std::string jversion = json_model["version"];
-          logger_ && jversion != app_params.version) {
-        logger_->warn("Your model version (", jversion,
-                      ") is not the same as current version (",
-                      app_params.version, ")");
+          jversion != app_params.version) {
+        logger.warn("Your model version (", jversion,
+                    ") is not the same as current version (",
+                    app_params.version, ")");
       }
 
       // Create a new Network object and deserialize the JSON data into it.
@@ -222,7 +222,4 @@ public:
     file << json_network.dump(2);
     file.close();
   }
-
-private:
-  std::shared_ptr<SimpleLogger> logger_ = nullptr;
 };

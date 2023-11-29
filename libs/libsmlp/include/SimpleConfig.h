@@ -9,7 +9,6 @@
  */
 #pragma once
 #include "../../json/include/json.hpp"
-#include "SimpleLogger.h"
 #include "exception/SimpleConfigException.h"
 #include <filesystem>
 #include <fstream>

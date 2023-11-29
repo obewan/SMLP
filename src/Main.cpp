@@ -1,3 +1,4 @@
+#include "SimpleLogger.h"
 #include "include/SimpleMLP.h"
 #include <cstdlib>
 
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]) {
       smlp->exportNetwork();
     }
   } catch (const std::exception &e) {
-    smlp->logger->error(e.what());
+    SimpleLogger::getIntance().error(e.what());
     return EXIT_FAILURE;
   }
 

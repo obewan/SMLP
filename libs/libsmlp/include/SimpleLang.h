@@ -20,7 +20,7 @@ using json = nlohmann::json;
 
 class SimpleLang {
 public:
-  static SimpleLang &getInstance() {
+  const static SimpleLang &getInstance() {
     static SimpleLang instance;
     return instance;
   }

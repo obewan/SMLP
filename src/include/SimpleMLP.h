@@ -10,8 +10,6 @@
 #pragma once
 #include "NetworkImportExportJSON.h"
 #include "SimpleConfig.h"
-#include "SimpleLang.h"
-#include "SimpleLogger.h"
 #include <memory>
 #include <string>
 
@@ -22,7 +20,7 @@
  */
 class SimpleMLP {
 public:
-  SimpleMLP() { logger = std::make_shared<SimpleLogger>(); }
+  SimpleMLP() = default;
 
   static const int EXIT_HELP = 2;
   static const int EXIT_VERSION = 3;
@@ -94,11 +92,6 @@ public:
    * @brief ImportExportJSON tool.
    */
   NetworkImportExportJSON importExportJSON;
-
-  /**
-   * @brief A simple logger
-   */
-  std::shared_ptr<SimpleLogger> logger = nullptr;
 
 private:
   int parseArgs(int argc, char **argv);

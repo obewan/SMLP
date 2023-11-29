@@ -1,6 +1,8 @@
 #include "Predict.h"
 #include "Common.h"
+#include "SimpleLogger.h"
 #include "exception/PredictException.h"
+#include <iostream>
 #include <math.h>
 
 void Predict::predict() const {
@@ -48,43 +50,45 @@ void Predict::appendValues(const std::vector<float> &values,
   };
 
   if (!values.empty()) {
-    logger_->append(roundValues ? round(values.front())
-                                : truncZero(values.front()));
+    const auto &logger = SimpleLogger::getIntance();
+    logger.append(roundValues ? round(values.front())
+                              : truncZero(values.front()));
     for (auto it = std::next(values.begin()); it != values.end(); ++it) {
-      logger_->append(",", roundValues ? round(*it) : truncZero(*it));
+      logger.append(",", roundValues ? round(*it) : truncZero(*it));
     }
   }
 }
 
 void Predict::showOutput(const std::vector<float> &inputs,
                          const std::vector<float> &predicteds) const {
-  logger_->setPrecision(3);
+  const auto &logger = SimpleLogger::getIntance();
+  logger.setPrecision(3);
   switch (app_params_.predictive_mode) {
   case EPredictiveMode::CSV: {
     appendValues(app_params_.output_at_end ? inputs : predicteds,
                  !app_params_.output_at_end);
-    logger_->append(",");
+    logger.append(",");
     appendValues(app_params_.output_at_end ? predicteds : inputs,
                  app_params_.output_at_end);
-    logger_->endl();
+    logger.endl();
   } break;
   case EPredictiveMode::NumberAndRaw: {
     appendValues(predicteds, true);
-    logger_->append(" [");
+    logger.append(" [");
     appendValues(predicteds, false);
-    logger_->out("]");
+    logger.out("]");
   } break;
   case EPredictiveMode::NumberOnly: {
     appendValues(predicteds, true);
-    logger_->endl();
+    logger.endl();
   } break;
   case EPredictiveMode::RawOnly: {
     appendValues(predicteds, false);
-    logger_->endl();
+    logger.endl();
   } break;
   default:
-    logger_->resetPrecision();
+    logger.resetPrecision();
     throw PredictException("Unimplemented predictive mode");
   }
-  logger_->resetPrecision();
+  logger.resetPrecision();
 }
