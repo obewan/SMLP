@@ -83,96 +83,107 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classSimpleLang.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSimpleLang.html">SimpleLang</a> {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a8397f8d1322106b3cd396dc4a93d8353">   23</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classSimpleLang.html#a8397f8d1322106b3cd396dc4a93d8353">SimpleLang</a>(<span class="keyword">const</span> std::string &amp;filename) : <a class="code" href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">currentFile</a>(filename) {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    parseFile(filename);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  };</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  std::string</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">   41</a></span>&#160;  <a class="code" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a>(<span class="keyword">const</span> std::string &amp;key,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <span class="keyword">const</span> std::map&lt;std::string, std::string, std::less&lt;&gt;&gt; &amp;variables = {}) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">auto</span> it = strings.find(key);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">if</span> (it != strings.end()) {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      std::string str = it-&gt;second;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[varkey, varval] : variables) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        std::string varKey = <span class="stringliteral">&quot;%%&quot;</span> + varkey + <span class="stringliteral">&quot;%%&quot;</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">size_t</span> start_pos = 0;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">while</span> ((start_pos = str.find(varKey, start_pos)) != std::string::npos) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;          str.replace(start_pos, varKey.length(), varval);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;          start_pos += varval.length();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      }</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keywordflow">return</span> str;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>) + <span class="stringliteral">&quot;: &quot;</span> + key;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  };</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">   71</a></span>&#160;  std::string <a class="code" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> error)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">auto</span> it = strings.find(<a class="code" href="Common_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab">errorMessages</a>.at(error));</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">if</span> (it != strings.end()) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordflow">return</span> it-&gt;second;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="comment">// Fallback error message</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="Common_8h.html#a7b94e81f835628646724d1cfe8db1a6a">defaultErrorMessages</a>.at(error);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">   81</a></span>&#160;  std::string <a class="code" href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">currentFile</a> = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> parseFile(<span class="keyword">const</span> std::string &amp;filename) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::string path_in_ext = filename;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">if</span> (std::filesystem::path p(path_in_ext); p.parent_path().empty()) {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      path_in_ext = <span class="stringliteral">&quot;./&quot;</span> + path_in_ext;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    std::ifstream file(path_in_ext);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="NetworkImportExportJSON_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a> json_model;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">if</span> (!file.is_open()) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                                path_in_ext);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">if</span> (!json::accept(file)) {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      file.close();</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                                path_in_ext);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    file.seekg(0, std::ifstream::beg);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      json_model = json::parse(file);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = json_model.begin(); it != json_model.end(); ++it) {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        strings[it.key()] = it.value();</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      file.close();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> json::parse_error &amp;e) {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      file.close();</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                                std::string(e.what()));</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  std::map&lt;std::string, std::string, std::less&lt;&gt;&gt; strings;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;};</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a74e7b00d0734616c113a28fb39775301">   23</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classSimpleLang.html">SimpleLang</a> &amp;<a class="code" href="classSimpleLang.html#a74e7b00d0734616c113a28fb39775301">getInstance</a>() {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <a class="code" href="classSimpleLang.html">SimpleLang</a> instance;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordflow">return</span> instance;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  }</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classSimpleLang.html#abaed79421962753e9fa8ee6bf1847bd2">   27</a></span>&#160;  <a class="code" href="classSimpleLang.html#abaed79421962753e9fa8ee6bf1847bd2">SimpleLang</a>(<a class="code" href="classSimpleLang.html">SimpleLang</a> <span class="keyword">const</span> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classSimpleLang.html#aa5a15fa64ca30299e12d14109c9e89d4">   28</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classSimpleLang.html#aa5a15fa64ca30299e12d14109c9e89d4">operator=</a>(<a class="code" href="classSimpleLang.html">SimpleLang</a> <span class="keyword">const</span> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">   43</a></span>&#160;  std::string <a class="code" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a>(<span class="keyword">const</span> std::string &amp;key,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                  <span class="keyword">const</span> std::map&lt;std::string, std::string, std::less&lt;&gt;&gt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                      &amp;variables = {}) <span class="keyword">const</span> {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">auto</span> it = strings.find(key);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordflow">if</span> (it != strings.end()) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      std::string str = it-&gt;second;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[varkey, varval] : variables) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::string varKey = <span class="stringliteral">&quot;%%&quot;</span> + varkey + <span class="stringliteral">&quot;%%&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">size_t</span> start_pos = 0;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordflow">while</span> ((start_pos = str.find(varKey, start_pos)) != std::string::npos) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;          str.replace(start_pos, varKey.length(), varval);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;          start_pos += varval.length();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      <span class="keywordflow">return</span> str;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>) + <span class="stringliteral">&quot;: &quot;</span> + key;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  };</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">   74</a></span>&#160;  std::string <a class="code" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> error)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">auto</span> it = strings.find(<a class="code" href="Common_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab">errorMessages</a>.at(error));</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">if</span> (it != strings.end()) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      <span class="keywordflow">return</span> it-&gt;second;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="comment">// Fallback error message</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="Common_8h.html#a7b94e81f835628646724d1cfe8db1a6a">defaultErrorMessages</a>.at(error);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    }</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a95f0fdd9c088414034dcd33bd9faa28e">   84</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classSimpleLang.html#a95f0fdd9c088414034dcd33bd9faa28e">parseFile</a>(<span class="keyword">const</span> std::string &amp;filename)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    strings.clear();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    currentFile = filename;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    std::string path_in_ext = filename;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordflow">if</span> (std::filesystem::path p(path_in_ext); p.parent_path().empty()) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      path_in_ext = <span class="stringliteral">&quot;./&quot;</span> + path_in_ext;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::ifstream file(path_in_ext);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="NetworkImportExportJSON_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a> json_model;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">if</span> (!file.is_open()) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                                path_in_ext);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span> (!json::accept(file)) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      file.close();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                                path_in_ext);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    file.seekg(0, std::ifstream::beg);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      json_model = json::parse(file);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = json_model.begin(); it != json_model.end(); ++it) {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        strings[it.key()] = it.value();</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      file.close();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    } <span class="keywordflow">catch</span> (<span class="keyword">const</span> json::parse_error &amp;e) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      file.close();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classSimpleLangException.html">SimpleLangException</a>(<a class="code" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a>(<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>) + <span class="stringliteral">&quot;: &quot;</span> +</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                std::string(e.what()));</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classSimpleLang.html#a03ac520b7606b217da9bb874447bc633">  121</a></span>&#160;  std::string <a class="code" href="classSimpleLang.html#a03ac520b7606b217da9bb874447bc633">getCurrentFile</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> currentFile; }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <a class="code" href="classSimpleLang.html">SimpleLang</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="keyword">mutable</span> std::map&lt;std::string, std::string, std::less&lt;&gt;&gt; strings;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keyword">mutable</span> std::string currentFile = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;};</div>
 <div class="ttc" id="aCommon_8h_html"><div class="ttname"><a href="Common_8h.html">Common.h</a></div><div class="ttdoc">Common tools and objects.</div></div>
-<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a></div><div class="ttdeci">Error</div><div class="ttdef"><b>Definition:</b> Common.h:22</div></div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a></div><div class="ttdeci">Error</div><div class="ttdef"><b>Definition:</b> Common.h:23</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a></div><div class="ttdeci">@ JsonParsingError</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a></div><div class="ttdeci">@ FailedToOpenFile</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a></div><div class="ttdeci">@ UnknownKey</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a></div><div class="ttdeci">@ InvalidJsonFile</div></div>
-<div class="ttc" id="aCommon_8h_html_a7b94e81f835628646724d1cfe8db1a6a"><div class="ttname"><a href="Common_8h.html#a7b94e81f835628646724d1cfe8db1a6a">defaultErrorMessages</a></div><div class="ttdeci">const std::map&lt; Error, std::string &gt; defaultErrorMessages</div><div class="ttdef"><b>Definition:</b> Common.h:35</div></div>
-<div class="ttc" id="aCommon_8h_html_a85fb25f0d9624480b3e21eaeab3fd6ab"><div class="ttname"><a href="Common_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab">errorMessages</a></div><div class="ttdeci">const std::map&lt; Error, std::string &gt; errorMessages</div><div class="ttdef"><b>Definition:</b> Common.h:29</div></div>
+<div class="ttc" id="aCommon_8h_html_a7b94e81f835628646724d1cfe8db1a6a"><div class="ttname"><a href="Common_8h.html#a7b94e81f835628646724d1cfe8db1a6a">defaultErrorMessages</a></div><div class="ttdeci">const std::map&lt; Error, std::string &gt; defaultErrorMessages</div><div class="ttdef"><b>Definition:</b> Common.h:38</div></div>
+<div class="ttc" id="aCommon_8h_html_a85fb25f0d9624480b3e21eaeab3fd6ab"><div class="ttname"><a href="Common_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab">errorMessages</a></div><div class="ttdeci">const std::map&lt; Error, std::string &gt; errorMessages</div><div class="ttdef"><b>Definition:</b> Common.h:31</div></div>
 <div class="ttc" id="aNetworkImportExportJSON_8h_html_ab701e3ac61a85b337ec5c1abaad6742d"><div class="ttname"><a href="NetworkImportExportJSON_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a></div><div class="ttdeci">nlohmann::json json</div><div class="ttdef"><b>Definition:</b> NetworkImportExportJSON.h:23</div></div>
 <div class="ttc" id="aSimpleLangException_8h_html"><div class="ttname"><a href="SimpleLangException_8h.html">SimpleLangException.h</a></div></div>
 <div class="ttc" id="aSimpleLang_8h_html_ab701e3ac61a85b337ec5c1abaad6742d"><div class="ttname"><a href="SimpleLang_8h.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a></div><div class="ttdeci">nlohmann::json json</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:19</div></div>
 <div class="ttc" id="aclassSimpleLangException_html"><div class="ttname"><a href="classSimpleLangException.html">SimpleLangException</a></div><div class="ttdoc">A custom exception class that inherits from std::exception. This class is thrown when there are issue...</div><div class="ttdef"><b>Definition:</b> SimpleLangException.h:9</div></div>
 <div class="ttc" id="aclassSimpleLang_html"><div class="ttname"><a href="classSimpleLang.html">SimpleLang</a></div><div class="ttdef"><b>Definition:</b> SimpleLang.h:21</div></div>
-<div class="ttc" id="aclassSimpleLang_html_a54a2608ad33996160afbf633b7aa5b32"><div class="ttname"><a href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">SimpleLang::get</a></div><div class="ttdeci">std::string get(Error error) const</div><div class="ttdoc">Fetches a string associated with a given error from the i18n file.</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:71</div></div>
-<div class="ttc" id="aclassSimpleLang_html_a5c3d6c2c7676c2ecf155b46876837dc8"><div class="ttname"><a href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">SimpleLang::currentFile</a></div><div class="ttdeci">std::string currentFile</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:81</div></div>
-<div class="ttc" id="aclassSimpleLang_html_a8397f8d1322106b3cd396dc4a93d8353"><div class="ttname"><a href="classSimpleLang.html#a8397f8d1322106b3cd396dc4a93d8353">SimpleLang::SimpleLang</a></div><div class="ttdeci">SimpleLang(const std::string &amp;filename)</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:23</div></div>
-<div class="ttc" id="aclassSimpleLang_html_af94f900509702ffd81ba3a0d31648663"><div class="ttname"><a href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">SimpleLang::get</a></div><div class="ttdeci">std::string get(const std::string &amp;key, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={})</div><div class="ttdoc">Fetches a localized string for a given key from the parsed JSON file.</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:41</div></div>
+<div class="ttc" id="aclassSimpleLang_html_a03ac520b7606b217da9bb874447bc633"><div class="ttname"><a href="classSimpleLang.html#a03ac520b7606b217da9bb874447bc633">SimpleLang::getCurrentFile</a></div><div class="ttdeci">std::string getCurrentFile() const</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:121</div></div>
+<div class="ttc" id="aclassSimpleLang_html_a1c4a349d6da9e1d5dfd095f595ca434d"><div class="ttname"><a href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">SimpleLang::get</a></div><div class="ttdeci">std::string get(const std::string &amp;key, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={}) const</div><div class="ttdoc">Fetches a localized string for a given key from the parsed JSON file.</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:43</div></div>
+<div class="ttc" id="aclassSimpleLang_html_a54a2608ad33996160afbf633b7aa5b32"><div class="ttname"><a href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">SimpleLang::get</a></div><div class="ttdeci">std::string get(Error error) const</div><div class="ttdoc">Fetches a string associated with a given error from the i18n file.</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:74</div></div>
+<div class="ttc" id="aclassSimpleLang_html_a74e7b00d0734616c113a28fb39775301"><div class="ttname"><a href="classSimpleLang.html#a74e7b00d0734616c113a28fb39775301">SimpleLang::getInstance</a></div><div class="ttdeci">static SimpleLang &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:23</div></div>
+<div class="ttc" id="aclassSimpleLang_html_a95f0fdd9c088414034dcd33bd9faa28e"><div class="ttname"><a href="classSimpleLang.html#a95f0fdd9c088414034dcd33bd9faa28e">SimpleLang::parseFile</a></div><div class="ttdeci">void parseFile(const std::string &amp;filename) const</div><div class="ttdef"><b>Definition:</b> SimpleLang.h:84</div></div>
+<div class="ttc" id="aclassSimpleLang_html_aa5a15fa64ca30299e12d14109c9e89d4"><div class="ttname"><a href="classSimpleLang.html#aa5a15fa64ca30299e12d14109c9e89d4">SimpleLang::operator=</a></div><div class="ttdeci">void operator=(SimpleLang const &amp;)=delete</div></div>
+<div class="ttc" id="aclassSimpleLang_html_abaed79421962753e9fa8ee6bf1847bd2"><div class="ttname"><a href="classSimpleLang.html#abaed79421962753e9fa8ee6bf1847bd2">SimpleLang::SimpleLang</a></div><div class="ttdeci">SimpleLang(SimpleLang const &amp;)=delete</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

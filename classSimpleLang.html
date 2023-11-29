@@ -63,7 +63,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classSimpleLang-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SimpleLang Class Reference</div>  </div>
@@ -74,23 +74,29 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8397f8d1322106b3cd396dc4a93d8353"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a8397f8d1322106b3cd396dc4a93d8353">SimpleLang</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a8397f8d1322106b3cd396dc4a93d8353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af94f900509702ffd81ba3a0d31648663"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">get</a> (const std::string &amp;key, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={})</td></tr>
-<tr class="memdesc:af94f900509702ffd81ba3a0d31648663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a localized string for a given key from the parsed JSON file.  <a href="classSimpleLang.html#af94f900509702ffd81ba3a0d31648663">More...</a><br /></td></tr>
-<tr class="separator:af94f900509702ffd81ba3a0d31648663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaed79421962753e9fa8ee6bf1847bd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#abaed79421962753e9fa8ee6bf1847bd2">SimpleLang</a> (<a class="el" href="classSimpleLang.html">SimpleLang</a> const &amp;)=delete</td></tr>
+<tr class="separator:abaed79421962753e9fa8ee6bf1847bd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a15fa64ca30299e12d14109c9e89d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#aa5a15fa64ca30299e12d14109c9e89d4">operator=</a> (<a class="el" href="classSimpleLang.html">SimpleLang</a> const &amp;)=delete</td></tr>
+<tr class="separator:aa5a15fa64ca30299e12d14109c9e89d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c4a349d6da9e1d5dfd095f595ca434d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">get</a> (const std::string &amp;key, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={}) const</td></tr>
+<tr class="memdesc:a1c4a349d6da9e1d5dfd095f595ca434d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a localized string for a given key from the parsed JSON file.  <a href="classSimpleLang.html#a1c4a349d6da9e1d5dfd095f595ca434d">More...</a><br /></td></tr>
+<tr class="separator:a1c4a349d6da9e1d5dfd095f595ca434d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54a2608ad33996160afbf633b7aa5b32"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">get</a> (<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> error) const</td></tr>
 <tr class="memdesc:a54a2608ad33996160afbf633b7aa5b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a string associated with a given error from the i18n file.  <a href="classSimpleLang.html#a54a2608ad33996160afbf633b7aa5b32">More...</a><br /></td></tr>
 <tr class="separator:a54a2608ad33996160afbf633b7aa5b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95f0fdd9c088414034dcd33bd9faa28e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a95f0fdd9c088414034dcd33bd9faa28e">parseFile</a> (const std::string &amp;filename) const</td></tr>
+<tr class="separator:a95f0fdd9c088414034dcd33bd9faa28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03ac520b7606b217da9bb874447bc633"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a03ac520b7606b217da9bb874447bc633">getCurrentFile</a> () const</td></tr>
+<tr class="separator:a03ac520b7606b217da9bb874447bc633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a5c3d6c2c7676c2ecf155b46876837dc8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a5c3d6c2c7676c2ecf155b46876837dc8">currentFile</a> = &quot;&quot;</td></tr>
-<tr class="separator:a5c3d6c2c7676c2ecf155b46876837dc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a74e7b00d0734616c113a28fb39775301"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classSimpleLang.html">SimpleLang</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a74e7b00d0734616c113a28fb39775301">getInstance</a> ()</td></tr>
+<tr class="separator:a74e7b00d0734616c113a28fb39775301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8397f8d1322106b3cd396dc4a93d8353"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8397f8d1322106b3cd396dc4a93d8353">&#9670;&nbsp;</a></span>SimpleLang()</h2>
+<a id="abaed79421962753e9fa8ee6bf1847bd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaed79421962753e9fa8ee6bf1847bd2">&#9670;&nbsp;</a></span>SimpleLang()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -101,14 +107,14 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">SimpleLang::SimpleLang </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classSimpleLang.html">SimpleLang</a> const &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -116,8 +122,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af94f900509702ffd81ba3a0d31648663"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af94f900509702ffd81ba3a0d31648663">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
+<a id="a1c4a349d6da9e1d5dfd095f595ca434d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c4a349d6da9e1d5dfd095f595ca434d">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -140,7 +146,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -199,17 +205,104 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a5c3d6c2c7676c2ecf155b46876837dc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c3d6c2c7676c2ecf155b46876837dc8">&#9670;&nbsp;</a></span>currentFile</h2>
+<a id="a03ac520b7606b217da9bb874447bc633"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03ac520b7606b217da9bb874447bc633">&#9670;&nbsp;</a></span>getCurrentFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string SimpleLang::currentFile = &quot;&quot;</td>
+          <td class="memname">std::string SimpleLang::getCurrentFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74e7b00d0734616c113a28fb39775301"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74e7b00d0734616c113a28fb39775301">&#9670;&nbsp;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classSimpleLang.html">SimpleLang</a>&amp; SimpleLang::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa5a15fa64ca30299e12d14109c9e89d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a15fa64ca30299e12d14109c9e89d4">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SimpleLang::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classSimpleLang.html">SimpleLang</a> const &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95f0fdd9c088414034dcd33bd9faa28e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95f0fdd9c088414034dcd33bd9faa28e">&#9670;&nbsp;</a></span>parseFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SimpleLang::parseFile </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

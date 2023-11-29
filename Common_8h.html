@@ -79,6 +79,7 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div>
@@ -107,10 +108,14 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> { <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">UnknownKey</a>
+<tr class="memitem:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> { <br />
+&#160;&#160;<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">UnknownKey</a>
 , <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">FailedToOpenFile</a>
 , <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">InvalidJsonFile</a>
 , <a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">JsonParsingError</a>
+, <br />
+&#160;&#160;<a class="el" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538">InvalidTotalInput</a>
+<br />
  }</td></tr>
 <tr class="separator:a2c3e4bb40f36b262a5214e2da2bca9c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a837590fd5310ff5df56ffcf7c394787e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a> { <br />
@@ -288,6 +293,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5"></a>FailedToOpenFile&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663"></a>InvalidJsonFile&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc"></a>JsonParsingError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538"></a>InvalidTotalInput&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -335,7 +341,9 @@ Variables</h2></td></tr>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>, <span class="stringliteral">&quot;Unknown key&quot;</span>},</div>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>, <span class="stringliteral">&quot;Failed to open file&quot;</span>},</div>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>, <span class="stringliteral">&quot;Invalid JSON file&quot;</span>},</div>
-<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JSON parsing error&quot;</span>}}</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JSON parsing error&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538">Error::InvalidTotalInput</a>, <span class="stringliteral">&quot;Invalid number of input values&quot;</span>}}</div>
+<div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538">Error::InvalidTotalInput</a></div><div class="ttdeci">@ InvalidTotalInput</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a></div><div class="ttdeci">@ JsonParsingError</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a></div><div class="ttdeci">@ FailedToOpenFile</div></div>
 <div class="ttc" id="aCommon_8h_html_a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121"><div class="ttname"><a href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a></div><div class="ttdeci">@ UnknownKey</div></div>
@@ -358,7 +366,8 @@ Variables</h2></td></tr>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121">Error::UnknownKey</a>, <span class="stringliteral">&quot;UnknownKey&quot;</span>},</div>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a2d2e4f8ddafca6d4416918714f1c5ad5">Error::FailedToOpenFile</a>, <span class="stringliteral">&quot;FailedToOpenFile&quot;</span>},</div>
 <div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663">Error::InvalidJsonFile</a>, <span class="stringliteral">&quot;InvalidJsonFile&quot;</span>},</div>
-<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JsonParsingError&quot;</span>}}</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc">Error::JsonParsingError</a>, <span class="stringliteral">&quot;JsonParsingError&quot;</span>},</div>
+<div class="line">    {<a class="code" href="Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538">Error::InvalidTotalInput</a>, <span class="stringliteral">&quot;InvalidTotalInput&quot;</span>}}</div>
 </div><!-- fragment -->
 </div>
 </div>
