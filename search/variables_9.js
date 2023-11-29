@@ -8,6 +8,5 @@ var searchData=
   ['leakyreluderivative_505',['leakyReluDerivative',['../ActivationFunctions_8h.html#a36f24957db1d6778585a3d25a155de89',1,'ActivationFunctions.h']]],
   ['learning_5frate_506',['learning_rate',['../structNetworkParameters.html#a8bad6561010dceefcc9791965718d7c9',1,'NetworkParameters']]],
   ['line_507',['line',['../structTestingResult_1_1TestResults.html#a0bb235840b0d3675cde3d189b750fd5b',1,'TestingResult::TestResults']]],
-  ['logger_508',['logger',['../classSimpleMLP.html#a316e39f4579e72639b002799bb4539ca',1,'SimpleMLP']]],
-  ['low_5fthreshold_509',['LOW_THRESHOLD',['../TestingResult_8cpp.html#a0759991b06468900a65e705c0d8b73a7',1,'TestingResult.cpp']]]
+  ['low_5fthreshold_508',['LOW_THRESHOLD',['../TestingResult_8cpp.html#a0759991b06468900a65e705c0d8b73a7',1,'TestingResult.cpp']]]
 ];
