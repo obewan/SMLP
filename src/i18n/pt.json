@@ -26,5 +26,6 @@
     "FailedToOpenFile": "Falha ao abrir o arquivo",
     "InvalidJsonFile": "Arquivo JSON inválido",
     "JsonParsingError": "Erro de análise JSON",
-    "InvalidTotalInput": "Número inválido de valores de entrada"
+    "InvalidTotalInput": "Número inválido de valores de entrada",
+    "UnimplementedPredictiveMode": "Modo preditivo não implementado"
 }

@@ -26,6 +26,7 @@ enum class Error {
   InvalidJsonFile,
   JsonParsingError,
   InvalidTotalInput,
+  UnimplementedPredictiveMode,
 };
 
 const std::map<Error, std::string> errorMessages = {
@@ -33,14 +34,16 @@ const std::map<Error, std::string> errorMessages = {
     {Error::FailedToOpenFile, "FailedToOpenFile"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
     {Error::JsonParsingError, "JsonParsingError"},
-    {Error::InvalidTotalInput, "InvalidTotalInput"}};
+    {Error::InvalidTotalInput, "InvalidTotalInput"},
+    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
     {Error::UnknownKey, "Unknown key"},
     {Error::FailedToOpenFile, "Failed to open file"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
     {Error::JsonParsingError, "JSON parsing error"},
-    {Error::InvalidTotalInput, "Invalid number of input values"}};
+    {Error::InvalidTotalInput, "Invalid number of input values"},
+    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"}};
 
 enum class EMode {
   Predictive,

@@ -88,7 +88,8 @@ void Predict::showOutput(const std::vector<float> &inputs,
   } break;
   default:
     logger.resetPrecision();
-    throw PredictException("Unimplemented predictive mode");
+    throw PredictException(
+        SimpleLang::Error(Error::UnimplementedPredictiveMode));
   }
   logger.resetPrecision();
 }

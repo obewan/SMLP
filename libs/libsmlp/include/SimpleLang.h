@@ -28,6 +28,27 @@ public:
   void operator=(SimpleLang const &) = delete;
 
   /**
+   * @brief Gets the error message (shortcut).
+   *
+   * @param error
+   * @return std::string
+   */
+  static std::string Error(Error error) { return getInstance().get(error); }
+
+  /**
+   * @brief Gets the key message (shortcut).
+   *
+   * @param key
+   * @param variables
+   * @return std::string
+   */
+  static std::string Message(
+      const std::string &key,
+      const std::map<std::string, std::string, std::less<>> &variables = {}) {
+    return getInstance().get(key, variables);
+  }
+
+  /**
    * @brief Fetches a localized string for a given key from the parsed JSON
    * file.
    *
@@ -71,7 +92,7 @@ public:
    * @return The string associated with the error if it exists in the i18n file,
    * otherwise a default error message.
    */
-  std::string get(Error error) const {
+  std::string get(enum Error error) const {
     auto it = strings.find(errorMessages.at(error));
     if (it != strings.end()) {
       return it->second;
