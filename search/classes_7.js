@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['network_291',['Network',['../classNetwork.html',1,'']]],
-  ['networkexception_292',['NetworkException',['../classNetworkException.html',1,'']]],
-  ['networkimportexportjson_293',['NetworkImportExportJSON',['../classNetworkImportExportJSON.html',1,'']]],
-  ['networkparameters_294',['NetworkParameters',['../structNetworkParameters.html',1,'']]],
-  ['neuron_295',['Neuron',['../classNeuron.html',1,'']]]
+  ['network_294',['Network',['../classNetwork.html',1,'']]],
+  ['networkexception_295',['NetworkException',['../classNetworkException.html',1,'']]],
+  ['networkimportexportjson_296',['NetworkImportExportJSON',['../classNetworkImportExportJSON.html',1,'']]],
+  ['networkparameters_297',['NetworkParameters',['../structNetworkParameters.html',1,'']]],
+  ['neuron_298',['Neuron',['../classNeuron.html',1,'']]]
 ];
