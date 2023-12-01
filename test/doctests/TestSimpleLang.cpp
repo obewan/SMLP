@@ -12,30 +12,34 @@ TEST_CASE("Testing the SimpleLang class") {
   }
 
   SUBCASE("Test parsing") {
-    const auto &lang1 = SimpleLang::getInstance();
-    lang1.parseFile("../../i18n/en.json");
-    std::string s1 = lang1.get("-i,--import_network");
+    const auto &lang = SimpleLang::getInstance();
+    lang.parseFile("../../i18n/en.json");
+    std::string s1 = lang.get("-i,--import_network");
     CHECK(s1.length() > 0);
-    std::string s2 = lang1.get("-e,--export_network");
+    std::string s2 = lang.get("-e,--export_network");
     CHECK(s2.length() > 0);
     CHECK(s1 != s2);
-    CHECK(lang1.get(Error::InvalidJsonFile) == "Invalid JSON file");
+    CHECK(lang.get(Error::InvalidJsonFile) == "Invalid JSON file");
+    CHECK(lang.get(Error::DifferentModelVersion,
+                   {{"vuser", "0.1"}, {"vcurrent", "0.2"}}) ==
+          "Your file model version (0.1) is not the same as current "
+          "version (0.2)");
 
-    lang1.parseFile("../../i18n/it.json");
-    CHECK(lang1.get(Error::InvalidJsonFile) == "File JSON non valido");
+    lang.parseFile("../../i18n/it.json");
+    CHECK(lang.get(Error::InvalidJsonFile) == "File JSON non valido");
 
-    lang1.parseFile("../../i18n/de.json");
-    CHECK(lang1.get(Error::InvalidJsonFile) == "Ungültige JSON-Datei");
+    lang.parseFile("../../i18n/de.json");
+    CHECK(lang.get(Error::InvalidJsonFile) == "Ungültige JSON-Datei");
 
-    lang1.parseFile("../../i18n/es.json");
-    CHECK(lang1.get(Error::InvalidJsonFile) == "Archivo JSON no válido");
+    lang.parseFile("../../i18n/es.json");
+    CHECK(lang.get(Error::InvalidJsonFile) == "Archivo JSON no válido");
 
-    lang1.parseFile("../../i18n/fr.json");
-    CHECK(lang1.get(Error::InvalidJsonFile) == "Fichier JSON invalide");
+    lang.parseFile("../../i18n/fr.json");
+    CHECK(lang.get(Error::InvalidJsonFile) == "Fichier JSON invalide");
 
-    lang1.parseFile("../../i18n/pt.json");
-    CHECK(lang1.get(Error::InvalidJsonFile) == "Arquivo JSON inválido");
-    CHECK(lang1.get(Error::InvalidTotalInput) ==
+    lang.parseFile("../../i18n/pt.json");
+    CHECK(lang.get(Error::InvalidJsonFile) == "Arquivo JSON inválido");
+    CHECK(lang.get(Error::InvalidTotalInput) ==
           "Número inválido de valores de entrada");
   }
 }

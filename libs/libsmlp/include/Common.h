@@ -27,6 +27,11 @@ enum class Error {
   JsonParsingError,
   InvalidTotalInput,
   UnimplementedPredictiveMode,
+  MissingImportFile,
+  DifferentModelVersion,
+  LayerTypeNotRecognized,
+  LayerTypeInvalidInput,
+  LayerTypeInvalidOutput
 };
 
 const std::map<Error, std::string> errorMessages = {
@@ -35,7 +40,12 @@ const std::map<Error, std::string> errorMessages = {
     {Error::InvalidJsonFile, "InvalidJsonFile"},
     {Error::JsonParsingError, "JsonParsingError"},
     {Error::InvalidTotalInput, "InvalidTotalInput"},
-    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"}};
+    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"},
+    {Error::MissingImportFile, "MissingImportFile"},
+    {Error::DifferentModelVersion, "DifferentModelVersion"},
+    {Error::LayerTypeNotRecognized, "LayerTypeNotRecognized"},
+    {Error::LayerTypeInvalidInput, "LayerTypeInvalidInput"},
+    {Error::LayerTypeInvalidOutput, "LayerTypeInvalidOutput"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
     {Error::UnknownKey, "Unknown key"},
@@ -43,7 +53,16 @@ const std::map<Error, std::string> defaultErrorMessages = {
     {Error::InvalidJsonFile, "Invalid JSON file"},
     {Error::JsonParsingError, "JSON parsing error"},
     {Error::InvalidTotalInput, "Invalid number of input values"},
-    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"}};
+    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"},
+    {Error::MissingImportFile, "Missing file to import"},
+    {Error::DifferentModelVersion,
+     "Your file model version (%%vuser%%) is not the "
+     "same as current version (%%vcurrent%%)"},
+    {Error::LayerTypeNotRecognized, "LayerType is not recognized"},
+    {Error::LayerTypeInvalidInput,
+     "Invalid LayerType for first layer: not an InputLayer"},
+    {Error::LayerTypeInvalidOutput,
+     "Invalid LayerType for last layer: not an OutputLayer"}};
 
 enum class EMode {
   Predictive,

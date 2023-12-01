@@ -13,10 +13,12 @@
 #include "exception/SimpleLangException.h"
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <map>
 #include <string>
 
 using json = nlohmann::json;
+using mapstr = std::map<std::string, std::string, std::less<>>;
 
 class SimpleLang {
 public:
@@ -33,7 +35,9 @@ public:
    * @param error
    * @return std::string
    */
-  static std::string Error(Error error) { return getInstance().get(error); }
+  static std::string Error(Error error, const mapstr &variables = {}) {
+    return getInstance().get(error, variables);
+  }
 
   /**
    * @brief Gets the key message (shortcut).
@@ -42,9 +46,8 @@ public:
    * @param variables
    * @return std::string
    */
-  static std::string Message(
-      const std::string &key,
-      const std::map<std::string, std::string, std::less<>> &variables = {}) {
+  static std::string Message(const std::string &key,
+                             const mapstr &variables = {}) {
     return getInstance().get(key, variables);
   }
 
@@ -61,21 +64,10 @@ public:
    * @return Localized string corresponding to the given key. If the key does
    * not exist, returns an empty string.
    */
-  std::string get(const std::string &key,
-                  const std::map<std::string, std::string, std::less<>>
-                      &variables = {}) const {
+  std::string get(const std::string &key, const mapstr &variables = {}) const {
     auto it = strings.find(key);
     if (it != strings.end()) {
-      std::string str = it->second;
-      for (const auto &[varkey, varval] : variables) {
-        std::string varKey = "%%" + varkey + "%%";
-        size_t start_pos = 0;
-        while ((start_pos = str.find(varKey, start_pos)) != std::string::npos) {
-          str.replace(start_pos, varKey.length(), varval);
-          start_pos += varval.length();
-        }
-      }
-      return str;
+      return replaceVariables(variables, it->second);
     } else {
       return get(Error::UnknownKey) + ": " + key;
     }
@@ -92,13 +84,15 @@ public:
    * @return The string associated with the error if it exists in the i18n file,
    * otherwise a default error message.
    */
-  std::string get(enum Error error) const {
+  std::string get(enum Error error,
+                  const std::map<std::string, std::string, std::less<>>
+                      &variables = {}) const {
     auto it = strings.find(errorMessages.at(error));
     if (it != strings.end()) {
-      return it->second;
+      return replaceVariables(variables, it->second);
     } else {
       // Fallback error message
-      return defaultErrorMessages.at(error);
+      return replaceVariables(variables, defaultErrorMessages.at(error));
     }
   }
 
@@ -143,6 +137,20 @@ public:
 
 private:
   SimpleLang() = default;
-  mutable std::map<std::string, std::string, std::less<>> strings;
+  mutable mapstr strings;
   mutable std::string currentFile = "";
+
+  std::function<const std::string(const mapstr &, std::string)>
+      replaceVariables = [](const mapstr &variables, std::string str) {
+        for (const auto &[varkey, varval] : variables) {
+          std::string varKey = "%%" + varkey + "%%";
+          size_t start_pos = 0;
+          while ((start_pos = str.find(varKey, start_pos)) !=
+                 std::string::npos) {
+            str.replace(start_pos, varKey.length(), varval);
+            start_pos += varval.length();
+          }
+        }
+        return str;
+      };
 };

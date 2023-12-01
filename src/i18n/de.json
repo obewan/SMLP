@@ -27,5 +27,10 @@
     "InvalidJsonFile": "Ungültige JSON-Datei",
     "JsonParsingError": "Fehler beim Parsen von JSON",
     "InvalidTotalInput": "Ungültige Anzahl von Eingabewerten",
-    "UnimplementedPredictiveMode": "Nicht implementierter Vorhersagemodus"
+    "UnimplementedPredictiveMode": "Nicht implementierter Vorhersagemodus",
+    "MissingImportFile": "Fehlende Datei zum Importieren",
+    "DifferentModelVersion": "Ihre Dateimodellversion (%%vuser%%) stimmt nicht mit der aktuellen Version (%%vcurrent%%) überein",
+    "LayerTypeNotRecognized": "LayerType wird nicht erkannt",
+    "LayerTypeInvalidInput": "Ungültiger LayerType für die erste Schicht: keine Eingabeschicht",
+    "LayerTypeInvalidOutput": "Ungültiger LayerType für die letzte Schicht: keine Ausgabeschicht"
 }

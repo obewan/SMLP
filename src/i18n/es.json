@@ -27,5 +27,10 @@
     "InvalidJsonFile": "Archivo JSON no válido",
     "JsonParsingError": "Error de análisis JSON",
     "InvalidTotalInput": "Número inválido de valores de entrada",
-    "UnimplementedPredictiveMode": "Modo predictivo no implementado"
+    "UnimplementedPredictiveMode": "Modo predictivo no implementado",
+    "MissingImportFile": "Archivo faltante para importar",
+    "DifferentModelVersion": "La versión de tu archivo modelo (%%vuser%%) no es la misma que la versión actual (%%vcurrent%%)",
+    "LayerTypeNotRecognized": "LayerType no reconocido",
+    "LayerTypeInvalidInput": "LayerType no válido para la primera capa: no es una capa de entrada",
+    "LayerTypeInvalidOutput": "LayerType no válido para la última capa: no es una capa de salida"
 }

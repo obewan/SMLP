@@ -27,5 +27,10 @@
     "InvalidJsonFile": "Arquivo JSON inválido",
     "JsonParsingError": "Erro de análise JSON",
     "InvalidTotalInput": "Número inválido de valores de entrada",
-    "UnimplementedPredictiveMode": "Modo preditivo não implementado"
+    "UnimplementedPredictiveMode": "Modo preditivo não implementado",
+    "MissingImportFile": "Arquivo faltando para importar",
+    "DifferentModelVersion": "A versão do seu arquivo modelo (%%vuser%%) não é a mesma que a versão atual (%%vcurrent%%)",
+    "LayerTypeNotRecognized": "LayerType não reconhecido",
+    "LayerTypeInvalidInput": "LayerType inválido para a primeira camada: não é uma camada de entrada",
+    "LayerTypeInvalidOutput": "LayerType inválido para a última camada: não é uma camada de saída"
 }

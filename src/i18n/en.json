@@ -28,5 +28,10 @@
     "InvalidJsonFile": "Invalid JSON file",
     "JsonParsingError": "JSON parsing error",
     "InvalidTotalInput": "Invalid number of input values",
-    "UnimplementedPredictiveMode": "Unimplemented predictive mode"
+    "UnimplementedPredictiveMode": "Unimplemented predictive mode",
+    "MissingImportFile": "Missing file to import",
+    "DifferentModelVersion": "Your file model version (%%vuser%%) is not the same as current version (%%vcurrent%%)",
+    "LayerTypeNotRecognized": "LayerType is not recognized",
+    "LayerTypeInvalidInput": "Invalid LayerType for first layer: not an InputLayer",
+    "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer"
 }
