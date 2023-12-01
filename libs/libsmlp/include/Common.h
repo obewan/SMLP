@@ -21,48 +21,52 @@
 using Record = std::pair<std::vector<float>, std::vector<float>>;
 
 enum class Error {
-  UnknownKey,
+  DifferentModelVersion,
   FailedToOpenFile,
   InvalidJsonFile,
-  JsonParsingError,
   InvalidTotalInput,
-  UnimplementedPredictiveMode,
-  MissingImportFile,
-  DifferentModelVersion,
-  LayerTypeNotRecognized,
+  InvalidTotalOutput,
+  JsonParsingError,
   LayerTypeInvalidInput,
-  LayerTypeInvalidOutput
+  LayerTypeInvalidOutput,
+  LayerTypeNotRecognized,
+  MissingImportFile,
+  UnimplementedPredictiveMode,
+  UnknownKey
 };
 
 const std::map<Error, std::string> errorMessages = {
-    {Error::UnknownKey, "UnknownKey"},
+    {Error::DifferentModelVersion, "DifferentModelVersion"},
     {Error::FailedToOpenFile, "FailedToOpenFile"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
-    {Error::JsonParsingError, "JsonParsingError"},
     {Error::InvalidTotalInput, "InvalidTotalInput"},
-    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"},
-    {Error::MissingImportFile, "MissingImportFile"},
-    {Error::DifferentModelVersion, "DifferentModelVersion"},
-    {Error::LayerTypeNotRecognized, "LayerTypeNotRecognized"},
+    {Error::InvalidTotalOutput, "InvalidTotalOutput"},
+    {Error::JsonParsingError, "JsonParsingError"},
     {Error::LayerTypeInvalidInput, "LayerTypeInvalidInput"},
-    {Error::LayerTypeInvalidOutput, "LayerTypeInvalidOutput"}};
+    {Error::LayerTypeInvalidOutput, "LayerTypeInvalidOutput"},
+    {Error::LayerTypeNotRecognized, "LayerTypeNotRecognized"},
+    {Error::MissingImportFile, "MissingImportFile"},
+    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"},
+    {Error::UnknownKey, "UnknownKey"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
-    {Error::UnknownKey, "Unknown key"},
+    {Error::DifferentModelVersion,
+     "Your file model version (%%vuser%%) is not the same as current version "
+     "(%%vcurrent%%)"},
     {Error::FailedToOpenFile, "Failed to open file"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
-    {Error::JsonParsingError, "JSON parsing error"},
     {Error::InvalidTotalInput, "Invalid number of input values"},
-    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"},
-    {Error::MissingImportFile, "Missing file to import"},
-    {Error::DifferentModelVersion,
-     "Your file model version (%%vuser%%) is not the "
-     "same as current version (%%vcurrent%%)"},
-    {Error::LayerTypeNotRecognized, "LayerType is not recognized"},
+    {Error::InvalidTotalOutput,
+     "The expected output size provided is not valid"},
+    {Error::JsonParsingError, "JSON parsing error"},
     {Error::LayerTypeInvalidInput,
      "Invalid LayerType for first layer: not an InputLayer"},
     {Error::LayerTypeInvalidOutput,
-     "Invalid LayerType for last layer: not an OutputLayer"}};
+     "Invalid LayerType for last layer: not an OutputLayer"},
+    {Error::LayerTypeNotRecognized, "LayerType is not recognized"},
+    {Error::MissingImportFile, "Missing file to import"},
+    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"},
+    {Error::UnknownKey, "Unknown key"}};
 
 enum class EMode {
   Predictive,

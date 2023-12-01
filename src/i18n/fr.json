@@ -32,5 +32,6 @@
     "DifferentModelVersion": "La version de votre fichier modèle (%%vuser%%) n'est pas la même que la version actuelle (%%vcurrent%%)",
     "LayerTypeNotRecognized": "LayerType non reconnu",
     "LayerTypeInvalidInput": "LayerType invalide pour la première couche : pas une couche d'entrée",
-    "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie"
+    "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie",
+    "InvalidTotalOutput": "Taille de sortie attendue invalide"
 }

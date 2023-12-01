@@ -33,5 +33,6 @@
     "DifferentModelVersion": "Your file model version (%%vuser%%) is not the same as current version (%%vcurrent%%)",
     "LayerTypeNotRecognized": "LayerType is not recognized",
     "LayerTypeInvalidInput": "Invalid LayerType for first layer: not an InputLayer",
-    "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer"
+    "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer",
+    "InvalidTotalOutput": "The expected output size provided is not valid"
 }

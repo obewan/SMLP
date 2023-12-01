@@ -32,5 +32,6 @@
     "DifferentModelVersion": "Ihre Dateimodellversion (%%vuser%%) stimmt nicht mit der aktuellen Version (%%vcurrent%%) überein",
     "LayerTypeNotRecognized": "LayerType wird nicht erkannt",
     "LayerTypeInvalidInput": "Ungültiger LayerType für die erste Schicht: keine Eingabeschicht",
-    "LayerTypeInvalidOutput": "Ungültiger LayerType für die letzte Schicht: keine Ausgabeschicht"
+    "LayerTypeInvalidOutput": "Ungültiger LayerType für die letzte Schicht: keine Ausgabeschicht",
+    "InvalidTotalOutput": "Ungültige erwartete Ausgabegröße"
 }

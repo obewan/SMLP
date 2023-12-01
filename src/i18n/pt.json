@@ -32,5 +32,6 @@
     "DifferentModelVersion": "A versão do seu arquivo modelo (%%vuser%%) não é a mesma que a versão atual (%%vcurrent%%)",
     "LayerTypeNotRecognized": "LayerType não reconhecido",
     "LayerTypeInvalidInput": "LayerType inválido para a primeira camada: não é uma camada de entrada",
-    "LayerTypeInvalidOutput": "LayerType inválido para a última camada: não é uma camada de saída"
+    "LayerTypeInvalidOutput": "LayerType inválido para a última camada: não é uma camada de saída",
+    "InvalidTotalOutput": "Tamanho de saída esperado inválido"
 }
