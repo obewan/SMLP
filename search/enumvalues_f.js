@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['warn_593',['WARN',['../SimpleLogger_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a32bd8a1db2275458673903bdb84cb277',1,'SimpleLogger.h']]]
+  ['unimplementedpredictivemode_603',['UnimplementedPredictiveMode',['../Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a236ccec3601487013cc9dc86356c805b',1,'Common.h']]],
+  ['unknownkey_604',['UnknownKey',['../Common_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121',1,'Common.h']]]
 ];
