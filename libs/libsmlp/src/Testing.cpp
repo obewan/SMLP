@@ -1,5 +1,6 @@
 #include "Testing.h"
 #include "Common.h"
+#include "SimpleLang.h"
 #include "TestingResult.h"
 #include "exception/TestingException.h"
 #include <cstddef>
@@ -28,8 +29,7 @@ void Testing::testFromFile(const NetworkParameters &network_params,
                                         app_params.use_stdin);
     }
     if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
-      throw TestingException("No data left for testing, check your "
-                             "training_ratio parameter. Aborting testing.");
+      throw TestingException(SimpleLang::Error(Error::InvalidTrainingRatio));
     }
   }
 

@@ -1,6 +1,7 @@
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "doctest.h"
+#include "exception/PredictException.h"
 #include <cstddef>
 #include <filesystem>
 #include <memory>
@@ -27,5 +28,17 @@ TEST_CASE("Testing the Predict class") {
       Predict predict(network, app_params);
       predict.predict();
     });
+
+    CHECK_THROWS_WITH_AS(
+        {
+          auto invalidEnum = static_cast<EPredictiveMode>(900);
+          app_params.predictive_mode = invalidEnum;
+          network = std::shared_ptr<Network>(
+              importExportJSON.importModel(app_params));
+          Predict predict(network, app_params);
+          predict.predict();
+        },
+        SimpleLang::Error(Error::UnimplementedPredictiveMode).c_str(),
+        PredictException);
   }
 }
