@@ -10,6 +10,7 @@
 #pragma once
 #include "Layer.h"
 #include "Neuron.h"
+#include "SimpleLang.h"
 #include <ranges>
 #include <vector>
 
@@ -57,7 +58,7 @@ public:
 
   void computeErrors(std::vector<float> const &expectedValues) {
     if (expectedValues.size() != neurons.size()) {
-      throw std::invalid_argument("Invalid expected output size");
+      throw std::invalid_argument(SimpleLang::Error(Error::InvalidTotalOutput));
     }
     for (size_t i = 0; i < neurons.size(); i++) {
       neurons[i].error = neurons[i].value - expectedValues[i];

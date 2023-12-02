@@ -11,7 +11,6 @@
 #include "Common.h"
 #include "DataFileParser.h"
 #include "Network.h"
-#include "SimpleLogger.h"
 #include "exception/PredictException.h"
 #include <memory>
 
@@ -22,15 +21,13 @@ class Predict {
 public:
   Predict(std::shared_ptr<Network> network,
           std::shared_ptr<DataFileParser> fileparser,
-          const AppParameters &app_params, const SimpleLogger &logger)
-      : network_(network), fileParser_(fileparser), app_params_(app_params),
-        logger_(logger) {}
+          const AppParameters &app_params)
+      : network_(network), fileParser_(fileparser), app_params_(app_params) {}
 
-  Predict(std::shared_ptr<Network> network, const AppParameters &app_params,
-          const SimpleLogger &logger)
+  Predict(std::shared_ptr<Network> network, const AppParameters &app_params)
       : network_(network),
         fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
-        app_params_(app_params), logger_(logger) {}
+        app_params_(app_params) {}
 
   void predict() const;
 
@@ -75,5 +72,4 @@ private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   const AppParameters &app_params_;
-  const SimpleLogger &logger_;
 };

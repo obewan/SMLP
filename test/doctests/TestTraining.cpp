@@ -1,14 +1,13 @@
 #include "Common.h"
-#include "SimpleLogger.h"
 #include "Training.h"
 #include "doctest.h"
+#include <iostream>
 #include <memory>
 
 TEST_CASE("Testing the Training class") {
-  SimpleLogger logger;
   SUBCASE("Test Constructor") {
     CHECK_NOTHROW({
-      auto training = new Training(nullptr, "", logger);
+      auto training = new Training(nullptr, "");
       delete training;
     });
   }
@@ -19,7 +18,7 @@ TEST_CASE("Testing the Training class") {
   AppParameters app_params{.data_file = test_file};
 
   auto network = std::make_shared<Network>(network_params);
-  Training training(network, test_file, logger);
+  Training training(network, test_file);
 
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {

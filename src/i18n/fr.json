@@ -20,5 +20,18 @@
     "-q,--output_activation_alpha": "La valeur du paramètre alpha pour les fonctions d'activation ELU et PReLU sur la couche de sortie",
     "-x,--disable_stdin": "Désactiver l'entrée stdin comme les tuyaux de commande (pipes) et les tests interactifs",
     "-v,--version": "Affiche la version actuelle",
-    "-w,--verbose": "Logs verbeux"
+    "-w,--verbose": "Logs verbeux",
+
+    "DifferentModelVersion": "La version de votre fichier modèle (%%vuser%%) n'est pas la même que la version actuelle (%%vcurrent%%)",
+    "FailedToOpenFile": "Échec de l'ouverture du fichier",
+    "InvalidJsonFile": "Fichier JSON invalide",
+    "InvalidTotalInput": "Nombre invalide de valeurs d'entrée",
+    "InvalidTotalOutput": "Taille de sortie attendue invalide",
+    "JsonParsingError": "Erreur d'analyse JSON",
+    "LayerTypeInvalidInput": "LayerType invalide pour la première couche : pas une couche d'entrée",
+    "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie",
+    "LayerTypeNotRecognized": "LayerType non reconnu",
+    "MissingImportFile": "Fichier manquant à importer",
+    "UnimplementedPredictiveMode": "Mode prédictif non implémenté",
+    "UnknownKey": "Clé inconnue"
 }

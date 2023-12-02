@@ -42,10 +42,6 @@ Includes a mushroom edibility dataset example.
 
 _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
-# API doc
-
-The API documentation can be found on [obewan.github.io/SMLP](https://obewan.github.io/SMLP/index.html).
-
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in data/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
@@ -58,9 +54,9 @@ The API documentation can be found on [obewan.github.io/SMLP](https://obewan.git
    - TrainThenTest: Train and then test the network (default mode).
    - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
 5. You can also use a `smlp.conf` file in JSON format, located in the same directory as the smlp program. This way, you won’t have to use the corresponding parameters on the command line. Currently, it supports:
-   - `lang_file`: The language file to use for the help. Currently available, by alphabetic order:
+   - `lang_file`: The language file to use, for the help and other messages. Currently available, by alphabetic order:
      - `i18n/de.json` (german)
-     - `i18n/en.json` (english)
+     - `i18n/en.json` (english - default)
      - `i18n/es.json` (spanish)
      - `i18n/fr.json` (french)
      - `i18n/it.json` (italian)
@@ -282,3 +278,9 @@ This work is licensed under a
 - _NonCommercial_ — You may not use the material for commercial purposes.
 - _ShareAlike_ — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 - _No additional restrictions_ — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+---
+
+&nbsp;  
+[![API](https://img.shields.io/badge/API-Documentation-blue)](https://obewan.github.io/SMLP/api/)
+[![Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fcoverage.json&query=coverage&label=coverage&color=green)](https://obewan.github.io/SMLP/coverage/html/)

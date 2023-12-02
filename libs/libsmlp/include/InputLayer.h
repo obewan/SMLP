@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Layer.h"
+#include "SimpleLang.h"
 #include <stdexcept>
 
 /**
@@ -33,7 +34,7 @@ public:
 
   void setInputValues(const std::vector<float> &inputValues) {
     if (inputValues.size() != neurons.size()) {
-      throw std::invalid_argument("Invalid number of input values");
+      throw std::invalid_argument(SimpleLang::Error(Error::InvalidTotalInput));
     }
     for (size_t i = 0; i < neurons.size(); i++) {
       neurons.at(i).value = inputValues.at(i);

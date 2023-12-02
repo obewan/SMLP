@@ -20,5 +20,19 @@
     "-q,--output_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on output layer",
     "-x,--disable_stdin": "Disable stdin input like command pipes and interactive testing",
     "-v,--version": "Show current version",
-    "-w,--verbose": "Verbose logs"
+    "-w,--verbose": "Verbose logs",
+
+
+    "DifferentModelVersion": "Your file model version (%%vuser%%) is not the same as current version (%%vcurrent%%)",
+    "FailedToOpenFile" : "Failed to open file",
+    "InvalidJsonFile": "Invalid JSON file",
+    "InvalidTotalInput": "Invalid number of input values",
+    "InvalidTotalOutput": "The expected output size provided is not valid",
+    "JsonParsingError": "JSON parsing error",
+    "LayerTypeInvalidInput": "Invalid LayerType for first layer: not an InputLayer",
+    "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer",
+    "LayerTypeNotRecognized": "LayerType is not recognized",
+    "MissingImportFile": "Missing file to import",
+    "UnimplementedPredictiveMode": "Unimplemented predictive mode",
+    "UnknownKey": "Unknown key"
 }

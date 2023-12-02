@@ -39,7 +39,9 @@ measures that legally restrict others from doing anything the license permits.
 #include "Training.h"
 #include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
+#include <SimpleLogger.h>
 #include <filesystem>
+#include <memory>
 #include <sstream>
 
 #ifdef _WIN32
@@ -53,6 +55,7 @@ measures that legally restrict others from doing anything the license permits.
 #endif
 
 int SimpleMLP::init(int argc, char **argv) {
+  const auto &logger = SimpleLogger::getIntance();
   try {
     checkStdin(); // check in case using defaults options
 
@@ -62,9 +65,9 @@ int SimpleMLP::init(int argc, char **argv) {
     }
 
     SimpleConfig config(app_params.config_file);
-    SimpleLang lang(config.lang_file);
+    SimpleLang::getInstance().parseFile(config.lang_file);
 
-    if (int init = parseArgs(argc, argv, lang); init != EXIT_SUCCESS) {
+    if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
       return init;
     }
 
@@ -99,11 +102,12 @@ int SimpleMLP::init(int argc, char **argv) {
 }
 
 void SimpleMLP::predict() {
-  auto predict = std::make_unique<Predict>(network, app_params, logger);
+  auto predict = std::make_unique<Predict>(network, app_params);
   predict->predict();
 }
 
 void SimpleMLP::train() {
+  const auto &logger = SimpleLogger::getIntance();
   if (app_params.use_stdin) {
     logger.info("Training, using command pipe input...");
     if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
@@ -114,12 +118,12 @@ void SimpleMLP::train() {
     logger.info("Training, using file ", app_params.data_file);
   }
   logger.info(showInlineHeader());
-  auto training =
-      std::make_unique<Training>(network, app_params.data_file, logger);
+  auto training = std::make_unique<Training>(network, app_params.data_file);
   training->train(network_params, app_params);
 }
 
 void SimpleMLP::test() {
+  const auto &logger = SimpleLogger::getIntance();
   auto testing = std::make_unique<Testing>(network, app_params.data_file);
   if (app_params.use_stdin) {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
@@ -132,6 +136,7 @@ void SimpleMLP::test() {
 }
 
 void SimpleMLP::trainTestMonitored() {
+  const auto &logger = SimpleLogger::getIntance();
   if (app_params.output_index_to_monitor > network_params.output_size) {
     logger.error("output_index_to_monitor > output_size: ",
                  app_params.output_index_to_monitor, ">",
@@ -146,7 +151,7 @@ void SimpleMLP::trainTestMonitored() {
   }
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
-  Training training(network, app_params.data_file, logger);
+  Training training(network, app_params.data_file);
   training.train(network_params, app_params);
 }
 
@@ -184,9 +189,10 @@ std::string SimpleMLP::showInlineHeader() const {
   return sst.str();
 }
 
-int SimpleMLP::parseArgs(int argc, char **argv, SimpleLang &lang) {
+int SimpleMLP::parseArgs(int argc, char **argv) {
   CLI::App app{app_params.title};
   bool version = false;
+  const auto &lang = SimpleLang::getInstance();
 
   // valid a parent path, if there is a path, that include a futur filename (not
   // like CLI::ExistingPath, CLI::ExistingDirectory or CLI::ExistingFile)
@@ -272,6 +278,7 @@ int SimpleMLP::parseArgs(int argc, char **argv, SimpleLang &lang) {
 
   // Version special exit
   if (version) {
+    const auto &logger = SimpleLogger::getIntance();
     logger.out(app_params.title, " v", app_params.version);
     logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
     return EXIT_VERSION;
@@ -281,6 +288,7 @@ int SimpleMLP::parseArgs(int argc, char **argv, SimpleLang &lang) {
 }
 
 void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
+  const auto &logger = SimpleLogger::getIntance();
   if (app_params.mode != EMode::Predictive) {
     if (config.isValidConfig) {
       logger.info("Using config file ", config.config_file, "...");
@@ -324,14 +332,15 @@ void SimpleMLP::runMode() {
 }
 
 void SimpleMLP::importOrBuildNetwork() {
+  const auto &logger = SimpleLogger::getIntance();
   // avoiding header lines on Predictive mode, for commands chaining with pipes
-  auto logNetworkImport = [this]() {
+  auto logNetworkImport = [this, &logger]() {
     if (app_params.mode != EMode::Predictive) {
       logger.info("Importing network model from ", app_params.network_to_import,
                   "...");
     }
   };
-  auto logNetworkCreation = [this]() {
+  auto logNetworkCreation = [this, &logger]() {
     if (!app_params.network_to_import.empty() &&
         app_params.mode != EMode::Predictive) {
       logger.info("Network model ", app_params.network_to_import,
@@ -359,6 +368,7 @@ bool SimpleMLP::shouldExportNetwork() const {
 }
 
 void SimpleMLP::exportNetwork() {
+  const auto &logger = SimpleLogger::getIntance();
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
   importExportJSON.exportModel(network.get(), app_params);

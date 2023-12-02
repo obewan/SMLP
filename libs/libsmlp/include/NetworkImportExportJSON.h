@@ -14,6 +14,7 @@
 #include "Layer.h"
 #include "Network.h"
 #include "OutputLayer.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/ImportExportException.h"
 #include <filesystem>
@@ -29,8 +30,6 @@ using json = nlohmann::json;
  */
 class NetworkImportExportJSON {
 public:
-  void setLogger(const SimpleLogger &logger) { logger_ = logger; }
-
   /**
    * @brief Parse a json file into a network model.
    *
@@ -38,8 +37,11 @@ public:
    * @return Network*
    */
   Network *importModel(const AppParameters &app_params) {
+    const auto &logger = SimpleLogger::getIntance();
+    const auto &lang = SimpleLang::getInstance();
+
     if (app_params.network_to_import.empty()) {
-      throw ImportExportException("Missing file to import.");
+      throw ImportExportException(lang.get(Error::MissingImportFile));
     }
 
     std::string path_in_ext = app_params.network_to_import;
@@ -51,13 +53,13 @@ public:
     json json_model;
 
     if (!file.is_open()) {
-      throw ImportExportException("Failed to open file for reading:" +
+      throw ImportExportException(lang.get(Error::FailedToOpenFile) + ": " +
                                   path_in_ext);
     }
 
     if (!json::accept(file)) {
       file.close();
-      throw ImportExportException("JSON parsing error: invalid JSON file:" +
+      throw ImportExportException(lang.get(Error::JsonParsingError) + ": " +
                                   path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
@@ -67,9 +69,9 @@ public:
 
       if (std::string jversion = json_model["version"];
           jversion != app_params.version) {
-        logger_.warn("Your model version (", jversion,
-                     ") is not the same as current version (",
-                     app_params.version, ")");
+        logger.warn(
+            lang.get(Error::DifferentModelVersion,
+                     {{"vuser", jversion}, {"vcurrent", app_params.version}}));
       }
 
       // Create a new Network object and deserialize the JSON data into it.
@@ -106,7 +108,7 @@ public:
           layer = new OutputLayer();
           break;
         default:
-          throw ImportExportException("LayerType not recognized.");
+          throw ImportExportException(lang.get(Error::LayerTypeNotRecognized));
         }
 
         // Add neurons and their weights
@@ -131,7 +133,7 @@ public:
                                        model->params.output_activation_alpha);
           break;
         default:
-          throw ImportExportException("LayerType not recognized.");
+          throw ImportExportException(lang.get(Error::LayerTypeNotRecognized));
         }
 
         // Add the layer to the network.
@@ -139,13 +141,11 @@ public:
       }
 
       if (model->layers.front()->layerType != LayerType::InputLayer) {
-        throw ImportExportException(
-            "Invalid LayerType for first layer: not an InputLayer");
+        throw ImportExportException(lang.get(Error::LayerTypeInvalidInput));
       }
 
       if (model->layers.back()->layerType != LayerType::OutputLayer) {
-        throw ImportExportException(
-            "Invalid LayerType for last layer: not an OutputLayer");
+        throw ImportExportException(lang.get(Error::LayerTypeInvalidOutput));
       }
 
       model->bindLayers();
@@ -156,7 +156,7 @@ public:
 
     } catch (const nlohmann::json::parse_error &e) {
       file.close();
-      throw ImportExportException("JSON parsing error: " +
+      throw ImportExportException(lang.get(Error::JsonParsingError) + ": " +
                                   std::string(e.what()));
     }
   }
@@ -222,7 +222,4 @@ public:
     file << json_network.dump(2);
     file.close();
   }
-
-private:
-  [[no_unique_address]] SimpleLogger logger_;
 };

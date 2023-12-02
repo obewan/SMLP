@@ -9,7 +9,7 @@
  */
 #pragma once
 #include "../../json/include/json.hpp"
-#include "SimpleLogger.h"
+#include "SimpleLang.h"
 #include "exception/SimpleConfigException.h"
 #include <filesystem>
 #include <fstream>
@@ -48,8 +48,8 @@ private:
 
     if (!json::accept(file)) {
       file.close();
-      throw SimpleConfigException("JSON parsing error: invalid JSON file:" +
-                                  path_in_ext);
+      throw SimpleConfigException(SimpleLang::Error(Error::InvalidJsonFile) +
+                                  ": " + path_in_ext);
     }
     file.seekg(0, std::ifstream::beg);
 

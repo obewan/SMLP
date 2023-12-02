@@ -11,7 +11,6 @@
 #include "Common.h"
 #include "DataFileParser.h"
 #include "Network.h"
-#include "SimpleLogger.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
 #include <memory>
@@ -62,11 +61,9 @@ public:
    * @param file_path File path to the training data.
    * @param logger
    */
-  Training(std::shared_ptr<Network> network, const std::string &file_path,
-           const SimpleLogger &logger)
+  Training(std::shared_ptr<Network> network, const std::string &file_path)
       : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(file_path)),
-        logger_(logger) {}
+        fileParser_(std::make_shared<DataFileParser>(file_path)) {}
 
   /**
    * @brief This method trains the model with the given parameters.
@@ -142,5 +139,4 @@ private:
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
-  SimpleLogger logger_;
 };

@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Neuron.h"
+#include "SimpleLang.h"
 #include <map>
 
 enum class LayerType { InputLayer, HiddenLayer, OutputLayer };
