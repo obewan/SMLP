@@ -283,4 +283,6 @@ This work is licensed under a
 - _ShareAlike_ — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 - _No additional restrictions_ — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 
-![Coverage](https://img.shields.io/endpoint?url=https://obewan.github.io/SMLP/coverage.json)
+---
+
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fcoverage.json&query=coverage&label=coverage&color=green&link=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fhtml%2F)
