@@ -44,7 +44,7 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 
 # API doc
 
-The API documentation can be found on [obewan.github.io/SMLP](https://obewan.github.io/SMLP/index.html).
+The API documentation can be found on [obewan.github.io/SMLP/api](https://obewan.github.io/SMLP/doxygen/index.html).
 
 # Usage
 

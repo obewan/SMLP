@@ -52,7 +52,7 @@ jobs:
 
       - name: Create JSON file for badge
         run: |
-          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep -o 'lines......: [0-9.]*%' | grep -o '[0-9.]*  | head -1')
+          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep -o 'lines......: [0-9.]*%' | grep -o '[0-9.]*'  | head -1)
           echo "{\"coverage\": \"$coverage\"}" > coverage/coverage.json
 
       - name: Deploy Coverage infos to GitHub Pages
@@ -60,6 +60,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{github.workspace}}/coverage
+          destination_dir: coverage
 
       - name: Configure CMake for Release
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
