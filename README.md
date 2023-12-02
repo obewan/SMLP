@@ -42,10 +42,6 @@ Includes a mushroom edibility dataset example.
 
 _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
 
-# API doc
-
-The API documentation can be found on [obewan.github.io/SMLP/api](https://obewan.github.io/SMLP/doxygen/index.html).
-
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example in data/mushroom we use a simple awk script to format mushroom_data_orig.csv into mushroom_data.csv).
@@ -285,4 +281,6 @@ This work is licensed under a
 
 ---
 
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fcoverage.json&query=coverage&label=coverage&color=green&link=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fhtml%2F)
+&nbsp;  
+[![API](https://img.shields.io/badge/API-Documentation-blue)](https://obewan.github.io/SMLP/api/)
+[![Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fcoverage.json&query=coverage&label=coverage&color=green)](https://obewan.github.io/SMLP/coverage/html/)

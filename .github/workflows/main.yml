@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++-10 lcov gawk
+          sudo apt-get install -y g++-10 lcov
           echo "CC=gcc-10" >> $GITHUB_ENV
           echo "CXX=g++-10" >> $GITHUB_ENV
 
@@ -38,29 +38,15 @@ jobs:
       - name: Run code coverage
         run: |
           mkdir -p ${{github.workspace}}/coverage
-          mkdir -p ${{github.workspace}}/coverage/html
           lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
           lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/test/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/src/*'
           lcov --summary ${{github.workspace}}/coverage/lcov.info
-          genhtml ${{github.workspace}}/coverage/lcov.info --output-directory ${{github.workspace}}/coverage/html
 
       - name: Very Good Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
         with:
           path: "${{github.workspace}}/coverage/lcov.info"
           min_coverage: 80
-
-      - name: Create JSON file for badge
-        run: |
-          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
-          echo -e "{\"coverage\": \"$coverage\"}" > coverage/coverage.json
-
-      - name: Deploy Coverage infos to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{github.workspace}}/coverage
-          destination_dir: coverage
 
       - name: Configure CMake for Release
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
