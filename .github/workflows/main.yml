@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++-10 lcov
+          sudo apt-get install -y g++-10 lcov gawk
           echo "CC=gcc-10" >> $GITHUB_ENV
           echo "CXX=g++-10" >> $GITHUB_ENV
 
@@ -52,7 +52,7 @@ jobs:
 
       - name: Create JSON file for badge
         run: |
-          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep -o 'lines......: [0-9.]*%' | grep -o '[0-9.]*' | tr -d '\n')
+          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
           echo -e "{\"coverage\": \"$coverage\"}" > coverage/coverage.json
 
       - name: Deploy Coverage infos to GitHub Pages
