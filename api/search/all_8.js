@@ -17,11 +17,12 @@ var searchData=
   ['invalidjsonfile_111',['InvalidJsonFile',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5af71241929198b433f2b1888c4b0e3663',1,'CommonErrors.h']]],
   ['invalidtotalinput_112',['InvalidTotalInput',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a129a63538b54214e26c98a2bf7dc9538',1,'CommonErrors.h']]],
   ['invalidtotaloutput_113',['InvalidTotalOutput',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5abb24a979185c9b4c8756400248ea6368',1,'CommonErrors.h']]],
-  ['isatty_114',['ISATTY',['../SimpleMLP_8cpp.html#a731b8c97222b70212a2ae3d3a785ea17',1,'SimpleMLP.cpp']]],
-  ['isendoffile_115',['isEndOfFile',['../structRecordResult.html#aa2c9dbe2a985d3e5d038ecdde5b502e1',1,'RecordResult']]],
-  ['isendoftraininglines_116',['isEndOfTrainingLines',['../structRecordResult.html#a6b00324be4a91a2edc5be61d7776e13f',1,'RecordResult']]],
-  ['islineskipped_117',['isLineSkipped',['../structRecordResult.html#a7f4c8570224e69ebfabe2d0285f73508',1,'RecordResult']]],
-  ['issuccess_118',['isSuccess',['../structRecordResult.html#a2d34f2b6a497def9972c0f4ebdd08add',1,'RecordResult']]],
-  ['istrainingratiolineprocessed_119',['isTrainingRatioLineProcessed',['../classDataFileParser.html#a4d47d221d2ed794afbecb9dd0f1fdce5',1,'DataFileParser']]],
-  ['isvalidconfig_120',['isValidConfig',['../classSimpleConfig.html#af94bac1f2f910f0a2e8b5ab1fb277270',1,'SimpleConfig']]]
+  ['invalidtrainingratio_114',['InvalidTrainingRatio',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a10f18c666b11375623597849876d5ba0',1,'CommonErrors.h']]],
+  ['isatty_115',['ISATTY',['../SimpleMLP_8cpp.html#a731b8c97222b70212a2ae3d3a785ea17',1,'SimpleMLP.cpp']]],
+  ['isendoffile_116',['isEndOfFile',['../structRecordResult.html#aa2c9dbe2a985d3e5d038ecdde5b502e1',1,'RecordResult']]],
+  ['isendoftraininglines_117',['isEndOfTrainingLines',['../structRecordResult.html#a6b00324be4a91a2edc5be61d7776e13f',1,'RecordResult']]],
+  ['islineskipped_118',['isLineSkipped',['../structRecordResult.html#a7f4c8570224e69ebfabe2d0285f73508',1,'RecordResult']]],
+  ['issuccess_119',['isSuccess',['../structRecordResult.html#a2d34f2b6a497def9972c0f4ebdd08add',1,'RecordResult']]],
+  ['istrainingratiolineprocessed_120',['isTrainingRatioLineProcessed',['../classDataFileParser.html#a4d47d221d2ed794afbecb9dd0f1fdce5',1,'DataFileParser']]],
+  ['isvalidconfig_121',['isValidConfig',['../classSimpleConfig.html#af94bac1f2f910f0a2e8b5ab1fb277270',1,'SimpleConfig']]]
 ];
