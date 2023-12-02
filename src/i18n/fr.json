@@ -22,16 +22,16 @@
     "-v,--version": "Affiche la version actuelle",
     "-w,--verbose": "Logs verbeux",
 
-    "UnknownKey": "Clé inconnue",
+    "DifferentModelVersion": "La version de votre fichier modèle (%%vuser%%) n'est pas la même que la version actuelle (%%vcurrent%%)",
     "FailedToOpenFile": "Échec de l'ouverture du fichier",
     "InvalidJsonFile": "Fichier JSON invalide",
-    "JsonParsingError": "Erreur d'analyse JSON",
     "InvalidTotalInput": "Nombre invalide de valeurs d'entrée",
-    "UnimplementedPredictiveMode": "Mode prédictif non implémenté",
-    "MissingImportFile": "Fichier manquant à importer",
-    "DifferentModelVersion": "La version de votre fichier modèle (%%vuser%%) n'est pas la même que la version actuelle (%%vcurrent%%)",
-    "LayerTypeNotRecognized": "LayerType non reconnu",
+    "InvalidTotalOutput": "Taille de sortie attendue invalide",
+    "JsonParsingError": "Erreur d'analyse JSON",
     "LayerTypeInvalidInput": "LayerType invalide pour la première couche : pas une couche d'entrée",
     "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie",
-    "InvalidTotalOutput": "Taille de sortie attendue invalide"
+    "LayerTypeNotRecognized": "LayerType non reconnu",
+    "MissingImportFile": "Fichier manquant à importer",
+    "UnimplementedPredictiveMode": "Mode prédictif non implémenté",
+    "UnknownKey": "Clé inconnue"
 }

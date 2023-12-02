@@ -22,16 +22,16 @@
     "-v,--version": "Mostrar la versión actual",
     "-w,--verbose": "Registros detallados",
 
-    "UnknownKey": "Clave desconocida",
+    "DifferentModelVersion": "La versión de tu archivo modelo (%%vuser%%) no es la misma que la versión actual (%%vcurrent%%)",
     "FailedToOpenFile": "Error al abrir el archivo",
     "InvalidJsonFile": "Archivo JSON no válido",
-    "JsonParsingError": "Error de análisis JSON",
     "InvalidTotalInput": "Número inválido de valores de entrada",
-    "UnimplementedPredictiveMode": "Modo predictivo no implementado",
-    "MissingImportFile": "Archivo faltante para importar",
-    "DifferentModelVersion": "La versión de tu archivo modelo (%%vuser%%) no es la misma que la versión actual (%%vcurrent%%)",
-    "LayerTypeNotRecognized": "LayerType no reconocido",
+    "InvalidTotalOutput": "Tamaño de salida esperado no válido",
+    "JsonParsingError": "Error de análisis JSON",
     "LayerTypeInvalidInput": "LayerType no válido para la primera capa: no es una capa de entrada",
     "LayerTypeInvalidOutput": "LayerType no válido para la última capa: no es una capa de salida",
-    "InvalidTotalOutput": "Tamaño de salida esperado no válido"
+    "LayerTypeNotRecognized": "LayerType no reconocido",
+    "MissingImportFile": "Archivo faltante para importar",
+    "UnimplementedPredictiveMode": "Modo predictivo no implementado",
+    "UnknownKey": "Clave desconocida"
 }
