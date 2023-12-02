@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['calcstats_15',['calcStats',['../classTestingResult.html#a14eae8632ff4e93ce1fa8ab46ed37771',1,'TestingResult']]],
+  ['closefile_16',['closeFile',['../classDataFileParser.html#a696823cd47ab566786bdb4cff0ba4234',1,'DataFileParser']]],
+  ['common_17',['Common',['../classCommon.html',1,'']]],
+  ['common_2eh_18',['Common.h',['../Common_8h.html',1,'']]],
+  ['commonerrors_2eh_19',['CommonErrors.h',['../CommonErrors_8h.html',1,'']]],
+  ['commonmodes_2eh_20',['CommonModes.h',['../CommonModes_8h.html',1,'']]],
+  ['commonparameters_2eh_21',['CommonParameters.h',['../CommonParameters_8h.html',1,'']]],
+  ['computeerrors_22',['computeErrors',['../classOutputLayer.html#aa2981b73f1c34a17172a0887ca4cd300',1,'OutputLayer']]],
+  ['config_5ffile_23',['config_file',['../structAppParameters.html#a94b6e3ec2aacceb0c7b32222f2fea59c',1,'AppParameters::config_file()'],['../classSimpleConfig.html#a136a2e71e00b869dc70ac1de8c7bd20d',1,'SimpleConfig::config_file()']]],
+  ['convergence_24',['convergence',['../structTestingResult_1_1Stat.html#aae81ef24e711905729ffc3adb24a97be',1,'TestingResult::Stat']]],
+  ['convergence_5fone_25',['convergence_one',['../structTestingResult_1_1Stat.html#a9c157fcee4150e97091264924d7f3475',1,'TestingResult::Stat']]],
+  ['convergence_5fzero_26',['convergence_zero',['../structTestingResult_1_1Stat.html#a0ba1045627b9aa4665c79464c315f75a',1,'TestingResult::Stat']]],
+  ['correct_5fpredictions_27',['correct_predictions',['../structTestingResult_1_1Stat.html#a2d4144392e646d6cc4d73b0ee7ea852d',1,'TestingResult::Stat']]],
+  ['correct_5fpredictions_5fhigh_28',['correct_predictions_high',['../structTestingResult_1_1Stat.html#ac2c66dae3304274408567085535a2ff3',1,'TestingResult::Stat']]],
+  ['correct_5fpredictions_5flow_29',['correct_predictions_low',['../structTestingResult_1_1Stat.html#a9d407957eb1785b78d246bb59f28cbef',1,'TestingResult::Stat']]],
+  ['countline_30',['countLine',['../classDataFileParser.html#a6502370ca38722a33c0b750b18fbd6a9',1,'DataFileParser']]],
+  ['createjsonneuron_31',['createJsonNeuron',['../classNetworkImportExportJSON.html#a306bf87c535daae75d02a1761244db04',1,'NetworkImportExportJSON']]],
+  ['createtesting_32',['createTesting',['../classTraining.html#a010df181591bc10641c51811b1069ade',1,'Training']]],
+  ['csv_33',['CSV',['../CommonModes_8h.html#ab5512b190eabd5c12e80988e6b4b1c81acc8d68c551c4a9a6d5313e07de4deafd',1,'CommonModes.h']]],
+  ['csv_5fparser_34',['csv_parser',['../classDataFileParser.html#aaa0e44b29696f93b8049bdc52a6483cd',1,'DataFileParser']]],
+  ['current_5fline_5fnumber_35',['current_line_number',['../classDataFileParser.html#ad013955f94ac060e397854bee332cbd2',1,'DataFileParser']]]
+];
