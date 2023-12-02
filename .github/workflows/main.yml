@@ -52,7 +52,7 @@ jobs:
 
       - name: Create JSON file for badge
         run: |
-          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
+          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
           echo -e "{\"coverage\": \"$coverage\"}" > coverage/coverage.json
 
       - name: Deploy Coverage infos to GitHub Pages
