@@ -14,6 +14,7 @@
 #include "HiddenLayer.h"
 #include "InputLayer.h"
 #include "OutputLayer.h"
+#include "SimpleLang.h"
 #include "exception/NetworkException.h"
 
 /**
@@ -170,7 +171,8 @@ public:
       layer->setActivationFunction(tanhFunc, tanhDerivative);
       break;
     default:
-      throw NetworkException("Unimplemented Activation Function.");
+      throw NetworkException(
+          SimpleLang::Error(Error::UnimplementedActivationFunction));
     }
   }
 };

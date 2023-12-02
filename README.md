@@ -261,26 +261,15 @@ $ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mush
 $ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.json -m Predictive | ./smlp -e new_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
 ```
 
-## License
-
-[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
-
-This work is licensed under a
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
-
-[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+---
 
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
 [cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
 [cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
 
-- _Attribution_ — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-- _NonCommercial_ — You may not use the material for commercial purposes.
-- _ShareAlike_ — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-- _No additional restrictions_ — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-
----
-
 &nbsp;  
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 [![API](https://img.shields.io/badge/API-Documentation-blue)](https://obewan.github.io/SMLP/api/)
 [![Coverage](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fobewan.github.io%2FSMLP%2Fcoverage%2Fcoverage.json&query=coverage&label=coverage&color=green)](https://obewan.github.io/SMLP/coverage/html/)
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]

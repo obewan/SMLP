@@ -1,7 +1,9 @@
 #include "Common.h"
 #include "DataFileParser.h"
+#include "SimpleLang.h"
 #include "Testing.h"
 #include "doctest.h"
+#include "exception/TestingException.h"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -46,5 +48,16 @@ TEST_CASE("Testing the Testing class") {
 
     // Restore std::cin to normal after the test
     std::cin.rdbuf(cin_buffer);
+  }
+  SUBCASE("Test exception") {
+    auto network = std::make_shared<Network>();
+    auto fileparser = std::make_shared<DataFileParser>("../data/test_file.csv");
+    auto testing = new Testing(network, fileparser);
+    CHECK_THROWS_WITH_AS(
+        testing->testFromFile(
+            {}, {.training_ratio = 1, .mode = EMode::TrainThenTest}),
+        SimpleLang::Error(Error::InvalidTrainingRatio).c_str(),
+        TestingException);
+    delete testing;
   }
 }

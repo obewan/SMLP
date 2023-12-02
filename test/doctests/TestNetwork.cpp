@@ -1,7 +1,9 @@
 #include "Common.h"
 #include "HiddenLayer.h"
 #include "Network.h"
+#include "SimpleLang.h"
 #include "doctest.h"
+#include "exception/NetworkException.h"
 
 TEST_CASE("Testing the Network class") {
   const float eps = 1e-6f; // epsilon for float testing
@@ -60,6 +62,12 @@ TEST_CASE("Testing the Network class") {
     }
     CHECK(hasElu == true);
     CHECK(hasTanh == true);
+
+    auto invalidEnum = static_cast<EActivationFunction>(900);
+    CHECK_THROWS_WITH_AS(
+        network->SetActivationFunction(hlayer, invalidEnum, 0.1f),
+        SimpleLang::Error(Error::UnimplementedActivationFunction).c_str(),
+        NetworkException);
 
     CHECK_NOTHROW(delete hlayer);
     CHECK_NOTHROW(delete network);

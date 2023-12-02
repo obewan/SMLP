@@ -1,5 +1,6 @@
 #include "SimpleConfig.h"
 #include "doctest.h"
+#include "exception/SimpleConfigException.h"
 
 TEST_CASE("Testing the SimpleConf class") {
   SUBCASE("Test constructor") { CHECK_NOTHROW(SimpleConfig("test")); }
@@ -28,5 +29,10 @@ TEST_CASE("Testing the SimpleConf class") {
     CHECK(conf3.import_network == "model.json");
     CHECK(conf3.export_network == "model_new.json");
     CHECK(conf3.isValidConfig);
+
+    auto error = SimpleLang::Error(Error::InvalidJsonFile) +
+                 ": ../data/test_config_bad_format.json";
+    CHECK_THROWS_WITH_AS(SimpleConfig("../data/test_config_bad_format.json"),
+                         error.c_str(), SimpleConfigException);
   }
 }

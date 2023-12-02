@@ -27,11 +27,13 @@
     "InvalidJsonFile": "File JSON non valido",
     "InvalidTotalInput": "Numero di valori di input non valido",
     "InvalidTotalOutput": "Dimensione dell'output previsto non valida",
+    "InvalidTrainingRatio": "Non ci sono dati disponibili per il test. Si prega di controllare il parametro 'training_ratio'. Il test non può procedere.",
     "JsonParsingError": "Errore di parsing JSON",
     "LayerTypeInvalidInput": "LayerType non valido per il primo strato: non è uno strato di input",
     "LayerTypeInvalidOutput": "LayerType non valido per l'ultimo strato: non è uno strato di output",
     "LayerTypeNotRecognized": "LayerType non riconosciuto",
     "MissingImportFile": "File da importare mancante",
+    "UnimplementedActivationFunction": "Funzione di attivazione non implementata",
     "UnimplementedPredictiveMode": "Modalità predittiva non implementata",
     "UnknownKey": "Chiave sconosciuta"
 }

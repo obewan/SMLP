@@ -27,11 +27,13 @@
     "InvalidJsonFile": "Fichier JSON invalide",
     "InvalidTotalInput": "Nombre invalide de valeurs d'entrée",
     "InvalidTotalOutput": "Taille de sortie attendue invalide",
+    "InvalidTrainingRatio": "Il n'y a pas de données disponibles pour les tests. Veuillez vérifier votre paramètre 'training_ratio'. Les tests ne peuvent pas continuer.",
     "JsonParsingError": "Erreur d'analyse JSON",
     "LayerTypeInvalidInput": "LayerType invalide pour la première couche : pas une couche d'entrée",
     "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie",
     "LayerTypeNotRecognized": "LayerType non reconnu",
     "MissingImportFile": "Fichier manquant à importer",
+    "UnimplementedActivationFunction": "Fonction d'activation non implémentée",
     "UnimplementedPredictiveMode": "Mode prédictif non implémenté",
     "UnknownKey": "Clé inconnue"
 }
