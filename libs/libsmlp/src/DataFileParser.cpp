@@ -3,8 +3,6 @@
 #include "CommonErrors.h"
 #include "SimpleLang.h"
 #include "exception/FileParserException.h"
-#include <iostream>
-#include <sstream>
 #include <string>
 
 DataFileParser::~DataFileParser() {
