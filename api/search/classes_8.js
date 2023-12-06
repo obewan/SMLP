@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['outputlayer_311',['OutputLayer',['../classOutputLayer.html',1,'']]]
+  ['outputlayer_318',['OutputLayer',['../classOutputLayer.html',1,'']]]
 ];

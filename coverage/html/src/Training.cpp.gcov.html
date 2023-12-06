@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2023-12-02 05:52:09</td>
+            <td class="headerValue">2023-12-06 08:06:38</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -112,8 +112,8 @@
 <a name="50"><span class="lineNum">      50 </span><span class="lineCov">          5 :                                       app_params.use_stdin);</span></a>
 <a name="51"><span class="lineNum">      51 </span>            :   }</a>
 <a name="52"><span class="lineNum">      52 </span><span class="lineCov">          5 :   if (fileParser_-&gt;training_ratio_line == 0) {</span></a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          2 :     throw TrainingException(&quot;invalid parameter: training_ratio is too small, &quot;</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          4 :                             &quot;no data for training.&quot;);</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          2 :     throw TrainingException(</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          4 :         SimpleLang::Error(Error::InvalidTrainingRatioTooSmall));</span></a>
 <a name="55"><span class="lineNum">      55 </span>            :   }</a>
 <a name="56"><span class="lineNum">      56 </span><span class="lineCov">          3 :   if (app_params.mode == EMode::TrainTestMonitored) {</span></a>
 <a name="57"><span class="lineNum">      57 </span><span class="lineCov">          1 :     createTesting();</span></a>

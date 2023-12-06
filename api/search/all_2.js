@@ -20,5 +20,10 @@ var searchData=
   ['createtesting_32',['createTesting',['../classTraining.html#a010df181591bc10641c51811b1069ade',1,'Training']]],
   ['csv_33',['CSV',['../CommonModes_8h.html#ab5512b190eabd5c12e80988e6b4b1c81acc8d68c551c4a9a6d5313e07de4deafd',1,'CommonModes.h']]],
   ['csv_5fparser_34',['csv_parser',['../classDataFileParser.html#aaa0e44b29696f93b8049bdc52a6483cd',1,'DataFileParser']]],
-  ['current_5fline_5fnumber_35',['current_line_number',['../classDataFileParser.html#ad013955f94ac060e397854bee332cbd2',1,'DataFileParser']]]
+  ['csvparsingerror_35',['CSVParsingError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5aeb10d4152ed5803ed0da0f6c88045098',1,'CommonErrors.h']]],
+  ['csvparsingerrorcolumnsbadformat_36',['CSVParsingErrorColumnsBadFormat',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5afccaf4bc8ab349fba6debe8215f2c0e0',1,'CommonErrors.h']]],
+  ['csvparsingerrorcolumnsmin_37',['CSVParsingErrorColumnsMin',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a540667136f1331e778c4125d1dc1584e',1,'CommonErrors.h']]],
+  ['csvparsingerrorcolumnssize_38',['CSVParsingErrorColumnsSize',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a4df51cc77fad1979562c0e339d61f9b5',1,'CommonErrors.h']]],
+  ['csvparsingerroremptyline_39',['CSVParsingErrorEmptyLine',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a6abe6f60369c8c8ba2383f907ee30cd4',1,'CommonErrors.h']]],
+  ['current_5fline_5fnumber_40',['current_line_number',['../classDataFileParser.html#ad013955f94ac060e397854bee332cbd2',1,'DataFileParser']]]
 ];
