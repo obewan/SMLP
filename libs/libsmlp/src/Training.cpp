@@ -50,8 +50,8 @@ void Training::trainFromFile(const NetworkParameters &network_params,
                                       app_params.use_stdin);
   }
   if (fileParser_->training_ratio_line == 0) {
-    throw TrainingException("invalid parameter: training_ratio is too small, "
-                            "no data for training.");
+    throw TrainingException(
+        SimpleLang::Error(Error::InvalidTrainingRatioTooSmall));
   }
   if (app_params.mode == EMode::TrainTestMonitored) {
     createTesting();

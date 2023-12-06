@@ -33,6 +33,8 @@ public:
   Layer *previousLayer = nullptr;
   Layer *nextLayer = nullptr;
 
+  const std::string UndefinedLayer = "UndefinedLayer";
+
   // Virtual destructor
   virtual ~Layer() = default;
 
@@ -62,7 +64,7 @@ public:
         return key;
       }
     }
-    return "Undefined";
+    return UndefinedLayer;
   }
 
   void setActivationFunction(const std::function<float(float)> &function,

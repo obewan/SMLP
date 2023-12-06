@@ -56,7 +56,7 @@ TEST_CASE("Testing the Testing class") {
     CHECK_THROWS_WITH_AS(
         testing->testFromFile(
             {}, {.training_ratio = 1, .mode = EMode::TrainThenTest}),
-        SimpleLang::Error(Error::InvalidTrainingRatio).c_str(),
+        SimpleLang::Error(Error::InvalidTrainingRatioTooBig).c_str(),
         TestingException);
     delete testing;
   }

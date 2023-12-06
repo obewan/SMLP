@@ -1,3 +1,12 @@
+/**
+ * @file ActivationFunctions.h
+ * @author Damien Balima (www.dams-labs.net)
+ * @brief Activation functions
+ * @date 2023-12-02
+ *
+ * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2023
+ *
+ */
 #pragma once
 #include <math.h>
 
