@@ -29,7 +29,8 @@ void Testing::testFromFile(const NetworkParameters &network_params,
                                         app_params.use_stdin);
     }
     if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
-      throw TestingException(SimpleLang::Error(Error::InvalidTrainingRatio));
+      throw TestingException(
+          SimpleLang::Error(Error::InvalidTrainingRatioTooBig));
     }
   }
 

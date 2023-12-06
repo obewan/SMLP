@@ -165,22 +165,23 @@ TEST_CASE("Testing the DataFileParser class") {
     CHECK_NOTHROW(parser.processLine(network_params, app_params));
     CHECK_THROWS_WITH_AS(
         parser.processLine(network_params, app_params),
-        "Invalid columns at line 2: found 20 columns instead of 21",
+        "CSV parsing error at line 2: there are 20 columns instead of 21.",
         FileParserException);
     parser.closeFile();
 
     parser.openFile("../data/test_file_bad_format.csv");
     CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
-                         "CSV parsing error at line 1: bad column format",
+                         "CSV parsing error at line 1: bad format.",
                          FileParserException);
     parser.closeFile();
 
     // Special Predictive mode tests
     app_params.mode = EMode::Predictive;
     parser.openFile("../data/test_file_short_line.csv");
-    CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
-                         "Invalid columns at line 1: found 19 columns instead "
-                         "of a minimum of 20",
-                         FileParserException);
+    CHECK_THROWS_WITH_AS(
+        parser.processLine(network_params, app_params),
+        "CSV parsing error at line 1: there are 19 columns instead "
+        "of a minimum of 20.",
+        FileParserException);
   }
 }

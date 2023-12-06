@@ -1,5 +1,7 @@
 #include "DataFileParser.h"
 #include "Common.h"
+#include "CommonErrors.h"
+#include "SimpleLang.h"
 #include "exception/FileParserException.h"
 #include <iostream>
 #include <sstream>
@@ -24,7 +26,8 @@ void DataFileParser::openFile(const std::string &filepath) {
   }
   file.open(path);
   if (!file.is_open()) {
-    throw FileParserException("Failed to open file: " + path);
+    throw FileParserException(SimpleLang::Error(Error::FailedToOpenFile) +
+                              ": " + path);
   }
   current_line_number = 0;
 }
@@ -91,10 +94,11 @@ void DataFileParser::parseLine(
     std::string_view data(line);
     csv_parser.parseTo(data, cell_refs);
   } catch (Csv::ParseError &ex) {
-    std::stringstream sstr;
-    sstr << "CSV parsing error at line " << current_line_number << ": "
-         << ex.what();
-    throw FileParserException(sstr.str());
+    throw FileParserException(
+        SimpleLang::Error(
+            Error::CSVParsingError,
+            {{"line_number", std::to_string(current_line_number)}}) +
+        ": " + ex.what());
   }
 }
 
@@ -103,28 +107,29 @@ void DataFileParser::validateColumns(
     const NetworkParameters &network_params,
     const AppParameters &app_params) const {
   if (cell_refs.empty()) {
-    std::stringstream sstr;
-    sstr << "Invalid columns at line " << current_line_number << ": empty line";
-    throw FileParserException(sstr.str());
+    throw FileParserException(SimpleLang::Error(
+        Error::CSVParsingErrorEmptyLine,
+        {{"line_number", std::to_string(current_line_number)}}));
   }
 
   if (app_params.mode != EMode::Predictive &&
       cell_refs.size() !=
           network_params.input_size + network_params.output_size) {
-    std::stringstream sstr;
-    sstr << "Invalid columns at line " << current_line_number << ": found "
-         << cell_refs.size() << " columns instead of "
-         << network_params.input_size + network_params.output_size;
-    throw FileParserException(sstr.str());
+    throw FileParserException(SimpleLang::Error(
+        Error::CSVParsingErrorColumnsSize,
+        {{"line_number", std::to_string(current_line_number)},
+         {"value", std::to_string(cell_refs.size())},
+         {"expected", std::to_string(network_params.input_size +
+                                     network_params.output_size)}}));
   }
 
   if (app_params.mode == EMode::Predictive &&
       cell_refs.size() < network_params.input_size) {
-    std::stringstream sstr;
-    sstr << "Invalid columns at line " << current_line_number << ": found "
-         << cell_refs.size() << " columns instead of a minimum of "
-         << network_params.input_size;
-    throw FileParserException(sstr.str());
+    throw FileParserException(SimpleLang::Error(
+        Error::CSVParsingErrorColumnsMin,
+        {{"line_number", std::to_string(current_line_number)},
+         {"value", std::to_string(cell_refs.size())},
+         {"expected", std::to_string(network_params.input_size)}}));
   }
 }
 
@@ -145,10 +150,9 @@ Record DataFileParser::processColumns(
                                   network_params.output_size);
     }
   } catch (std::bad_optional_access &) {
-    std::stringstream sstr;
-    sstr << "CSV parsing error at line " << current_line_number
-         << ": bad column format";
-    throw FileParserException(sstr.str());
+    throw FileParserException(SimpleLang::Error(
+        Error::CSVParsingErrorColumnsBadFormat,
+        {{"line_number", std::to_string(current_line_number)}}));
   }
   return record;
 }
