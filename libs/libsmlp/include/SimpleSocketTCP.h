@@ -9,7 +9,9 @@
  */
 #pragma once
 
+#include "Common.h"
 #include <condition_variable>
+#include <cstddef>
 #include <mutex>
 #include <thread>
 #include <vector>
@@ -20,7 +22,13 @@ public:
   void handle_client(int client_socket, std::stop_token stoken);
   void stop();
 
-  unsigned short sin_port = 8080;
+  void setServerPort(unsigned short port) { this->sin_port = port; }
+  unsigned short getServerPort() const { return this->sin_port; }
+
+  void setClientBufferSize(size_t bytes_length) {
+    this->client_buff_size = bytes_length;
+  }
+  size_t getClientBufferSize() const { return this->client_buff_size; }
 
 private:
   std::vector<std::jthread> threads;
@@ -28,4 +36,6 @@ private:
   std::condition_variable condition;
   std::stop_source stopSource;
   int server_socket = 0;
+  unsigned short sin_port = 8080;
+  size_t client_buff_size = 32_K;
 };

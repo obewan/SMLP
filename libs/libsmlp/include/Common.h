@@ -32,6 +32,18 @@ struct RecordResult {
   Record record;
 };
 
+consteval unsigned long long operator"" _K(unsigned long long x) {
+  return x * 1024;
+}
+
+consteval unsigned long long operator"" _M(unsigned long long x) {
+  return x * 1024_K;
+}
+
+consteval unsigned long long operator"" _G(unsigned long long x) {
+  return x * 1024_M;
+}
+
 /**
  * @brief Common class.
  */

@@ -71,12 +71,12 @@ void SimpleSocketTCP::init() {
 }
 
 void SimpleSocketTCP::handle_client(int client_socket, std::stop_token stoken) {
-  char buffer[4096];
+  char buffer[client_buff_size];
 
   while (!stoken.stop_requested()) {
-    memset(buffer, 0, 4096);
+    memset(buffer, 0, client_buff_size);
 
-    int bytesReceived = recv(client_socket, buffer, 4096, 0);
+    int bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
     if (bytesReceived == -1) {
       std::cerr << "Error in recv(). Quitting" << std::endl;
       break;
