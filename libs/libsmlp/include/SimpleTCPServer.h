@@ -35,8 +35,9 @@ private:
   std::mutex threadMutex;
   std::condition_variable condition;
   std::stop_source stopSource;
+  std::vector<int> client_sockets;
   int server_socket = 0;
   unsigned short sin_port = 8080;
   size_t client_buff_size = 32_K;
-  bool isListening = true;
+  std::atomic<bool> isListening = true;
 };

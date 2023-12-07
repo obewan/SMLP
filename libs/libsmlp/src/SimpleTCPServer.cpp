@@ -1,5 +1,6 @@
 #include "SimpleTCPServer.h"
 #include "exception/SimpleTCPException.h"
+#include <algorithm>
 #include <cstring>
 #include <exception>
 #include <functional>
@@ -55,9 +56,14 @@ void SimpleTCPServer::init() {
         accept(server_socket, (struct sockaddr *)&client_address, &client_len);
 
     if (client_socket == -1) {
-      std::cerr << "Failed to accept client" << std::endl;
+      if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        std::cerr << "Error in accept(). Quitting" << std::endl;
+        break;
+      }
       continue;
     }
+
+    client_sockets.push_back(client_socket);
 
     std::stop_token stoken = stopSource.get_token();
     threads.emplace_back(&SimpleTCPServer::handle_client, this, client_socket,
@@ -80,12 +86,21 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
 
     int bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
     if (bytesReceived == -1) {
-      std::cerr << "Error in recv(). Quitting" << std::endl;
-      break;
+
+      if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        std::cerr << "Error in recv(). Closing client connection" << std::endl;
+        CLOSE_SOCKET(client_socket);
+        client_sockets.erase(std::ranges::find(client_sockets, client_socket));
+        return;
+      }
+      // Retry receiving data
+      continue;
     }
 
     if (bytesReceived == 0) {
       std::cout << "Client disconnected " << std::endl;
+      CLOSE_SOCKET(client_socket);
+      client_sockets.erase(std::ranges::find(client_sockets, client_socket));
       break;
     }
 
@@ -101,9 +116,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
 }
 
 void SimpleTCPServer::stop() {
-  // Lock the mutex to ensure thread safety
-  std::lock_guard<std::mutex> lock(threadMutex);
-
+  // Gracefully stop accepting new clients
   isListening = false;
 
   // Request all threads to stop
@@ -112,13 +125,19 @@ void SimpleTCPServer::stop() {
     thread.request_stop();
   }
 
-  // Join all threads
+  // Notify all waiting threads to terminate
+  condition.notify_all();
+
+  // Join all remaining threads
   for (auto &thread : threads) {
     if (thread.joinable()) {
       thread.join();
     }
   }
 
-  // Notify all waiting threads
-  condition.notify_all();
+  // Close all client sockets
+  for (auto const &socket : client_sockets) {
+    CLOSE_SOCKET(socket);
+  }
+  client_sockets.clear();
 }
