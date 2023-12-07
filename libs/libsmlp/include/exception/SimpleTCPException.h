@@ -4,12 +4,11 @@
 
 /**
  * @brief A custom exception class that inherits from std::exception.
- * This class is thrown when there are issues during SimpleSocket.
+ * This class is thrown when there are issues during SimpleTCP.
  */
-class SimpleSocketException : public std::exception {
+class SimpleTCPException : public std::exception {
 public:
-  explicit SimpleSocketException(const std::string &message)
-      : message_(message) {}
+  explicit SimpleTCPException(const std::string &message) : message_(message) {}
   const char *what() const noexcept override { return message_.c_str(); }
 
 private:

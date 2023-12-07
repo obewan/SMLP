@@ -16,7 +16,7 @@
 #include <thread>
 #include <vector>
 
-class SimpleSocketTCP {
+class SimpleTCPServer {
 public:
   void init();
   void handle_client(int client_socket, std::stop_token stoken);
@@ -38,4 +38,5 @@ private:
   int server_socket = 0;
   unsigned short sin_port = 8080;
   size_t client_buff_size = 32_K;
+  bool isListening = true;
 };
