@@ -10,6 +10,7 @@
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
+#include "CommonParameters.h"
 #include <cstddef>
 #include <fstream>
 
@@ -49,21 +50,17 @@ public:
    * @brief Calculates the line number that corresponds to the given training
    * ratio.
    *
-   * @param trainingRatio The ratio of training data to total data.
-   * @param trainingRatioLine A training ratio line to use instead.
-   * @param use_stdin if true this will use training_ratio_line
-   * @return The line number that corresponds to the training ratio.
+   * @param app_params The application parameters.
    */
-  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine,
-                              bool use_stdin) {
-    if (use_stdin) {
-      training_ratio_line = trainingRatioLine;
+  void calcTrainingRatioLine(const AppParameters &app_params) {
+    if (app_params.use_stdin || app_params.training_ratio_line > 0) {
+      training_ratio_line = app_params.training_ratio_line;
     } else {
       total_lines = countLine();
-      training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+      training_ratio_line =
+          (size_t)((float)total_lines * app_params.training_ratio);
     }
     isTrainingRatioLineProcessed = true;
-    return training_ratio_line;
   }
 
   /**

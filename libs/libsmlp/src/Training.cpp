@@ -45,9 +45,7 @@ void Training::trainFromFile(const NetworkParameters &network_params,
                              const AppParameters &app_params) {
   const auto &logger = SimpleLogger::getIntance();
   if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->getTrainingRatioLine(app_params.training_ratio,
-                                      app_params.training_ratio_line,
-                                      app_params.use_stdin);
+    fileParser_->calcTrainingRatioLine(app_params);
   }
   if (fileParser_->training_ratio_line == 0) {
     throw TrainingException(

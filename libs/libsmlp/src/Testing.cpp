@@ -24,9 +24,7 @@ void Testing::testFromFile(const NetworkParameters &network_params,
   if (app_params.mode == EMode::TrainThenTest ||
       app_params.use_training_ratio_line) {
     if (!fileParser_->isTrainingRatioLineProcessed) {
-      fileParser_->getTrainingRatioLine(app_params.training_ratio,
-                                        app_params.training_ratio_line,
-                                        app_params.use_stdin);
+      fileParser_->calcTrainingRatioLine(app_params);
     }
     if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
       throw TestingException(
