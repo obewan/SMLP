@@ -19,7 +19,7 @@
 #define CLOSE_SOCKET close
 #endif
 
-void SimpleTCPServer::init() {
+void SimpleTCPServer::start() {
 
 #ifdef _WIN32
   WSADATA wsaData;
@@ -78,43 +78,6 @@ void SimpleTCPServer::init() {
 #endif
 }
 
-void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
-  char buffer[client_buff_size];
-
-  while (!stoken.stop_requested()) {
-    memset(buffer, 0, client_buff_size);
-
-    int bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
-    if (bytesReceived == -1) {
-
-      if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        std::cerr << "Error in recv(). Closing client connection" << std::endl;
-        CLOSE_SOCKET(client_socket);
-        client_sockets.erase(std::ranges::find(client_sockets, client_socket));
-        return;
-      }
-      // Retry receiving data
-      continue;
-    }
-
-    if (bytesReceived == 0) {
-      std::cout << "Client disconnected " << std::endl;
-      CLOSE_SOCKET(client_socket);
-      client_sockets.erase(std::ranges::find(client_sockets, client_socket));
-      break;
-    }
-
-    std::cout << "Received: " << std::string(buffer, 0, bytesReceived)
-              << std::endl;
-
-    // Echo message back to client
-    send(client_socket, buffer, bytesReceived + 1, 0);
-  }
-
-  // Close the client socket
-  CLOSE_SOCKET(client_socket);
-}
-
 void SimpleTCPServer::stop() {
   // Gracefully stop accepting new clients
   isListening = false;
@@ -140,4 +103,55 @@ void SimpleTCPServer::stop() {
     CLOSE_SOCKET(socket);
   }
   client_sockets.clear();
+}
+
+void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
+  char buffer[client_buff_size];
+  std::string lineBuffer;
+
+  while (!stoken.stop_requested()) {
+    memset(buffer, 0, client_buff_size);
+
+    int bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
+    if (bytesReceived == -1) {
+
+      if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        std::cerr << "Error in recv(). Closing client connection" << std::endl;
+        CLOSE_SOCKET(client_socket);
+        client_sockets.erase(std::ranges::find(client_sockets, client_socket));
+        return;
+      }
+      // Retry receiving data
+      continue;
+    }
+
+    if (bytesReceived == 0) {
+      std::cout << "Client disconnected " << std::endl;
+      CLOSE_SOCKET(client_socket);
+      client_sockets.erase(std::ranges::find(client_sockets, client_socket));
+      break;
+    }
+
+    lineBuffer.append(buffer, bytesReceived);
+
+    size_t pos;
+    while ((pos = lineBuffer.find('\n')) != std::string::npos) {
+      std::string line = lineBuffer.substr(0, pos);
+      lineBuffer.erase(0, pos + 1);
+
+      // Process the line
+      std::cout << "Received line: " << line << std::endl;
+    }
+
+    // Echo message back to client
+    send(client_socket, buffer, bytesReceived + 1, 0);
+  }
+
+  // Process any remaining data in lineBuffer
+  if (!lineBuffer.empty()) {
+    std::cout << "Received line: " << lineBuffer << std::endl;
+  }
+
+  // Close the client socket
+  CLOSE_SOCKET(client_socket);
 }

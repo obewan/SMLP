@@ -18,9 +18,18 @@
 
 class SimpleTCPServer {
 public:
-  void init();
-  void handle_client(int client_socket, std::stop_token stoken);
+  SimpleTCPServer() = default;
+  SimpleTCPServer(const SimpleTCPServer &other) = delete;
+  SimpleTCPServer &operator=(const SimpleTCPServer &other) = delete;
+  ~SimpleTCPServer() {
+    if (isListening) {
+      stop();
+    }
+  }
+
+  void start();
   void stop();
+  void handle_client(int client_socket, std::stop_token stoken);
 
   void setServerPort(unsigned short port) { this->sin_port = port; }
   unsigned short getServerPort() const { return this->sin_port; }
