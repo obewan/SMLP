@@ -3,7 +3,7 @@
  * A Simple Multi-Layer Perceptron to study artificial networks.
  * \author  Damien Balima (https://dams-labs.net)
  * \date    August 2023
- * \link https://github.com/obewan/SMLP \endlink
+ * \see https://github.com/obewan/SMLP
  * \copyright
  *
  * [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]

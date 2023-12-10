@@ -59,7 +59,6 @@ public:
    *
    * @param network Pointer to the network.
    * @param file_path File path to the training data.
-   * @param logger
    */
   Training(std::shared_ptr<Network> network, const std::string &file_path)
       : network_(network),

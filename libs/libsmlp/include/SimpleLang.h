@@ -33,6 +33,7 @@ public:
    * @brief Gets the error message (shortcut).
    *
    * @param error
+   * @param variables
    * @return std::string
    */
   static std::string Error(Error error, const mapstr &variables = {}) {
@@ -54,7 +55,7 @@ public:
   /**
    * @brief Gets the key message (shortcut).
    *
-   * @param key
+   * @param message
    * @param variables
    * @return std::string
    */
@@ -93,6 +94,8 @@ public:
    * default error message.
    *
    * @param error The error for which to fetch the associated string.
+   * @param variables Optional map of variable names and their corresponding
+   * replacement values.
    * @return The string associated with the error if it exists in the i18n file,
    * otherwise a default error message.
    */
@@ -116,6 +119,8 @@ public:
    * default message.
    *
    * @param message The message for which to fetch the associated string.
+   * @param variables Optional map of variable names and their corresponding
+   * replacement values.
    * @return The string associated with the message if it exists in the i18n
    * file, otherwise a default message.
    */

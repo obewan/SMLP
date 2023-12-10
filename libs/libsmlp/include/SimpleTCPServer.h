@@ -1,5 +1,5 @@
 /**
- * @file SimpleSocketTCP.h
+ * @file SimpleTCPServer.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief
  * @date 2023-12-06
