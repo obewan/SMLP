@@ -6,7 +6,7 @@
 #include <memory>
 
 TEST_CASE("Testing the SimpleLogger class") {
-  const auto &logger = SimpleLogger::getIntance();
+  const auto &logger = SimpleLogger::getInstance();
   const Predict predict(nullptr,
                         {.predictive_mode = EPredictiveMode::NumberAndRaw});
   float f = 0.1234567890123456789f;

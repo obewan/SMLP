@@ -22,7 +22,7 @@ enum class LogLevel { INFO, WARN, ERROR, DEBUG };
  */
 class SimpleLogger {
 public:
-  const static SimpleLogger &getIntance() {
+  const static SimpleLogger &getInstance() {
     static SimpleLogger instance;
     return instance;
   }

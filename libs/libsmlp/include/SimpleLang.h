@@ -52,6 +52,18 @@ public:
   }
 
   /**
+   * @brief Gets the key message (shortcut).
+   *
+   * @param key
+   * @param variables
+   * @return std::string
+   */
+  static std::string Message(enum Message message,
+                             const mapstr &variables = {}) {
+    return getInstance().get(message, variables);
+  }
+
+  /**
    * @brief Fetches a localized string for a given key from the parsed JSON
    * file.
    *
@@ -93,6 +105,29 @@ public:
     } else {
       // Fallback error message
       return replaceVariables(variables, defaultErrorMessages.at(error));
+    }
+  }
+
+  /**
+   * @brief Fetches a string associated with a given error from the i18n file.
+   *
+   * This method retrieves the string associated with a given message from the
+   * i18n file. If the message does not exist in the i18n file, it returns a
+   * default message.
+   *
+   * @param message The message for which to fetch the associated string.
+   * @return The string associated with the message if it exists in the i18n
+   * file, otherwise a default message.
+   */
+  std::string get(enum Message message,
+                  const std::map<std::string, std::string, std::less<>>
+                      &variables = {}) const {
+    auto it = strings.find(messages.at(message));
+    if (it != strings.end()) {
+      return replaceVariables(variables, it->second);
+    } else {
+      // Fallback message
+      return replaceVariables(variables, defaultMessages.at(message));
     }
   }
 

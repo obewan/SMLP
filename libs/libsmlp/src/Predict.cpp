@@ -50,7 +50,7 @@ void Predict::appendValues(const std::vector<float> &values,
   };
 
   if (!values.empty()) {
-    const auto &logger = SimpleLogger::getIntance();
+    const auto &logger = SimpleLogger::getInstance();
     logger.append(roundValues ? round(values.front())
                               : truncZero(values.front()));
     for (auto it = std::next(values.begin()); it != values.end(); ++it) {
@@ -61,7 +61,7 @@ void Predict::appendValues(const std::vector<float> &values,
 
 void Predict::showOutput(const std::vector<float> &inputs,
                          const std::vector<float> &predicteds) const {
-  const auto &logger = SimpleLogger::getIntance();
+  const auto &logger = SimpleLogger::getInstance();
   logger.setPrecision(3);
   switch (app_params_.predictive_mode) {
   case EPredictiveMode::CSV: {

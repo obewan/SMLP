@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "CommonErrors.h"
+#include "CommonMessages.h"
 #include "CommonModes.h"
 #include "CommonParameters.h"
 #include <map>

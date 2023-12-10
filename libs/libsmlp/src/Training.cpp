@@ -21,7 +21,7 @@ void Training::train(const NetworkParameters &network_params,
 
 void Training::trainFromStdin(const NetworkParameters &network_params,
                               const AppParameters &app_params) {
-  const auto &logger = SimpleLogger::getIntance();
+  const auto &logger = SimpleLogger::getInstance();
   if (app_params.mode == EMode::TrainTestMonitored) {
     createTesting();
   }
@@ -43,7 +43,7 @@ void Training::trainFromStdin(const NetworkParameters &network_params,
 
 void Training::trainFromFile(const NetworkParameters &network_params,
                              const AppParameters &app_params) {
-  const auto &logger = SimpleLogger::getIntance();
+  const auto &logger = SimpleLogger::getInstance();
   if (!fileParser_->isTrainingRatioLineProcessed) {
     fileParser_->calcTrainingRatioLine(app_params);
   }
