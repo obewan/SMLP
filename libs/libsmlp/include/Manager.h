@@ -11,6 +11,8 @@
 
 #include "Common.h"
 #include "NetworkImportExportJSON.h"
+#include "Predict.h"
+#include "Training.h"
 #include <memory>
 
 class Manager {
@@ -24,13 +26,15 @@ public:
 
   /**
    * @brief This method apply the model on inputs to predict the outputs
+   * @param line Optional line to use.
    */
-  void predict();
+  void predict(const std::string &line = "");
 
   /**
    * @brief This method trains the model.
+   * @param line Optional line to use.
    */
-  void train();
+  void train(const std::string &line = "");
 
   /**
    * @brief This method tests the model.
@@ -50,7 +54,7 @@ public:
    *
    * @param line
    */
-  void processTCPClient(std::string line);
+  void processTCPClient(const std::string &line);
 
   /**
    * @brief run the selected mode.
@@ -96,4 +100,7 @@ public:
 private:
   Manager() = default;
   std::string showInlineHeader() const;
+  std::unique_ptr<Predict> predict_ = nullptr;
+  std::unique_ptr<Training> training_ = nullptr;
+  std::unique_ptr<Testing> testing_ = nullptr;
 };

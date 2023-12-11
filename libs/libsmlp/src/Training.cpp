@@ -11,8 +11,10 @@
 using namespace std::string_view_literals;
 
 void Training::train(const NetworkParameters &network_params,
-                     const AppParameters &app_params) {
-  if (app_params.use_stdin) {
+                     const AppParameters &app_params, const std::string &line) {
+  if (app_params.use_socket) {
+    processInputLine(network_params, app_params, line);
+  } else if (app_params.use_stdin) {
     trainFromStdin(network_params, app_params);
   } else {
     trainFromFile(network_params, app_params);
@@ -83,9 +85,9 @@ void Training::trainFromFile(const NetworkParameters &network_params,
   }
 }
 
-void Training::processInputLine(const NetworkParameters &network_params,
-                                const AppParameters &app_params,
-                                const std::string &line) const {
+RecordResult Training::processInputLine(const NetworkParameters &network_params,
+                                        const AppParameters &app_params,
+                                        const std::string &line) const {
   RecordResult result =
       fileParser_->processLine(network_params, app_params, line);
   if (result.isSuccess) {
@@ -93,4 +95,5 @@ void Training::processInputLine(const NetworkParameters &network_params,
     network_->backwardPropagation(result.record.second);
     network_->updateWeights();
   }
+  return result;
 }

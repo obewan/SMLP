@@ -1,40 +1,46 @@
 #include "Manager.h"
-#include "Predict.h"
-#include "Training.h"
 #include "exception/ManagerException.h"
 
-void Manager::predict() {
-  auto predict = std::make_unique<Predict>(network, app_params);
-  predict->predict();
+void Manager::predict(const std::string &line) {
+  if (!predict_) {
+    predict_ = std::make_unique<Predict>(network, app_params);
+  }
+  predict_->predict(line);
 }
 
-void Manager::train() {
+void Manager::train(const std::string &line) {
   const auto &logger = SimpleLogger::getInstance();
-  if (app_params.use_stdin) {
-    logger.info("Training, using command pipe input...");
-    if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
-      logger.warn("Epochs and training ratio are disabled using command "
-                  "pipe input. Use training_ratio_line parameter instead.");
+  if (!app_params.use_socket) {
+    if (app_params.use_stdin) {
+      logger.info("Training, using command pipe input...");
+      if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
+        logger.warn("Epochs and training ratio are disabled using command "
+                    "pipe input. Use training_ratio_line parameter instead.");
+      }
+    } else {
+      logger.info("Training, using file ", app_params.data_file);
     }
-  } else {
-    logger.info("Training, using file ", app_params.data_file);
+    logger.info(showInlineHeader());
   }
-  logger.info(showInlineHeader());
-  auto training = std::make_unique<Training>(network, app_params.data_file);
-  training->train(network_params, app_params);
+  if (!training_) {
+    training_ = std::make_unique<Training>(network, app_params.data_file);
+  }
+  training_->train(network_params, app_params, line);
 }
 
 void Manager::test() {
   const auto &logger = SimpleLogger::getInstance();
-  auto testing = std::make_unique<Testing>(network, app_params.data_file);
   if (app_params.use_stdin) {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
   } else {
     logger.info("Testing, using file ", app_params.data_file);
   }
-  testing->test(network_params, app_params);
+  if (!testing_) {
+    testing_ = std::make_unique<Testing>(network, app_params.data_file);
+  }
+  testing_->test(network_params, app_params);
   logger.out(
-      testing->getTestingResults()->showDetailledResults(app_params.mode));
+      testing_->getTestingResults()->showDetailledResults(app_params.mode));
 }
 
 void Manager::trainTestMonitored() {
@@ -53,8 +59,10 @@ void Manager::trainTestMonitored() {
   }
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
-  Training training(network, app_params.data_file);
-  training.train(network_params, app_params);
+  if (!training_) {
+    training_ = std::make_unique<Training>(network, app_params.data_file);
+  }
+  training_->train(network_params, app_params);
 }
 
 std::string Manager::showInlineHeader() const {
@@ -157,4 +165,31 @@ void Manager::exportNetwork() {
   importExportJSON.exportModel(network.get(), app_params);
 }
 
-void Manager::processTCPClient(std::string line) {}
+void Manager::processTCPClient(const std::string &line) {
+  if (!app_params.use_socket) {
+    throw ManagerException("TCP socket not in use.");
+  }
+  switch (app_params.mode) {
+  case EMode::Predictive:
+    predict(line);
+    break;
+  case EMode::TrainOnly:
+    train(line);
+    break;
+  case EMode::TestOnly:
+    // TODO
+    // test();
+    break;
+  case EMode::TrainTestMonitored:
+    // TODO
+    // trainTestMonitored();
+    break;
+  case EMode::TrainThenTest:
+    // TODO
+    // train();
+    // test();
+    break;
+  default:
+    throw ManagerException("Unimplemented mode.");
+  }
+}

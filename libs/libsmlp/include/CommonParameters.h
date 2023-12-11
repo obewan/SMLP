@@ -30,6 +30,7 @@ struct AppParameters {
   bool output_at_end = false;
   bool verbose = false;
   bool use_stdin = false;
+  bool use_socket = false;
   bool disable_stdin = false;
   bool use_training_ratio_line = false;
   EMode mode = EMode::TrainThenTest;

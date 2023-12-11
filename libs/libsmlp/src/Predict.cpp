@@ -5,8 +5,10 @@
 #include <iostream>
 #include <math.h>
 
-void Predict::predict() const {
-  if (app_params_.use_stdin) {
+void Predict::predict(const std::string &line) const {
+  if (app_params_.use_socket) {
+    processLine(line);
+  } else if (app_params_.use_stdin) {
     processStdin();
   } else {
     processFile();
@@ -16,12 +18,7 @@ void Predict::predict() const {
 void Predict::processStdin() const {
   std::string line;
   while (std::getline(std::cin, line)) {
-    RecordResult result =
-        fileParser_->processLine(network_->params, app_params_, line);
-    if (result.isSuccess) {
-      auto predicteds = network_->forwardPropagation(result.record.first);
-      showOutput(result.record.first, predicteds);
-    }
+    processLine(line);
   }
 }
 
@@ -31,15 +28,20 @@ void Predict::processFile() const {
   }
   bool isParsing = true;
   while (isParsing) {
-    RecordResult result =
-        fileParser_->processLine(network_->params, app_params_);
-    if (result.isSuccess) {
-      auto predicteds = network_->forwardPropagation(result.record.first);
-      showOutput(result.record.first, predicteds);
-    }
+    auto result = processLine();
     isParsing = result.isSuccess && !result.isEndOfFile;
   }
   fileParser_->closeFile();
+}
+
+RecordResult Predict::processLine(const std::string &line) const {
+  RecordResult result =
+      fileParser_->processLine(network_->params, app_params_, line);
+  if (result.isSuccess) {
+    auto predicteds = network_->forwardPropagation(result.record.first);
+    showOutput(result.record.first, predicteds);
+  }
+  return result;
 }
 
 void Predict::appendValues(const std::vector<float> &values,

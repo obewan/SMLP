@@ -69,9 +69,10 @@ public:
    *
    * @param network_params Network parameters for training.
    * @param app_params Application parameters.
+   * @param line Optional line to use.
    */
   void train(const NetworkParameters &network_params,
-             const AppParameters &app_params);
+             const AppParameters &app_params, const std::string &line = "");
 
   /**
    * @brief Sets the network for training.
@@ -132,9 +133,9 @@ private:
                       const AppParameters &app_params);
   void trainFromFile(const NetworkParameters &network_params,
                      const AppParameters &app_params);
-  void processInputLine(const NetworkParameters &network_params,
-                        const AppParameters &app_params,
-                        const std::string &line = "") const;
+  RecordResult processInputLine(const NetworkParameters &network_params,
+                                const AppParameters &app_params,
+                                const std::string &line = "") const;
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;

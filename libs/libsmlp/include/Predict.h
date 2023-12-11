@@ -29,7 +29,9 @@ public:
         fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
         app_params_(app_params) {}
 
-  void predict() const;
+  void predict(const std::string &line = "") const;
+
+  RecordResult processLine(const std::string &line = "") const;
 
   void appendValues(const std::vector<float> &values, bool roundValues) const;
 
