@@ -1,10 +1,12 @@
 #include "SimpleTCPServer.h"
+#include "Manager.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <cstring>
 #include <exception>
 #include <functional>
 #include <iostream>
+#include <mutex>
 #include <netinet/in.h>
 #include <stop_token>
 #include <sys/socket.h>
@@ -116,6 +118,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
     if (bytesReceived == -1) {
 
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        std::scoped_lock<std::mutex> lock(threadMutex);
         std::cerr << "Error in recv(). Closing client connection" << std::endl;
         CLOSE_SOCKET(client_socket);
         client_sockets.erase(std::ranges::find(client_sockets, client_socket));
@@ -126,6 +129,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
     }
 
     if (bytesReceived == 0) {
+      std::scoped_lock<std::mutex> lock(threadMutex);
       std::cout << "Client disconnected " << std::endl;
       CLOSE_SOCKET(client_socket);
       client_sockets.erase(std::ranges::find(client_sockets, client_socket));
@@ -138,20 +142,24 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
     while ((pos = lineBuffer.find('\n')) != std::string::npos) {
       std::string line = lineBuffer.substr(0, pos);
       lineBuffer.erase(0, pos + 1);
-
-      // Process the line
-      std::cout << "Received line: " << line << std::endl;
+      processLine(line);
     }
 
     // Echo message back to client
-    send(client_socket, buffer, bytesReceived + 1, 0);
+    // send(client_socket, buffer, bytesReceived + 1, 0);
   }
 
   // Process any remaining data in lineBuffer
   if (!lineBuffer.empty()) {
-    std::cout << "Received line: " << lineBuffer << std::endl;
+    processLine(lineBuffer);
   }
 
   // Close the client socket
   CLOSE_SOCKET(client_socket);
+}
+
+void SimpleTCPServer::processLine(const std::string &line) {
+  std::scoped_lock<std::mutex> lock(threadMutex);
+  std::cout << "Received line: " << line << std::endl;
+  Manager::getInstance().processTCPClient(line);
 }

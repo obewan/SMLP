@@ -39,6 +39,8 @@ public:
   }
   size_t getClientBufferSize() const { return this->client_buff_size; }
 
+  void processLine(const std::string &line);
+
 private:
   std::vector<std::jthread> threads;
   std::mutex threadMutex;

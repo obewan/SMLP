@@ -92,7 +92,7 @@ int SimpleMLP::init(int argc, char **argv) {
       logger.info("Stdin disabled");
     }
 
-    manager->importOrBuildNetwork();
+    Manager::getInstance().importOrBuildNetwork();
 
     return EXIT_SUCCESS;
 

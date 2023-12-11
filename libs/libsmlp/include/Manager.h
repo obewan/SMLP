@@ -15,6 +15,13 @@
 
 class Manager {
 public:
+  static Manager &getInstance() {
+    static Manager instance;
+    return instance;
+  }
+  Manager(Manager const &) = delete;
+  void operator=(Manager const &) = delete;
+
   /**
    * @brief This method apply the model on inputs to predict the outputs
    */
@@ -37,6 +44,13 @@ public:
    * recommended for use with smaller datasets and a lower number of epochs.
    */
   void trainTestMonitored();
+
+  /**
+   * @brief Process line from TCP Client socket.
+   *
+   * @param line
+   */
+  void processTCPClient(std::string line);
 
   /**
    * @brief run the selected mode.
@@ -80,5 +94,6 @@ public:
   NetworkImportExportJSON importExportJSON;
 
 private:
+  Manager() = default;
   std::string showInlineHeader() const;
 };

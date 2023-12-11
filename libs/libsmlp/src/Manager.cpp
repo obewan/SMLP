@@ -156,3 +156,5 @@ void Manager::exportNetwork() {
               "...");
   importExportJSON.exportModel(network.get(), app_params);
 }
+
+void Manager::processTCPClient(std::string line) {}

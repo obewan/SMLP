@@ -20,9 +20,7 @@
  */
 class SimpleMLP {
 public:
-  SimpleMLP()
-      : manager(std::make_shared<Manager>()), app_params(manager->app_params),
-        network_params(manager->network_params){};
+  SimpleMLP() = default;
 
   static const int EXIT_HELP = 2;
   static const int EXIT_VERSION = 3;
@@ -40,22 +38,18 @@ public:
    * @brief Main run
    *
    */
-  void run() const {
-    manager->runMode();
-    if (manager->shouldExportNetwork()) {
-      manager->exportNetwork();
+  void run() {
+    auto &manager = Manager::getInstance();
+    manager.runMode();
+    if (manager.shouldExportNetwork()) {
+      manager.exportNetwork();
     }
   }
-
-  /**
-   * @brief Manager
-   */
-  std::shared_ptr<Manager> manager = nullptr;
 
 private:
   int parseArgs(int argc, char **argv);
   void ConfigSettings(const SimpleConfig &config);
   void checkStdin();
-  AppParameters &app_params;
-  NetworkParameters &network_params;
+  AppParameters &app_params = Manager::getInstance().app_params;
+  NetworkParameters &network_params = Manager::getInstance().network_params;
 };
