@@ -13,6 +13,9 @@
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "Training.h"
+#include "TrainingFile.h"
+#include "TrainingSocket.h"
+#include "TrainingStdin.h"
 #include <memory>
 
 class Manager {
@@ -96,6 +99,35 @@ public:
    * @brief ImportExportJSON tool.
    */
   NetworkImportExportJSON importExportJSON;
+
+  /**
+   * @brief Create a Training object
+   *
+   * @param network_params
+   * @param app_params
+   * @return std::unique_ptr<Training>
+   */
+  std::unique_ptr<Training> createTraining() {
+    if (app_params.use_socket) {
+      auto trainingSocket =
+          std::make_unique<TrainingSocket>(network_params, app_params);
+      trainingSocket->setNetwork(network);
+      trainingSocket->createFileParser();
+      return trainingSocket;
+    } else if (app_params.use_stdin) {
+      auto trainingStdin =
+          std::make_unique<TrainingStdin>(network_params, app_params);
+      trainingStdin->setNetwork(network);
+      trainingStdin->createFileParser();
+      return trainingStdin;
+    } else {
+      auto trainingFile =
+          std::make_unique<TrainingFile>(network_params, app_params);
+      trainingFile->setNetwork(network);
+      trainingFile->createFileParser();
+      return trainingFile;
+    }
+  }
 
 private:
   Manager() = default;

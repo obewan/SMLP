@@ -1,5 +1,8 @@
 #include "Common.h"
 #include "Training.h"
+#include "TrainingFile.h"
+#include "TrainingSocket.h"
+#include "TrainingStdin.h"
 #include "doctest.h"
 #include <iostream>
 #include <memory>
@@ -7,7 +10,7 @@
 TEST_CASE("Testing the Training class") {
   SUBCASE("Test Constructor") {
     CHECK_NOTHROW({
-      auto training = new Training(nullptr, "");
+      auto training = new TrainingFile({}, {});
       delete training;
     });
   }
@@ -18,18 +21,19 @@ TEST_CASE("Testing the Training class") {
   AppParameters app_params{.data_file = test_file};
 
   auto network = std::make_shared<Network>(network_params);
-  Training training(network, test_file);
+  TrainingFile training(network_params, app_params);
+  training.setNetwork(network);
+  training.createFileParser();
 
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.train(network_params, app_params),
-                      TrainingException);
+      CHECK_THROWS_AS(training.train(), TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       app_params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.train(network_params, app_params));
+      CHECK_NOTHROW(training.train());
     }
 
     SUBCASE("using stdin") {
@@ -53,7 +57,10 @@ TEST_CASE("Testing the Training class") {
       // Redirect std::cin
       std::cin.rdbuf(inputDataStream.rdbuf());
 
-      CHECK_NOTHROW(training.train(network_params, app_params_for_stdin));
+      TrainingStdin trainingStdin(network_params, app_params_for_stdin);
+      trainingStdin.setNetwork(network);
+      trainingStdin.createFileParser();
+      CHECK_NOTHROW(training.train());
 
       // Restore std::cin to normal after the test
       std::cin.rdbuf(cin_buffer);
@@ -63,13 +70,12 @@ TEST_CASE("Testing the Training class") {
   SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.train(network_params, app_params),
-                      TrainingException);
+      CHECK_THROWS_AS(training.train(), TrainingException);
     }
 
     SUBCASE("valid training_ratio") {
       app_params.training_ratio = 0.5f;
-      CHECK_NOTHROW(training.train(network_params, app_params));
+      CHECK_NOTHROW(training.train());
       CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
       CHECK(training.getFileParser()->training_ratio_line == 5);
       CHECK(training.getFileParser()->total_lines == 10);
@@ -82,7 +88,7 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
-      CHECK_NOTHROW(training.train(network_params, app_params));
+      CHECK_NOTHROW(training.train());
 
       auto testing = training.getTesting();
       CHECK(testing != nullptr);

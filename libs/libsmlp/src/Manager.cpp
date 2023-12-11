@@ -23,9 +23,9 @@ void Manager::train(const std::string &line) {
     logger.info(showInlineHeader());
   }
   if (!training_) {
-    training_ = std::make_unique<Training>(network, app_params.data_file);
+    training_ = createTraining();
   }
-  training_->train(network_params, app_params, line);
+  training_->train(line);
 }
 
 void Manager::test() {
@@ -60,9 +60,9 @@ void Manager::trainTestMonitored() {
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
   if (!training_) {
-    training_ = std::make_unique<Training>(network, app_params.data_file);
+    training_ = createTraining();
   }
-  training_->train(network_params, app_params);
+  training_->train();
 }
 
 std::string Manager::showInlineHeader() const {
@@ -124,7 +124,8 @@ void Manager::runMode() {
 
 void Manager::importOrBuildNetwork() {
   const auto &logger = SimpleLogger::getInstance();
-  // avoiding header lines on Predictive mode, for commands chaining with pipes
+  // avoiding header lines on Predictive mode, for commands chaining with
+  // pipes
   auto logNetworkImport = [this, &logger]() {
     if (app_params.mode != EMode::Predictive) {
       logger.info("Importing network model from ", app_params.network_to_import,

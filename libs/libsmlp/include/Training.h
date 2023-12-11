@@ -13,6 +13,7 @@
 #include "Network.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
+#include <SimpleLogger.h>
 #include <memory>
 #include <string>
 
@@ -50,29 +51,11 @@ predict the correct outputs for the given inputs.
  */
 class Training {
 public:
-  // Default constructor
-  Training() = default;
+  Training(const NetworkParameters &network_params,
+           const AppParameters &app_params)
+      : network_params_(network_params), app_params_(app_params) {}
 
-  /**
-   * @brief Constructor that takes a pointer to the network and the file path to
-   * training data as arguments.
-   *
-   * @param network Pointer to the network.
-   * @param file_path File path to the training data.
-   */
-  Training(std::shared_ptr<Network> network, const std::string &file_path)
-      : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(file_path)) {}
-
-  /**
-   * @brief This method trains the model with the given parameters.
-   *
-   * @param network_params Network parameters for training.
-   * @param app_params Application parameters.
-   * @param line Optional line to use.
-   */
-  void train(const NetworkParameters &network_params,
-             const AppParameters &app_params, const std::string &line = "");
+  virtual void train(const std::string &line = "") = 0;
 
   /**
    * @brief Sets the network for training.
@@ -87,6 +70,16 @@ public:
    * @return Pointer to the network.
    */
   std::shared_ptr<Network> getNetwork() const { return network_; }
+
+  /**
+   * @brief Create a File Parser object
+   *
+   */
+  void createFileParser() {
+    if (!fileParser_) {
+      fileParser_ = std::make_shared<DataFileParser>(app_params_.data_file);
+    }
+  }
 
   /**
    * @brief Sets the file parser for training data.
@@ -118,7 +111,9 @@ public:
    * @param app_params
    */
   void createTesting() {
-    testing_ = std::make_shared<Testing>(network_, fileParser_);
+    if (!testing_) {
+      testing_ = std::make_shared<Testing>(network_, fileParser_);
+    }
   }
 
   /**
@@ -128,14 +123,22 @@ public:
    */
   std::shared_ptr<Testing> getTesting() const { return testing_; }
 
-private:
-  void trainFromStdin(const NetworkParameters &network_params,
-                      const AppParameters &app_params);
-  void trainFromFile(const NetworkParameters &network_params,
-                     const AppParameters &app_params);
-  RecordResult processInputLine(const NetworkParameters &network_params,
-                                const AppParameters &app_params,
-                                const std::string &line = "") const;
+protected:
+  RecordResult processInputLine(const std::string &line = "") const {
+    RecordResult result =
+        fileParser_->processLine(network_params_, app_params_, line);
+    if (result.isSuccess) {
+      network_->forwardPropagation(result.record.first);
+      network_->backwardPropagation(result.record.second);
+      network_->updateWeights();
+    }
+    return result;
+  }
+
+  const NetworkParameters &network_params_;
+  const AppParameters &app_params_;
+  const SimpleLogger &logger_ = SimpleLogger::getInstance();
+
   std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
