@@ -16,11 +16,11 @@
     "-y,--output_index_to_monitor": "Indicate the output neuron index to monitor during a TrainTestMonitored mode. If index = 0 there will be no progress monitoring. Default is 1, the first neuron output.",
     "-a,--hidden_activation_function": "Select the hidden neurons activation function:\n  - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter.\n  - LReLU: Leaky ReLU.\n  - PReLU: Parametric ReLU, require an hidden_activation_alpha_parameter.\n  - ReLU: Rectified Linear Unit.\n  - Sigmoid (default).\n  - Tanh: Hyperbolic Tangent",
     "-b,--output_activation_function": "Select the output neurons activation function:\n  - ELU: Exponential Linear Units, require an output_activation_alpha parameter.\n  - LReLU: Leaky ReLU.\n  - PReLU: Parametric ReLU, require an output_activation_alpha parameter.\n  - ReLU: Rectified Linear Unit.\n  - Sigmoid (default).\n  - Tanh: Hyperbolic Tangent",
-    "-k,--hidden_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on hidden layers",
-    "-q,--output_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on output layer",
+    "-A,--hidden_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on hidden layers",
+    "-B,--output_activation_alpha": "The alpha parameter value for ELU and PReLU activation functions on output layer",
     "-x,--disable_stdin": "Disable stdin input like command pipes and interactive testing",
     "-v,--version": "Show current version",
-    "-w,--verbose": "Verbose logs",
+    "-V,--verbose": "Verbose logs",
 
 
     "CSVParsingError": "CSV parsing error at line %%line_number%%",

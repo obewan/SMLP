@@ -31,8 +31,6 @@ public:
 
   void predict(const std::string &line = "") const;
 
-  RecordResult processLine(const std::string &line = "") const;
-
   void appendValues(const std::vector<float> &values, bool roundValues) const;
 
   void showOutput(const std::vector<float> &inputs,
@@ -69,6 +67,7 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
+  RecordResult processLine(const std::string &line = "") const;
   void processStdin() const;
   void processFile() const;
   std::shared_ptr<Network> network_ = nullptr;

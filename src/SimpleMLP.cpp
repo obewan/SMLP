@@ -168,15 +168,15 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addOptionTransform("-b,--output_activation_function",
                      network_params.output_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
-  addOption("-k,--hidden_activation_alpha",
+  addOption("-A,--hidden_activation_alpha",
             network_params.hidden_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
-  addOption("-q,--output_activation_alpha",
+  addOption("-B,--output_activation_alpha",
             network_params.output_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
   addFlag("-x,--disable_stdin", app_params.disable_stdin);
   addFlag("-v,--version", version);
-  addFlag("-w,--verbose", app_params.verbose);
+  addFlag("-V,--verbose", app_params.verbose);
 
   // Parsing
   try {

@@ -30,7 +30,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
 - [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) code metrics.
 - [Valgrind](https://valgrind.org/) memory check.
-- [Microsoft Bing AI](https://www.microsoft.com/en-us/bing?ep=140&es=31&form=MA13FV), [OpenAI ChatGPT](https://chat.openai.com/) and [Google Bard](https://bard.google.com/) for code reviews.
+- [Microsoft Bing AI](https://www.microsoft.com/en-us/bing?ep=140&es=31&form=MA13FV), [OpenAI ChatGPT](https://chat.openai.com/) and [Google Bard](https://bard.google.com/) code reviews.
 
 Includes a mushroom edibility dataset example.
 
@@ -122,13 +122,13 @@ Indicate the output neuron index to monitor during a TrainTestMonitored mode. If
 Select the hidden neurons activation function: - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter. - LReLU: Leaky ReLU. - PReLU: Parametric ReLU, require an hidden_activation_alpha_parameter. - ReLU: Rectified Linear Unit. - Sigmoid (default). - Tanh: Hyperbolic Tangent
 -b,--output_activation_function ENUM:value in {ELU->0,LReLU->1,PReLU->2,ReLU->3,Sigmoid->4,Tanh->5} OR {0,1,2,3,4,5} [4]
 Select the output neurons activation function: - ELU: Exponential Linear Units, require an output_activation_alpha parameter. - LReLU: Leaky ReLU. - PReLU: Parametric ReLU, require an output_activation_alpha parameter. - ReLU: Rectified Linear Unit. - Sigmoid (default). - Tanh: Hyperbolic Tangent
--k,--hidden_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+-A,--hidden_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
 The alpha parameter value for ELU and PReLU activation functions on hidden layers
--q,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+-B,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
 The alpha parameter value for ELU and PReLU activation functions on output layer
 -x,--disable_stdin Disable stdin input like command pipes and interactive testing
 -v,--version Show current version
--w,--verbose Verbose logs
+-V,--verbose Verbose logs
 
 ```
 
