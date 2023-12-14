@@ -10,10 +10,9 @@
 #pragma once
 #include "Testing.h"
 
-class TestingSocket : Testing {
+class TestingSocket : public Testing {
 public:
   using Testing::Testing;
-  virtual ~TestingSocket() = default;
 
-  void test() override {}
+  void test(size_t epoch = 0, size_t current_line = 0) override {}
 };

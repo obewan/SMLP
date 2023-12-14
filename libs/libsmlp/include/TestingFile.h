@@ -9,20 +9,23 @@
  */
 #pragma once
 #include "CommonModes.h"
+#include "SimpleLang.h"
 #include "Testing.h"
-#include "TestingResult.h"
+#include "exception/TestingException.h"
 #include <memory>
 
-class TestingFile : Testing {
+class TestingFile : public Testing {
 public:
-  using Testing::Testing;
-  virtual ~TestingFile() = default;
+  explicit TestingFile(const AppParameters &app_params) : Testing(app_params) {}
 
-  void test(size_t epoch = 0) override {
-    if (app_params.mode == EMode::TrainThenTest ||
-        app_params.use_training_ratio_line) {
+  void test(size_t epoch = 0, size_t current_line = 0) override {
+    if (!fileParser_ || !network_) {
+      throw TestingException(SimpleLang::Error(Error::InternalError));
+    }
+    if (app_params_.mode == EMode::TrainThenTest ||
+        app_params_.use_training_ratio_line) {
       if (!fileParser_->isTrainingRatioLineProcessed) {
-        fileParser_->calcTrainingRatioLine(app_params);
+        fileParser_->calcTrainingRatioLine(app_params_);
       }
       if (fileParser_->training_ratio_line >= fileParser_->total_lines) {
         throw TestingException(
@@ -34,37 +37,16 @@ public:
       fileParser_->openFile();
     }
 
-    std::vector<TestingResult::TestResult> testResults;
-    bool isTesting = true;
-    auto output_neuron_to_monitor = app_params.output_index_to_monitor;
     auto network_params = network_->params;
-    bool isValidOutputNeuronToMonitor =
-        output_neuron_to_monitor < network_params.output_size;
-    while (isTesting) {
+    while (true) {
       RecordResult result =
-          fileParser_->processLine(network_params, app_params);
-      if (result.isSuccess) {
-        auto testResult =
-            testLine(result, fileParser_->current_line_number, epoch);
-
-        testingResults_->processRecordTestingResult(testResult);
-        if (app_params.mode != EMode::TrainTestMonitored) {
-
-        } else if (isValidOutputNeuronToMonitor) {
-          testResults.emplace_back(
-              epoch, fileParser_->current_line_number,
-              result.record.outputs[output_neuron_to_monitor],
-              testResult.outputs[output_neuron_to_monitor]);
-        }
-      } else {
-        isTesting = false;
+          fileParser_->processLine(network_params, app_params_);
+      if (!result.isSuccess) {
+        break;
       }
+      auto testResult =
+          testLine(result, fileParser_->current_line_number, epoch);
+      testingResults_->processRecordTestingResult(testResult);
     }
-
-    testingResults_->processResults(testResults, app_params.mode, epoch);
   }
-
-private:
-  std::shared_ptr<TestingResult> testingResults_ =
-      std::make_shared<TestingResult>();
 };

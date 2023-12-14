@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "TestingFile.h"
 #include "Training.h"
 #include "TrainingFile.h"
 #include "TrainingSocket.h"
@@ -88,18 +89,18 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
+      auto testing = std::make_shared<TestingFile>(app_params);
+      CHECK(testing != nullptr);
+      training.setTesting(testing);
+      testing->setFileParser(training.getFileParser());
+      testing->setNetwork(training.getNetwork());
       CHECK_NOTHROW(training.train());
 
-      auto testing = training.getTesting();
-      CHECK(testing != nullptr);
       auto testProgress = testing->getTestingResults()->getProgress();
       CHECK(testProgress.empty() == false);
       CHECK(testProgress.size() ==
             training.getFileParser()->total_lines -
                 training.getFileParser()->training_ratio_line);
-      for (auto const &[key, values] : testProgress) {
-        CHECK(values.size() == app_params.num_epochs);
-      }
 
       // Get the first element
       auto it_first = testProgress.begin();
@@ -113,10 +114,10 @@ TEST_CASE("Testing the Training class") {
       auto lastValue = it_last->second;
       CHECK(lastKey == training.getFileParser()->total_lines);
       CHECK(lastKey > firstKey);
-      CHECK(lastValue.back() > firstValue.front());
+      CHECK(lastValue.current > firstValue.previous);
 
-      auto stats = testing->getTestingResults()->calcStats(true);
-      CHECK(stats.convergence > 0);
+      testing->getTestingResults()->calcStats();
+      CHECK(testing->getTestingResults()->getStats().convergence > 0);
     }
   }
 }

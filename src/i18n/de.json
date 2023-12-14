@@ -29,6 +29,7 @@
     "CSVParsingErrorColumnsSize": "CSV-Parsing-Fehler in Zeile %%line_number%%: es gibt %%value%% Spalten statt der erwarteten %%expected%%.",
     "DifferentModelVersion": "Ihre Dateimodellversion (%%vuser%%) stimmt nicht mit der aktuellen Version (%%vcurrent%%) überein",
     "FailedToOpenFile": "Datei konnte nicht geöffnet werden",
+    "InternalError": "Interner Fehler",
     "InvalidJsonFile": "Ungültige JSON-Datei",
     "InvalidTotalInput": "Ungültige Anzahl von Eingabewerten",
     "InvalidTotalOutput": "Ungültige erwartete Ausgabegröße",

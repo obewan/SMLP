@@ -29,6 +29,7 @@
     "CSVParsingErrorColumnsSize": "Erreur d'analyse CSV à la ligne %%line_number%% : il y a %%value%% colonnes au lieu de %%expected%% attendues.",
     "DifferentModelVersion": "La version de votre fichier modèle (%%vuser%%) n'est pas la même que la version actuelle (%%vcurrent%%)",
     "FailedToOpenFile": "Échec de l'ouverture du fichier",
+    "InternalError":"Erreur interne",
     "InvalidJsonFile": "Fichier JSON invalide",
     "InvalidTotalInput": "Nombre invalide de valeurs d'entrée",
     "InvalidTotalOutput": "Taille de sortie attendue invalide",

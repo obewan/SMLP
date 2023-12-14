@@ -1,7 +1,8 @@
 #include "Common.h"
 #include "DataFileParser.h"
 #include "SimpleLang.h"
-#include "Testing.h"
+#include "TestingFile.h"
+#include "TestingStdin.h"
 #include "doctest.h"
 #include "exception/TestingException.h"
 #include <iostream>
@@ -13,7 +14,8 @@ TEST_CASE("Testing the Testing class") {
     CHECK_NOTHROW({
       auto network = std::make_shared<Network>();
       auto fileparser = std::make_shared<DataFileParser>("");
-      auto testing = new Testing(network, fileparser);
+      auto testing = new TestingFile({});
+      testing->setFileParser(fileparser);
       delete testing;
     });
   }
@@ -35,16 +37,19 @@ TEST_CASE("Testing the Testing class") {
                                                     .output_size = 1,
                                                     .hiddens_count = 1});
     auto fileparser = std::make_shared<DataFileParser>("");
-    auto testing = new Testing(network, fileparser);
+
     AppParameters app_params = {.training_ratio_line = 0,
                                 .use_stdin = true,
                                 .use_training_ratio_line = true,
                                 .mode = EMode::TrainTestMonitored};
+    auto testing = new TestingStdin(app_params);
+    testing->setNetwork(network);
+    testing->setFileParser(fileparser);
 
     // Redirect std::cin
     std::cin.rdbuf(inputDataStream.rdbuf());
 
-    CHECK_NOTHROW(testing->test(network->params, app_params););
+    CHECK_NOTHROW(testing->test(););
 
     // Restore std::cin to normal after the test
     std::cin.rdbuf(cin_buffer);
@@ -52,10 +57,12 @@ TEST_CASE("Testing the Testing class") {
   SUBCASE("Test exception") {
     auto network = std::make_shared<Network>();
     auto fileparser = std::make_shared<DataFileParser>("../data/test_file.csv");
-    auto testing = new Testing(network, fileparser);
+    auto testing =
+        new TestingFile({.training_ratio = 1, .mode = EMode::TrainThenTest});
+    testing->setNetwork(network);
+    testing->setFileParser(fileparser);
     CHECK_THROWS_WITH_AS(
-        testing->testFromFile(
-            {}, {.training_ratio = 1, .mode = EMode::TrainThenTest}),
+        testing->test(),
         SimpleLang::Error(Error::InvalidTrainingRatioTooBig).c_str(),
         TestingException);
     delete testing;

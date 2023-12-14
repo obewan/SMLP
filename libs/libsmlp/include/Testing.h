@@ -10,7 +10,6 @@
 #pragma once
 #include "Common.h"
 #include "DataFileParser.h"
-#include "Manager.h"
 #include "Network.h"
 #include "TestingResult.h"
 #include "exception/TestingException.h"
@@ -28,12 +27,14 @@ public:
    * @brief Constructor that takes a pointer to the network and a pointer to the
    * file parser as arguments.
    *
-   * @param network Pointer to the network.
-   * @param fileparser Pointer to the file parser.
+   * @param app_params
    */
-  Testing() = default;
+  explicit Testing(const AppParameters &app_params)
+      : app_params_(app_params),
+        testingResults_(std::make_shared<TestingResult>(app_params)){};
+  virtual ~Testing() = default;
 
-  virtual void test(size_t epoch = 0) = 0;
+  virtual void test(size_t epoch = 0, size_t current_line = 0) = 0;
 
   /**
    * @brief Sets the file parser for testing data.
@@ -60,6 +61,17 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
+  /**
+   * @brief Set the Network object
+   *
+   * @param network
+   */
+  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
+
+  std::shared_ptr<TestingResult> getTestingResults() const {
+    return testingResults_;
+  }
+
 protected:
   TestingResult::TestResults testLine(const RecordResult &record_result,
                                       const size_t line_number = 0,
@@ -71,7 +83,8 @@ protected:
             .outputs = predicteds};
   };
 
-  std::shared_ptr<Network> network_ = Manager::getInstance().network;
-  const AppParameters &app_params = Manager::getInstance().app_params;
+  std::shared_ptr<Network> network_ = nullptr;
+  const AppParameters &app_params_;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
+  std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };

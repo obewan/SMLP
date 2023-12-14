@@ -38,8 +38,8 @@ RecordResult Predict::processLine(const std::string &line) const {
   RecordResult result =
       fileParser_->processLine(network_->params, app_params_, line);
   if (result.isSuccess) {
-    auto predicteds = network_->forwardPropagation(result.record.first);
-    showOutput(result.record.first, predicteds);
+    auto predicteds = network_->forwardPropagation(result.record.inputs);
+    showOutput(result.record.inputs, predicteds);
   }
   return result;
 }

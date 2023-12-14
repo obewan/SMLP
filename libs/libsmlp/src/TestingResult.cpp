@@ -1,5 +1,8 @@
 #include "TestingResult.h"
+#include "CommonModes.h"
+#include "exception/TestingException.h"
 #include <cmath>
+#include <cstddef>
 #include <iomanip>
 #include <iostream>
 
@@ -7,13 +10,13 @@ const float LOW_THRESHOLD = 0.30f;
 const float MEDIUM_THRESHOLD = 0.20f;
 const float HIGH_THRESHOLD = 0.10f;
 
-std::string TestingResult::showResultsLine(bool withConvergence) {
-  auto stats = calcStats(withConvergence);
+std::string TestingResult::showResultsLine() {
+  calcStats();
   std::stringstream sstr;
 
   sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
-       << stats.accuracy << " " << stats.accuracy_high << "]";
-  if (withConvergence) {
+       << stats.accuracy_avg << " " << stats.accuracy_high << "]";
+  if (app_params_.mode == EMode::TrainTestMonitored) {
     sstr << std::setprecision(2) << " conv(01t)[" << stats.convergence_zero
          << " " << stats.convergence_one << " " << stats.convergence << "]";
   }
@@ -21,56 +24,33 @@ std::string TestingResult::showResultsLine(bool withConvergence) {
   return sstr.str();
 }
 
-std::string TestingResult::showResultsVerbose(const TestResult &result,
-                                              EMode mode) const {
-  std::stringstream sstr;
-  sstr << "Expected:" << result.expected << " Predicted:" << result.output;
-  if (mode == EMode::TrainTestMonitored) {
-    sstr << " [ ";
-    for (auto &progres : result.progress) {
-      sstr << progres << " ";
-    }
-    sstr << "] (" << result.progress.back() - result.progress.front() << ")";
-  }
-  return sstr.str();
-}
-
-std::string TestingResult::showDetailledResults(EMode mode, bool verbose) {
-  auto stats = calcStats(mode == EMode::TrainTestMonitored);
+std::string TestingResult::showDetailledResults() {
+  calcStats();
   std::stringstream sstr;
 
   sstr << "Testing results: " << std::endl;
 
-  if (verbose) {
-    for (auto const &result : testResultExts) {
-      sstr << showResultsVerbose(result, mode) << std::endl;
-    }
-    sstr << std::endl;
-  }
+  sstr << showAccuracyResults();
 
-  sstr << showAccuracyResults(stats);
-
-  if (mode == EMode::TrainTestMonitored) {
-    sstr << showConvergenceResults(stats);
+  if (app_params_.mode == EMode::TrainTestMonitored) {
+    sstr << showConvergenceResults();
   }
   return sstr.str();
 }
 
-std::string
-TestingResult::showAccuracyResults(const TestingResult::Stat &stats) const {
+std::string TestingResult::showAccuracyResults() const {
   std::stringstream sstr;
   sstr << std::setprecision(3)
        << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
        << std::endl
-       << "Avg accuracy (correct at 80%): " << stats.accuracy << "%"
+       << "Avg accuracy (correct at 80%): " << stats.accuracy_avg << "%"
        << std::endl
        << "High accuracy (correct at 90%): " << stats.accuracy_high << "%"
        << std::endl;
   return sstr.str();
 }
 
-std::string
-TestingResult::showConvergenceResults(const TestingResult::Stat &stats) const {
+std::string TestingResult::showConvergenceResults() const {
   std::stringstream sstr;
   sstr << std::setprecision(3)
        << "Good convergence toward zero: " << stats.convergence_zero << "% ("
@@ -86,103 +66,97 @@ TestingResult::showConvergenceResults(const TestingResult::Stat &stats) const {
 }
 
 void TestingResult::processRecordTestingResult(
-    const TestingResult::TestResults &testResult) {}
+    const TestingResult::TestResults &testResult) {
+  if (testResult.expecteds.size() != testResult.outputs.size()) {
+    throw TestingException("invalid expecteds and outputs size.");
+  }
 
-void TestingResult::processResults(
-    const std::vector<TestingResult::TestResult> &testResults, EMode mode,
-    size_t last_epoch) {
-  if (mode == EMode::TrainTestMonitored) {
-    // record the progress of an output neuron
-    for (auto const &result : testResults) {
-      if (!progress.contains(result.lineNumber)) {
-        progress[result.lineNumber] = {result.output};
-      } else {
-        progress.at(result.lineNumber).push_back(result.output);
+  const size_t expectedsSize = testResult.expecteds.size();
+  size_t correct_predictions_low = 0;
+  size_t correct_predictions_avg = 0;
+  size_t correct_predictions_high = 0;
+
+  auto updateStats = [&expectedsSize](const size_t correct_predictions,
+                                      size_t &stat) {
+    if (correct_predictions > expectedsSize / 2) {
+      stat++;
+    }
+  };
+
+  for (size_t i = 0; i < expectedsSize; ++i) {
+    const auto error =
+        std::abs(testResult.expecteds[i] - testResult.outputs[i]);
+
+    if (error < LOW_THRESHOLD) {
+      correct_predictions_low++;
+    }
+    if (error < MEDIUM_THRESHOLD) {
+      correct_predictions_avg++;
+    }
+    if (error < HIGH_THRESHOLD) {
+      correct_predictions_high++;
+    }
+  }
+
+  updateStats(correct_predictions_low, stats.correct_predictions_low);
+  updateStats(correct_predictions_avg, stats.correct_predictions_avg);
+  updateStats(correct_predictions_high, stats.correct_predictions_high);
+
+  if (app_params_.mode == EMode::TrainTestMonitored) {
+    updateMonitoredProgress(testResult);
+  }
+
+  stats.total_samples++;
+}
+
+void TestingResult::updateMonitoredProgress(
+    const TestingResult::TestResults &result) {
+  if (app_params_.output_index_to_monitor > result.outputs.size()) {
+    throw TestingException("invalid output_index_to_monitor parameter");
+  }
+  auto outputMonitored = result.outputs.at(app_params_.output_index_to_monitor);
+  auto expected = result.expecteds.at(app_params_.output_index_to_monitor);
+
+  if (!progress.contains(result.lineNumber)) {
+    progress[result.lineNumber] = {
+        .current = outputMonitored, .expected = expected, .hasPrevious = false};
+  } else {
+    auto &progress_update = progress[result.lineNumber];
+    progress_update.previous = progress_update.current;
+    progress_update.current = outputMonitored;
+    progress_update.hasPrevious = true;
+  }
+}
+
+void TestingResult::calcStats() {
+  if (app_params_.mode == EMode::TrainTestMonitored) {
+    calculateConvergences();
+  }
+  calculatePercentages();
+}
+
+void TestingResult::calculateConvergences() {
+  for (const auto &[line, converg] : progress) {
+    if (converg.hasPrevious) {
+      if (converg.expected == 1 && converg.current > converg.previous) {
+        stats.good_convergence_one++;
+        stats.good_convergence++;
+      } else if (converg.expected == 0 && converg.current < converg.previous) {
+        stats.good_convergence_zero++;
+        stats.good_convergence++;
       }
     }
   }
-
-  lastEpochTestResultTemp_ = testResults;
-  last_epoch_ = last_epoch;
 }
 
-TestingResult::Stat TestingResult::calcStats(bool monitored) {
-  if (monitored) {
-    testResultExts.clear();
-    for (auto const &result : lastEpochTestResultTemp_) {
-      testResultExts.emplace_back(result.epoch, result.lineNumber,
-                                  result.expected, result.output,
-                                  progress.at(result.lineNumber));
-    }
-  }
-
-  TestingResult::Stat stats;
-  stats.total_samples =
-      monitored ? testResultExts.size() : lastEpochTestResultTemp_.size();
-  auto const &results = monitored ? testResultExts : lastEpochTestResultTemp_;
-
-  if (stats.total_samples == 0) {
-    return stats;
-  }
-
-  for (auto const &result : results) {
-    updateStats(stats, result, monitored);
-  }
-
-  calculatePercentages(stats, monitored);
-
-  return stats;
-}
-
-void TestingResult::updateStats(TestingResult::Stat &stats,
-                                const TestResult &result, bool monitored) {
-  if (result.expected == 1) {
-    stats.total_expected_one++;
-  } else {
-    stats.total_expected_zero++;
-  }
-
-  if (monitored && result.progress.size() > 1) {
-    updateConvergenceStats(stats, result);
-  }
-
-  updatePredictionStats(stats, result);
-}
-
-void TestingResult::updateConvergenceStats(Stat &stats,
-                                           const TestResult &result) const {
-  if (result.expected == 1 &&
-      result.progress.back() > result.progress.front()) {
-    stats.good_convergence_one++;
-    stats.good_convergence++;
-  } else if (result.expected == 0 &&
-             result.progress.back() < result.progress.front()) {
-    stats.good_convergence_zero++;
-    stats.good_convergence++;
-  }
-}
-
-void TestingResult::updatePredictionStats(Stat &stats,
-                                          const TestResult &result) const {
-  if (std::abs(result.expected - result.output) < LOW_THRESHOLD) {
-    stats.correct_predictions_low++;
-  }
-  if (std::abs(result.expected - result.output) < MEDIUM_THRESHOLD) {
-    stats.correct_predictions++;
-  }
-  if (std::abs(result.expected - result.output) < HIGH_THRESHOLD) {
-    stats.correct_predictions_high++;
-  }
-}
-
-void TestingResult::calculatePercentages(Stat &stats, bool monitored) const {
-  stats.accuracy = static_cast<float>(stats.correct_predictions) /
-                   (float)stats.total_samples * 100.0f;
+void TestingResult::calculatePercentages() {
+  stats.accuracy_avg = static_cast<float>(stats.correct_predictions_avg) /
+                       (float)stats.total_samples * 100.0f;
   stats.accuracy_low = static_cast<float>(stats.correct_predictions_low) /
                        (float)stats.total_samples * 100.0f;
   stats.accuracy_high = static_cast<float>(stats.correct_predictions_high) /
                         (float)stats.total_samples * 100.0f;
-  if (monitored) {
+  if (app_params_.mode == EMode::TrainTestMonitored) {
     stats.convergence = static_cast<float>(stats.good_convergence) /
                         (float)stats.total_samples * 100.0f;
     stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /

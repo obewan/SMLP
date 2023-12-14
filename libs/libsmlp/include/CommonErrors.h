@@ -19,6 +19,7 @@ enum class Error {
   CSVParsingErrorColumnsSize,
   DifferentModelVersion,
   FailedToOpenFile,
+  InternalError,
   InvalidJsonFile,
   InvalidTotalInput,
   InvalidTotalOutput,
@@ -31,7 +32,7 @@ enum class Error {
   MissingImportFile,
   UnimplementedActivationFunction,
   UnimplementedPredictiveMode,
-  UnknownKey
+  UnknownKey,
 };
 
 const std::map<Error, std::string> errorMessages = {
@@ -42,6 +43,7 @@ const std::map<Error, std::string> errorMessages = {
     {Error::CSVParsingErrorColumnsSize, "CSVParsingErrorColumnsSize"},
     {Error::DifferentModelVersion, "DifferentModelVersion"},
     {Error::FailedToOpenFile, "FailedToOpenFile"},
+    {Error::InternalError, "InternalError"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
     {Error::InvalidTotalInput, "InvalidTotalInput"},
     {Error::InvalidTotalOutput, "InvalidTotalOutput"},
@@ -72,6 +74,7 @@ const std::map<Error, std::string> defaultErrorMessages = {
      "Your file model version (%%vuser%%) is not the same as current version "
      "(%%vcurrent%%)"},
     {Error::FailedToOpenFile, "Failed to open file"},
+    {Error::InternalError, "Internal error"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
     {Error::InvalidTotalInput, "Invalid number of input values"},
     {Error::InvalidTotalOutput,

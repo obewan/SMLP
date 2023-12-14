@@ -54,6 +54,7 @@ public:
   Training(const NetworkParameters &network_params,
            const AppParameters &app_params)
       : network_params_(network_params), app_params_(app_params) {}
+  virtual ~Training() = default;
 
   virtual void train(const std::string &line = "") = 0;
 
@@ -105,18 +106,6 @@ public:
   void setTesting(std::shared_ptr<Testing> tester) { testing_ = tester; }
 
   /**
-   * @brief Create a Testing object
-   *
-   * @param network_params
-   * @param app_params
-   */
-  void createTesting() {
-    if (!testing_) {
-      testing_ = std::make_shared<Testing>(network_, fileParser_);
-    }
-  }
-
-  /**
    * @brief Gets the tester used for testing during training.
    *
    * @return Pointer to the tester.
@@ -128,8 +117,8 @@ protected:
     RecordResult result =
         fileParser_->processLine(network_params_, app_params_, line);
     if (result.isSuccess) {
-      network_->forwardPropagation(result.record.first);
-      network_->backwardPropagation(result.record.second);
+      network_->forwardPropagation(result.record.inputs);
+      network_->backwardPropagation(result.record.outputs);
       network_->updateWeights();
     }
     return result;

@@ -9,21 +9,25 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonParameters.h"
 #include <cstddef>
 #include <vector>
 
 class TestingResult {
 public:
   /**
-   * @brief TestResult structure that holds the epoch, line, expected output,
-   * and actual output of a test, on a specific monitored neuron.
+   * @brief Construct a new Testing Result object
+   *
+   * @param app_params
    */
-  struct TestResult {
-    size_t epoch = 0;
-    size_t lineNumber = 0;
+  explicit TestingResult(const AppParameters &app_params)
+      : app_params_(app_params){};
+
+  struct Convergence {
+    float previous = 0.0f;
+    float current = 0.0f;
     float expected = 0.0f;
-    float output = 0.0f;
-    std::vector<float> progress; // This will be empty for unmonitored data
+    bool hasPrevious = false;
   };
 
   /**
@@ -45,7 +49,7 @@ public:
   struct Stat {
     size_t total_samples = 0;
     size_t correct_predictions_low = 0;
-    size_t correct_predictions = 0;
+    size_t correct_predictions_avg = 0;
     size_t correct_predictions_high = 0;
     size_t good_convergence = 0;
     size_t good_convergence_zero = 0;
@@ -53,7 +57,7 @@ public:
     size_t total_expected_zero = 0;
     size_t total_expected_one = 0;
 
-    float accuracy = 0.0f;
+    float accuracy_avg = 0.0f;
     float accuracy_low = 0.0f;
     float accuracy_high = 0.0f;
     float convergence = 0.0f;
@@ -64,32 +68,25 @@ public:
   /**
    * @brief Displays a summary of the test results on a single line.
    */
-  std::string showResultsLine(bool withConvergence);
+  std::string showResultsLine();
 
   /**
-   * @brief Displays detailed test results. If the verbose parameter is set to
-   * true, additional information will be displayed.
+   * @brief Displays detailed test results.
    *
-   * @param mode Mode of the training.
-   * @param verbose If true, additional details are displayed (default is
-   * false).
    */
-  std::string showDetailledResults(EMode mode, bool verbose = false);
+  std::string showDetailledResults();
 
   /**
-   * @brief Display some verbose results.
-   *
+   * @brief Calculates the statistics of the test results
    */
-  std::string showResultsVerbose(const TestResult &result, EMode mode) const;
+  void calcStats();
 
   /**
-   * @brief Calculates and returns the statistics of the test results, including
-   * monitored progress if monitored is true.
+   * @brief Get the Stats object
    *
-   * @param monitored If true, return stats with progress
-   * @return A Stat object containing the calculated statistics.
+   * @return const TestingResult::Stat&
    */
-  Stat calcStats(bool monitored);
+  const TestingResult::Stat &getStats() const { return stats; }
 
   /**
    * @brief process the results to get the training progress
@@ -99,30 +96,20 @@ public:
   void processRecordTestingResult(const TestingResult::TestResults &testResult);
 
   /**
-   * @brief process the results to get the training progress
+   * @brief Get the Progress object
    *
-   * @param testResults
-   * @param mode
-   * @param last_epoch
+   * @return const std::map<size_t, Convergence>&
    */
-  void processResults(const std::vector<TestingResult::TestResult> &testResults,
-                      EMode mode, size_t last_epoch = 0);
-
-  const std::map<size_t, std::vector<float>> &getProgress() const {
-    return progress;
-  }
+  const std::map<size_t, Convergence> &getProgress() const { return progress; }
 
 private:
-  std::string showAccuracyResults(const TestingResult::Stat &stats) const;
-  std::string showConvergenceResults(const TestingResult::Stat &stats) const;
-  void updateStats(TestingResult::Stat &stats, const TestResult &result,
-                   bool monitored);
-  void updateConvergenceStats(Stat &stats, const TestResult &result) const;
-  void updatePredictionStats(Stat &stats, const TestResult &result) const;
-  void calculatePercentages(Stat &stats, bool monitored) const;
+  std::string showAccuracyResults() const;
+  std::string showConvergenceResults() const;
+  void updateMonitoredProgress(const TestingResult::TestResults &result);
+  void calculateConvergences();
+  void calculatePercentages();
 
-  std::vector<TestResult> testResultExts;
-  std::map<size_t, std::vector<float>> progress;
-  std::vector<TestResult> lastEpochTestResultTemp_;
-  size_t last_epoch_ = 0;
+  std::map<size_t, Convergence> progress;
+  TestingResult::Stat stats;
+  const AppParameters &app_params_;
 };

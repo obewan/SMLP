@@ -8,23 +8,24 @@
  *
  */
 #pragma once
+#include "SimpleLang.h"
 #include "Training.h"
+#include "exception/TrainingException.h"
 
 class TrainingFile : public Training {
 public:
   using Training::Training;
-  virtual ~TrainingFile() = default;
 
   void train(const std::string &line = "") override {
+    if (!fileParser_) {
+      throw TrainingException(SimpleLang::Error(Error::InternalError));
+    }
     if (!fileParser_->isTrainingRatioLineProcessed) {
       fileParser_->calcTrainingRatioLine(app_params_);
     }
     if (fileParser_->training_ratio_line == 0) {
       throw TrainingException(
           SimpleLang::Error(Error::InvalidTrainingRatioTooSmall));
-    }
-    if (app_params_.mode == EMode::TrainTestMonitored) {
-      createTesting();
     }
     fileParser_->openFile();
     const auto start{std::chrono::steady_clock::now()};
@@ -36,10 +37,12 @@ public:
         processInputLine();
       }
       if (app_params_.mode == EMode::TrainTestMonitored) {
+        if (!testing_) {
+          throw TrainingException(SimpleLang::Error(Error::InternalError));
+        }
         logger_.append("testing... ");
-        testing_->testFromFile(network_params_, app_params_, epoch);
-        logger_.out(testing_->getTestingResults()->showResultsLine(
-            app_params_.mode == EMode::TrainTestMonitored));
+        testing_->test(epoch);
+        logger_.out(testing_->getTestingResults()->showResultsLine());
       } else {
         logger_.endl();
       }
@@ -50,8 +53,7 @@ public:
     const std::chrono::duration<double> elapsed_seconds{end - start};
     logger_.info("Elapsed time: ", elapsed_seconds.count(), "s");
     if (app_params_.mode == EMode::TrainTestMonitored) {
-      logger_.info(testing_->getTestingResults()->showDetailledResults(
-          app_params_.mode, app_params_.verbose));
+      logger_.info(testing_->getTestingResults()->showDetailledResults());
     }
   }
 };

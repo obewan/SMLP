@@ -158,41 +158,41 @@ Record DataFileParser::processColumns(
 Record DataFileParser::processInputOnly(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
-  std::vector<float> input(input_size);
+  std::vector<float> inputs(input_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
   std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
-                 input.begin(), getValue);
-  return std::make_pair(input, std::vector<float>{});
+                 inputs.begin(), getValue);
+  return {.inputs = inputs, .outputs = std::vector<float>{}};
 }
 
 Record DataFileParser::processInputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size, size_t output_size) const {
-  std::vector<float> input(input_size);
-  std::vector<float> expected_output(output_size);
+  std::vector<float> inputs(input_size);
+  std::vector<float> expected_outputs(output_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
   std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
-                 input.begin(), getValue);
+                 inputs.begin(), getValue);
   std::transform(cell_refs.begin() + input_size, cell_refs.end(),
-                 expected_output.begin(), getValue);
-  return std::make_pair(input, expected_output);
+                 expected_outputs.begin(), getValue);
+  return {.inputs = inputs, .outputs = expected_outputs};
 }
 
 Record DataFileParser::processOutputFirst(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size, size_t output_size) const {
-  std::vector<float> input(input_size);
-  std::vector<float> expected_output(output_size);
+  std::vector<float> inputs(input_size);
+  std::vector<float> expected_outputs(output_size);
   auto getValue = [](auto cells) {
     return (float)cells[0].getDouble().value();
   };
   std::transform(cell_refs.begin(), cell_refs.begin() + output_size,
-                 expected_output.begin(), getValue);
+                 expected_outputs.begin(), getValue);
   std::transform(cell_refs.begin() + output_size, cell_refs.end(),
-                 input.begin(), getValue);
-  return std::make_pair(input, expected_output);
+                 inputs.begin(), getValue);
+  return {.inputs = inputs, .outputs = expected_outputs};
 }

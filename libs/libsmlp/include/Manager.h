@@ -13,7 +13,9 @@
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "SimpleLogger.h"
-#include "Training.h"
+#include "TestingFile.h"
+#include "TestingSocket.h"
+#include "TestingStdin.h"
 #include "TrainingFile.h"
 #include "TrainingSocket.h"
 #include "TrainingStdin.h"
@@ -106,28 +108,39 @@ public:
    *
    * @param network_params
    * @param app_params
-   * @return std::unique_ptr<Training>
    */
-  std::unique_ptr<Training> createTraining() {
-    if (app_params.use_socket) {
-      auto trainingSocket =
-          std::make_unique<TrainingSocket>(network_params, app_params);
-      trainingSocket->setNetwork(network);
-      trainingSocket->createFileParser();
-      return trainingSocket;
-    } else if (app_params.use_stdin) {
-      auto trainingStdin =
-          std::make_unique<TrainingStdin>(network_params, app_params);
-      trainingStdin->setNetwork(network);
-      trainingStdin->createFileParser();
-      return trainingStdin;
-    } else {
-      auto trainingFile =
-          std::make_unique<TrainingFile>(network_params, app_params);
-      trainingFile->setNetwork(network);
-      trainingFile->createFileParser();
-      return trainingFile;
+  void createTraining() {
+    if (training_) {
+      return;
     }
+    if (app_params.use_socket) {
+      training_ = std::make_unique<TrainingSocket>(network_params, app_params);
+    } else if (app_params.use_stdin) {
+      training_ = std::make_unique<TrainingStdin>(network_params, app_params);
+    } else {
+      training_ = std::make_unique<TrainingFile>(network_params, app_params);
+    }
+    training_->setNetwork(network);
+    training_->createFileParser();
+    if (app_params.mode == EMode::TrainTestMonitored) {
+      createTesting();
+      testing_->setFileParser(training_->getFileParser());
+      training_->setTesting(testing_);
+    }
+  }
+
+  void createTesting() {
+    if (testing_) {
+      return;
+    }
+    if (app_params.use_socket) {
+      testing_ = std::make_shared<TestingSocket>(app_params);
+    } else if (app_params.use_stdin) {
+      testing_ = std::make_shared<TestingStdin>(app_params);
+    } else {
+      testing_ = std::make_shared<TestingFile>(app_params);
+    }
+    testing_->setNetwork(network);
   }
 
   /**
@@ -141,5 +154,5 @@ private:
   std::string showInlineHeader() const;
   std::unique_ptr<Predict> predict_ = nullptr;
   std::unique_ptr<Training> training_ = nullptr;
-  std::unique_ptr<Testing> testing_ = nullptr;
+  std::shared_ptr<Testing> testing_ = nullptr;
 };

@@ -22,7 +22,7 @@ void Manager::train(const std::string &line) {
     logger.info(showInlineHeader());
   }
   if (!training_) {
-    training_ = createTraining();
+    createTraining();
   }
   training_->train(line);
 }
@@ -34,11 +34,10 @@ void Manager::test() {
     logger.info("Testing, using file ", app_params.data_file);
   }
   if (!testing_) {
-    testing_ = std::make_unique<Testing>(network, app_params.data_file);
+    createTesting();
   }
-  testing_->test(network_params, app_params);
-  logger.out(
-      testing_->getTestingResults()->showDetailledResults(app_params.mode));
+  testing_->test();
+  logger.out(testing_->getTestingResults()->showDetailledResults());
 }
 
 void Manager::trainTestMonitored() {
@@ -57,7 +56,7 @@ void Manager::trainTestMonitored() {
   logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
               showInlineHeader());
   if (!training_) {
-    training_ = createTraining();
+    createTraining();
   }
   training_->train();
 }

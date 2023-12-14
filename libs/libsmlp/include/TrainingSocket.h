@@ -13,7 +13,6 @@
 class TrainingSocket : public Training {
 public:
   using Training::Training;
-  virtual ~TrainingSocket() = default;
 
   void train(const std::string &line = "") override { processInputLine(line); }
 };
