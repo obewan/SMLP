@@ -9,20 +9,32 @@
  */
 #pragma once
 #include "Common.h"
+#include <cstddef>
 #include <vector>
 
 class TestingResult {
 public:
   /**
-   * @brief TestResults structure that holds the epoch, line, expected output,
-   * and actual output of a test.
+   * @brief TestResult structure that holds the epoch, line, expected output,
+   * and actual output of a test, on a specific monitored neuron.
    */
-  struct TestResults {
+  struct TestResult {
     size_t epoch = 0;
-    size_t line = 0;
+    size_t lineNumber = 0;
     float expected = 0.0f;
     float output = 0.0f;
     std::vector<float> progress; // This will be empty for unmonitored data
+  };
+
+  /**
+   * @brief TestResults structure that holds the epoch, line, expected outputs,
+   * and actual outputs of a test, for all output neurons (not monitored).
+   */
+  struct TestResults {
+    size_t epoch = 0;
+    size_t lineNumber = 0;
+    std::vector<float> expecteds;
+    std::vector<float> outputs;
   };
 
   /**
@@ -68,7 +80,7 @@ public:
    * @brief Display some verbose results.
    *
    */
-  std::string showResultsVerbose(const TestResults &result, EMode mode) const;
+  std::string showResultsVerbose(const TestResult &result, EMode mode) const;
 
   /**
    * @brief Calculates and returns the statistics of the test results, including
@@ -82,13 +94,19 @@ public:
   /**
    * @brief process the results to get the training progress
    *
+   * @param testResult
+   */
+  void processRecordTestingResult(const TestingResult::TestResults &testResult);
+
+  /**
+   * @brief process the results to get the training progress
+   *
    * @param testResults
    * @param mode
    * @param last_epoch
    */
-  void
-  processResults(const std::vector<TestingResult::TestResults> &testResults,
-                 EMode mode, size_t last_epoch = 0);
+  void processResults(const std::vector<TestingResult::TestResult> &testResults,
+                      EMode mode, size_t last_epoch = 0);
 
   const std::map<size_t, std::vector<float>> &getProgress() const {
     return progress;
@@ -97,14 +115,14 @@ public:
 private:
   std::string showAccuracyResults(const TestingResult::Stat &stats) const;
   std::string showConvergenceResults(const TestingResult::Stat &stats) const;
-  void updateStats(TestingResult::Stat &stats, const TestResults &result,
+  void updateStats(TestingResult::Stat &stats, const TestResult &result,
                    bool monitored);
-  void updateConvergenceStats(Stat &stats, const TestResults &result) const;
-  void updatePredictionStats(Stat &stats, const TestResults &result) const;
+  void updateConvergenceStats(Stat &stats, const TestResult &result) const;
+  void updatePredictionStats(Stat &stats, const TestResult &result) const;
   void calculatePercentages(Stat &stats, bool monitored) const;
 
-  std::vector<TestResults> testResultExts;
+  std::vector<TestResult> testResultExts;
   std::map<size_t, std::vector<float>> progress;
-  std::vector<TestResults> lastEpochTestResultTemp_;
+  std::vector<TestResult> lastEpochTestResultTemp_;
   size_t last_epoch_ = 0;
 };

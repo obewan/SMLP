@@ -12,6 +12,7 @@
 #include "Common.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
+#include "SimpleLogger.h"
 #include "Training.h"
 #include "TrainingFile.h"
 #include "TrainingSocket.h"
@@ -128,6 +129,12 @@ public:
       return trainingFile;
     }
   }
+
+  /**
+   * @brief Logger
+   *
+   */
+  const SimpleLogger &logger = SimpleLogger::getInstance();
 
 private:
   Manager() = default;

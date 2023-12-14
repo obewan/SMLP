@@ -24,7 +24,7 @@ struct AppParameters {
   std::string data_file = "";
   std::string config_file = "smlp.conf";
   size_t num_epochs = 1;
-  size_t output_index_to_monitor = 1;
+  size_t output_index_to_monitor = 0;
   float training_ratio = 0.7f;
   size_t training_ratio_line = 0;
   bool output_at_end = false;

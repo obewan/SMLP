@@ -9,7 +9,6 @@ void Manager::predict(const std::string &line) {
 }
 
 void Manager::train(const std::string &line) {
-  const auto &logger = SimpleLogger::getInstance();
   if (!app_params.use_socket) {
     if (app_params.use_stdin) {
       logger.info("Training, using command pipe input...");
@@ -29,7 +28,6 @@ void Manager::train(const std::string &line) {
 }
 
 void Manager::test() {
-  const auto &logger = SimpleLogger::getInstance();
   if (app_params.use_stdin) {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
   } else {
@@ -44,7 +42,6 @@ void Manager::test() {
 }
 
 void Manager::trainTestMonitored() {
-  const auto &logger = SimpleLogger::getInstance();
   if (app_params.output_index_to_monitor > network_params.output_size) {
     logger.error("output_index_to_monitor > output_size: ",
                  app_params.output_index_to_monitor, ">",
@@ -123,16 +120,15 @@ void Manager::runMode() {
 }
 
 void Manager::importOrBuildNetwork() {
-  const auto &logger = SimpleLogger::getInstance();
   // avoiding header lines on Predictive mode, for commands chaining with
   // pipes
-  auto logNetworkImport = [this, &logger]() {
+  auto logNetworkImport = [this]() {
     if (app_params.mode != EMode::Predictive) {
       logger.info("Importing network model from ", app_params.network_to_import,
                   "...");
     }
   };
-  auto logNetworkCreation = [this, &logger]() {
+  auto logNetworkCreation = [this]() {
     if (!app_params.network_to_import.empty() &&
         app_params.mode != EMode::Predictive) {
       logger.info("Network model ", app_params.network_to_import,
@@ -160,7 +156,6 @@ bool Manager::shouldExportNetwork() const {
 }
 
 void Manager::exportNetwork() {
-  const auto &logger = SimpleLogger::getInstance();
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
   importExportJSON.exportModel(network.get(), app_params);
@@ -178,8 +173,6 @@ void Manager::processTCPClient(const std::string &line) {
     train(line);
     break;
   case EMode::TestOnly:
-    // TODO
-    // test();
     break;
   case EMode::TrainTestMonitored:
     // TODO

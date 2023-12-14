@@ -21,7 +21,7 @@ std::string TestingResult::showResultsLine(bool withConvergence) {
   return sstr.str();
 }
 
-std::string TestingResult::showResultsVerbose(const TestResults &result,
+std::string TestingResult::showResultsVerbose(const TestResult &result,
                                               EMode mode) const {
   std::stringstream sstr;
   sstr << "Expected:" << result.expected << " Predicted:" << result.output;
@@ -85,16 +85,19 @@ TestingResult::showConvergenceResults(const TestingResult::Stat &stats) const {
   return sstr.str();
 }
 
+void TestingResult::processRecordTestingResult(
+    const TestingResult::TestResults &testResult) {}
+
 void TestingResult::processResults(
-    const std::vector<TestingResult::TestResults> &testResults, EMode mode,
+    const std::vector<TestingResult::TestResult> &testResults, EMode mode,
     size_t last_epoch) {
   if (mode == EMode::TrainTestMonitored) {
     // record the progress of an output neuron
     for (auto const &result : testResults) {
-      if (!progress.contains(result.line)) {
-        progress[result.line] = {result.output};
+      if (!progress.contains(result.lineNumber)) {
+        progress[result.lineNumber] = {result.output};
       } else {
-        progress.at(result.line).push_back(result.output);
+        progress.at(result.lineNumber).push_back(result.output);
       }
     }
   }
@@ -107,8 +110,9 @@ TestingResult::Stat TestingResult::calcStats(bool monitored) {
   if (monitored) {
     testResultExts.clear();
     for (auto const &result : lastEpochTestResultTemp_) {
-      testResultExts.emplace_back(result.epoch, result.line, result.expected,
-                                  result.output, progress.at(result.line));
+      testResultExts.emplace_back(result.epoch, result.lineNumber,
+                                  result.expected, result.output,
+                                  progress.at(result.lineNumber));
     }
   }
 
@@ -131,7 +135,7 @@ TestingResult::Stat TestingResult::calcStats(bool monitored) {
 }
 
 void TestingResult::updateStats(TestingResult::Stat &stats,
-                                const TestResults &result, bool monitored) {
+                                const TestResult &result, bool monitored) {
   if (result.expected == 1) {
     stats.total_expected_one++;
   } else {
@@ -146,7 +150,7 @@ void TestingResult::updateStats(TestingResult::Stat &stats,
 }
 
 void TestingResult::updateConvergenceStats(Stat &stats,
-                                           const TestResults &result) const {
+                                           const TestResult &result) const {
   if (result.expected == 1 &&
       result.progress.back() > result.progress.front()) {
     stats.good_convergence_one++;
@@ -159,7 +163,7 @@ void TestingResult::updateConvergenceStats(Stat &stats,
 }
 
 void TestingResult::updatePredictionStats(Stat &stats,
-                                          const TestResults &result) const {
+                                          const TestResult &result) const {
   if (std::abs(result.expected - result.output) < LOW_THRESHOLD) {
     stats.correct_predictions_low++;
   }

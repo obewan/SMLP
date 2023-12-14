@@ -17,10 +17,13 @@
 #include <vector>
 
 /**
- * @brief Record of inputs vector and outputs vector, in that order.
+ * @brief Record of inputs vector and outputs vector
  *
  */
-using Record = std::pair<std::vector<float>, std::vector<float>>;
+struct Record {
+  std::vector<float> inputs;
+  std::vector<float> outputs;
+};
 
 /**
  * @brief Results of a parsed record.
