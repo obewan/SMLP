@@ -141,6 +141,10 @@ public:
       testing_ = std::make_shared<TestingFile>(app_params);
     }
     testing_->setNetwork(network);
+    if (app_params.mode != EMode::TrainTestMonitored) {
+      testing_->createFileParser(); // TrainTestMonitored use the file parser of
+                                    // training_ instead.
+    }
   }
 
   /**

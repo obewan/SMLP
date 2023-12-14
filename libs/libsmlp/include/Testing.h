@@ -37,6 +37,16 @@ public:
   virtual void test(size_t epoch = 0, size_t current_line = 0) = 0;
 
   /**
+   * @brief Create a File Parser object
+   *
+   */
+  void createFileParser() {
+    if (!fileParser_) {
+      fileParser_ = std::make_shared<DataFileParser>(app_params_.data_file);
+    }
+  }
+
+  /**
    * @brief Sets the file parser for testing data.
    *
    * @param fileparser Pointer to the file parser.
