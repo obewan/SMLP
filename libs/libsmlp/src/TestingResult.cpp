@@ -72,41 +72,33 @@ void TestingResult::processRecordTestingResult(
   }
 
   const size_t expectedsSize = testResult.expecteds.size();
-  size_t correct_predictions_low = 0;
-  size_t correct_predictions_avg = 0;
-  size_t correct_predictions_high = 0;
-
-  auto updateStats = [&expectedsSize](const size_t correct_predictions,
-                                      size_t &stat) {
-    if (correct_predictions > expectedsSize / 2) {
-      stat++;
-    }
-  };
 
   for (size_t i = 0; i < expectedsSize; ++i) {
     const auto error =
         std::abs(testResult.expecteds[i] - testResult.outputs[i]);
 
+    if (testResult.expecteds[i] == 1) {
+      stats.total_expected_one++;
+    } else {
+      stats.total_expected_zero++;
+    }
+
     if (error < LOW_THRESHOLD) {
-      correct_predictions_low++;
+      stats.correct_predictions_low++;
     }
     if (error < MEDIUM_THRESHOLD) {
-      correct_predictions_avg++;
+      stats.correct_predictions_avg++;
     }
     if (error < HIGH_THRESHOLD) {
-      correct_predictions_high++;
+      stats.correct_predictions_high++;
     }
-  }
 
-  updateStats(correct_predictions_low, stats.correct_predictions_low);
-  updateStats(correct_predictions_avg, stats.correct_predictions_avg);
-  updateStats(correct_predictions_high, stats.correct_predictions_high);
+    stats.total_samples++;
+  }
 
   if (app_params_.mode == EMode::TrainTestMonitored) {
     updateMonitoredProgress(testResult);
   }
-
-  stats.total_samples++;
 }
 
 void TestingResult::updateMonitoredProgress(
