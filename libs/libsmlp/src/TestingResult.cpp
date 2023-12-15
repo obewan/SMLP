@@ -25,7 +25,9 @@ std::string TestingResult::showResultsLine() {
 }
 
 std::string TestingResult::showDetailledResults() {
-  calcStats();
+  if (stats.accuracy_avg == 0) {
+    calcStats();
+  }
   std::stringstream sstr;
 
   sstr << "Testing results: " << std::endl;
@@ -53,14 +55,14 @@ std::string TestingResult::showAccuracyResults() const {
 std::string TestingResult::showConvergenceResults() const {
   std::stringstream sstr;
   sstr << std::setprecision(3)
-       << "Good convergence toward zero: " << stats.convergence_zero << "% ("
+       << "Convergence toward zero: " << stats.convergence_zero << "% ("
        << stats.good_convergence_zero << "/" << stats.total_expected_zero << ")"
        << std::endl
-       << "Good convergence toward one: " << stats.convergence_one << "%  ("
+       << "Convergence toward one: " << stats.convergence_one << "%  ("
        << stats.good_convergence_one << "/" << stats.total_expected_one << ")"
        << std::endl
-       << "Good convergence total: " << stats.convergence << "% ("
-       << stats.good_convergence << "/" << stats.total_samples << ")"
+       << "Convergence total: " << stats.convergence << "% ("
+       << stats.good_convergence << "/" << stats.total_convergences << ")"
        << std::endl;
   return sstr.str();
 }
@@ -76,12 +78,6 @@ void TestingResult::processRecordTestingResult(
   for (size_t i = 0; i < expectedsSize; ++i) {
     const auto error =
         std::abs(testResult.expecteds[i] - testResult.outputs[i]);
-
-    if (testResult.expecteds[i] == 1) {
-      stats.total_expected_one++;
-    } else {
-      stats.total_expected_zero++;
-    }
 
     if (error < LOW_THRESHOLD) {
       stats.correct_predictions_low++;
@@ -130,10 +126,19 @@ void TestingResult::calcStats() {
 void TestingResult::calculateConvergences() {
   for (const auto &[line, converg] : progress) {
     if (converg.hasPrevious) {
-      if (converg.expected == 1 && converg.current > converg.previous) {
+      stats.total_convergences++;
+      if (converg.expected == 1) {
+        stats.total_expected_one++;
+      } else {
+        stats.total_expected_zero++;
+      }
+      if (converg.expected == 1 && (converg.current > converg.previous ||
+                                    converg.current == converg.expected)) {
         stats.good_convergence_one++;
         stats.good_convergence++;
-      } else if (converg.expected == 0 && converg.current < converg.previous) {
+      } else if (converg.expected == 0 &&
+                 (converg.current < converg.previous ||
+                  converg.current == converg.expected)) {
         stats.good_convergence_zero++;
         stats.good_convergence++;
       }
@@ -150,7 +155,7 @@ void TestingResult::calculatePercentages() {
                         (float)stats.total_samples * 100.0f;
   if (app_params_.mode == EMode::TrainTestMonitored) {
     stats.convergence = static_cast<float>(stats.good_convergence) /
-                        (float)stats.total_samples * 100.0f;
+                        (float)stats.total_convergences * 100.0f;
     stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /
                              (float)stats.total_expected_zero * 100.0f;
     stats.convergence_one = static_cast<float>(stats.good_convergence_one) /

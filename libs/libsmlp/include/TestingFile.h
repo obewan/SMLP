@@ -19,6 +19,7 @@ public:
   explicit TestingFile(const AppParameters &app_params) : Testing(app_params) {}
 
   void test(size_t epoch = 0, size_t current_line = 0) override {
+    testingResults_->clearStats();
     if (!fileParser_ || !network_) {
       throw TestingException(SimpleLang::Error(Error::InternalError));
     }

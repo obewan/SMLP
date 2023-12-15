@@ -56,6 +56,7 @@ public:
     size_t good_convergence_one = 0;
     size_t total_expected_zero = 0;
     size_t total_expected_one = 0;
+    size_t total_convergences = 0;
 
     float accuracy_avg = 0.0f;
     float accuracy_low = 0.0f;
@@ -101,6 +102,29 @@ public:
    * @return const std::map<size_t, Convergence>&
    */
   const std::map<size_t, Convergence> &getProgress() const { return progress; }
+
+  /**
+   * @brief clear stats
+   *
+   */
+  void clearStats() {
+    stats.convergence = 0.f;
+    stats.convergence_one = 0.f;
+    stats.convergence_zero = 0.f;
+    stats.good_convergence_zero = 0;
+    stats.good_convergence = 0;
+    stats.good_convergence_one = 0;
+    stats.total_convergences = 0;
+    stats.accuracy_avg = 0.f;
+    stats.accuracy_high = 0.f;
+    stats.accuracy_low = 0.f;
+    stats.correct_predictions_avg = 0;
+    stats.correct_predictions_high = 0;
+    stats.correct_predictions_low = 0;
+    stats.total_expected_one = 0;
+    stats.total_expected_zero = 0;
+    stats.total_samples = 0;
+  }
 
 private:
   std::string showAccuracyResults() const;
