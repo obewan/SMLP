@@ -14,5 +14,6 @@ class TestingSocket : public Testing {
 public:
   using Testing::Testing;
 
-  void test(size_t epoch = 0, size_t current_line = 0) override {}
+  void test(const std::string &line = "", size_t epoch = 0,
+            size_t current_line_number = 0) override {}
 };

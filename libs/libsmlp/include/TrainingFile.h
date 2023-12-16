@@ -41,7 +41,7 @@ public:
           throw TrainingException(SimpleLang::Error(Error::InternalError));
         }
         logger_.append("testing... ");
-        testing_->test(epoch);
+        testing_->test("", epoch);
         logger_.out(testing_->getTestingResults()->showResultsLine());
       } else {
         logger_.endl();

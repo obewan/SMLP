@@ -27,20 +27,23 @@ void Manager::train(const std::string &line) {
   training_->train(line);
 }
 
-void Manager::test() {
-  if (app_params.use_stdin) {
-    logger.info("Testing, using command pipe input... ", app_params.data_file);
-  } else {
-    logger.info("Testing, using file ", app_params.data_file);
+void Manager::test(const std::string &line) {
+  if (!app_params.use_socket) {
+    if (app_params.use_stdin) {
+      logger.info("Testing, using command pipe input... ",
+                  app_params.data_file);
+    } else {
+      logger.info("Testing, using file ", app_params.data_file);
+    }
   }
   if (!testing_) {
     createTesting();
   }
-  testing_->test();
+  testing_->test(line);
   logger.out(testing_->getTestingResults()->showDetailledResults());
 }
 
-void Manager::trainTestMonitored() {
+void Manager::trainTestMonitored(const std::string &line) {
   if (app_params.output_index_to_monitor > network_params.output_size) {
     logger.error("output_index_to_monitor > output_size: ",
                  app_params.output_index_to_monitor, ">",
@@ -58,7 +61,7 @@ void Manager::trainTestMonitored() {
   if (!training_) {
     createTraining();
   }
-  training_->train();
+  training_->train(line);
 }
 
 std::string Manager::showInlineHeader() const {
@@ -172,15 +175,14 @@ void Manager::processTCPClient(const std::string &line) {
     train(line);
     break;
   case EMode::TestOnly:
+    test(line);
     break;
   case EMode::TrainTestMonitored:
-    // TODO
-    // trainTestMonitored();
+    trainTestMonitored(line);
     break;
   case EMode::TrainThenTest:
-    // TODO
-    // train();
-    // test();
+    train(line);
+    test(line);
     break;
   default:
     throw ManagerException("Unimplemented mode.");

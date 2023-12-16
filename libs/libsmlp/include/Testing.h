@@ -34,7 +34,8 @@ public:
         testingResults_(std::make_shared<TestingResult>(app_params)){};
   virtual ~Testing() = default;
 
-  virtual void test(size_t epoch = 0, size_t current_line = 0) = 0;
+  virtual void test(const std::string &line = "", size_t epoch = 0,
+                    size_t current_line_number = 0) = 0;
 
   /**
    * @brief Create a File Parser object

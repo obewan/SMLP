@@ -44,16 +44,18 @@ public:
 
   /**
    * @brief This method tests the model.
+   * @param line Optional line to use.
    */
-  void test();
+  void test(const std::string &line = "");
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
    * the progress of an output neuron. Be aware that this mode consumes more
    * memory with each epoch to save the monitoring progress. Therefore, it is
    * recommended for use with smaller datasets and a lower number of epochs.
+   * @param line Optional line to use.
    */
-  void trainTestMonitored();
+  void trainTestMonitored(const std::string &line = "");
 
   /**
    * @brief Process line from TCP Client socket.
