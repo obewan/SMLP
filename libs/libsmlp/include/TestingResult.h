@@ -64,6 +64,8 @@ public:
     float convergence = 0.0f;
     float convergence_zero = 0.0f;
     float convergence_one = 0.0f;
+
+    bool isCalculate = false;
   };
 
   /**
@@ -124,6 +126,7 @@ public:
     stats.total_expected_one = 0;
     stats.total_expected_zero = 0;
     stats.total_samples = 0;
+    stats.isCalculate = false;
   }
 
 private:

@@ -159,11 +159,9 @@ Record DataFileParser::processInputOnly(
     const std::vector<std::vector<Csv::CellReference>> &cell_refs,
     size_t input_size) const {
   std::vector<float> inputs(input_size);
-  auto getValue = [](auto cells) {
-    return (float)cells[0].getDouble().value();
-  };
+
   std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
-                 inputs.begin(), getValue);
+                 inputs.begin(), getFloatValue);
   return {.inputs = inputs, .outputs = std::vector<float>{}};
 }
 
@@ -172,13 +170,11 @@ Record DataFileParser::processInputFirst(
     size_t input_size, size_t output_size) const {
   std::vector<float> inputs(input_size);
   std::vector<float> expected_outputs(output_size);
-  auto getValue = [](auto cells) {
-    return (float)cells[0].getDouble().value();
-  };
+
   std::transform(cell_refs.begin(), cell_refs.begin() + input_size,
-                 inputs.begin(), getValue);
+                 inputs.begin(), getFloatValue);
   std::transform(cell_refs.begin() + input_size, cell_refs.end(),
-                 expected_outputs.begin(), getValue);
+                 expected_outputs.begin(), getFloatValue);
   return {.inputs = inputs, .outputs = expected_outputs};
 }
 
@@ -187,12 +183,10 @@ Record DataFileParser::processOutputFirst(
     size_t input_size, size_t output_size) const {
   std::vector<float> inputs(input_size);
   std::vector<float> expected_outputs(output_size);
-  auto getValue = [](auto cells) {
-    return (float)cells[0].getDouble().value();
-  };
+
   std::transform(cell_refs.begin(), cell_refs.begin() + output_size,
-                 expected_outputs.begin(), getValue);
+                 expected_outputs.begin(), getFloatValue);
   std::transform(cell_refs.begin() + output_size, cell_refs.end(),
-                 inputs.begin(), getValue);
+                 inputs.begin(), getFloatValue);
   return {.inputs = inputs, .outputs = expected_outputs};
 }

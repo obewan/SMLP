@@ -162,7 +162,7 @@ void Manager::exportNetwork() {
 
 void Manager::processTCPClient(const std::string &line) {
   if (!app_params.use_socket) {
-    throw ManagerException("TCP socket not in use.");
+    throw ManagerException("TCP socket not set.");
   }
   switch (app_params.mode) {
   case EMode::Predictive:

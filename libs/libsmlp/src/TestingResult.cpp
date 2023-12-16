@@ -25,7 +25,7 @@ std::string TestingResult::showResultsLine() {
 }
 
 std::string TestingResult::showDetailledResults() {
-  if (stats.accuracy_avg == 0) {
+  if (!stats.isCalculate) {
     calcStats();
   }
   std::stringstream sstr;
@@ -121,6 +121,7 @@ void TestingResult::calcStats() {
     calculateConvergences();
   }
   calculatePercentages();
+  stats.isCalculate = true;
 }
 
 void TestingResult::calculateConvergences() {

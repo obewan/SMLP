@@ -13,6 +13,7 @@
 #include "CommonParameters.h"
 #include <cstddef>
 #include <fstream>
+#include <functional>
 
 /**
  * @brief The FileParser class is responsible for parsing a file. It contains
@@ -150,4 +151,9 @@ public:
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
   std::string path = "";
+
+  std::function<float(const std::vector<Csv::CellReference> &)> getFloatValue =
+      [](const std::vector<Csv::CellReference> &cells) {
+        return (float)cells[0].getDouble().value();
+      };
 };
