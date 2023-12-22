@@ -49,9 +49,7 @@ void SimpleTCPServer::start() {
     throw SimpleTCPException("Failed to listen on socket");
   }
 
-  isListening = true;
-
-  while (isListening) {
+  while (!stopSource.stop_requested()) {
     sockaddr_in client_address{};
     socklen_t client_len = sizeof(client_address);
     int client_socket =
@@ -81,9 +79,6 @@ void SimpleTCPServer::start() {
 }
 
 void SimpleTCPServer::stop() {
-  // Gracefully stop accepting new clients
-  isListening = false;
-
   // Request all threads to stop
   stopSource.request_stop();
   for (auto &thread : threads) {
@@ -145,13 +140,13 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
       processLine(line);
     }
 
-    // Echo message back to client
-    // send(client_socket, buffer, bytesReceived + 1, 0);
-  }
+    // Process any remaining data in lineBuffer
+    if (!lineBuffer.empty()) {
+      processLine(lineBuffer);
+    }
 
-  // Process any remaining data in lineBuffer
-  if (!lineBuffer.empty()) {
-    processLine(lineBuffer);
+    // Echo message back to client
+    // send(client_socket, lineBuffer, bytesReceived + 1, 0);
   }
 
   // Close the client socket

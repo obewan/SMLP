@@ -22,7 +22,7 @@ public:
   SimpleTCPServer(const SimpleTCPServer &other) = delete;
   SimpleTCPServer &operator=(const SimpleTCPServer &other) = delete;
   ~SimpleTCPServer() {
-    if (isListening) {
+    if (!stopSource.stop_requested()) {
       stop();
     }
   }
@@ -50,5 +50,4 @@ private:
   int server_socket = 0;
   unsigned short sin_port = 8080;
   size_t client_buff_size = 32_K;
-  std::atomic<bool> isListening = true;
 };
