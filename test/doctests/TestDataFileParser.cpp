@@ -3,6 +3,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Common.h"
 #include "DataFileParser.h"
+#include "Manager.h"
 #include "doctest.h"
 #include <cmath>
 #include <string>
@@ -11,20 +12,19 @@ TEST_CASE("Testing the DataFileParser class") {
   std::string test_file = "../data/test_file.csv";
   const float eps = 1e-6f; // epsilon for float testing
 
-  SUBCASE("Test Constructor") { CHECK_NOTHROW(DataFileParser("")); }
+  SUBCASE("Test Constructor") { CHECK_NOTHROW(DataFileParser()); }
+  DataFileParser parser;
 
   SUBCASE("Test openFile") {
-    DataFileParser parser_NOK(
-        "non_existent_file.csv"); // This file does not exist
-    CHECK_THROWS_AS(parser_NOK.openFile(), FileParserException);
+    Manager::getInstance().app_params.data_file =
+        "oops"; // This file does not exist
+    CHECK_THROWS_AS(parser.openFile(), FileParserException);
 
-    DataFileParser parser_OK(test_file);
-    CHECK_NOTHROW(parser_OK.openFile());
-    CHECK(parser_OK.file.is_open() == true);
-    parser_OK.closeFile();
+    Manager::getInstance().app_params.data_file = test_file;
+    CHECK_NOTHROW(parser.openFile());
+    CHECK(parser.file.is_open() == true);
+    parser.closeFile();
   }
-
-  DataFileParser parser(test_file);
 
   SUBCASE("Test closeFile") {
     parser.openFile();
@@ -60,20 +60,17 @@ TEST_CASE("Testing the DataFileParser class") {
   }
 
   SUBCASE("Test processLine") {
-
-    NetworkParameters network_params{.input_size = 20,
-                                     .hidden_size = 12,
-                                     .output_size = 1,
-                                     .hiddens_count = 1};
-    AppParameters app_params{.output_at_end = false};
-
-    CHECK(network_params.input_size == 20);
-    CHECK(network_params.hidden_size == 12);
+    Manager::getInstance().network_params = {.input_size = 20,
+                                             .hidden_size = 12,
+                                             .output_size = 1,
+                                             .hiddens_count = 1};
+    Manager::getInstance().app_params = {.data_file = test_file,
+                                         .output_at_end = false};
 
     parser.openFile();
 
     // Test first line
-    RecordResult result = parser.processLine(network_params, app_params);
+    RecordResult result = parser.processLine();
     CHECK(result.isSuccess == true);
     const auto &[inputs, outputs] = result.record;
     std::vector<float> expectedInputs = {
@@ -91,7 +88,7 @@ TEST_CASE("Testing the DataFileParser class") {
     }
 
     // Test next line
-    RecordResult result2 = parser.processLine(network_params, app_params);
+    RecordResult result2 = parser.processLine();
     CHECK(result.isSuccess == true);
     const auto &[inputs2, outputs2] = result2.record;
     std::vector<float> expectedInputs2 = {
@@ -113,12 +110,14 @@ TEST_CASE("Testing the DataFileParser class") {
     // predicted and added at the end, so they are
     // optional in dataset entry, but inputs are mandatory ofc.
     parser.closeFile();
-    app_params.mode = EMode::Predictive;
-    parser.openFile("../data/test_file_input_only.csv");
-    CHECK_NOTHROW(parser.processLine(network_params, app_params));
-    RecordResult result3 = parser.processLine(network_params, app_params);
+    Manager::getInstance().app_params.mode = EMode::Predictive;
+    Manager::getInstance().app_params.data_file =
+        "../data/test_file_input_only.csv";
+    parser.openFile();
+    CHECK_NOTHROW(parser.processLine());
+    RecordResult result3 = parser.processLine();
     const auto &[inputs3, outputs3] = result3.record;
-    CHECK(inputs3.size() == network_params.input_size);
+    CHECK(inputs3.size() == Manager::getInstance().network_params.input_size);
     CHECK(outputs3.size() == 0);
     parser.closeFile();
   }
@@ -152,34 +151,35 @@ TEST_CASE("Testing the DataFileParser class") {
 
   SUBCASE("Test processLine errors") {
     parser.closeFile();
-    NetworkParameters network_params{.input_size = 20,
-                                     .hidden_size = 12,
-                                     .output_size = 1,
-                                     .hiddens_count = 1};
-    AppParameters app_params{.output_at_end = false};
+    auto &manager = Manager::getInstance();
+    manager.network_params = {.input_size = 20,
+                              .hidden_size = 12,
+                              .output_size = 1,
+                              .hiddens_count = 1};
+    manager.app_params = {.output_at_end = false};
 
-    CHECK(network_params.input_size == 20);
-    CHECK(network_params.hidden_size == 12);
-
-    parser.openFile("../data/test_file_bad_line.csv");
-    CHECK_NOTHROW(parser.processLine(network_params, app_params));
+    manager.app_params.data_file = "../data/test_file_bad_line.csv";
+    parser.openFile();
+    CHECK_NOTHROW(parser.processLine());
     CHECK_THROWS_WITH_AS(
-        parser.processLine(network_params, app_params),
+        parser.processLine(),
         "CSV parsing error at line 2: there are 20 columns instead of 21.",
         FileParserException);
     parser.closeFile();
 
-    parser.openFile("../data/test_file_bad_format.csv");
-    CHECK_THROWS_WITH_AS(parser.processLine(network_params, app_params),
+    manager.app_params.data_file = "../data/test_file_bad_format.csv";
+    parser.openFile();
+    CHECK_THROWS_WITH_AS(parser.processLine(),
                          "CSV parsing error at line 1: bad format.",
                          FileParserException);
     parser.closeFile();
 
     // Special Predictive mode tests
-    app_params.mode = EMode::Predictive;
-    parser.openFile("../data/test_file_short_line.csv");
+    manager.app_params.mode = EMode::Predictive;
+    manager.app_params.data_file = "../data/test_file_short_line.csv";
+    parser.openFile();
     CHECK_THROWS_WITH_AS(
-        parser.processLine(network_params, app_params),
+        parser.processLine(),
         "CSV parsing error at line 1: there are 19 columns instead "
         "of a minimum of 20.",
         FileParserException);

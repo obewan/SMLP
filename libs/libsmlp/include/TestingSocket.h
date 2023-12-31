@@ -8,11 +8,13 @@
  *
  */
 #pragma once
+#include "CommonParameters.h"
 #include "Testing.h"
 
 class TestingSocket : public Testing {
 public:
-  using Testing::Testing;
+  explicit TestingSocket(const AppParameters &app_params)
+      : Testing(TestingType::TestingSocket, app_params){};
 
   void test(const std::string &line = "", size_t epoch = 0,
             size_t current_line_number = 0) override {}

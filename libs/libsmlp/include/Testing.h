@@ -16,6 +16,13 @@
 #include <cstddef>
 #include <memory>
 
+enum class TestingType { TestingFile, TestingSocket, TestingStdin };
+
+const std::map<std::string, TestingType, std::less<>> testing_map{
+    {"TestingFile", TestingType::TestingFile},
+    {"TestingSocket", TestingType::TestingSocket},
+    {"TestingStdin", TestingType::TestingStdin}};
+
 /**
  * @brief The Testing class is responsible for testing the neural network model.
  * It contains methods for processing test data, calculating statistics, and
@@ -29,11 +36,22 @@ public:
    *
    * @param app_params
    */
-  explicit Testing(const AppParameters &app_params)
-      : app_params_(app_params),
+  explicit Testing(TestingType testing_type, const AppParameters &app_params)
+      : testingType(testing_type), app_params_(app_params),
         testingResults_(std::make_shared<TestingResult>(app_params)){};
   virtual ~Testing() = default;
 
+  TestingType testingType;
+
+  const std::string UndefinedTesting = "UndefinedTesting";
+
+  /**
+   * @brief Test a network
+   *
+   * @param line optional data line to use for testing
+   * @param epoch optional epoch to indicate for testing results
+   * @param current_line_number optional line number to indicate
+   */
   virtual void test(const std::string &line = "", size_t epoch = 0,
                     size_t current_line_number = 0) = 0;
 
@@ -43,7 +61,7 @@ public:
    */
   void createFileParser() {
     if (!fileParser_) {
-      fileParser_ = std::make_shared<DataFileParser>(app_params_.data_file);
+      fileParser_ = std::make_shared<DataFileParser>();
     }
   }
 
@@ -62,7 +80,7 @@ public:
    * @param filepath file path.
    */
   void setFileParser(const std::string &filepath) {
-    fileParser_ = std::make_shared<DataFileParser>(filepath);
+    fileParser_ = std::make_shared<DataFileParser>();
   }
 
   /**
@@ -81,6 +99,15 @@ public:
 
   std::shared_ptr<TestingResult> getTestingResults() const {
     return testingResults_;
+  }
+
+  std::string testingTypeStr() const {
+    for (const auto &[key, mTestingType] : testing_map) {
+      if (mTestingType == testingType) {
+        return key;
+      }
+    }
+    return UndefinedTesting;
   }
 
 protected:

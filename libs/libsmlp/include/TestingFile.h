@@ -16,7 +16,8 @@
 
 class TestingFile : public Testing {
 public:
-  explicit TestingFile(const AppParameters &app_params) : Testing(app_params) {}
+  explicit TestingFile(const AppParameters &app_params)
+      : Testing(TestingType::TestingFile, app_params) {}
 
   void test(const std::string &line = "", size_t epoch = 0,
             size_t current_line_number = 0) override {
@@ -39,10 +40,8 @@ public:
       fileParser_->openFile();
     }
 
-    auto network_params = network_->params;
     while (true) {
-      RecordResult result =
-          fileParser_->processLine(network_params, app_params_);
+      RecordResult result = fileParser_->processLine();
       if (!result.isSuccess) {
         break;
       }

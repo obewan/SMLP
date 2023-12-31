@@ -1,14 +1,16 @@
 #include "Predict.h"
 #include "Common.h"
+#include "Manager.h"
 #include "SimpleLogger.h"
 #include "exception/PredictException.h"
 #include <iostream>
 #include <math.h>
 
 void Predict::predict(const std::string &line) const {
-  if (app_params_.use_socket) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.use_socket) {
     processLine(line);
-  } else if (app_params_.use_stdin) {
+  } else if (app_params.use_stdin) {
     processStdin();
   } else {
     processFile();
@@ -35,10 +37,10 @@ void Predict::processFile() const {
 }
 
 RecordResult Predict::processLine(const std::string &line) const {
-  RecordResult result =
-      fileParser_->processLine(network_->params, app_params_, line);
+  RecordResult result = fileParser_->processLine(line);
   if (result.isSuccess) {
-    auto predicteds = network_->forwardPropagation(result.record.inputs);
+    const auto &network = Manager::getInstance().network;
+    auto predicteds = network->forwardPropagation(result.record.inputs);
     showOutput(result.record.inputs, predicteds);
   }
   return result;
@@ -63,15 +65,16 @@ void Predict::appendValues(const std::vector<float> &values,
 
 void Predict::showOutput(const std::vector<float> &inputs,
                          const std::vector<float> &predicteds) const {
+  const auto &app_params = Manager::getInstance().app_params;
   const auto &logger = SimpleLogger::getInstance();
   logger.setPrecision(3);
-  switch (app_params_.predictive_mode) {
+  switch (app_params.predictive_mode) {
   case EPredictiveMode::CSV: {
-    appendValues(app_params_.output_at_end ? inputs : predicteds,
-                 !app_params_.output_at_end);
+    appendValues(app_params.output_at_end ? inputs : predicteds,
+                 !app_params.output_at_end);
     logger.append(",");
-    appendValues(app_params_.output_at_end ? predicteds : inputs,
-                 app_params_.output_at_end);
+    appendValues(app_params.output_at_end ? predicteds : inputs,
+                 app_params.output_at_end);
     logger.endl();
   } break;
   case EPredictiveMode::NumberAndRaw: {

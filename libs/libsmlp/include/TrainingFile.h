@@ -14,7 +14,9 @@
 
 class TrainingFile : public Training {
 public:
-  using Training::Training;
+  TrainingFile(const NetworkParameters &network_params,
+               const AppParameters &app_params)
+      : Training(TrainingType::TrainingFile, network_params, app_params) {}
 
   void train(const std::string &line = "") override {
     if (!fileParser_) {

@@ -1,5 +1,6 @@
 #include "Common.h"
 #include "DataFileParser.h"
+#include "Manager.h"
 #include "SimpleLang.h"
 #include "TestingFile.h"
 #include "TestingStdin.h"
@@ -13,7 +14,7 @@ TEST_CASE("Testing the Testing class") {
   SUBCASE("Test constructor") {
     CHECK_NOTHROW({
       auto network = std::make_shared<Network>();
-      auto fileparser = std::make_shared<DataFileParser>("");
+      auto fileparser = std::make_shared<DataFileParser>();
       auto testing = new TestingFile({});
       testing->setFileParser(fileparser);
       delete testing;
@@ -31,19 +32,20 @@ TEST_CASE("Testing the Testing class") {
         "0.00, 0.62,0.00, 0.00, 1.00, 0.92, 0.00, 1.00,0.00\n";
     std::stringstream inputDataStream(inputData);
 
-    auto network =
+    auto &manager = Manager::getInstance();
+    manager.network =
         std::make_shared<Network>(NetworkParameters{.input_size = 20,
                                                     .hidden_size = 12,
                                                     .output_size = 1,
                                                     .hiddens_count = 1});
-    auto fileparser = std::make_shared<DataFileParser>("");
+    auto fileparser = std::make_shared<DataFileParser>();
 
-    AppParameters app_params = {.training_ratio_line = 0,
-                                .use_stdin = true,
-                                .use_training_ratio_line = true,
-                                .mode = EMode::TrainTestMonitored};
-    auto testing = new TestingStdin(app_params);
-    testing->setNetwork(network);
+    manager.app_params = {.training_ratio_line = 0,
+                          .use_stdin = true,
+                          .use_training_ratio_line = true,
+                          .mode = EMode::TrainTestMonitored};
+    auto testing = new TestingStdin(manager.app_params);
+    testing->setNetwork(manager.network);
     testing->setFileParser(fileparser);
 
     // Redirect std::cin
@@ -55,11 +57,12 @@ TEST_CASE("Testing the Testing class") {
     std::cin.rdbuf(cin_buffer);
   }
   SUBCASE("Test exception") {
-    auto network = std::make_shared<Network>();
-    auto fileparser = std::make_shared<DataFileParser>("../data/test_file.csv");
+    auto &manager = Manager::getInstance();
+    manager.app_params.data_file = "../data/test_file.csv";
+    auto fileparser = std::make_shared<DataFileParser>();
     auto testing =
         new TestingFile({.training_ratio = 1, .mode = EMode::TrainThenTest});
-    testing->setNetwork(network);
+    testing->setNetwork(manager.network);
     testing->setFileParser(fileparser);
     CHECK_THROWS_WITH_AS(
         testing->test(),

@@ -19,6 +19,7 @@
 #include "TrainingFile.h"
 #include "TrainingSocket.h"
 #include "TrainingStdin.h"
+#include <algorithm>
 #include <memory>
 
 class Manager {
@@ -108,19 +109,17 @@ public:
   /**
    * @brief Create a Training object
    *
-   * @param network_params
-   * @param app_params
    */
   void createTraining() {
     if (training_) {
       return;
     }
     if (app_params.use_socket) {
-      training_ = std::make_unique<TrainingSocket>(network_params, app_params);
+      training_ = std::make_shared<TrainingSocket>(network_params, app_params);
     } else if (app_params.use_stdin) {
-      training_ = std::make_unique<TrainingStdin>(network_params, app_params);
+      training_ = std::make_shared<TrainingStdin>(network_params, app_params);
     } else {
-      training_ = std::make_unique<TrainingFile>(network_params, app_params);
+      training_ = std::make_shared<TrainingFile>(network_params, app_params);
     }
     training_->setNetwork(network);
     training_->createFileParser();
@@ -131,6 +130,10 @@ public:
     }
   }
 
+  /**
+   * @brief Create a Testing object
+   *
+   */
   void createTesting() {
     if (testing_) {
       return;
@@ -144,9 +147,33 @@ public:
     }
     testing_->setNetwork(network);
     if (app_params.mode != EMode::TrainTestMonitored) {
-      testing_->createFileParser(); // TrainTestMonitored use the file parser of
-                                    // training_ instead.
+      // TrainTestMonitored use the file parser of training_ instead.
+      testing_->createFileParser();
     }
+  }
+
+  /**
+   * @brief This will delete the managed object if this is the last shared_ptr
+   * owning it.
+   *
+   */
+  void resetTraining() {
+    if (training_ == nullptr) {
+      return;
+    }
+    training_.reset();
+  }
+
+  /**
+   * @brief This will delete the managed object if this is the last shared_ptr
+   * owning it.
+   *
+   */
+  void resetTesting() {
+    if (testing_ == nullptr) {
+      return;
+    }
+    testing_.reset();
   }
 
   /**
@@ -155,10 +182,24 @@ public:
    */
   const SimpleLogger &logger = SimpleLogger::getInstance();
 
+  /**
+   * @brief Get the Training object
+   *
+   * @return std::shared_ptr<Training>
+   */
+  std::shared_ptr<Training> getTraining() const { return training_; }
+
+  /**
+   * @brief Get the Testing object
+   *
+   * @return std::shared_ptr<Testing>
+   */
+  std::shared_ptr<Testing> getTesting() const { return testing_; }
+
 private:
   Manager() = default;
   std::string showInlineHeader() const;
-  std::unique_ptr<Predict> predict_ = nullptr;
-  std::unique_ptr<Training> training_ = nullptr;
+  std::shared_ptr<Predict> predict_ = nullptr;
+  std::shared_ptr<Training> training_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
 };

@@ -19,15 +19,10 @@
  */
 class Predict {
 public:
-  Predict(std::shared_ptr<Network> network,
-          std::shared_ptr<DataFileParser> fileparser,
-          const AppParameters &app_params)
-      : network_(network), fileParser_(fileparser), app_params_(app_params) {}
+  explicit Predict(std::shared_ptr<DataFileParser> fileparser)
+      : fileParser_(fileparser) {}
 
-  Predict(std::shared_ptr<Network> network, const AppParameters &app_params)
-      : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
-        app_params_(app_params) {}
+  Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
 
   void predict(const std::string &line = "") const;
 
@@ -35,20 +30,6 @@ public:
 
   void showOutput(const std::vector<float> &inputs,
                   const std::vector<float> &predicteds) const;
-
-  /**
-   * @brief Sets the network for testing.
-   *
-   * @param network Pointer to the network.
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
-
-  /**
-   * @brief Gets the network used for testing.
-   *
-   * @return Pointer to the network.
-   */
-  std::shared_ptr<Network> getNetwork() const { return network_; }
 
   /**
    * @brief Sets the file parser for testing data.
@@ -70,7 +51,5 @@ private:
   RecordResult processLine(const std::string &line = "") const;
   void processStdin() const;
   void processFile() const;
-  std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
-  const AppParameters &app_params_;
 };

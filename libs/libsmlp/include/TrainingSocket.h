@@ -12,7 +12,9 @@
 
 class TrainingSocket : public Training {
 public:
-  using Training::Training;
+  TrainingSocket(const NetworkParameters &network_params,
+                 const AppParameters &app_params)
+      : Training(TrainingType::TrainingSocket, network_params, app_params) {}
 
   void train(const std::string &line = "") override { processInputLine(line); }
 };

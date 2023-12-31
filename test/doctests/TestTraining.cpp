@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "Manager.h"
 #include "TestingFile.h"
 #include "Training.h"
 #include "TrainingFile.h"
@@ -18,10 +19,15 @@ TEST_CASE("Testing the Training class") {
 
   std::string test_file = "../data/test_file.csv";
 
-  NetworkParameters network_params{.input_size = 20, .output_size = 1};
-  AppParameters app_params{.data_file = test_file};
+  auto &manager = Manager::getInstance();
+  manager.network_params = {.input_size = 20, .output_size = 1};
+  manager.app_params = {.data_file = test_file};
+  manager.network = std::make_shared<Network>(manager.network_params);
 
-  auto network = std::make_shared<Network>(network_params);
+  auto &network_params = manager.network_params;
+  auto &app_params = manager.app_params;
+  auto &network = manager.network;
+
   TrainingFile training(network_params, app_params);
   training.setNetwork(network);
   training.createFileParser();

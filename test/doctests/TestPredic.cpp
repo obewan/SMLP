@@ -1,3 +1,4 @@
+#include "Manager.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "doctest.h"
@@ -7,12 +8,12 @@
 #include <memory>
 
 TEST_CASE("Testing the Predict class") {
-  SUBCASE("Test constructor") { CHECK_NOTHROW(Predict(nullptr, {})); }
+  SUBCASE("Test constructor") { CHECK_NOTHROW(Predict()); }
 
   SUBCASE("Test predict") {
     std::string modelJsonFile = "testModel.json";
     std::string test_file = "../data/test_file.csv";
-    AppParameters app_params{
+    Manager::getInstance().app_params = {
         .version = "1.0.0",
         .network_to_import = modelJsonFile,
         .data_file = test_file,
@@ -21,21 +22,19 @@ TEST_CASE("Testing the Predict class") {
     NetworkImportExportJSON importExportJSON;
     CHECK(std::filesystem::exists(modelJsonFile) == true);
 
-    std::shared_ptr<Network> network = nullptr;
+    const auto &app_params = Manager::getInstance().app_params;
     CHECK_NOTHROW({
-      network =
+      Manager::getInstance().network =
           std::shared_ptr<Network>(importExportJSON.importModel(app_params));
-      Predict predict(network, app_params);
+      Predict predict;
       predict.predict();
     });
 
     CHECK_THROWS_WITH_AS(
         {
           auto invalidEnum = static_cast<EPredictiveMode>(900);
-          app_params.predictive_mode = invalidEnum;
-          network = std::shared_ptr<Network>(
-              importExportJSON.importModel(app_params));
-          Predict predict(network, app_params);
+          Manager::getInstance().app_params.predictive_mode = invalidEnum;
+          Predict predict;
           predict.predict();
         },
         SimpleLang::Error(Error::UnimplementedPredictiveMode).c_str(),

@@ -3,7 +3,9 @@
 
 class TrainingStdin : public Training {
 public:
-  using Training::Training;
+  TrainingStdin(const NetworkParameters &network_params,
+                const AppParameters &app_params)
+      : Training(TrainingType::TrainingStdin, network_params, app_params) {}
 
   void train(const std::string &line = "") override {
     logger_.log(LogLevel::INFO, false, "Training...");

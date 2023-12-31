@@ -14,6 +14,7 @@
 #include "Testing.h"
 #include "exception/TrainingException.h"
 #include <SimpleLogger.h>
+#include <map>
 #include <memory>
 #include <string>
 
@@ -44,6 +45,13 @@ predict the correct outputs for the given inputs.
  *
  */
 
+enum class TrainingType { TrainingFile, TrainingSocket, TrainingStdin };
+
+const std::map<std::string, TrainingType, std::less<>> training_map{
+    {"TrainingFile", TrainingType::TrainingFile},
+    {"TrainingSocket", TrainingType::TrainingSocket},
+    {"TrainingStdin", TrainingType::TrainingStdin}};
+
 /**
  * @brief The Training class is responsible for training the neural network
  * model. It contains methods for processing training data, updating the model
@@ -51,11 +59,21 @@ predict the correct outputs for the given inputs.
  */
 class Training {
 public:
-  Training(const NetworkParameters &network_params,
+  Training(TrainingType training_type, const NetworkParameters &network_params,
            const AppParameters &app_params)
-      : network_params_(network_params), app_params_(app_params) {}
+      : trainingType(training_type), network_params_(network_params),
+        app_params_(app_params) {}
   virtual ~Training() = default;
 
+  TrainingType trainingType;
+
+  const std::string UndefinedTraining = "UndefinedTraining";
+
+  /**
+   * @brief Train a network.
+   *
+   * @param line optional data line to use for training
+   */
   virtual void train(const std::string &line = "") = 0;
 
   /**
@@ -78,7 +96,7 @@ public:
    */
   void createFileParser() {
     if (!fileParser_) {
-      fileParser_ = std::make_shared<DataFileParser>(app_params_.data_file);
+      fileParser_ = std::make_shared<DataFileParser>();
     }
   }
 
@@ -112,10 +130,18 @@ public:
    */
   std::shared_ptr<Testing> getTesting() const { return testing_; }
 
+  std::string trainingTypeStr() const {
+    for (const auto &[key, mTrainingType] : training_map) {
+      if (mTrainingType == trainingType) {
+        return key;
+      }
+    }
+    return UndefinedTraining;
+  }
+
 protected:
   RecordResult processInputLine(const std::string &line = "") const {
-    RecordResult result =
-        fileParser_->processLine(network_params_, app_params_, line);
+    RecordResult result = fileParser_->processLine(line);
     if (result.isSuccess) {
       network_->forwardPropagation(result.record.inputs);
       network_->backwardPropagation(result.record.outputs);

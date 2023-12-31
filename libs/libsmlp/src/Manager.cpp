@@ -3,7 +3,7 @@
 
 void Manager::predict(const std::string &line) {
   if (!predict_) {
-    predict_ = std::make_unique<Predict>(network, app_params);
+    predict_ = std::make_unique<Predict>();
   }
   predict_->predict(line);
 }
@@ -152,9 +152,8 @@ void Manager::importOrBuildNetwork() {
 
 bool Manager::shouldExportNetwork() const {
   return !app_params.network_to_export.empty() &&
-         (app_params.mode == EMode::TrainOnly ||
-          app_params.mode == EMode::TrainTestMonitored ||
-          app_params.mode == EMode::TrainThenTest);
+         app_params.mode != EMode::Predictive &&
+         app_params.mode != EMode::TestOnly;
 }
 
 void Manager::exportNetwork() {

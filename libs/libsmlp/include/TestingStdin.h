@@ -8,13 +8,15 @@
  *
  */
 #pragma once
+#include "CommonParameters.h"
 #include "Testing.h"
 #include <cstddef>
 #include <iostream>
 
 class TestingStdin : public Testing {
 public:
-  using Testing::Testing;
+  explicit TestingStdin(const AppParameters &app_params)
+      : Testing(TestingType::TestingStdin, app_params) {}
 
   void test(const std::string &line = "", size_t epoch = 0,
             size_t current_line_number = 0) override {
@@ -23,13 +25,10 @@ public:
       current_line_number = app_params_.training_ratio_line;
     }
 
-    auto network_params = network_->params;
-
     std::string current_line;
     while (std::getline(std::cin, current_line)) {
       fileParser_->current_line_number = current_line_number - 1;
-      RecordResult result =
-          fileParser_->processLine(network_params, app_params_, current_line);
+      RecordResult result = fileParser_->processLine(current_line);
       if (!result.isSuccess) {
         continue;
       }

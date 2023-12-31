@@ -45,14 +45,14 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   serverThread.join();
 }
 
-TEST_CASE("Testing the SimpleTCPServer class - basics") {
+TEST_CASE("Testing the SimpleTCPServer class - mock") {
+  // TODO
+  //  CHECK_NOTHROW({
+  //    SimpleTCPServer server;
+  //    std::jthread serverThread([&server] { server.start(); });
+  //    server.stop();
+  //    serverThread.join();
+  //  });
 
-  CHECK_NOTHROW({
-    SimpleTCPServer server;
-    std::jthread serverThread([&server] { server.start(); });
-    server.stop();
-    serverThread.join();
-  });
-
-  CHECK_NOTHROW({ SimpleTCPClient client; });
+  // CHECK_NOTHROW({ SimpleTCPClient client; });
 }

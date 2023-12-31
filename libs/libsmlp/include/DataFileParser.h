@@ -23,11 +23,9 @@
 class DataFileParser {
 public:
   /**
-   * @brief Constructor that takes a file path as an argument.
-   *
-   * @param path The path to the file.
+   * @brief Constructor
    */
-  explicit DataFileParser(const std::string &path) : path(path) {}
+  DataFileParser() = default;
 
   // Virtual destructor
   virtual ~DataFileParser();
@@ -35,7 +33,7 @@ public:
   /**
    * @brief Opens the file.
    */
-  void openFile(const std::string &filepath = "");
+  void openFile();
 
   /**
    * @brief Closes the file.
@@ -81,16 +79,12 @@ public:
   /**
    * @brief Processes a line from the file and returns a RecordResult. This
    * method can be used for both testing and training data.
-   *
-   * @param network_params The parameters to use when processing the line.
-   * @param app_params The application parameters.
+
    * @param line if not empty it will use this line to process, else it will
    * process the next line of the fileparser.
    * @return A RecordResult containing the processed data from the line.
    */
-  RecordResult processLine(const NetworkParameters &network_params,
-                           const AppParameters &app_params,
-                           const std::string &line = "");
+  RecordResult processLine(const std::string &line = "");
 
   /**
    * @brief Processes a record with input only.
@@ -131,18 +125,14 @@ public:
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
-  bool getNextLine(std::string &line, const AppParameters &app_params);
+  bool getNextLine(std::string &line);
   void parseLine(const std::string &line,
                  std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
-  void
-  validateColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-                  const NetworkParameters &network_params,
-                  const AppParameters &app_params) const;
+  void validateColumns(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
-  Record
-  processColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-                 const NetworkParameters &network_params,
-                 const AppParameters &app_params) const;
+  Record processColumns(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
   std::ifstream file;
   Csv::Parser csv_parser;
@@ -150,7 +140,6 @@ public:
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
-  std::string path = "";
 
   std::function<float(const std::vector<Csv::CellReference> &)> getFloatValue =
       [](const std::vector<Csv::CellReference> &cells) {

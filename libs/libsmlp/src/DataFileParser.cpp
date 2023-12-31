@@ -1,6 +1,7 @@
 #include "DataFileParser.h"
 #include "Common.h"
 #include "CommonErrors.h"
+#include "Manager.h"
 #include "SimpleLang.h"
 #include "exception/FileParserException.h"
 #include <string>
@@ -11,21 +12,23 @@ DataFileParser::~DataFileParser() {
   }
 }
 
-void DataFileParser::openFile(const std::string &filepath) {
+void DataFileParser::openFile() {
+  const auto &manager = Manager::getInstance();
+  const auto &data_file = manager.app_params.data_file;
   if (file.is_open()) {
-    if (filepath.empty()) {
+    if (data_file.empty()) {
       return;
     } else {
       file.close();
     }
   }
-  if (!filepath.empty()) {
-    path = filepath;
+  if (data_file.empty()) {
+    throw FileParserException(SimpleLang::Error(Error::FailedToOpenFile));
   }
-  file.open(path);
+  file.open(data_file);
   if (!file.is_open()) {
     throw FileParserException(SimpleLang::Error(Error::FailedToOpenFile) +
-                              ": " + path);
+                              ": " + data_file);
   }
   current_line_number = 0;
 }
@@ -42,15 +45,11 @@ void DataFileParser::resetPos() {
   current_line_number = 0;
 }
 
-RecordResult
-DataFileParser::processLine(const NetworkParameters &network_params,
-                            const AppParameters &app_params,
-                            const std::string &line) {
-
+RecordResult DataFileParser::processLine(const std::string &line) {
   std::string nextline;
   current_line_number++;
   if (line.empty()) {
-    if (!getNextLine(nextline, app_params)) {
+    if (!getNextLine(nextline)) {
       return {.isSuccess = false, .isEndOfFile = true};
     }
   } else {
@@ -61,17 +60,17 @@ DataFileParser::processLine(const NetworkParameters &network_params,
 
   parseLine(nextline, cell_refs);
 
-  validateColumns(cell_refs, network_params, app_params);
+  validateColumns(cell_refs);
 
-  Record record = processColumns(cell_refs, network_params, app_params);
+  Record record = processColumns(cell_refs);
 
   return {.isSuccess = true, .record = record};
 }
 
-bool DataFileParser::getNextLine(std::string &line,
-                                 const AppParameters &app_params) {
+bool DataFileParser::getNextLine(std::string &line) {
   // if isTesting, skipping lines until testing lines
-  if (app_params.use_training_ratio_line &&
+  const auto &manager = Manager::getInstance();
+  if (manager.app_params.use_training_ratio_line &&
       current_line_number < training_ratio_line) {
     for (; current_line_number < training_ratio_line; ++current_line_number) {
       if (!std::getline(file, line)) {
@@ -101,14 +100,16 @@ void DataFileParser::parseLine(
 }
 
 void DataFileParser::validateColumns(
-    const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-    const NetworkParameters &network_params,
-    const AppParameters &app_params) const {
+    const std::vector<std::vector<Csv::CellReference>> &cell_refs) const {
   if (cell_refs.empty()) {
     throw FileParserException(SimpleLang::Error(
         Error::CSVParsingErrorEmptyLine,
         {{"line_number", std::to_string(current_line_number)}}));
   }
+
+  const auto &manager = Manager::getInstance();
+  const auto &app_params = manager.app_params;
+  const auto &network_params = manager.network_params;
 
   if (app_params.mode != EMode::Predictive &&
       cell_refs.size() !=
@@ -132,11 +133,13 @@ void DataFileParser::validateColumns(
 }
 
 Record DataFileParser::processColumns(
-    const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-    const NetworkParameters &network_params,
-    const AppParameters &app_params) const {
+    const std::vector<std::vector<Csv::CellReference>> &cell_refs) const {
   Record record;
   try {
+    const auto &manager = Manager::getInstance();
+    const auto &app_params = manager.app_params;
+    const auto &network_params = manager.network_params;
+
     if (app_params.mode == EMode::Predictive &&
         cell_refs.size() == network_params.input_size) {
       record = processInputOnly(cell_refs, network_params.input_size);
