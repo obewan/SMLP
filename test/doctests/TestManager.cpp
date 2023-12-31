@@ -72,7 +72,7 @@ TEST_CASE("Testing the Manager class") {
                          FileParserException);
 
     // Test predict file with a valid file path and network.
-    manager.app_params.network_to_import = "testModel.json";
+    manager.app_params.network_to_import = "../data/testModel.json";
     manager.app_params.data_file = "../data/test_file.csv";
     CHECK(std::filesystem::exists(manager.app_params.network_to_import));
     CHECK(std::filesystem::exists(manager.app_params.data_file));
