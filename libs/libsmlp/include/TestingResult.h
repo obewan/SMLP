@@ -20,8 +20,7 @@ public:
    *
    * @param app_params
    */
-  explicit TestingResult(const AppParameters &app_params)
-      : app_params_(app_params){};
+  explicit TestingResult() = default;
 
   struct Convergence {
     float previous = 0.0f;
@@ -138,5 +137,4 @@ private:
 
   std::map<size_t, Convergence> progress;
   TestingResult::Stat stats;
-  const AppParameters &app_params_;
 };

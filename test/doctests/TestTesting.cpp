@@ -15,7 +15,7 @@ TEST_CASE("Testing the Testing class") {
     CHECK_NOTHROW({
       auto network = std::make_shared<Network>();
       auto fileparser = std::make_shared<DataFileParser>();
-      auto testing = new TestingFile({});
+      auto testing = new TestingFile();
       testing->setFileParser(fileparser);
       delete testing;
     });
@@ -44,8 +44,7 @@ TEST_CASE("Testing the Testing class") {
                           .use_stdin = true,
                           .use_training_ratio_line = true,
                           .mode = EMode::TrainTestMonitored};
-    auto testing = new TestingStdin(manager.app_params);
-    testing->setNetwork(manager.network);
+    auto testing = new TestingStdin();
     testing->setFileParser(fileparser);
 
     // Redirect std::cin
@@ -60,9 +59,9 @@ TEST_CASE("Testing the Testing class") {
     auto &manager = Manager::getInstance();
     manager.app_params.data_file = "../data/test_file.csv";
     auto fileparser = std::make_shared<DataFileParser>();
-    auto testing =
-        new TestingFile({.training_ratio = 1, .mode = EMode::TrainThenTest});
-    testing->setNetwork(manager.network);
+    manager.app_params.training_ratio = 1;
+    manager.app_params.mode = EMode::TrainThenTest;
+    auto testing = new TestingFile();
     testing->setFileParser(fileparser);
     CHECK_THROWS_WITH_AS(
         testing->test(),

@@ -115,18 +115,16 @@ public:
       return;
     }
     if (app_params.use_socket) {
-      training_ = std::make_shared<TrainingSocket>(network_params, app_params);
+      training_ = std::make_shared<TrainingSocket>();
     } else if (app_params.use_stdin) {
-      training_ = std::make_shared<TrainingStdin>(network_params, app_params);
+      training_ = std::make_shared<TrainingStdin>();
     } else {
-      training_ = std::make_shared<TrainingFile>(network_params, app_params);
+      training_ = std::make_shared<TrainingFile>();
     }
-    training_->setNetwork(network);
     training_->createFileParser();
     if (app_params.mode == EMode::TrainTestMonitored) {
       createTesting();
       testing_->setFileParser(training_->getFileParser());
-      training_->setTesting(testing_);
     }
   }
 
@@ -139,13 +137,12 @@ public:
       return;
     }
     if (app_params.use_socket) {
-      testing_ = std::make_shared<TestingSocket>(app_params);
+      testing_ = std::make_shared<TestingSocket>();
     } else if (app_params.use_stdin) {
-      testing_ = std::make_shared<TestingStdin>(app_params);
+      testing_ = std::make_shared<TestingStdin>();
     } else {
-      testing_ = std::make_shared<TestingFile>(app_params);
+      testing_ = std::make_shared<TestingFile>();
     }
-    testing_->setNetwork(network);
     if (app_params.mode != EMode::TrainTestMonitored) {
       // TrainTestMonitored use the file parser of training_ instead.
       testing_->createFileParser();

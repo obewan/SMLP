@@ -34,11 +34,10 @@ public:
    * @brief Constructor that takes a pointer to the network and a pointer to the
    * file parser as arguments.
    *
-   * @param app_params
    */
-  explicit Testing(TestingType testing_type, const AppParameters &app_params)
-      : testingType(testing_type), app_params_(app_params),
-        testingResults_(std::make_shared<TestingResult>(app_params)){};
+  explicit Testing(TestingType testing_type)
+      : testingType(testing_type),
+        testingResults_(std::make_shared<TestingResult>()){};
   virtual ~Testing() = default;
 
   TestingType testingType;
@@ -75,27 +74,11 @@ public:
   }
 
   /**
-   * @brief Sets the file parser for testing data.
-   *
-   * @param filepath file path.
-   */
-  void setFileParser(const std::string &filepath) {
-    fileParser_ = std::make_shared<DataFileParser>();
-  }
-
-  /**
    * @brief Gets the file parser used for testing data.
    *
    * @return Pointer to the file parser.
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
-
-  /**
-   * @brief Set the Network object
-   *
-   * @param network
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
 
   std::shared_ptr<TestingResult> getTestingResults() const {
     return testingResults_;
@@ -113,16 +96,8 @@ public:
 protected:
   TestingResult::TestResults testLine(const RecordResult &record_result,
                                       const size_t line_number = 0,
-                                      const size_t epoch = 0) const {
-    auto predicteds = network_->forwardPropagation(record_result.record.inputs);
-    return {.epoch = epoch,
-            .lineNumber = line_number,
-            .expecteds = record_result.record.outputs,
-            .outputs = predicteds};
-  };
+                                      const size_t epoch = 0) const;
 
-  std::shared_ptr<Network> network_ = nullptr;
-  const AppParameters &app_params_;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };

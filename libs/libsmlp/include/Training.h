@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonParameters.h"
 #include "DataFileParser.h"
 #include "Network.h"
 #include "Testing.h"
@@ -59,10 +60,7 @@ const std::map<std::string, TrainingType, std::less<>> training_map{
  */
 class Training {
 public:
-  Training(TrainingType training_type, const NetworkParameters &network_params,
-           const AppParameters &app_params)
-      : trainingType(training_type), network_params_(network_params),
-        app_params_(app_params) {}
+  explicit Training(TrainingType training_type);
   virtual ~Training() = default;
 
   TrainingType trainingType;
@@ -75,20 +73,6 @@ public:
    * @param line optional data line to use for training
    */
   virtual void train(const std::string &line = "") = 0;
-
-  /**
-   * @brief Sets the network for training.
-   *
-   * @param network Pointer to the network.
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
-
-  /**
-   * @brief Gets the network used for training.
-   *
-   * @return Pointer to the network.
-   */
-  std::shared_ptr<Network> getNetwork() const { return network_; }
 
   /**
    * @brief Create a File Parser object
@@ -116,20 +100,6 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  /**
-   * @brief Sets the tester for testing during training.
-   *
-   * @param tester Pointer to the tester.
-   */
-  void setTesting(std::shared_ptr<Testing> tester) { testing_ = tester; }
-
-  /**
-   * @brief Gets the tester used for testing during training.
-   *
-   * @return Pointer to the tester.
-   */
-  std::shared_ptr<Testing> getTesting() const { return testing_; }
-
   std::string trainingTypeStr() const {
     for (const auto &[key, mTrainingType] : training_map) {
       if (mTrainingType == trainingType) {
@@ -140,21 +110,9 @@ public:
   }
 
 protected:
-  RecordResult processInputLine(const std::string &line = "") const {
-    RecordResult result = fileParser_->processLine(line);
-    if (result.isSuccess) {
-      network_->forwardPropagation(result.record.inputs);
-      network_->backwardPropagation(result.record.outputs);
-      network_->updateWeights();
-    }
-    return result;
-  }
+  RecordResult processInputLine(const std::string &line = "") const;
 
-  const NetworkParameters &network_params_;
-  const AppParameters &app_params_;
   const SimpleLogger &logger_ = SimpleLogger::getInstance();
 
-  std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
-  std::shared_ptr<Testing> testing_ = nullptr;
 };

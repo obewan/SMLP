@@ -1,5 +1,6 @@
 #include "TestingResult.h"
 #include "CommonModes.h"
+#include "Manager.h"
 #include "exception/TestingException.h"
 #include <cmath>
 #include <cstddef>
@@ -13,10 +14,11 @@ const float HIGH_THRESHOLD = 0.10f;
 std::string TestingResult::showResultsLine() {
   calcStats();
   std::stringstream sstr;
+  const auto &app_params = Manager::getInstance().app_params;
 
   sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
        << stats.accuracy_avg << " " << stats.accuracy_high << "]";
-  if (app_params_.mode == EMode::TrainTestMonitored) {
+  if (app_params.mode == EMode::TrainTestMonitored) {
     sstr << std::setprecision(2) << " conv(01t)[" << stats.convergence_zero
          << " " << stats.convergence_one << " " << stats.convergence << "]";
   }
@@ -33,8 +35,8 @@ std::string TestingResult::showDetailledResults() {
   sstr << "Testing results: " << std::endl;
 
   sstr << showAccuracyResults();
-
-  if (app_params_.mode == EMode::TrainTestMonitored) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.mode == EMode::TrainTestMonitored) {
     sstr << showConvergenceResults();
   }
   return sstr.str();
@@ -92,18 +94,20 @@ void TestingResult::processRecordTestingResult(
     stats.total_samples++;
   }
 
-  if (app_params_.mode == EMode::TrainTestMonitored) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.mode == EMode::TrainTestMonitored) {
     updateMonitoredProgress(testResult);
   }
 }
 
 void TestingResult::updateMonitoredProgress(
     const TestingResult::TestResults &result) {
-  if (app_params_.output_index_to_monitor > result.outputs.size()) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.output_index_to_monitor > result.outputs.size()) {
     throw TestingException("invalid output_index_to_monitor parameter");
   }
-  auto outputMonitored = result.outputs.at(app_params_.output_index_to_monitor);
-  auto expected = result.expecteds.at(app_params_.output_index_to_monitor);
+  auto outputMonitored = result.outputs.at(app_params.output_index_to_monitor);
+  auto expected = result.expecteds.at(app_params.output_index_to_monitor);
 
   if (!progress.contains(result.lineNumber)) {
     progress[result.lineNumber] = {
@@ -117,7 +121,8 @@ void TestingResult::updateMonitoredProgress(
 }
 
 void TestingResult::calcStats() {
-  if (app_params_.mode == EMode::TrainTestMonitored) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.mode == EMode::TrainTestMonitored) {
     calculateConvergences();
   }
   calculatePercentages();
@@ -154,7 +159,8 @@ void TestingResult::calculatePercentages() {
                        (float)stats.total_samples * 100.0f;
   stats.accuracy_high = static_cast<float>(stats.correct_predictions_high) /
                         (float)stats.total_samples * 100.0f;
-  if (app_params_.mode == EMode::TrainTestMonitored) {
+  const auto &app_params = Manager::getInstance().app_params;
+  if (app_params.mode == EMode::TrainTestMonitored) {
     stats.convergence = static_cast<float>(stats.good_convergence) /
                         (float)stats.total_convergences * 100.0f;
     stats.convergence_zero = static_cast<float>(stats.good_convergence_zero) /

@@ -81,9 +81,39 @@ TEST_CASE("Testing the Manager class") {
     CHECK_NOTHROW(manager.predict());
   }
 
-  SUBCASE("Test file training") { CHECK_NOTHROW(manager.train()); }
+  SUBCASE("Test file training") {
+    CHECK_NOTHROW(manager.train());
+    CHECK_NOTHROW(manager.trainTestMonitored());
+  }
 
   SUBCASE("Test file testing") { CHECK_NOTHROW(manager.test()); }
+
+  SUBCASE("Test run mode") {
+    manager.app_params.network_to_import = "../data/testModel.json";
+    manager.app_params.data_file = "../data/test_file.csv";
+    CHECK(std::filesystem::exists(manager.app_params.network_to_import));
+    CHECK(std::filesystem::exists(manager.app_params.data_file));
+    CHECK_NOTHROW(manager.importOrBuildNetwork());
+    manager.app_params.use_socket = false;
+    manager.app_params.use_stdin = false;
+
+    // for (auto mode :
+    //      {EMode::TestOnly, EMode::TrainOnly, EMode::TrainTestMonitored,
+    //       EMode::TrainThenTest, EMode::Predictive}) {
+    //   manager.app_params.mode = mode;
+    //   CHECK_NOTHROW(manager.runMode());
+    // }
+    manager.app_params.mode = EMode::Predictive;
+    CHECK_NOTHROW(manager.runMode());
+    manager.app_params.mode = EMode::TestOnly;
+    CHECK_NOTHROW(manager.runMode());
+    manager.app_params.mode = EMode::TrainOnly;
+    CHECK_NOTHROW(manager.runMode());
+    manager.app_params.mode = EMode::TrainTestMonitored;
+    CHECK_NOTHROW(manager.runMode());
+    manager.app_params.mode = EMode::TrainThenTest;
+    CHECK_NOTHROW(manager.runMode());
+  }
 
   SUBCASE("Test should export network") {
     manager.app_params.network_to_export = "";

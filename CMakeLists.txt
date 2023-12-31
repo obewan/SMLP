@@ -32,7 +32,14 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
     add_custom_target(lcov
         COMMAND lcov --capture --directory . --output-file ../coverage/lcov.info
-        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' '${CMAKE_CURRENT_SOURCE_DIR}/test/*' '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
+        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info 
+        '/usr/include/*' '/usr/lib/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/libsmlp/src/SimpleTCPServer.cpp' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/libsmlp/src/SimpleTCPClient.cpp' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/test/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
         COMMENT "Generating lcov.info"
     )
     add_custom_target(lcov_summary

@@ -12,7 +12,7 @@
 TEST_CASE("Testing the Training class") {
   SUBCASE("Test Constructor") {
     CHECK_NOTHROW({
-      auto training = new TrainingFile({}, {});
+      auto training = new TrainingFile();
       delete training;
     });
   }
@@ -26,10 +26,8 @@ TEST_CASE("Testing the Training class") {
 
   auto &network_params = manager.network_params;
   auto &app_params = manager.app_params;
-  auto &network = manager.network;
 
-  TrainingFile training(network_params, app_params);
-  training.setNetwork(network);
+  TrainingFile training;
   training.createFileParser();
 
   SUBCASE("Test train function") {
@@ -61,16 +59,17 @@ TEST_CASE("Testing the Training class") {
                                             .use_training_ratio_line = true,
                                             .mode = EMode::TrainOnly};
 
+      manager.app_params = app_params_for_stdin;
       // Redirect std::cin
       std::cin.rdbuf(inputDataStream.rdbuf());
 
-      TrainingStdin trainingStdin(network_params, app_params_for_stdin);
-      trainingStdin.setNetwork(network);
+      TrainingStdin trainingStdin;
       trainingStdin.createFileParser();
-      CHECK_NOTHROW(training.train());
+      CHECK_NOTHROW(trainingStdin.train());
 
       // Restore std::cin to normal after the test
       std::cin.rdbuf(cin_buffer);
+      manager.app_params = {.data_file = test_file};
     }
   }
 
@@ -95,11 +94,11 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
-      auto testing = std::make_shared<TestingFile>(app_params);
+
+      manager.createTesting();
+      const auto &testing = manager.getTesting();
       CHECK(testing != nullptr);
-      training.setTesting(testing);
       testing->setFileParser(training.getFileParser());
-      testing->setNetwork(training.getNetwork());
       CHECK_NOTHROW(training.train());
 
       auto testProgress = testing->getTestingResults()->getProgress();
