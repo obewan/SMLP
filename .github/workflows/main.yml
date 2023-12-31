@@ -39,8 +39,7 @@ jobs:
         run: |
           mkdir -p ${{github.workspace}}/coverage
           lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info 
-          '/usr/include/*' '/usr/lib/*' 
+          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info           
           '${{github.workspace}}/libs/libsmlp/src/SimpleTCPServer.cpp' 
           '${{github.workspace}}/libs/libsmlp/src/SimpleTCPClient.cpp' 
           '${{github.workspace}}/libs/csv-parser/*' 
