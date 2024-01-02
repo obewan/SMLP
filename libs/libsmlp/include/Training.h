@@ -14,7 +14,6 @@
 #include "Network.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
-#include <SimpleLogger.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -63,7 +62,7 @@ public:
   explicit Training(TrainingType training_type);
   virtual ~Training() = default;
 
-  TrainingType trainingType;
+  const TrainingType trainingType;
 
   const std::string UndefinedTraining = "UndefinedTraining";
 
@@ -111,8 +110,6 @@ public:
 
 protected:
   RecordResult processInputLine(const std::string &line = "") const;
-
-  const SimpleLogger &logger_ = SimpleLogger::getInstance();
 
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };

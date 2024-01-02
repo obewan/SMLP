@@ -40,7 +40,7 @@ public:
         testingResults_(std::make_shared<TestingResult>()){};
   virtual ~Testing() = default;
 
-  TestingType testingType;
+  const TestingType testingType;
 
   const std::string UndefinedTesting = "UndefinedTesting";
 

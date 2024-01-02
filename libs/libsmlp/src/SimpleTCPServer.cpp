@@ -1,5 +1,6 @@
 #include "SimpleTCPServer.h"
 #include "Manager.h"
+#include "SimpleLang.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <cstring>
@@ -32,7 +33,7 @@ void SimpleTCPServer::start() {
 
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (server_socket == -1) {
-    throw SimpleTCPException("Failed to create socket");
+    throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketCreateError));
   }
 
   sockaddr_in server_address{};
@@ -42,11 +43,11 @@ void SimpleTCPServer::start() {
 
   if (bind(server_socket, (struct sockaddr *)&server_address,
            sizeof(server_address)) == -1) {
-    throw SimpleTCPException("Failed to bind socket");
+    throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketBindError));
   }
 
   if (listen(server_socket, 10) == -1) {
-    throw SimpleTCPException("Failed to listen on socket");
+    throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketListenError));
   }
 
   while (!stopSource.stop_requested()) {
@@ -57,7 +58,8 @@ void SimpleTCPServer::start() {
 
     if (client_socket == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        std::cerr << "Error in accept(). Quitting" << std::endl;
+        std::cerr << SimpleLang::Error(Error::TCPServerAcceptError)
+                  << std::endl;
         break;
       }
       continue;
@@ -114,7 +116,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
 
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
         std::scoped_lock<std::mutex> lock(threadMutex);
-        std::cerr << "Error in recv(). Closing client connection" << std::endl;
+        std::cerr << SimpleLang::Error(Error::TCPServerRecvError) << std::endl;
         CLOSE_SOCKET(client_socket);
         client_sockets.erase(std::ranges::find(client_sockets, client_socket));
         return;
@@ -125,7 +127,8 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
 
     if (bytesReceived == 0) {
       std::scoped_lock<std::mutex> lock(threadMutex);
-      std::cout << "Client disconnected " << std::endl;
+      std::cout << SimpleLang::Message(Message::TCPClientDisconnected)
+                << std::endl;
       CLOSE_SOCKET(client_socket);
       client_sockets.erase(std::ranges::find(client_sockets, client_socket));
       break;
@@ -155,6 +158,5 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
 
 void SimpleTCPServer::processLine(const std::string &line) {
   std::scoped_lock<std::mutex> lock(threadMutex);
-  std::cout << "Received line: " << line << std::endl;
   Manager::getInstance().processTCPClient(line);
 }

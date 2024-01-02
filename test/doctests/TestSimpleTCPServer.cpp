@@ -5,10 +5,13 @@
 #include <sstream>
 #include <thread>
 
-// Beware, networking testing must be disable for Github
-// So add * doctest::skip(true) after the Test Case name to disable, or use
-// mocks. See
-// https://github.com/doctest/doctest/blob/master/doc/markdown/testcases.md#decorators
+/** Beware:
+ * networking testing must be disable for Github so add skip(true) after the
+ * Test Case name to disable, or use mocks. Also the TCP classes are and should
+ * be ignored by the code coverage, as they must be mocked. For doctest
+ * decorators see
+ * https://github.com/doctest/doctest/blob/master/doc/markdown/testcases.md#decorators
+ */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
           doctest::skip(true)) {
   // change this by your WSL IP addr, if using WSL:
@@ -47,12 +50,4 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
 
 TEST_CASE("Testing the SimpleTCPServer class - mock") {
   // TODO
-  //  CHECK_NOTHROW({
-  //    SimpleTCPServer server;
-  //    std::jthread serverThread([&server] { server.start(); });
-  //    server.stop();
-  //    serverThread.join();
-  //  });
-
-  // CHECK_NOTHROW({ SimpleTCPClient client; });
 }

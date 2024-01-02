@@ -22,6 +22,7 @@
 class OutputLayer : public Layer {
 public:
   OutputLayer() : Layer(LayerType::OutputLayer) {}
+
   void forwardPropagation() override {
     if (previousLayer == nullptr) {
       return;

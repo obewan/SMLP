@@ -41,6 +41,12 @@
     "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer",
     "LayerTypeNotRecognized": "LayerType is not recognized",
     "MissingImportFile": "Missing file to import",
+    "TCPClientDisconnected": "TCP client disconnected.",
+    "TCPServerAcceptError": "TCP server error during client accept.",
+    "TCPServerRecvError": "TCP server error during client reception: closing client connection.",
+    "TCPSocketBindError": "TCP error: failed to bind server socket.",
+    "TCPSocketCreateError": "TCP error: failed to create server socket.",
+    "TCPSocketListenError": "TCP error: failed to listen on server socket.",
     "UnimplementedActivationFunction": "Unimplemented Activation Function",
     "UnimplementedPredictiveMode": "Unimplemented predictive mode",
     "UnknownKey": "Unknown key"

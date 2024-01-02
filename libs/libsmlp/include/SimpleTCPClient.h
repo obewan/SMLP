@@ -1,7 +1,7 @@
 /**
  * @file SimpleTCPClient.h
  * @author Damien Balima (www.dams-labs.net)
- * @brief A simple TCP client, especially created for unit testing.
+ * @brief A simple TCP client, for the TCP Server unit tests.
  * @date 2023-12-22
  *
  * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2023

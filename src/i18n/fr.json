@@ -40,6 +40,12 @@
     "LayerTypeInvalidOutput": "LayerType invalide pour la dernière couche : pas une couche de sortie",
     "LayerTypeNotRecognized": "LayerType non reconnu",
     "MissingImportFile": "Fichier manquant à importer",
+    "TCPClientDisconnected": "Client TCP déconnecté.",
+    "TCPServerAcceptError": "Erreur du serveur TCP lors de l'acceptation du client.",
+    "TCPServerRecvError": "Erreur du serveur TCP lors de la réception du client : fermeture de la connexion client.",
+    "TCPSocketBindError": "Erreur TCP : échec de la liaison du socket du serveur.",
+    "TCPSocketCreateError": "Erreur TCP : échec de la création du socket du serveur.",
+    "TCPSocketListenError": "Erreur TCP : échec de l'écoute sur le socket du serveur.",
     "UnimplementedActivationFunction": "Fonction d'activation non implémentée",
     "UnimplementedPredictiveMode": "Mode prédictif non implémenté",
     "UnknownKey": "Clé inconnue"

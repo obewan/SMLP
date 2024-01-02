@@ -12,9 +12,11 @@
 #include <string>
 
 enum class Message {
-
+  TCPClientDisconnected,
 };
 
-const std::map<Message, std::string> messages = {};
+const std::map<Message, std::string> messages = {
+    {Message::TCPClientDisconnected, "TCPClientDisconnected"}};
 
-const std::map<Message, std::string> defaultMessages = {};
+const std::map<Message, std::string> defaultMessages = {
+    {Message::TCPClientDisconnected, "TCP client disconnected."}};
