@@ -1,3 +1,4 @@
+#include "Manager.h"
 #include "SimpleTCPClient.h"
 #include "SimpleTCPServer.h"
 #include "doctest.h"
@@ -14,28 +15,32 @@
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
           doctest::skip(true)) {
-  // change this by your WSL IP addr, if using WSL:
+  // change this with your WSL IP addr, if using WSL:
   // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-  std::string server_ip_addr = "172.22.67.125";
+  std::string server_ip_addr = "172.26.184.90";
+  // std::string server_ip_addr = "";
   SimpleTCPServer server;
+  auto &manager = Manager::getInstance();
+  manager.app_params.use_socket = true;
+  manager.app_params.verbose = true;
   std::cout << "[TEST] Starting the TCP server..." << std::endl;
   std::jthread serverThread([&server] { server.start(); });
 
   // Allow server to start
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+  std::this_thread::sleep_for(std::chrono::seconds(2));
 
   SimpleTCPClient client;
   std::cout << "[TEST] Starting the TCP client..." << std::endl;
   client.connect(server_ip_addr, server.getServerPort());
   client.send("Test message");
 
-  // Allow message to be processed
-  std::this_thread::sleep_for(std::chrono::seconds(10));
-
   // Redirect cout to a stringstream
   std::stringstream ss;
   auto oldCoutBuffer = std::cout.rdbuf();
   std::cout.rdbuf(ss.rdbuf());
+
+  // Allow message to be processed
+  // std::this_thread::sleep_for(std::chrono::seconds(2));
 
   // Check server's output
   CHECK(ss.str() == "Received line: Test message\n");
@@ -45,7 +50,6 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
 
   std::cout << "[TEST] Closing the TCP server and client..." << std::endl;
   server.stop();
-  serverThread.join();
 }
 
 TEST_CASE("Testing the SimpleTCPServer class - mock") {

@@ -10,7 +10,6 @@
 #pragma once
 
 #include "Common.h"
-#include <condition_variable>
 #include <cstddef>
 #include <mutex>
 #include <thread>
@@ -41,10 +40,13 @@ public:
 
   void processLine(const std::string &line);
 
+  void closeClientSocket(int client_socket);
+  void closeAllClientSockets();
+  void closeServerSocket();
+
 private:
   std::vector<std::jthread> threads;
   std::mutex threadMutex;
-  std::condition_variable condition;
   std::stop_source stopSource;
   std::vector<int> client_sockets;
   int server_socket = 0;

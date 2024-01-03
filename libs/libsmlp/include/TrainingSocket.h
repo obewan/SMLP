@@ -8,11 +8,20 @@
  *
  */
 #pragma once
+#include "SimpleLogger.h"
 #include "Training.h"
+#include "exception/FileParserException.h"
 
 class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  void train(const std::string &line = "") override { processInputLine(line); }
+  void train(const std::string &line = "") override {
+    try {
+      processInputLine(line);
+    } catch (FileParserException &fpe) {
+      SimpleLogger::getInstance().error("FileParserException at line '", line,
+                                        "': ", fpe.what());
+    }
+  }
 };

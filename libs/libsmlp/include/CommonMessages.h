@@ -13,10 +13,14 @@
 
 enum class Message {
   TCPClientDisconnected,
+  TCPServerClosed,
 };
 
 const std::map<Message, std::string> messages = {
-    {Message::TCPClientDisconnected, "TCPClientDisconnected"}};
+    {Message::TCPClientDisconnected, "TCPClientDisconnected"},
+    {Message::TCPServerClosed, "TCPServerClosed"}};
 
 const std::map<Message, std::string> defaultMessages = {
-    {Message::TCPClientDisconnected, "TCP client disconnected."}};
+    {Message::TCPClientDisconnected, "TCP client disconnected."},
+    {Message::TCPServerClosed,
+     "TCP Server socket was closed, stopping server."}};

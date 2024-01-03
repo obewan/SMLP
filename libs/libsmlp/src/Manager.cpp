@@ -2,6 +2,7 @@
 #include "exception/ManagerException.h"
 
 void Manager::predict(const std::string &line) {
+  // no log here as the output is the result
   if (!predict_) {
     predict_ = std::make_unique<Predict>();
   }
@@ -9,18 +10,22 @@ void Manager::predict(const std::string &line) {
 }
 
 void Manager::train(const std::string &line) {
-  if (!app_params.use_socket) {
-    if (app_params.use_stdin) {
-      logger.info("Training, using command pipe input...");
-      if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
-        logger.warn("Epochs and training ratio are disabled using command "
-                    "pipe input. Use training_ratio_line parameter instead.");
-      }
-    } else {
-      logger.info("Training, using file ", app_params.data_file);
+  if (app_params.use_socket && app_params.verbose) {
+    logger.info("Training using sockets, received line: ", line);
+  }
+  if (app_params.use_stdin) {
+    logger.info("Training, using command pipe input...");
+    if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
+      logger.warn("Epochs and training ratio are disabled using command "
+                  "pipe input. Use training_ratio_line parameter instead.");
     }
     logger.info(showInlineHeader());
   }
+  if (!app_params.use_socket && !app_params.use_stdin) {
+    logger.info("Training, using file ", app_params.data_file);
+    logger.info(showInlineHeader());
+  }
+
   if (!training_) {
     createTraining();
   }
@@ -28,14 +33,18 @@ void Manager::train(const std::string &line) {
 }
 
 void Manager::test(const std::string &line) {
-  if (!app_params.use_socket) {
-    if (app_params.use_stdin) {
-      logger.info("Testing, using command pipe input... ",
-                  app_params.data_file);
-    } else {
-      logger.info("Testing, using file ", app_params.data_file);
-    }
+  if (app_params.use_socket && app_params.verbose) {
+    logger.info("Testing using sockets, received line: ", line);
   }
+
+  if (app_params.use_stdin) {
+    logger.info("Testing, using command pipe input... ", app_params.data_file);
+  }
+
+  if (!app_params.use_stdin && !app_params.use_socket) {
+    logger.info("Testing, using file ", app_params.data_file);
+  }
+
   if (!testing_) {
     createTesting();
   }
@@ -51,13 +60,22 @@ void Manager::trainTestMonitored(const std::string &line) {
     return;
   }
 
+  if (app_params.use_socket && app_params.verbose) {
+    logger.info("Train and testing using sockets, received line: ", line);
+  }
+
   if (app_params.use_stdin) {
     logger.info("Train and testing, using command pipe input...");
-  } else {
-    logger.info("Train and testing, using file ", app_params.data_file);
+    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+                " ", showInlineHeader());
   }
-  logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
-              showInlineHeader());
+
+  if (!app_params.use_stdin && !app_params.use_socket) {
+    logger.info("Train and testing, using file ", app_params.data_file);
+    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+                " ", showInlineHeader());
+  }
+
   if (!training_) {
     createTraining();
   }

@@ -22,6 +22,9 @@
 #define CLOSE_SOCKET close
 #endif
 
+#define MAX_REQUESTS 50
+#define TIMEOUT_SECONDS 5
+
 void SimpleTCPServer::start() {
 
 #ifdef _WIN32
@@ -46,9 +49,20 @@ void SimpleTCPServer::start() {
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketBindError));
   }
 
-  if (listen(server_socket, 10) == -1) {
+  if (listen(server_socket, MAX_REQUESTS) == -1) {
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketListenError));
   }
+
+  // Start the watchdog thread
+  std::jthread watchdog([this] {
+    // Wait for a stop request
+    while (!stopSource.stop_requested()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+
+    // Stop request received, close the server socket
+    closeServerSocket();
+  });
 
   while (!stopSource.stop_requested()) {
     sockaddr_in client_address{};
@@ -57,6 +71,15 @@ void SimpleTCPServer::start() {
         accept(server_socket, (struct sockaddr *)&client_address, &client_len);
 
     if (client_socket == -1) {
+      // Check if the error is because the socket was closed
+#ifdef _WIN32
+      if (WSAGetLastError() == WSAENOTSOCK) {
+#else
+      if (errno == EBADF) {
+#endif
+        std::cout << SimpleLang::Message(Message::TCPServerClosed) << std::endl;
+        break;
+      }
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
         std::cerr << SimpleLang::Error(Error::TCPServerAcceptError)
                   << std::endl;
@@ -73,7 +96,7 @@ void SimpleTCPServer::start() {
   }
 
   // Close the server socket
-  CLOSE_SOCKET(server_socket);
+  closeServerSocket();
 
 #ifdef _WIN32
   WSACleanup();
@@ -87,26 +110,17 @@ void SimpleTCPServer::stop() {
     thread.request_stop();
   }
 
-  // Notify all waiting threads to terminate
-  condition.notify_all();
-
-  // Join all remaining threads
-  for (auto &thread : threads) {
-    if (thread.joinable()) {
-      thread.join();
-    }
-  }
-
-  // Close all client sockets
-  for (auto const &socket : client_sockets) {
-    CLOSE_SOCKET(socket);
-  }
-  client_sockets.clear();
+  closeAllClientSockets();
 }
 
 void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
   char buffer[client_buff_size];
   std::string lineBuffer;
+  struct timeval tv;
+  tv.tv_sec = TIMEOUT_SECONDS; // Timeout in seconds
+  tv.tv_usec = 0;              // Not using microseconds
+  setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv,
+             sizeof(tv));
 
   while (!stoken.stop_requested()) {
     memset(buffer, 0, client_buff_size);
@@ -117,8 +131,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
         std::scoped_lock<std::mutex> lock(threadMutex);
         std::cerr << SimpleLang::Error(Error::TCPServerRecvError) << std::endl;
-        CLOSE_SOCKET(client_socket);
-        client_sockets.erase(std::ranges::find(client_sockets, client_socket));
+        closeClientSocket(client_socket);
         return;
       }
       // Retry receiving data
@@ -129,8 +142,7 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
       std::scoped_lock<std::mutex> lock(threadMutex);
       std::cout << SimpleLang::Message(Message::TCPClientDisconnected)
                 << std::endl;
-      CLOSE_SOCKET(client_socket);
-      client_sockets.erase(std::ranges::find(client_sockets, client_socket));
+      closeClientSocket(client_socket);
       break;
     }
 
@@ -152,11 +164,34 @@ void SimpleTCPServer::handle_client(int client_socket, std::stop_token stoken) {
     // send(client_socket, lineBuffer, bytesReceived + 1, 0);
   }
 
-  // Close the client socket
-  CLOSE_SOCKET(client_socket);
+  closeClientSocket(client_socket);
 }
 
 void SimpleTCPServer::processLine(const std::string &line) {
   std::scoped_lock<std::mutex> lock(threadMutex);
   Manager::getInstance().processTCPClient(line);
+}
+
+void SimpleTCPServer::closeClientSocket(int client_socket) {
+  std::scoped_lock<std::mutex> lock(threadMutex);
+  if (auto it = std::ranges::find(client_sockets, client_socket);
+      it != client_sockets.end()) {
+    CLOSE_SOCKET(client_socket);
+    client_sockets.erase(it);
+  }
+}
+
+void SimpleTCPServer::closeAllClientSockets() {
+  std::scoped_lock<std::mutex> lock(threadMutex);
+  for (auto const &socket : client_sockets) {
+    CLOSE_SOCKET(socket);
+  }
+  client_sockets.clear();
+}
+
+void SimpleTCPServer::closeServerSocket() {
+  if (server_socket != -1) {
+    CLOSE_SOCKET(server_socket);
+    server_socket = -1;
+  }
 }
