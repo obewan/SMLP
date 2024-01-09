@@ -33,14 +33,16 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   auto &manager = Manager::getInstance();
   manager.app_params.use_socket = true;
   manager.app_params.verbose = true;
+  manager.app_params.mode = EMode::TrainThenTest;
   manager.app_params.network_to_import = "../data/testModel.json";
+  manager.resetTraining();
+  manager.resetTesting();
   CHECK_NOTHROW(manager.importOrBuildNetwork());
   CHECK(manager.network != nullptr);
 
   // Starting the server
   MESSAGE("[TEST] Starting the TCP server...");
-  std::jthread serverThread(
-      [&server](std::stop_token st) { server.start(st); });
+  std::jthread serverThread([&server]() { server.start(); });
   std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow server to start
 
   // Starting the client
@@ -62,8 +64,7 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   MESSAGE("[TEST] Closing the TCP server and client...");
 
   client.disconnect();
-  serverThread.request_stop();
-  // server.stop();
+  server.stop();
   serverThread.join();
   MESSAGE("[TEST] End of test");
 }

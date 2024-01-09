@@ -12,6 +12,7 @@
 #include <mutex>
 #include <netinet/in.h>
 #include <stop_token>
+#include <string>
 #include <sys/socket.h>
 #include <vector>
 
@@ -29,6 +30,12 @@
 #define CLIENT_RECV_TIMEOUT_SECONDS 5
 
 void SimpleTCPServer::start() {
+  if (bool expected = false; !isStarted.compare_exchange_strong(
+          expected, true)) { // thread safe comparison
+    return;
+  }
+  SimpleLogger::LOG_INFO("TCP Server start on port ", sin_port, "...");
+  isStarted = true;
 
 #ifdef _WIN32
   WSADATA wsaData;
@@ -38,6 +45,7 @@ void SimpleTCPServer::start() {
 #endif
   server_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (server_socket == -1) {
+    isStarted = false;
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketCreateError));
   }
 
@@ -54,26 +62,26 @@ void SimpleTCPServer::start() {
   setsockopt(server_socket, SOL_SOCKET, SO_SNDTIMEO, (const char *)&tv,
              sizeof tv);
 
+  // bind to the tcp port
   if (bind(server_socket, (struct sockaddr *)&server_address,
            sizeof(server_address)) == -1) {
+    isStarted = false;
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketBindError));
   }
 
+  // listen for clients connections
   if (listen(server_socket, MAX_REQUESTS) == -1) {
+    isStarted = false;
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketListenError));
   }
 
-  if (!isExternalServerToken) {
-    serverToken = stopSource.get_token();
-  }
-
-  while (!serverToken.stop_requested()) {
+  while (!stopSource.stop_requested()) {
     sockaddr_in client_address{};
     socklen_t client_len = sizeof(client_address);
     int client_socket =
         accept(server_socket, (struct sockaddr *)&client_address, &client_len);
 
-    if (serverToken.stop_requested()) {
+    if (stopSource.stop_requested()) {
       break;
     }
     if (client_socket == -1) {
@@ -83,12 +91,11 @@ void SimpleTCPServer::start() {
 #else
       if (errno == EBADF) {
 #endif
-        std::cout << SimpleLang::Message(Message::TCPServerClosed) << std::endl;
+        SimpleLogger::LOG_INFO(SimpleLang::Message(Message::TCPServerClosed));
         break;
       }
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        std::cerr << SimpleLang::Error(Error::TCPServerAcceptError)
-                  << std::endl;
+        SimpleLogger::LOG_ERROR(SimpleLang::Error(Error::TCPServerAcceptError));
         break;
       }
       continue;
@@ -106,28 +113,26 @@ void SimpleTCPServer::start() {
     handler.join();
   }
 
-  SimpleLogger::getInstance().info("TCP Server stop complete.");
+  SimpleLogger::LOG_INFO("TCP Server stop complete.");
 
 #ifdef _WIN32
   WSACleanup();
 #endif
-}
 
-void SimpleTCPServer::start(const std::stop_token &server_token) {
-  serverToken = server_token;
-  isExternalServerToken = true;
-  start();
+  isStarted = false;
 }
 
 void SimpleTCPServer::stop() {
-  std::scoped_lock<std::mutex> lock(threadMutex);
-  SimpleLogger::getInstance().info("TCP Server stop...");
+  SimpleLogger::LOG_INFO("TCP Server stop...");
   stopSource.request_stop();
-  CLOSE_SOCKET(server_socket);
+  if (server_socket != -1) {
+    CLOSE_SOCKET(server_socket);
+  }
+  server_socket = -1;
 }
 
 void SimpleTCPServer::handle_client(int client_socket,
-                                    std::stop_token &stoken) {
+                                    const std::stop_token &stoken) {
   char buffer[client_buff_size];
   std::string lineBuffer;
   struct timeval tv;
@@ -139,11 +144,11 @@ void SimpleTCPServer::handle_client(int client_socket,
   while (!stoken.stop_requested()) {
     memset(buffer, 0, client_buff_size);
 
-    int bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
+    ssize_t bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
     if (bytesReceived == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
         std::scoped_lock<std::mutex> lock(threadMutex);
-        std::cerr << SimpleLang::Error(Error::TCPServerRecvError) << std::endl;
+        SimpleLogger::LOG_ERROR(SimpleLang::Error(Error::TCPServerRecvError));
         CLOSE_SOCKET(client_socket);
         return;
       }
@@ -153,8 +158,8 @@ void SimpleTCPServer::handle_client(int client_socket,
 
     if (bytesReceived == 0) {
       std::scoped_lock<std::mutex> lock(threadMutex);
-      std::cout << SimpleLang::Message(Message::TCPClientDisconnected)
-                << std::endl;
+      SimpleLogger::LOG_INFO(
+          SimpleLang::Message(Message::TCPClientDisconnected));
       CLOSE_SOCKET(client_socket);
       return;
     }

@@ -27,9 +27,8 @@ public:
   }
 
   void start();
-  void start(const std::stop_token &server_token);
   void stop();
-  void handle_client(int client_socket, std::stop_token &stoken);
+  void handle_client(int client_socket, const std::stop_token &stoken);
 
   void setServerPort(unsigned short port) { this->sin_port = port; }
   unsigned short getServerPort() const { return this->sin_port; }
@@ -43,11 +42,10 @@ public:
 
 private:
   std::stop_source stopSource;
-  std::stop_token serverToken;
   std::vector<std::jthread> clientHandlers;
   std::mutex threadMutex;
-  int server_socket = 0;
+  std::atomic<bool> isStarted = false;
+  int server_socket = -1;
   unsigned short sin_port = 8080;
   size_t client_buff_size = 32_K;
-  bool isExternalServerToken = false;
 };

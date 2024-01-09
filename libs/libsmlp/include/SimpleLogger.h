@@ -272,6 +272,54 @@ public:
     return *this;
   }
 
+  /**
+   * @brief static shortcut for log info.
+   *
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_INFO(Args &&...args) {
+    return getInstance().info(args...);
+  }
+
+  /**
+   * @brief static shortcut for log warning.
+   *
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_WARN(Args &&...args) {
+    return getInstance().warn(args...);
+  }
+
+  /**
+   * @brief static shortcut for log error.
+   *
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_ERROR(Args &&...args) {
+    return getInstance().error(args...);
+  }
+
+  /**
+   * @brief static shortcut for log debug.
+   *
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_DEBUG(Args &&...args) {
+    return getInstance().debug(args...);
+  }
+
 private:
   SimpleLogger() = default;
   std::streamsize default_precision = std::cout.precision();

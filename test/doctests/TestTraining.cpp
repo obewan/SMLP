@@ -22,6 +22,8 @@ TEST_CASE("Testing the Training class") {
   auto &manager = Manager::getInstance();
   manager.network_params = {.input_size = 20, .output_size = 1};
   manager.app_params = {.data_file = test_file};
+  manager.resetTraining();
+  manager.resetTesting();
   manager.network = std::make_shared<Network>(manager.network_params);
 
   auto &network_params = manager.network_params;
