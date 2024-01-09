@@ -21,6 +21,8 @@ public:
 
   void send(const std::string &message);
 
+  void disconnect();
+
 private:
-  int sockfd = -1;
+  int client_socket = -1;
 };

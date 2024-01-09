@@ -7,7 +7,7 @@
 #include <string>
 
 DataFileParser::~DataFileParser() {
-  if (file.is_open()) {
+  if (file && file.is_open()) {
     file.close();
   }
 }

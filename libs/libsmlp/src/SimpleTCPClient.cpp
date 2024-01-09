@@ -23,20 +23,11 @@ SimpleTCPClient::SimpleTCPClient() {
 #endif
 }
 
-SimpleTCPClient::~SimpleTCPClient() {
-  if (sockfd != -1) {
-#ifdef _WIN32
-    closesocket(sockfd);
-    WSACleanup();
-#else
-    close(sockfd);
-#endif
-  }
-}
+SimpleTCPClient::~SimpleTCPClient() { disconnect(); }
 
 void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd == -1) {
+  client_socket = socket(AF_INET, SOCK_STREAM, 0);
+  if (client_socket == -1) {
     throw std::runtime_error("Failed to create socket");
   }
 
@@ -48,13 +39,26 @@ void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
     throw std::runtime_error("Invalid address/ Address not supported");
   }
 
-  if (::connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+  if (::connect(client_socket, (struct sockaddr *)&serv_addr,
+                sizeof(serv_addr)) < 0) {
     throw std::runtime_error("Connection failed");
   }
 }
 
 void SimpleTCPClient::send(const std::string &message) {
-  if (::send(sockfd, message.c_str(), message.size(), 0) < 0) {
+  if (::send(client_socket, message.c_str(), message.size(), 0) < 0) {
     throw std::runtime_error("Send failed");
   }
+}
+
+void SimpleTCPClient::disconnect() {
+  if (client_socket != -1) {
+#ifdef _WIN32
+    closesocket(client_socket);
+    WSACleanup();
+#else
+    close(client_socket);
+#endif
+  }
+  client_socket = -1;
 }
