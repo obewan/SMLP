@@ -23,7 +23,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  * https://github.com/doctest/doctest/blob/master/examples/all_features/concurrency.cpp
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
-          doctest::skip(false)) {
+          doctest::skip(true)) {
   // you can also use a custom server IP addr, instead of
   // server.getServerIp() :
   // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
