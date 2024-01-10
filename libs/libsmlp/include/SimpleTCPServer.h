@@ -28,17 +28,20 @@ public:
 
   void start();
   void stop();
-  void handle_client(int client_socket, const std::stop_token &stoken);
+  void handle_client(int client_socket, const std::string &client_ip,
+                     const std::stop_token &stoken);
 
   void setServerPort(unsigned short port) { this->sin_port = port; }
   unsigned short getServerPort() const { return this->sin_port; }
+
+  const std::string &getServerIp() const { return server_ip; }
 
   void setClientBufferSize(size_t bytes_length) {
     this->client_buff_size = bytes_length;
   }
   size_t getClientBufferSize() const { return this->client_buff_size; }
 
-  void processLine(const std::string &line);
+  void processLine(const std::string &line, const std::string &client_info);
 
 private:
   std::stop_source stopSource;
@@ -46,6 +49,8 @@ private:
   std::mutex threadMutex;
   std::atomic<bool> isStarted = false;
   int server_socket = -1;
+  std::string server_ip;
+  std::string server_info;
   unsigned short sin_port = 8080;
   size_t client_buff_size = 32_K;
 };

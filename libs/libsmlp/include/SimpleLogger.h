@@ -12,6 +12,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <mutex>
 #include <sstream>
 
 enum class LogLevel { INFO, WARN, ERROR, DEBUG };
@@ -285,6 +286,21 @@ public:
   }
 
   /**
+   * @brief static shortcut for log info, thread safe.
+   *
+   * @tparam Args
+   * @param threadMutex
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_INFO_TS(std::mutex &threadMutex,
+                                         Args &&...args) {
+    std::scoped_lock<std::mutex> lock(threadMutex);
+    return getInstance().info(args...);
+  }
+
+  /**
    * @brief static shortcut for log warning.
    *
    * @tparam Args
@@ -293,6 +309,21 @@ public:
    */
   template <typename... Args>
   static const SimpleLogger &LOG_WARN(Args &&...args) {
+    return getInstance().warn(args...);
+  }
+
+  /**
+   * @brief static shortcut for log warning, thread safe.
+   *
+   * @tparam Args
+   * @param threadMutex
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_WARN_TS(std::mutex &threadMutex,
+                                         Args &&...args) {
+    std::scoped_lock<std::mutex> lock(threadMutex);
     return getInstance().warn(args...);
   }
 
@@ -309,6 +340,21 @@ public:
   }
 
   /**
+   * @brief static shortcut for log error, thread safe.
+   *
+   * @tparam Args
+   * @param threadMutex
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_ERROR_TS(std::mutex &threadMutex,
+                                          Args &&...args) {
+    std::scoped_lock<std::mutex> lock(threadMutex);
+    return getInstance().error(args...);
+  }
+
+  /**
    * @brief static shortcut for log debug.
    *
    * @tparam Args
@@ -317,6 +363,21 @@ public:
    */
   template <typename... Args>
   static const SimpleLogger &LOG_DEBUG(Args &&...args) {
+    return getInstance().debug(args...);
+  }
+
+  /**
+   * @brief static shortcut for log debug, thread safe.
+   *
+   * @tparam Args
+   * @param threadMutex
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_DEBUG_TS(std::mutex &threadMutex,
+                                          Args &&...args) {
+    std::scoped_lock<std::mutex> lock(threadMutex);
     return getInstance().debug(args...);
   }
 

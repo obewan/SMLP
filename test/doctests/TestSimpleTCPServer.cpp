@@ -24,9 +24,10 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
           doctest::skip(true)) {
-  // change this with your WSL IP addr, if using WSL:
+  // you can also use a custom server IP addr, instead of
+  // server.getServerIp() :
   // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-  std::string server_ip_addr = "";
+  // std::string server_ip_addr = "";
   SimpleTCPServer server;
 
   // Building the network
@@ -48,7 +49,7 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   // Starting the client
   SimpleTCPClient client;
   MESSAGE("[TEST] Starting the TCP client...");
-  client.connect(server_ip_addr, server.getServerPort());
+  client.connect(server.getServerIp(), server.getServerPort());
 
   // Message testing
   MESSAGE("[TEST] Sending first data...");
@@ -56,7 +57,9 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
               "0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00\n");
   MESSAGE("[TEST] Sending next data...");
   client.send("1,0.01,0.57,0.90,0.25,1.00,0.00,0.67,0.92,0.09,0.02,0.00,"
-              "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
+              "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\n");
+  MESSAGE("[TEST] Sending next data...");
+  client.send("oops");
 
   // Allow message to be processed
   std::this_thread::sleep_for(std::chrono::seconds(2));

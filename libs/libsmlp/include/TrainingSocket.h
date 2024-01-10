@@ -16,12 +16,5 @@ class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  void train(const std::string &line = "") override {
-    try {
-      processInputLine(line);
-    } catch (FileParserException &fpe) {
-      SimpleLogger::getInstance().error("FileParserException at line '", line,
-                                        "': ", fpe.what());
-    }
-  }
+  void train(const std::string &line = "") override { processInputLine(line); }
 };

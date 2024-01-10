@@ -29,7 +29,7 @@ void Manager::train(const std::string &line) {
   }
 
   if (app_params.use_socket && app_params.verbose) {
-    logger.info("Training using sockets, received line: ", line);
+    logger.info("Training using TCP socket...");
   } else if (app_params.use_stdin) {
     handleStdinTraining();
   } else {
@@ -53,7 +53,7 @@ void Manager::test(const std::string &line) {
   }
 
   if (app_params.use_socket && app_params.verbose) {
-    logger.info("Testing using sockets, received line: ", line);
+    logger.info("Testing using TCP socket...");
   } else if (app_params.use_stdin) {
     handleStdinTesting();
   } else {
@@ -73,7 +73,7 @@ void Manager::trainTestMonitored(const std::string &line) {
   }
 
   if (app_params.use_socket && app_params.verbose) {
-    logger.info("Train and testing using sockets, received line: ", line);
+    logger.info("Train and testing using TCP sockets...");
   }
 
   if (app_params.use_stdin) {
