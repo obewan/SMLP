@@ -46,7 +46,8 @@ void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
 }
 
 void SimpleTCPClient::send(const std::string &message) {
-  if (::send(client_socket, message.c_str(), message.size(), 0) < 0) {
+  if (::send(client_socket, message.c_str(), message.size() + 1, 0) <
+      0) { // we add +1 to add the null character (\0)
     throw std::runtime_error("Send failed");
   }
 }

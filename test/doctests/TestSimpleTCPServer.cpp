@@ -23,7 +23,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  * https://github.com/doctest/doctest/blob/master/examples/all_features/concurrency.cpp
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
-          doctest::skip(true)) {
+          doctest::skip(false)) {
   // you can also use a custom server IP addr, instead of
   // server.getServerIp() :
   // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
@@ -54,10 +54,10 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   // Message testing
   MESSAGE("[TEST] Sending first data...");
   client.send("0,0.08,0.43,0.90,0.42,1.00,0.62,0.33,0.38,0.10,0.07,0.00,0.00,"
-              "0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00\n");
+              "0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
   MESSAGE("[TEST] Sending next data...");
   client.send("1,0.01,0.57,0.90,0.25,1.00,0.00,0.67,0.92,0.09,0.02,0.00,"
-              "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\n");
+              "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
   MESSAGE("[TEST] Sending next data...");
   client.send("oops");
 

@@ -182,9 +182,9 @@ void SimpleTCPServer::handle_client(int client_socket,
     ssize_t bytesReceived = recv(client_socket, buffer, client_buff_size, 0);
     if (bytesReceived == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        std::scoped_lock<std::mutex> lock(threadMutex);
-        SimpleLogger::LOG_ERROR(client_info,
-                                SimpleLang::Error(Error::TCPServerRecvError));
+        SimpleLogger::LOG_ERROR_TS(
+            threadMutex, client_info,
+            SimpleLang::Error(Error::TCPServerRecvError));
         CLOSE_SOCKET(client_socket);
         return;
       }
@@ -193,25 +193,32 @@ void SimpleTCPServer::handle_client(int client_socket,
     }
 
     if (bytesReceived == 0) {
-      std::scoped_lock<std::mutex> lock(threadMutex);
-      SimpleLogger::LOG_INFO(
-          client_info, SimpleLang::Message(Message::TCPClientDisconnected));
+      SimpleLogger::LOG_INFO_TS(
+          threadMutex, client_info,
+          SimpleLang::Message(Message::TCPClientDisconnected));
+
+      // Process any remaining data in lineBuffer
+      if (!lineBuffer.empty()) {
+        std::string line = lineBuffer;
+        lineBuffer.erase();
+        processLine(line, client_info);
+      }
+
       CLOSE_SOCKET(client_socket);
       return;
     }
 
     lineBuffer.append(buffer, bytesReceived);
 
-    size_t pos;
-    while ((pos = lineBuffer.find('\n')) != std::string::npos) {
+    size_t pos_n = lineBuffer.find('\n');
+    size_t pos_0 = lineBuffer.find('\0');
+    while (pos_n != std::string::npos || pos_0 != std::string::npos) {
+      size_t pos = std::min(pos_n, pos_0);
       std::string line = lineBuffer.substr(0, pos);
       lineBuffer.erase(0, pos + 1);
       processLine(line, client_info);
-    }
-
-    // Process any remaining data in lineBuffer
-    if (!lineBuffer.empty()) {
-      processLine(lineBuffer, client_info);
+      pos_n = lineBuffer.find('\n');
+      pos_0 = lineBuffer.find('\0');
     }
 
     // Echo message back to client
@@ -228,7 +235,7 @@ void SimpleTCPServer::processLine(const std::string &line,
                                   const std::string &client_info) {
   std::scoped_lock<std::mutex> lock(threadMutex);
   if (Manager::getInstance().app_params.verbose) {
-    SimpleLogger::LOG_INFO(client_info, "[CLIENT RECV] ", line);
+    SimpleLogger::LOG_INFO(client_info, "[RECV FROM CLIENT] ", line);
   }
   try {
     Manager::getInstance().processTCPClient(line);
