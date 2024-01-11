@@ -24,11 +24,8 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
           doctest::skip(true)) {
-  // you can also use a custom server IP addr, instead of
-  // server.getServerIp() :
-  // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-  // std::string server_ip_addr = "";
   SimpleTCPServer server;
+  CHECK(server.isStarted() == false);
 
   // Building the network
   auto &manager = Manager::getInstance();
@@ -45,10 +42,14 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   MESSAGE("[TEST] Starting the TCP server...");
   std::jthread serverThread([&server]() { server.start(); });
   std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow server to start
+  CHECK(server.isStarted() == true);
 
   // Starting the client
   SimpleTCPClient client;
   MESSAGE("[TEST] Starting the TCP client...");
+  // you can also use a custom server IP addr, instead of
+  // server.getServerIp(): to get the IP with bash:
+  // ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
   client.connect(server.getServerIp(), server.getServerPort());
 
   // Message testing
@@ -69,6 +70,7 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
   client.disconnect();
   server.stop();
   serverThread.join();
+  CHECK(server.isStarted() == false);
   MESSAGE("[TEST] End of test");
 }
 

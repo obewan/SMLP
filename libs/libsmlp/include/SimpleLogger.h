@@ -23,6 +23,11 @@ enum class LogLevel { INFO, WARN, ERROR, DEBUG };
  */
 class SimpleLogger {
 public:
+  /**
+   * @brief Get the Instance object
+   * @remark This use a thread safe Meyers’ Singleton
+   * @return const SimpleLogger&
+   */
   const static SimpleLogger &getInstance() {
     static SimpleLogger instance;
     return instance;
@@ -275,114 +280,63 @@ public:
 
   /**
    * @brief static shortcut for log info.
-   *
+   * @remark thread safe
    * @tparam Args
    * @param args
    * @return const SimpleLogger&
    */
   template <typename... Args>
   static const SimpleLogger &LOG_INFO(Args &&...args) {
-    return getInstance().info(args...);
-  }
-
-  /**
-   * @brief static shortcut for log info, thread safe.
-   *
-   * @tparam Args
-   * @param threadMutex
-   * @param args
-   * @return const SimpleLogger&
-   */
-  template <typename... Args>
-  static const SimpleLogger &LOG_INFO_TS(std::mutex &threadMutex,
-                                         Args &&...args) {
-    std::scoped_lock<std::mutex> lock(threadMutex);
-    return getInstance().info(args...);
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.info(args...);
   }
 
   /**
    * @brief static shortcut for log warning.
-   *
+   * @remark thread safe
    * @tparam Args
    * @param args
    * @return const SimpleLogger&
    */
   template <typename... Args>
   static const SimpleLogger &LOG_WARN(Args &&...args) {
-    return getInstance().warn(args...);
-  }
-
-  /**
-   * @brief static shortcut for log warning, thread safe.
-   *
-   * @tparam Args
-   * @param threadMutex
-   * @param args
-   * @return const SimpleLogger&
-   */
-  template <typename... Args>
-  static const SimpleLogger &LOG_WARN_TS(std::mutex &threadMutex,
-                                         Args &&...args) {
-    std::scoped_lock<std::mutex> lock(threadMutex);
-    return getInstance().warn(args...);
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.warn(args...);
   }
 
   /**
    * @brief static shortcut for log error.
-   *
+   * @remark thread safe
    * @tparam Args
    * @param args
    * @return const SimpleLogger&
    */
   template <typename... Args>
   static const SimpleLogger &LOG_ERROR(Args &&...args) {
-    return getInstance().error(args...);
-  }
-
-  /**
-   * @brief static shortcut for log error, thread safe.
-   *
-   * @tparam Args
-   * @param threadMutex
-   * @param args
-   * @return const SimpleLogger&
-   */
-  template <typename... Args>
-  static const SimpleLogger &LOG_ERROR_TS(std::mutex &threadMutex,
-                                          Args &&...args) {
-    std::scoped_lock<std::mutex> lock(threadMutex);
-    return getInstance().error(args...);
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.error(args...);
   }
 
   /**
    * @brief static shortcut for log debug.
-   *
+   * @remark thread safe
    * @tparam Args
    * @param args
    * @return const SimpleLogger&
    */
   template <typename... Args>
   static const SimpleLogger &LOG_DEBUG(Args &&...args) {
-    return getInstance().debug(args...);
-  }
-
-  /**
-   * @brief static shortcut for log debug, thread safe.
-   *
-   * @tparam Args
-   * @param threadMutex
-   * @param args
-   * @return const SimpleLogger&
-   */
-  template <typename... Args>
-  static const SimpleLogger &LOG_DEBUG_TS(std::mutex &threadMutex,
-                                          Args &&...args) {
-    std::scoped_lock<std::mutex> lock(threadMutex);
-    return getInstance().debug(args...);
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.debug(args...);
   }
 
 private:
   SimpleLogger() = default;
   std::streamsize default_precision = std::cout.precision();
   mutable std::streamsize current_precision = std::cout.precision();
+  mutable std::mutex threadMutex_;
 };

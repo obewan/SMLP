@@ -21,36 +21,44 @@ public:
   SimpleTCPServer(const SimpleTCPServer &other) = delete;
   SimpleTCPServer &operator=(const SimpleTCPServer &other) = delete;
   ~SimpleTCPServer() {
-    if (!stopSource.stop_requested()) {
+    if (!stopSource_.stop_requested()) {
       stop();
     }
   }
 
   void start();
   void stop();
+
+  /**
+   * @brief Get the TCP service started flag, thread safe.
+   * @return true if server started
+   * @return false if server not started
+   */
+  bool isStarted() const { return isStarted_.load(); }
+
   void handle_client(int client_socket, const std::string &client_ip,
                      const std::stop_token &stoken);
 
-  void setServerPort(unsigned short port) { this->sin_port = port; }
-  unsigned short getServerPort() const { return this->sin_port; }
+  void setServerPort(unsigned short port) { this->sin_port_ = port; }
+  unsigned short getServerPort() const { return this->sin_port_; }
 
-  const std::string &getServerIp() const { return server_ip; }
+  const std::string &getServerIp() const { return server_ip_; }
 
   void setClientBufferSize(size_t bytes_length) {
-    this->client_buff_size = bytes_length;
+    this->client_buff_size_ = bytes_length;
   }
-  size_t getClientBufferSize() const { return this->client_buff_size; }
+  size_t getClientBufferSize() const { return this->client_buff_size_; }
 
   void processLine(const std::string &line, const std::string &client_info);
 
 private:
-  std::stop_source stopSource;
-  std::vector<std::jthread> clientHandlers;
-  std::mutex threadMutex;
-  std::atomic<bool> isStarted = false;
-  int server_socket = -1;
-  std::string server_ip;
-  std::string server_info;
-  unsigned short sin_port = 8080;
-  size_t client_buff_size = 32_K;
+  std::stop_source stopSource_;
+  std::vector<std::jthread> clientHandlers_;
+  std::mutex threadMutex_;
+  std::atomic<bool> isStarted_ = false;
+  int server_socket_ = -1;
+  std::string server_ip_;
+  std::string server_info_;
+  unsigned short sin_port_ = 8080;
+  size_t client_buff_size_ = 32_K;
 };
