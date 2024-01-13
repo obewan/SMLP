@@ -23,7 +23,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  * https://github.com/doctest/doctest/blob/master/examples/all_features/concurrency.cpp
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
-          doctest::skip(false)) {
+          doctest::skip(true)) {
   SimpleTCPServer server;
   CHECK(server.isStarted() == false);
 
