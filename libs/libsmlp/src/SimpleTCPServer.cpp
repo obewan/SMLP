@@ -206,13 +206,25 @@ void SimpleTCPServer::handle_client(int client_socket,
     lineBuffer.append(buffer, bytesReceived);
 
     size_t pos_n = lineBuffer.find('\n');
+    size_t pos_r = lineBuffer.find('\r'); // for windows \r\n
     size_t pos_0 = lineBuffer.find('\0');
-    while (pos_n != std::string::npos || pos_0 != std::string::npos) {
-      size_t pos = std::min(pos_n, pos_0);
+    while (pos_n != std::string::npos || pos_r != std::string::npos ||
+           pos_0 != std::string::npos) {
+      size_t pos = std::min({pos_n, pos_r, pos_0});
       std::string line = lineBuffer.substr(0, pos);
+      // If it's a Windows-style newline, consume the '\n' as well
+      if (pos_r != std::string::npos && pos_r == pos && pos_n == pos + 1) {
+        pos++;
+      }
       lineBuffer.erase(0, pos + 1);
-      processLine(line, client_info);
+
+      Common::trim(line);
+      if (!line.empty()) {
+        processLine(line, client_info);
+      }
+
       pos_n = lineBuffer.find('\n');
+      pos_r = lineBuffer.find('\r');
       pos_0 = lineBuffer.find('\0');
     }
 

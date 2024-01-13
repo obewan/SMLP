@@ -23,7 +23,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  * https://github.com/doctest/doctest/blob/master/examples/all_features/concurrency.cpp
  */
 TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
-          doctest::skip(true)) {
+          doctest::skip(false)) {
   SimpleTCPServer server;
   CHECK(server.isStarted() == false);
 
@@ -61,6 +61,11 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
               "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
   MESSAGE("[TEST] Sending next data...");
   client.send("oops");
+  MESSAGE("[TEST] Sending next data...");
+  client.send("           "); // trim check
+  MESSAGE("[TEST] Sending next data...");
+  client.send("   1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
+              "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
 
   // Allow message to be processed
   std::this_thread::sleep_for(std::chrono::seconds(2));
