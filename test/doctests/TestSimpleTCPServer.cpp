@@ -1,3 +1,4 @@
+#include "CommonModes.h"
 #include "doctest.h"
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
@@ -29,7 +30,7 @@ TEST_CASE("Testing the SimpleTCPServer class" * doctest::timeout(10) *
 
   // Building the network
   auto &manager = Manager::getInstance();
-  manager.app_params.use_socket = true;
+  manager.app_params.input = EInput::Socket;
   manager.app_params.verbose = true;
   manager.app_params.mode = EMode::TrainThenTest;
   manager.app_params.network_to_import = "../data/testModel.json";

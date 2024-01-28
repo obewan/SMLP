@@ -10,8 +10,10 @@
 #pragma once
 
 #include "Common.h"
+#include "CommonModes.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "TestingFile.h"
 #include "TestingSocket.h"
@@ -19,6 +21,7 @@
 #include "TrainingFile.h"
 #include "TrainingSocket.h"
 #include "TrainingStdin.h"
+#include "exception/ManagerException.h"
 #include <algorithm>
 #include <memory>
 
@@ -114,13 +117,20 @@ public:
     if (training_) {
       return;
     }
-    if (app_params.use_socket) {
-      training_ = std::make_shared<TrainingSocket>();
-    } else if (app_params.use_stdin) {
-      training_ = std::make_shared<TrainingStdin>();
-    } else {
+    switch (app_params.input) {
+    case EInput::File:
       training_ = std::make_shared<TrainingFile>();
+      break;
+    case EInput::Stdin:
+      training_ = std::make_shared<TrainingStdin>();
+      break;
+    case EInput::Socket:
+      training_ = std::make_shared<TrainingSocket>();
+      break;
+    default:
+      throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
     }
+
     training_->createFileParser();
     if (app_params.mode == EMode::TrainTestMonitored) {
       createTesting();
@@ -136,13 +146,20 @@ public:
     if (testing_) {
       return;
     }
-    if (app_params.use_socket) {
-      testing_ = std::make_shared<TestingSocket>();
-    } else if (app_params.use_stdin) {
-      testing_ = std::make_shared<TestingStdin>();
-    } else {
+    switch (app_params.input) {
+    case EInput::File:
       testing_ = std::make_shared<TestingFile>();
+      break;
+    case EInput::Stdin:
+      testing_ = std::make_shared<TestingStdin>();
+      break;
+    case EInput::Socket:
+      testing_ = std::make_shared<TestingSocket>();
+      break;
+    default:
+      throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
     }
+
     if (app_params.mode != EMode::TrainTestMonitored) {
       // TrainTestMonitored use the file parser of training_ instead.
       testing_->createFileParser();

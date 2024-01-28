@@ -49,6 +49,22 @@ public:
   }
   size_t getClientBufferSize() const { return this->client_buff_size_; }
 
+  /**
+   * @brief if there is an end of line or an end of chars (\0), get the line and
+   * process it.
+   *
+   * @param line_buffer
+   * @param client_info
+   */
+  void processLineBuffer(std::string &line_buffer,
+                         const std::string &client_info);
+
+  /**
+   * @brief use the line data with the neural network, thread safe.
+   *
+   * @param line
+   * @param client_info
+   */
   void processLine(const std::string &line, const std::string &client_info);
 
 private:

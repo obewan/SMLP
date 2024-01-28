@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "CommonModes.h"
 #include "Manager.h"
 #include "TestingFile.h"
 #include "Training.h"
@@ -55,9 +56,9 @@ TEST_CASE("Testing the Training class") {
       std::stringstream inputDataStream(inputData);
 
       AppParameters app_params_for_stdin = {.training_ratio_line = 1,
-                                            .use_stdin = true,
                                             .use_training_ratio_line = true,
-                                            .mode = EMode::TrainOnly};
+                                            .mode = EMode::TrainOnly,
+                                            .input = EInput::Stdin};
 
       manager.app_params = app_params_for_stdin;
       // Redirect std::cin

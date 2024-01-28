@@ -31,6 +31,7 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "include/SimpleMLP.h"
 #include "Common.h"
+#include "CommonModes.h"
 #include "Network.h"
 #include "Predict.h"
 #include "SimpleConfig.h"
@@ -60,7 +61,7 @@ int SimpleMLP::init(int argc, char **argv) {
   try {
     checkStdin(); // check in case using defaults options
 
-    if (argc == 1 && !app_params.use_stdin) {
+    if (argc == 1 && app_params.input != EInput::Stdin) {
       argv[1] = (char *)"-h"; // showing help by default
       argc++;
     }
@@ -78,7 +79,7 @@ int SimpleMLP::init(int argc, char **argv) {
     ConfigSettings(config);
 
     // Some post validations
-    if (app_params.data_file.empty() && !app_params.use_stdin) {
+    if (app_params.data_file.empty() && app_params.input == EInput::File) {
       logger.error("A dataset file is required, but file_input is missing.");
       return EXIT_FAILURE;
     }
@@ -210,7 +211,7 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
     }
   }
   if (!config.file_input.empty() && app_params.data_file.empty() &&
-      !app_params.use_stdin) {
+      app_params.input == EInput::File) {
     app_params.data_file = config.file_input;
   }
   if (!config.import_network.empty() && app_params.network_to_import.empty()) {
@@ -222,8 +223,11 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
 }
 
 void SimpleMLP::checkStdin() {
-  app_params.use_stdin = false; // important
+  bool use_stdin = false; // important
   if (!app_params.disable_stdin) {
-    app_params.use_stdin = !ISATTY(FILENO(stdin));
+    use_stdin = !ISATTY(FILENO(stdin));
+  }
+  if (use_stdin) {
+    app_params.input = EInput::Stdin;
   }
 }

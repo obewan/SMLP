@@ -10,6 +10,7 @@
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
+#include "CommonModes.h"
 #include "CommonParameters.h"
 #include <cstddef>
 #include <fstream>
@@ -52,7 +53,8 @@ public:
    * @param app_params The application parameters.
    */
   void calcTrainingRatioLine(const AppParameters &app_params) {
-    if (app_params.use_stdin || app_params.training_ratio_line > 0) {
+    if (app_params.input != EInput::File ||
+        app_params.training_ratio_line > 0) {
       training_ratio_line = app_params.training_ratio_line;
     } else {
       total_lines = countLine();

@@ -27,9 +27,9 @@
 #define CLOSE_SOCKET close
 #endif
 
-#define MAX_REQUESTS 50
-#define SERVER_ACCEPT_TIMEOUT_SECONDS 5
-#define CLIENT_RECV_TIMEOUT_SECONDS 5
+constexpr int MAX_REQUESTS = 50;
+constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
+constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 void SimpleTCPServer::start() {
   if (bool expected = false; !isStarted_.compare_exchange_strong(
@@ -205,28 +205,7 @@ void SimpleTCPServer::handle_client(int client_socket,
 
     lineBuffer.append(buffer, bytesReceived);
 
-    size_t pos_n = lineBuffer.find('\n');
-    size_t pos_r = lineBuffer.find('\r'); // for windows \r\n
-    size_t pos_0 = lineBuffer.find('\0');
-    while (pos_n != std::string::npos || pos_r != std::string::npos ||
-           pos_0 != std::string::npos) {
-      size_t pos = std::min({pos_n, pos_r, pos_0});
-      std::string line = lineBuffer.substr(0, pos);
-      // If it's a Windows-style newline, consume the '\n' as well
-      if (pos_r != std::string::npos && pos_r == pos && pos_n == pos + 1) {
-        pos++;
-      }
-      lineBuffer.erase(0, pos + 1);
-
-      Common::trim(line);
-      if (!line.empty()) {
-        processLine(line, client_info);
-      }
-
-      pos_n = lineBuffer.find('\n');
-      pos_r = lineBuffer.find('\r');
-      pos_0 = lineBuffer.find('\0');
-    }
+    processLineBuffer(lineBuffer, client_info);
 
     // Echo message back to client
     // send(client_socket, lineBuffer, bytesReceived + 1, 0);
@@ -235,6 +214,32 @@ void SimpleTCPServer::handle_client(int client_socket,
   CLOSE_SOCKET(client_socket);
   SimpleLogger::LOG_INFO(client_info,
                          SimpleLang::Message(Message::TCPClientDisconnected));
+}
+
+void SimpleTCPServer::processLineBuffer(std::string &line_buffer,
+                                        const std::string &client_info) {
+  size_t pos_n = line_buffer.find('\n');
+  size_t pos_r = line_buffer.find('\r'); // for windows \r\n
+  size_t pos_0 = line_buffer.find('\0');
+  while (pos_n != std::string::npos || pos_r != std::string::npos ||
+         pos_0 != std::string::npos) {
+    size_t pos = std::min({pos_n, pos_r, pos_0});
+    std::string line = line_buffer.substr(0, pos);
+    // If it's a Windows-style newline, consume the '\n' as well
+    if (pos_r != std::string::npos && pos_r == pos && pos_n == pos + 1) {
+      pos++;
+    }
+    line_buffer.erase(0, pos + 1);
+
+    Common::trim(line);
+    if (!line.empty()) {
+      processLine(line, client_info);
+    }
+
+    pos_n = line_buffer.find('\n');
+    pos_r = line_buffer.find('\r');
+    pos_0 = line_buffer.find('\0');
+  }
 }
 
 void SimpleTCPServer::processLine(const std::string &line,

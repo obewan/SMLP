@@ -19,6 +19,8 @@ enum class EMode {
   TrainThenTest
 };
 
+enum class EInput { File, Stdin, Socket };
+
 const std::map<std::string, EMode, std::less<>> mode_map{
     {"Predictive", EMode::Predictive},
     {"TestOnly", EMode::TestOnly},

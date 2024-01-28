@@ -38,6 +38,7 @@ enum class Error {
   TestingError,
   TrainingError,
   UnimplementedActivationFunction,
+  UnimplementedMode,
   UnimplementedPredictiveMode,
   UnknownKey,
 };
@@ -69,6 +70,7 @@ const std::map<Error, std::string> errorMessages = {
     {Error::TestingError, "TestingError"},
     {Error::TrainingError, "TrainingError"},
     {Error::UnimplementedActivationFunction, "UnimplementedActivationFunction"},
+    {Error::UnimplementedMode, "UnimplementedMode"},
     {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"},
     {Error::UnknownKey, "UnknownKey"}};
 
@@ -116,5 +118,6 @@ const std::map<Error, std::string> defaultErrorMessages = {
     {Error::TrainingError, "Training error."},
     {Error::UnimplementedActivationFunction,
      "Unimplemented Activation Function"},
+    {Error::UnimplementedMode, "Unimplemented mode"},
     {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"},
     {Error::UnknownKey, "Unknown key"}};

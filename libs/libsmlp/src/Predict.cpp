@@ -1,6 +1,8 @@
 #include "Predict.h"
 #include "Common.h"
+#include "CommonModes.h"
 #include "Manager.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/PredictException.h"
 #include <iostream>
@@ -8,12 +10,18 @@
 
 void Predict::predict(const std::string &line) const {
   const auto &app_params = Manager::getInstance().app_params;
-  if (app_params.use_socket) {
-    processLine(line);
-  } else if (app_params.use_stdin) {
-    processStdin();
-  } else {
+  switch (app_params.input) {
+  case EInput::File:
     processFile();
+    break;
+  case EInput::Stdin:
+    processStdin();
+    break;
+  case EInput::Socket:
+    processLine(line);
+    break;
+  default:
+    throw PredictException(SimpleLang::Error(Error::UnimplementedMode));
   }
 }
 

@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "CommonModes.h"
 #include "DataFileParser.h"
 #include "Manager.h"
 #include "SimpleLang.h"
@@ -41,9 +42,9 @@ TEST_CASE("Testing the Testing class") {
     auto fileparser = std::make_shared<DataFileParser>();
 
     manager.app_params = {.training_ratio_line = 0,
-                          .use_stdin = true,
                           .use_training_ratio_line = true,
-                          .mode = EMode::TrainTestMonitored};
+                          .mode = EMode::TrainTestMonitored,
+                          .input = EInput::Stdin};
     auto testing = new TestingStdin();
     testing->setFileParser(fileparser);
 

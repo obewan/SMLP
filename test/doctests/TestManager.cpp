@@ -21,48 +21,41 @@ TEST_CASE("Testing the Manager class") {
   auto &manager = Manager::getInstance();
 
   SUBCASE("Test createTraining") {
-    manager.app_params.use_socket = true;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::Socket;
     CHECK_NOTHROW(manager.createTraining());
     CHECK(manager.getTraining()->trainingType == TrainingType::TrainingSocket);
     manager.resetTraining();
 
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = true;
+    manager.app_params.input = EInput::Stdin;
     CHECK_NOTHROW(manager.createTraining());
     CHECK(manager.getTraining()->trainingType == TrainingType::TrainingStdin);
     manager.resetTraining();
 
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::File;
     CHECK_NOTHROW(manager.createTraining());
     CHECK(manager.getTraining()->trainingType == TrainingType::TrainingFile);
     manager.resetTraining();
   }
 
   SUBCASE("Test createTesting") {
-    manager.app_params.use_socket = true;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::Socket;
     CHECK_NOTHROW(manager.createTesting());
     CHECK(manager.getTesting()->testingType == TestingType::TestingSocket);
     manager.resetTesting();
 
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = true;
+    manager.app_params.input = EInput::Stdin;
     CHECK_NOTHROW(manager.createTesting());
     CHECK(manager.getTesting()->testingType == TestingType::TestingStdin);
     manager.resetTesting();
 
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::File;
     CHECK_NOTHROW(manager.createTesting());
     CHECK(manager.getTesting()->testingType == TestingType::TestingFile);
     manager.resetTesting();
   }
 
   SUBCASE("Test file predict") {
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::File;
     manager.app_params.data_file = "";
     manager.app_params.mode = EMode::Predictive;
 
@@ -94,8 +87,7 @@ TEST_CASE("Testing the Manager class") {
     CHECK(std::filesystem::exists(manager.app_params.network_to_import));
     CHECK(std::filesystem::exists(manager.app_params.data_file));
     CHECK_NOTHROW(manager.importOrBuildNetwork());
-    manager.app_params.use_socket = false;
-    manager.app_params.use_stdin = false;
+    manager.app_params.input = EInput::File;
 
     // for (auto mode :
     //      {EMode::TestOnly, EMode::TrainOnly, EMode::TrainTestMonitored,
@@ -124,7 +116,7 @@ TEST_CASE("Testing the Manager class") {
   }
 
   SUBCASE("Test procesTCPClient") {
-    manager.app_params.use_socket = false;
+    manager.app_params.input = EInput::File;
     CHECK_THROWS_WITH_AS(manager.processTCPClient(""), "TCP socket not set.",
                          ManagerException);
   }

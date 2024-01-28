@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "CommonModes.h"
 #include "exception/ManagerException.h"
 
 void Manager::predict(const std::string &line) {
@@ -28,12 +29,20 @@ void Manager::train(const std::string &line) {
     createTraining();
   }
 
-  if (app_params.use_socket && app_params.verbose) {
-    logger.info("Training using TCP socket...");
-  } else if (app_params.use_stdin) {
-    handleStdinTraining();
-  } else {
+  switch (app_params.input) {
+  case EInput::File:
     handleFileTraining();
+    break;
+  case EInput::Stdin:
+    handleStdinTraining();
+    break;
+  case EInput::Socket:
+    if (app_params.verbose) {
+      logger.info("Training using TCP socket...");
+    }
+    break;
+  default:
+    break;
   }
 
   training_->train(line);
@@ -52,12 +61,20 @@ void Manager::test(const std::string &line) {
     createTesting();
   }
 
-  if (app_params.use_socket && app_params.verbose) {
-    logger.info("Testing using TCP socket...");
-  } else if (app_params.use_stdin) {
-    handleStdinTesting();
-  } else {
+  switch (app_params.input) {
+  case EInput::File:
     handleFileTesting();
+    break;
+  case EInput::Stdin:
+    handleStdinTesting();
+    break;
+  case EInput::Socket:
+    if (app_params.verbose) {
+      logger.info("Testing using TCP socket...");
+    }
+    break;
+  default:
+    break;
   }
 
   testing_->test(line);
@@ -72,20 +89,24 @@ void Manager::trainTestMonitored(const std::string &line) {
     return;
   }
 
-  if (app_params.use_socket && app_params.verbose) {
-    logger.info("Train and testing using TCP sockets...");
-  }
-
-  if (app_params.use_stdin) {
-    logger.info("Train and testing, using command pipe input...");
-    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-                " ", showInlineHeader());
-  }
-
-  if (!app_params.use_stdin && !app_params.use_socket) {
+  switch (app_params.input) {
+  case EInput::File:
     logger.info("Train and testing, using file ", app_params.data_file);
     logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
                 " ", showInlineHeader());
+    break;
+  case EInput::Stdin:
+    logger.info("Train and testing, using command pipe input...");
+    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+                " ", showInlineHeader());
+    break;
+  case EInput::Socket:
+    if (app_params.verbose) {
+      logger.info("Train and testing using TCP socket...");
+    }
+    break;
+  default:
+    break;
   }
 
   if (!training_) {
@@ -113,7 +134,7 @@ std::string Manager::showInlineHeader() const {
       network_params.output_activation_function == EActivationFunction::PReLU) {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
   }
-  if (!app_params.use_stdin) {
+  if (app_params.input != EInput::Stdin) {
     sst << " Epochs:" << app_params.num_epochs;
     if (app_params.training_ratio_line > 0) {
       sst << " TrainingRatioLine:" << app_params.training_ratio_line;
@@ -193,7 +214,7 @@ void Manager::exportNetwork() {
 }
 
 void Manager::processTCPClient(const std::string &line) {
-  if (!app_params.use_socket) {
+  if (app_params.input != EInput::Socket) {
     throw ManagerException("TCP socket not set.");
   }
   switch (app_params.mode) {
