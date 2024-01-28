@@ -226,12 +226,8 @@ void SimpleMLP::checkStdin() {
   if (app_params.input == EInput::Socket) {
     return;
   }
-  bool use_stdin = false;
   app_params.input = EInput::File; // important
-  if (!app_params.disable_stdin) {
-    use_stdin = !ISATTY(FILENO(stdin));
-  }
-  if (use_stdin) {
+  if (!app_params.disable_stdin && !ISATTY(FILENO(stdin))) {
     app_params.input = EInput::Stdin;
   }
 }
