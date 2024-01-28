@@ -223,7 +223,11 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
 }
 
 void SimpleMLP::checkStdin() {
-  bool use_stdin = false; // important
+  if (app_params.input == EInput::Socket) {
+    return;
+  }
+  bool use_stdin = false;
+  app_params.input = EInput::File; // important
   if (!app_params.disable_stdin) {
     use_stdin = !ISATTY(FILENO(stdin));
   }
