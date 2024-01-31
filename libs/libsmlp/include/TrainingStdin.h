@@ -5,5 +5,5 @@ class TrainingStdin : public Training {
 public:
   TrainingStdin() : Training(TrainingType::TrainingStdin) {}
 
-  void train(const std::string &line = "") override;
+  TrainingResult train(const std::string &line = "") override;
 };

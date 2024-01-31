@@ -1,7 +1,7 @@
 #include "TrainingStdin.h"
 #include "Manager.h"
 
-void TrainingStdin::train(const std::string &line) {
+TrainingResult TrainingStdin::train(const std::string &line) {
   const auto &logger = SimpleLogger::getInstance();
   logger.log(LogLevel::INFO, false, "Training...");
   size_t current_line = 0;
@@ -18,4 +18,6 @@ void TrainingStdin::train(const std::string &line) {
     manager.getTesting()->test();
     logger.out(manager.getTesting()->getTestingResults()->showResultsLine());
   }
+
+  return {.isSuccess = true};
 }

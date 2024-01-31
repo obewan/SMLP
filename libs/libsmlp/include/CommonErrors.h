@@ -12,6 +12,7 @@
 #include <string>
 
 enum class Error {
+  ConfigFileNotFound,
   CSVParsingError,
   CSVParsingErrorEmptyLine,
   CSVParsingErrorColumnsBadFormat,
@@ -20,7 +21,10 @@ enum class Error {
   DifferentModelVersion,
   FailedToOpenFile,
   InternalError,
+  InvalidDatasetFileMissing,
+  InvalidDirectory,
   InvalidJsonFile,
+  InvalidPredictiveNetworkMissing,
   InvalidTotalInput,
   InvalidTotalOutput,
   InvalidTrainingRatioTooBig,
@@ -44,6 +48,7 @@ enum class Error {
 };
 
 const std::map<Error, std::string> errorMessages = {
+    {Error::ConfigFileNotFound, "ConfigFileNotFound"},
     {Error::CSVParsingError, "CSVParsingError"},
     {Error::CSVParsingErrorEmptyLine, "CSVParsingErrorEmptyLine"},
     {Error::CSVParsingErrorColumnsBadFormat, "CSVParsingErrorColumnsBadFormat"},
@@ -52,7 +57,10 @@ const std::map<Error, std::string> errorMessages = {
     {Error::DifferentModelVersion, "DifferentModelVersion"},
     {Error::FailedToOpenFile, "FailedToOpenFile"},
     {Error::InternalError, "InternalError"},
+    {Error::InvalidDatasetFileMissing, "InvalidDatasetFileMissing"},
+    {Error::InvalidDirectory, "InvalidDirectory"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
+    {Error::InvalidPredictiveNetworkMissing, "InvalidPredictiveNetworkMissing"},
     {Error::InvalidTotalInput, "InvalidTotalInput"},
     {Error::InvalidTotalOutput, "InvalidTotalOutput"},
     {Error::InvalidTrainingRatioTooBig, "InvalidTrainingRatioTooBig"},
@@ -75,6 +83,7 @@ const std::map<Error, std::string> errorMessages = {
     {Error::UnknownKey, "UnknownKey"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
+    {Error::ConfigFileNotFound, "Config file not found: %%config_file%%"},
     {Error::CSVParsingError, "CSV parsing error at line %%line_number%%"},
     {Error::CSVParsingErrorEmptyLine,
      "CSV parsing error at line %%line_number%%: empty line."},
@@ -91,7 +100,13 @@ const std::map<Error, std::string> defaultErrorMessages = {
      "(%%vcurrent%%)"},
     {Error::FailedToOpenFile, "Failed to open file"},
     {Error::InternalError, "Internal error"},
+    {Error::InvalidDatasetFileMissing,
+     "A dataset file is required, but file_input is missing"},
+    {Error::InvalidDirectory, "Invalid directory"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
+    {Error::InvalidPredictiveNetworkMissing,
+     "Predictive mode require a trained network to import, but "
+     "network_to_import is missing"},
     {Error::InvalidTotalInput, "Invalid number of input values"},
     {Error::InvalidTotalOutput,
      "The expected output size provided is not valid"},

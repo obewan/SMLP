@@ -16,5 +16,5 @@ class TrainingFile : public Training {
 public:
   TrainingFile() : Training(TrainingType::TrainingFile) {}
 
-  void train(const std::string &line = "") override;
+  TrainingResult train(const std::string &line = "") override;
 };

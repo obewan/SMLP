@@ -12,15 +12,21 @@
 #include <string>
 
 enum class Message {
+  StdinDisabled,
   TCPClientDisconnected,
   TCPServerClosed,
+  UsingConfigFile,
 };
 
 const std::map<Message, std::string> messages = {
+    {Message::StdinDisabled, "StdinDisabled"},
     {Message::TCPClientDisconnected, "TCPClientDisconnected"},
-    {Message::TCPServerClosed, "TCPServerClosed"}};
+    {Message::TCPServerClosed, "TCPServerClosed"},
+    {Message::UsingConfigFile, "UsingConfigFile"}};
 
 const std::map<Message, std::string> defaultMessages = {
+    {Message::StdinDisabled, "Stdin disabled."},
     {Message::TCPClientDisconnected, "TCP client disconnected."},
     {Message::TCPServerClosed,
-     "TCP Server socket was closed, stopping server."}};
+     "TCP Server socket was closed, stopping server."},
+    {Message::UsingConfigFile, "Using config file %%config_file%%..."}};

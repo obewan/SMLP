@@ -2,7 +2,7 @@
 #include "Manager.h"
 #include "SimpleLogger.h"
 
-void TrainingFile::train(const std::string &line) {
+TrainingResult TrainingFile::train(const std::string &line) {
   if (!fileParser_) {
     throw TrainingException(SimpleLang::Error(Error::InternalError));
   }
@@ -49,4 +49,6 @@ void TrainingFile::train(const std::string &line) {
     }
     logger.info(testing->getTestingResults()->showDetailledResults());
   }
+
+  return {.isSuccess = true};
 }

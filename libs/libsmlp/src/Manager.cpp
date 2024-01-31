@@ -1,6 +1,7 @@
 #include "Manager.h"
 #include "CommonModes.h"
 #include "exception/ManagerException.h"
+#include <exception>
 
 void Manager::predict(const std::string &line) {
   // no log here as the output is the result
@@ -45,7 +46,18 @@ void Manager::train(const std::string &line) {
     break;
   }
 
-  training_->train(line);
+  try {
+    const auto &results = training_->train(line);
+    if (app_params.verbose) {
+      if (results.isSuccess) {
+        logger.info("Training success.");
+      } else {
+        logger.error("Training error.");
+      }
+    }
+  } catch (std::exception &ex) {
+    logger.error("Training error: ", ex.what());
+  }
 }
 
 void Manager::test(const std::string &line) {

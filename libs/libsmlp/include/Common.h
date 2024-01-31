@@ -36,6 +36,15 @@ struct RecordResult {
   Record record;
 };
 
+/**
+ * @brief Training results
+ */
+struct TrainingResult {
+  bool isSuccess = false;
+  std::string message = "";
+  std::string error = "";
+};
+
 consteval unsigned long long operator"" _K(unsigned long long x) {
   return x * 1024;
 }

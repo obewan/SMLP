@@ -31,6 +31,7 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "include/SimpleMLP.h"
 #include "Common.h"
+#include "CommonMessages.h"
 #include "CommonModes.h"
 #include "Network.h"
 #include "Predict.h"
@@ -73,24 +74,23 @@ int SimpleMLP::init(int argc, char **argv) {
       return init;
     }
 
-    // check again but including -x param this time
+    // check again but including -x param (stdin disable) this time
     checkStdin();
     // Config file settings, must be after this second checkStdin()
     ConfigSettings(config);
 
     // Some post validations
     if (app_params.data_file.empty() && app_params.input == EInput::File) {
-      logger.error("A dataset file is required, but file_input is missing.");
+      logger.error(SimpleLang::Error(Error::InvalidDatasetFileMissing));
       return EXIT_FAILURE;
     }
     if (app_params.mode == EMode::Predictive &&
         app_params.network_to_import.empty()) {
-      logger.error("Predictive mode require a trained network to import, but "
-                   "network_to_import is missing.");
+      logger.error(SimpleLang::Error(Error::InvalidPredictiveNetworkMissing));
       return EXIT_FAILURE;
     }
     if (app_params.disable_stdin && app_params.mode != EMode::Predictive) {
-      logger.info("Stdin disabled");
+      logger.info(SimpleLang::Message(Message::StdinDisabled));
     }
 
     Manager::getInstance().importOrBuildNetwork();
@@ -113,7 +113,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   auto valid_path = [](auto filename) {
     if (std::filesystem::path p(filename);
         p.has_parent_path() && !std::filesystem::exists(p.parent_path())) {
-      return std::string("The directory of the file does not exist.");
+      return SimpleLang::Error(Error::InvalidDirectory);
     }
     return std::string();
   };
@@ -205,9 +205,11 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   const auto &logger = SimpleLogger::getInstance();
   if (app_params.mode != EMode::Predictive) {
     if (config.isValidConfig) {
-      logger.info("Using config file ", config.config_file, "...");
-    } else {
-      logger.info("No valid config file ", config.config_file, " found...");
+      logger.info(SimpleLang::Message(Message::UsingConfigFile,
+                                      {{"config_file", config.config_file}}));
+    } else if (app_params.verbose) {
+      logger.info(SimpleLang::Error(Error::ConfigFileNotFound,
+                                    {{"config_file", config.config_file}}));
     }
   }
   if (!config.file_input.empty() && app_params.data_file.empty() &&

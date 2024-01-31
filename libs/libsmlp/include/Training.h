@@ -71,7 +71,7 @@ public:
    *
    * @param line optional data line to use for training
    */
-  virtual void train(const std::string &line = "") = 0;
+  virtual TrainingResult train(const std::string &line = "") = 0;
 
   /**
    * @brief Create a File Parser object

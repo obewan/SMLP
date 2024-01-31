@@ -16,5 +16,8 @@ class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  void train(const std::string &line = "") override { processInputLine(line); }
+  TrainingResult train(const std::string &line = "") override {
+    const auto &processResult = processInputLine(line);
+    return {.isSuccess = processResult.isSuccess};
+  }
 };
