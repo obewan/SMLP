@@ -20,14 +20,34 @@ public:
   SimpleTCPServer() = default;
   SimpleTCPServer(const SimpleTCPServer &other) = delete;
   SimpleTCPServer &operator=(const SimpleTCPServer &other) = delete;
-  ~SimpleTCPServer() {
+  virtual ~SimpleTCPServer() {
     if (!stopSource_.stop_requested()) {
       stop();
     }
   }
 
-  void start();
-  void stop();
+  virtual void start();
+  virtual void stop();
+  virtual void handle_client(int client_socket, const std::string &client_ip,
+                             const std::stop_token &stoken);
+  /**
+   * @brief if there is an end of line or an end of chars (\0), get the line and
+   * process it.
+   *
+   * @param line_buffer
+   * @param client_info
+   */
+  virtual void processLineBuffer(std::string &line_buffer,
+                                 const std::string &client_info);
+
+  /**
+   * @brief use the line data with the neural network, thread safe.
+   *
+   * @param line
+   * @param client_info
+   */
+  virtual void processLine(const std::string &line,
+                           const std::string &client_info);
 
   /**
    * @brief Get the TCP service started flag, thread safe.
@@ -35,9 +55,6 @@ public:
    * @return false if server not started
    */
   bool isStarted() const { return isStarted_.load(); }
-
-  void handle_client(int client_socket, const std::string &client_ip,
-                     const std::stop_token &stoken);
 
   void setServerPort(unsigned short port) { this->sin_port_ = port; }
   unsigned short getServerPort() const { return this->sin_port_; }
@@ -49,25 +66,7 @@ public:
   }
   size_t getClientBufferSize() const { return this->client_buff_size_; }
 
-  /**
-   * @brief if there is an end of line or an end of chars (\0), get the line and
-   * process it.
-   *
-   * @param line_buffer
-   * @param client_info
-   */
-  void processLineBuffer(std::string &line_buffer,
-                         const std::string &client_info);
-
-  /**
-   * @brief use the line data with the neural network, thread safe.
-   *
-   * @param line
-   * @param client_info
-   */
-  void processLine(const std::string &line, const std::string &client_info);
-
-private:
+protected:
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
   std::mutex threadMutex_;

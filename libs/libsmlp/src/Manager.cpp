@@ -1,5 +1,6 @@
 #include "Manager.h"
 #include "CommonModes.h"
+#include "SimpleLang.h"
 #include "exception/ManagerException.h"
 #include <exception>
 
@@ -227,7 +228,7 @@ void Manager::exportNetwork() {
 
 void Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
-    throw ManagerException("TCP socket not set.");
+    throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
   switch (app_params.mode) {
   case EMode::Predictive:
@@ -247,6 +248,6 @@ void Manager::processTCPClient(const std::string &line) {
     test(line);
     break;
   default:
-    throw ManagerException("Unimplemented mode.");
+    throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
   }
 }

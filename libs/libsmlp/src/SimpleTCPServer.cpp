@@ -32,12 +32,26 @@ constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 void SimpleTCPServer::start() {
+  /**
+   * @brief This function compares the current value of isStarted_ with the
+   * value of expected. If they are equal, it assigns the second argument (true
+   * in this case) to isStarted_ and returns true. If they are not equal, it
+   * assigns the current value of isStarted_ to expected and returns false.
+   *
+   * So, in summary, this code checks if isStarted_ is false in a thread-safe
+   * way. If isStarted_ is false, it sets it to true. If isStarted_ is already
+   * true, it immediately returns from the current function. This can be useful
+   * in scenarios where you want to ensure that a piece of code is only executed
+   * once, even in a multithreaded environment.
+   *
+   * Warning, this will exchange the value of isStarted_
+   *
+   * @param expected
+   */
   if (bool expected = false; !isStarted_.compare_exchange_strong(
           expected, true)) { // thread safe comparison
     return;
   }
-
-  isStarted_ = true;
 
 #ifdef _WIN32
   WSADATA wsaData;
@@ -127,7 +141,7 @@ void SimpleTCPServer::start() {
         break;
       }
       continue;
-    }
+    } // end if client_socket == -1
 
     SimpleLogger::LOG_INFO(client_info, " Client connection.");
 

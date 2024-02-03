@@ -15,14 +15,14 @@ class SimpleTCPClient {
 public:
   SimpleTCPClient();
 
-  ~SimpleTCPClient();
+  virtual ~SimpleTCPClient();
 
-  void connect(const std::string &host, unsigned short port);
+  virtual void connect(const std::string &host, unsigned short port);
 
-  void send(const std::string &message);
+  virtual void send(const std::string &message);
 
-  void disconnect();
+  virtual void disconnect();
 
-private:
+protected:
   int client_socket = -1;
 };
