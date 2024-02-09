@@ -20,7 +20,7 @@ public:
     if (server == nullptr) {
       return;
     }
-    std::strcpy(server->buffer, message.c_str());
+    server->buffer_write(message.c_str());
     server->cv_data.notify_all();
   }
   void disconnect() override {

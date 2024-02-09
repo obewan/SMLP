@@ -9,17 +9,18 @@ void SimpleTCPServerMock::start() {
     return;
   }
   isStarted_ = true;
-
+  clientIsConnected = false;
   std::unique_lock<std::mutex> lk(cv_m);
+
   while (!stopSource_.stop_requested()) {
+    if (clientIsConnected) {
+      cv_connection.wait_for(lk, std::chrono::seconds(1)); // to avoid cpu burst
+      continue;
+    }
+
     cv_connection.wait_for(lk,
                            std::chrono::seconds(SERVER_ACCEPT_TIMEOUT_SECONDS),
                            [this] { return clientConnection.load(); });
-    if (clientIsConnected) {
-      std::this_thread::sleep_for(
-          std::chrono::seconds(1)); // timer to avoid cpu burst
-      continue;
-    }
 
     int client_socket = 1;
     std::string client_ip = "localhost";
@@ -47,30 +48,24 @@ void SimpleTCPServerMock::handle_client(int client_socket,
                                         const std::stop_token &stoken) {
   std::string client_info = "[" + client_ip + "] ";
   std::string lineBuffer;
-  std::unique_lock<std::mutex> lk(cv_m);
+  std::unique_lock lk(cv_m);
+
   while (!stoken.stop_requested()) {
-    memset(buffer, 0, 32_K);
+    SimpleLogger::LOG_INFO(client_info, "MOCK TEST - SERVER WAITING FOR DATA");
     cv_data.wait_for(lk, std::chrono::seconds(CLIENT_RECV_TIMEOUT_SECONDS),
                      [this] { return clientIsSendingData.load(); });
+
     clientIsSendingData = false;
-    size_t bytesReceived = strlen(buffer);
-    if (bytesReceived == 0) {
+
+    while (!bufferQueue.empty()) {
+      auto bufferQueueElement = buffer_get();
+      size_t bytesReceived = bufferQueueElement.size();
+
+      lineBuffer.append(bufferQueueElement.c_str(), bytesReceived + 1);
       SimpleLogger::LOG_INFO(
-          client_info, SimpleLang::Message(Message::TCPClientDisconnected));
-
-      // Process any remaining data in lineBuffer
-      if (!lineBuffer.empty()) {
-        std::string line = lineBuffer;
-        lineBuffer.erase();
-        processLine(line, client_info);
-      }
-
-      return;
+          client_info, "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
+      processLineBuffer(lineBuffer, client_info);
     }
-
-    lineBuffer.append(buffer, bytesReceived);
-
-    processLineBuffer(lineBuffer, client_info);
   }
   SimpleLogger::LOG_INFO(client_info,
                          SimpleLang::Message(Message::TCPClientDisconnected));
