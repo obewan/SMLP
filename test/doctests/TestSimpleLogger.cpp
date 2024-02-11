@@ -27,19 +27,23 @@ TEST_CASE("Testing the SimpleLogger class") {
   // CHECK THE LOG OUTPUT
   SUBCASE("Test predict precision") {
     Predict predict;
-    Manager::getInstance().app_params = {
-        .output_at_end = true, .predictive_mode = EPredictiveMode::CSV};
-    predict.showOutput({1, 2, 3}, {f, g});
+    std::string result;
+    auto &app_params = Manager::getInstance().app_params;
+    app_params = {.output_at_end = true,
+                  .predictive_mode = EPredictiveMode::CSV};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "1,2,3,0,0");
 
-    Manager::getInstance().app_params = {.predictive_mode =
-                                             EPredictiveMode::NumberAndRaw};
-    predict.showOutput({1, 2, 3}, {f, g});
+    app_params = {.predictive_mode = EPredictiveMode::NumberAndRaw};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0,0 [0.123,0]");
 
-    Manager::getInstance().app_params = {.predictive_mode =
-                                             EPredictiveMode::NumberOnly};
-    predict.showOutput({1, 2, 3}, {f, g});
-    Manager::getInstance().app_params = {.predictive_mode =
-                                             EPredictiveMode::RawOnly};
-    predict.showOutput({1, 2, 3}, {f, g});
+    app_params = {.predictive_mode = EPredictiveMode::NumberOnly};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0,0");
+
+    app_params = {.predictive_mode = EPredictiveMode::RawOnly};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0.123,0");
   }
 }

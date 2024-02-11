@@ -1,4 +1,5 @@
 #include "SimpleTCPServer.h"
+#include "CommonModes.h"
 #include "Manager.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -221,8 +222,9 @@ void SimpleTCPServer::handle_client(int client_socket,
 
     processLineBuffer(lineBuffer, client_info);
 
-    // Echo message back to client
-    // send(client_socket, lineBuffer, bytesReceived + 1, 0);
+    if (Manager::getInstance().app_params.mode == EMode::Predictive) {
+      // send(client_socket, lineBuffer, bytesReceived + 1, 0);
+    }
   }
 
   CLOSE_SOCKET(client_socket);

@@ -1,4 +1,5 @@
 #include "SimpleTCPServerMock.h"
+#include "Manager.h"
 
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
@@ -10,7 +11,7 @@ void SimpleTCPServerMock::start() {
   }
   isStarted_ = true;
   clientIsConnected = false;
-  std::unique_lock<std::mutex> lk(cv_m);
+  std::unique_lock lk(cv_m);
 
   while (!stopSource_.stop_requested()) {
     if (clientIsConnected) {
@@ -65,6 +66,9 @@ void SimpleTCPServerMock::handle_client(int client_socket,
       SimpleLogger::LOG_INFO(
           client_info, "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
       processLineBuffer(lineBuffer, client_info);
+
+      if (Manager::getInstance().app_params.mode == EMode::Predictive) {
+      }
     }
   }
   SimpleLogger::LOG_INFO(client_info,

@@ -24,12 +24,13 @@ public:
 
   Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
 
-  void predict(const std::string &line = "") const;
+  std::string predict(const std::string &line = "") const;
 
-  void appendValues(const std::vector<float> &values, bool roundValues) const;
+  std::string formatValues(const std::vector<float> &values,
+                           bool roundValues) const;
 
-  void showOutput(const std::vector<float> &inputs,
-                  const std::vector<float> &predicteds) const;
+  std::string formatResult(const std::vector<float> &inputs,
+                           const std::vector<float> &predicteds) const;
 
   /**
    * @brief Sets the file parser for testing data.
@@ -48,8 +49,7 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
-  RecordResult processLine(const std::string &line = "") const;
-  void processStdin() const;
-  void processFile() const;
+  std::string processInput(EInput input, const std::string &line) const;
+  std::string processLine(const RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };
