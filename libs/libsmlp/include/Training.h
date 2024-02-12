@@ -71,7 +71,7 @@ public:
    *
    * @param line optional data line to use for training
    */
-  virtual TrainingResult train(const std::string &line = "") = 0;
+  virtual Common::Result train(const std::string &line = "") = 0;
 
   /**
    * @brief Create a File Parser object
@@ -109,7 +109,7 @@ public:
   }
 
 protected:
-  RecordResult processInputLine(const std::string &line = "") const;
+  Common::RecordResult processInputLine(const std::string &line = "") const;
 
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };

@@ -1,8 +1,9 @@
 #include "TrainingFile.h"
+#include "CommonResult.h"
 #include "Manager.h"
 #include "SimpleLogger.h"
 
-TrainingResult TrainingFile::train(const std::string &line) {
+Common::Result TrainingFile::train(const std::string &line) {
   if (!fileParser_) {
     throw TrainingException(SimpleLang::Error(Error::InternalError));
   }
@@ -50,5 +51,5 @@ TrainingResult TrainingFile::train(const std::string &line) {
     logger.info(testing->getTestingResults()->showDetailledResults());
   }
 
-  return {.isSuccess = true};
+  return {.code = Common::make_error_code(Common::ErrorCode::Success)};
 }

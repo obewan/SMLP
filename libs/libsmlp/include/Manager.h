@@ -38,7 +38,7 @@ public:
    * @brief This method apply the model on inputs to predict the outputs
    * @param line Optional line to use.
    */
-  void predict(const std::string &line = "");
+  std::string predict(const std::string &line = "");
 
   /**
    * @brief This method trains the model.

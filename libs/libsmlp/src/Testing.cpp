@@ -1,9 +1,9 @@
 #include "Testing.h"
 #include "Manager.h"
 
-TestingResult::TestResults Testing::testLine(const RecordResult &record_result,
-                                             const size_t line_number,
-                                             const size_t epoch) const {
+TestingResult::TestResults
+Testing::testLine(const Common::RecordResult &record_result,
+                  const size_t line_number, const size_t epoch) const {
 
   auto predicteds = Manager::getInstance().network->forwardPropagation(
       record_result.record.inputs);

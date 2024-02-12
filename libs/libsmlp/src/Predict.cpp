@@ -10,6 +10,8 @@
 #include <math.h>
 #include <sstream>
 
+using namespace Common;
+
 std::string Predict::predict(const std::string &line) const {
   const auto &app_params = Manager::getInstance().app_params;
   switch (app_params.input) {

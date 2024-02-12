@@ -6,6 +6,8 @@
 #include "exception/FileParserException.h"
 #include <string>
 
+using namespace Common;
+
 DataFileParser::~DataFileParser() {
   if (file && file.is_open()) {
     file.close();

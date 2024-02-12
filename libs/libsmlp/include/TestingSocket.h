@@ -20,7 +20,7 @@ public:
 
   void test(const std::string &line = "", size_t epoch = 0,
             size_t current_line_number = 0) override {
-    RecordResult result = fileParser_->processLine(line);
+    Common::RecordResult result = fileParser_->processLine(line);
     if (!result.isSuccess) {
       throw TestingException(SimpleLang::Error(Error::TestingError));
     }

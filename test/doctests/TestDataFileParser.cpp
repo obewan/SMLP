@@ -8,6 +8,8 @@
 #include <cmath>
 #include <string>
 
+using namespace Common;
+
 TEST_CASE("Testing the DataFileParser class") {
   std::string test_file = "../data/test_file.csv";
   const float eps = 1e-6f; // epsilon for float testing

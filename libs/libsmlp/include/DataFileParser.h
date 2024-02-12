@@ -86,7 +86,7 @@ public:
    * process the next line of the fileparser.
    * @return A RecordResult containing the processed data from the line.
    */
-  RecordResult processLine(const std::string &line = "");
+  Common::RecordResult processLine(const std::string &line = "");
 
   /**
    * @brief Processes a record with input only.
@@ -95,7 +95,7 @@ public:
    * @param input_size The size of the input data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processInputOnly(
+  Common::Record processInputOnly(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size) const;
 
@@ -109,7 +109,7 @@ public:
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processInputFirst(
+  Common::Record processInputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
@@ -123,7 +123,7 @@ public:
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processOutputFirst(
+  Common::Record processOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
@@ -133,7 +133,7 @@ public:
   void validateColumns(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
-  Record processColumns(
+  Common::Record processColumns(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
   std::ifstream file;

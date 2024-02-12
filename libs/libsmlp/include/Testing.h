@@ -94,7 +94,7 @@ public:
   }
 
 protected:
-  TestingResult::TestResults testLine(const RecordResult &record_result,
+  TestingResult::TestResults testLine(const Common::RecordResult &record_result,
                                       const size_t line_number = 0,
                                       const size_t epoch = 0) const;
 

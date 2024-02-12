@@ -50,6 +50,6 @@ public:
 
 private:
   std::string processInput(EInput input, const std::string &line) const;
-  std::string processLine(const RecordResult &result) const;
+  std::string processLine(const Common::RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };

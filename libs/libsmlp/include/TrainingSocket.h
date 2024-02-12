@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include "CommonResult.h"
 #include "SimpleLogger.h"
 #include "Training.h"
 #include "exception/FileParserException.h"
@@ -16,8 +17,10 @@ class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  TrainingResult train(const std::string &line = "") override {
+  Common::Result train(const std::string &line = "") override {
     const auto &processResult = processInputLine(line);
-    return {.isSuccess = processResult.isSuccess};
+    return {.code = Common::make_error_code(processResult.isSuccess
+                                                ? Common::ErrorCode::Success
+                                                : Common::ErrorCode::Failure)};
   }
 };

@@ -31,8 +31,6 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "include/SimpleMLP.h"
 #include "Common.h"
-#include "CommonMessages.h"
-#include "CommonModes.h"
 #include "Network.h"
 #include "Predict.h"
 #include "SimpleConfig.h"

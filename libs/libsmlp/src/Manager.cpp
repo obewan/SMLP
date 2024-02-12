@@ -4,12 +4,12 @@
 #include "exception/ManagerException.h"
 #include <exception>
 
-void Manager::predict(const std::string &line) {
+std::string Manager::predict(const std::string &line) {
   // no log here as the output is the result
   if (!predict_) {
     predict_ = std::make_unique<Predict>();
   }
-  predict_->predict(line);
+  return predict_->predict(line);
 }
 
 void Manager::train(const std::string &line) {
@@ -50,7 +50,7 @@ void Manager::train(const std::string &line) {
   try {
     const auto &results = training_->train(line);
     if (app_params.verbose) {
-      if (results.isSuccess) {
+      if (results.isSuccess()) {
         logger.info("Training success.");
       } else {
         logger.error("Training error.");
@@ -136,13 +136,13 @@ std::string Manager::showInlineHeader() const {
       << " HiddenLayers:" << network_params.hiddens_count
       << " LearningRate:" << network_params.learning_rate
       << " HiddenActivationFunction:"
-      << Common::getActivationStr(network_params.hidden_activation_function);
+      << Common::GetActivationStr(network_params.hidden_activation_function);
   if (network_params.hidden_activation_function == EActivationFunction::ELU ||
       network_params.hidden_activation_function == EActivationFunction::PReLU) {
     sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
   }
   sst << " OutputActivationFunction:"
-      << Common::getActivationStr(network_params.output_activation_function);
+      << Common::GetActivationStr(network_params.output_activation_function);
   if (network_params.output_activation_function == EActivationFunction::ELU ||
       network_params.output_activation_function == EActivationFunction::PReLU) {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
@@ -157,7 +157,7 @@ std::string Manager::showInlineHeader() const {
   } else {
     sst << " TrainingRatioLine:" << app_params.training_ratio_line;
   }
-  sst << " Mode:" << Common::getModeStr(app_params.mode)
+  sst << " Mode:" << Common::GetModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;
   return sst.str();
 }
