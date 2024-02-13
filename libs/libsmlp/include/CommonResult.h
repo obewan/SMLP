@@ -66,7 +66,7 @@ struct Result {
     nlohmann::json jdata;
     jdata["code"] = code.value();
     jdata["message"] = message();
-    jdata["data"] = data.has_value() ? data->c_str() : "";
+    jdata["data"] = data.value_or("");
     return jdata.dump();
   }
 };
