@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonResult.h"
 #include "DataFileParser.h"
 #include "Network.h"
 #include "exception/PredictException.h"
@@ -24,7 +25,7 @@ public:
 
   Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
 
-  std::string predict(const std::string &line = "") const;
+  Common::Result predict(const std::string &line = "") const;
 
   std::string formatValues(const std::vector<float> &values,
                            bool roundValues) const;
@@ -49,7 +50,7 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
-  std::string processInput(EInput input, const std::string &line) const;
-  std::string processLine(const Common::RecordResult &result) const;
+  Common::Result processInput(EInput input, const std::string &line) const;
+  std::string processResult(const Common::RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };

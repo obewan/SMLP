@@ -1,10 +1,11 @@
 #include "Manager.h"
 #include "CommonModes.h"
+#include "CommonResult.h"
 #include "SimpleLang.h"
 #include "exception/ManagerException.h"
 #include <exception>
 
-std::string Manager::predict(const std::string &line) {
+Common::Result Manager::predict(const std::string &line) {
   // no log here as the output is the result
   if (!predict_) {
     predict_ = std::make_unique<Predict>();
@@ -226,14 +227,13 @@ void Manager::exportNetwork() {
   importExportJSON.exportModel(network.get(), app_params);
 }
 
-void Manager::processTCPClient(const std::string &line) {
+Common::Result Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
   switch (app_params.mode) {
   case EMode::Predictive:
-    predict(line);
-    break;
+    return predict(line);
   case EMode::TrainOnly:
     train(line);
     break;
@@ -250,4 +250,5 @@ void Manager::processTCPClient(const std::string &line) {
   default:
     throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
   }
+  return {.code = Common::make_error_code(Common::ErrorCode::Success)};
 }

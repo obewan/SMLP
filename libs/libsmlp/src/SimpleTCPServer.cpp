@@ -106,7 +106,8 @@ void SimpleTCPServer::start() {
   while (!stopSource_.stop_requested()) {
     sockaddr_in client_address{};
     socklen_t client_len = sizeof(client_address);
-    int client_socket =
+    clientInfo client_info;
+    client_info.client_socket =
         accept(server_socket_, (struct sockaddr *)&client_address, &client_len);
 
     // If you’re working with IPv6 addresses, you can replace AF_INET with
@@ -115,13 +116,12 @@ void SimpleTCPServer::start() {
     char client_ip_buf[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &(client_address.sin_addr), client_ip_buf,
               INET_ADDRSTRLEN);
-    std::string client_ip = client_ip_buf;
-    std::string client_info = "[" + client_ip + "] ";
+    client_info.client_ip = client_ip_buf;
 
     if (stopSource_.stop_requested()) {
       break;
     }
-    if (client_socket == -1) {
+    if (client_info.client_socket == -1) {
       // Check if the error is because the socket was closed
 #ifdef _WIN32
       int lastError = WSAGetLastError();
@@ -137,18 +137,17 @@ void SimpleTCPServer::start() {
 #else
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
 #endif
-        SimpleLogger::LOG_ERROR(client_info,
+        SimpleLogger::LOG_ERROR(clientLog(client_info),
                                 SimpleLang::Error(Error::TCPServerAcceptError));
         break;
       }
       continue;
     } // end if client_socket == -1
 
-    SimpleLogger::LOG_INFO(client_info, " Client connection.");
-
+    SimpleLogger::LOG_INFO(clientLog(client_info), " Client connection.");
     clientHandlers_.emplace_back(
-        [this, client_socket, client_ip](std::stop_token st) {
-          handle_client(client_socket, client_ip, st);
+        [this, client_info](std::stop_token st) {
+          handle_client(client_info, st);
         },
         stopSource_.get_token());
   } // while
@@ -176,27 +175,27 @@ void SimpleTCPServer::stop() {
   server_socket_ = -1;
 }
 
-void SimpleTCPServer::handle_client(int client_socket,
-                                    const std::string &client_ip,
+void SimpleTCPServer::handle_client(const clientInfo &client_info,
                                     const std::stop_token &stoken) {
-  std::string client_info = "[" + client_ip + "] ";
   char buffer[client_buff_size_];
   std::string lineBuffer;
   struct timeval tv;
   tv.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS;
   tv.tv_usec = 0;
-  setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv,
+  setsockopt(client_info.client_socket, SOL_SOCKET, SO_RCVTIMEO,
+             (const char *)&tv,
              sizeof(tv)); // Set the timeout
 
   while (!stoken.stop_requested()) {
     memset(buffer, 0, client_buff_size_);
 
-    ssize_t bytesReceived = recv(client_socket, buffer, client_buff_size_, 0);
+    ssize_t bytesReceived =
+        recv(client_info.client_socket, buffer, client_buff_size_, 0);
     if (bytesReceived == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        SimpleLogger::LOG_ERROR(client_info,
+        SimpleLogger::LOG_ERROR(clientLog(client_info),
                                 SimpleLang::Error(Error::TCPServerRecvError));
-        CLOSE_SOCKET(client_socket);
+        CLOSE_SOCKET(client_info.client_socket);
         return;
       }
       // Retry receiving data
@@ -205,7 +204,8 @@ void SimpleTCPServer::handle_client(int client_socket,
 
     if (bytesReceived == 0) {
       SimpleLogger::LOG_INFO(
-          client_info, SimpleLang::Message(Message::TCPClientDisconnected));
+          clientLog(client_info),
+          SimpleLang::Message(Message::TCPClientDisconnected));
 
       // Process any remaining data in lineBuffer
       if (!lineBuffer.empty()) {
@@ -214,26 +214,22 @@ void SimpleTCPServer::handle_client(int client_socket,
         processLine(line, client_info);
       }
 
-      CLOSE_SOCKET(client_socket);
+      CLOSE_SOCKET(client_info.client_socket);
       return;
     }
 
     lineBuffer.append(buffer, bytesReceived);
 
     processLineBuffer(lineBuffer, client_info);
-
-    if (Manager::getInstance().app_params.mode == EMode::Predictive) {
-      // send(client_socket, lineBuffer, bytesReceived + 1, 0);
-    }
   }
 
-  CLOSE_SOCKET(client_socket);
-  SimpleLogger::LOG_INFO(client_info,
+  CLOSE_SOCKET(client_info.client_socket);
+  SimpleLogger::LOG_INFO(clientLog(client_info),
                          SimpleLang::Message(Message::TCPClientDisconnected));
 }
 
 void SimpleTCPServer::processLineBuffer(std::string &line_buffer,
-                                        const std::string &client_info) {
+                                        const clientInfo &client_info) {
   size_t pos_n = line_buffer.find('\n');
   size_t pos_r = line_buffer.find('\r'); // for windows \r\n
   size_t pos_0 = line_buffer.find('\0');
@@ -259,14 +255,20 @@ void SimpleTCPServer::processLineBuffer(std::string &line_buffer,
 }
 
 void SimpleTCPServer::processLine(const std::string &line,
-                                  const std::string &client_info) {
+                                  const clientInfo &client_info) {
   std::scoped_lock<std::mutex> lock(threadMutex_);
-  if (Manager::getInstance().app_params.verbose) {
-    SimpleLogger::LOG_INFO(client_info, "[RECV FROM CLIENT] ", line);
+  auto &manager = Manager::getInstance();
+  if (manager.app_params.verbose) {
+    SimpleLogger::LOG_INFO(clientLog(client_info), "[RECV FROM CLIENT] ", line);
   }
   try {
-    Manager::getInstance().processTCPClient(line);
+    const auto &result = manager.processTCPClient(line);
+    if (manager.app_params.mode == EMode::Predictive) {
+      send(client_info.client_socket, result.message->c_str(),
+           result.message->length() + 1, 0);
+    }
+
   } catch (std::exception &ex) {
-    SimpleLogger::LOG_ERROR(client_info, ex.what());
+    SimpleLogger::LOG_ERROR(clientLog(client_info), ex.what());
   }
 }

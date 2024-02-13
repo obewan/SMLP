@@ -38,7 +38,7 @@ public:
    * @brief This method apply the model on inputs to predict the outputs
    * @param line Optional line to use.
    */
-  std::string predict(const std::string &line = "");
+  Common::Result predict(const std::string &line = "");
 
   /**
    * @brief This method trains the model.
@@ -66,7 +66,7 @@ public:
    *
    * @param line
    */
-  void processTCPClient(const std::string &line);
+  Common::Result processTCPClient(const std::string &line);
 
   /**
    * @brief run the selected mode.

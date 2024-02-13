@@ -25,7 +25,7 @@ public:
 
   void start() override;
   void stop() override;
-  void handle_client(int client_socket, const std::string &client_ip,
+  void handle_client(const clientInfo &client_info,
                      const std::stop_token &stoken) override;
 
   void buffer_write(const char *src) {

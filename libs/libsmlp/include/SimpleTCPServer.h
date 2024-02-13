@@ -11,6 +11,7 @@
 
 #include "Common.h"
 #include <cstddef>
+#include <functional>
 #include <mutex>
 #include <thread>
 #include <vector>
@@ -26,9 +27,14 @@ public:
     }
   }
 
+  struct clientInfo {
+    int client_socket;
+    std::string client_ip;
+  };
+
   virtual void start();
   virtual void stop();
-  virtual void handle_client(int client_socket, const std::string &client_ip,
+  virtual void handle_client(const clientInfo &client_info,
                              const std::stop_token &stoken);
   /**
    * @brief if there is an end of line or an end of chars (\0), get the line and
@@ -38,7 +44,7 @@ public:
    * @param client_info
    */
   virtual void processLineBuffer(std::string &line_buffer,
-                                 const std::string &client_info);
+                                 const clientInfo &client_info);
 
   /**
    * @brief use the line data with the neural network, thread safe.
@@ -47,7 +53,7 @@ public:
    * @param client_info
    */
   virtual void processLine(const std::string &line,
-                           const std::string &client_info);
+                           const clientInfo &client_info);
 
   /**
    * @brief Get the TCP service started flag, thread safe.
@@ -67,6 +73,8 @@ public:
   size_t getClientBufferSize() const { return this->client_buff_size_; }
 
 protected:
+  std::function<std::string(const clientInfo &)> clientLog =
+      [](const clientInfo &client) { return "[" + client.client_ip + "] "; };
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
   std::mutex threadMutex_;

@@ -1,6 +1,7 @@
 #include "Predict.h"
 #include "Common.h"
 #include "CommonModes.h"
+#include "CommonResult.h"
 #include "Manager.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -12,7 +13,7 @@
 
 using namespace Common;
 
-std::string Predict::predict(const std::string &line) const {
+Common::Result Predict::predict(const std::string &line) const {
   const auto &app_params = Manager::getInstance().app_params;
   switch (app_params.input) {
   case EInput::File:
@@ -20,11 +21,12 @@ std::string Predict::predict(const std::string &line) const {
   case EInput::Socket:
     return processInput(app_params.input, line);
   default:
-    throw PredictException(SimpleLang::Error(Error::UnimplementedMode));
+    return {.code = Common::make_error_code(Common::ErrorCode::NotImplemented)};
   }
 }
 
-std::string Predict::processInput(EInput input, const std::string &line) const {
+Common::Result Predict::processInput(EInput input,
+                                     const std::string &line) const {
   std::string output;
   bool isParsing = true;
   std::string linein;
@@ -52,16 +54,17 @@ std::string Predict::processInput(EInput input, const std::string &line) const {
       break;
     }
     if (result.isSuccess) {
-      output = processLine(result);
+      output = processResult(result);
     }
   }
   if (input == EInput::File) {
     fileParser_->closeFile();
   }
-  return output;
+  return {.code = Common::make_error_code(Common::ErrorCode::Success),
+          .message = output};
 }
 
-std::string Predict::processLine(const RecordResult &result) const {
+std::string Predict::processResult(const RecordResult &result) const {
   const auto &network = Manager::getInstance().network;
   auto predicteds = network->forwardPropagation(result.record.inputs);
   auto output = formatResult(result.record.inputs, predicteds);
