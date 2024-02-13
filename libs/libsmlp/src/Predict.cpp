@@ -11,9 +11,9 @@
 #include <math.h>
 #include <sstream>
 
-using namespace Common;
+using namespace smlp;
 
-Common::Result Predict::predict(const std::string &line) const {
+smlp::Result Predict::predict(const std::string &line) const {
   const auto &app_params = Manager::getInstance().app_params;
   switch (app_params.input) {
   case EInput::File:
@@ -21,12 +21,12 @@ Common::Result Predict::predict(const std::string &line) const {
   case EInput::Socket:
     return processInput(app_params.input, line);
   default:
-    return {.code = Common::make_error_code(Common::ErrorCode::NotImplemented)};
+    return {.code = smlp::make_error_code(smlp::ErrorCode::NotImplemented)};
   }
 }
 
-Common::Result Predict::processInput(EInput input,
-                                     const std::string &line) const {
+smlp::Result Predict::processInput(EInput input,
+                                   const std::string &line) const {
   std::string output;
   bool isParsing = true;
   std::string linein;
@@ -60,7 +60,7 @@ Common::Result Predict::processInput(EInput input,
   if (input == EInput::File) {
     fileParser_->closeFile();
   }
-  return {.code = Common::make_error_code(Common::ErrorCode::Success),
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
           .message = output};
 }
 

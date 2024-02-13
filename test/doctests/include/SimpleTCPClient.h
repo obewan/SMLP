@@ -21,6 +21,10 @@ public:
 
   virtual void send(const std::string &message);
 
+  virtual std::string receive();
+
+  virtual void sendAndReceive(const std::string &message);
+
   virtual void disconnect();
 
 protected:

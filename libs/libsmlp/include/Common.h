@@ -30,7 +30,7 @@ consteval unsigned long long operator"" _G(unsigned long long x) {
   return x * 1024_M;
 }
 
-namespace Common {
+namespace smlp {
 /**
  * @brief Record of inputs vector and outputs vector
  *
@@ -97,4 +97,4 @@ inline void trim(std::string &s) {
   ltrim(s);
   rtrim(s);
 }
-} // namespace Common
+} // namespace smlp

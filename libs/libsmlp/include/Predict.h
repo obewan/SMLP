@@ -25,7 +25,7 @@ public:
 
   Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
 
-  Common::Result predict(const std::string &line = "") const;
+  smlp::Result predict(const std::string &line = "") const;
 
   std::string formatValues(const std::vector<float> &values,
                            bool roundValues) const;
@@ -50,7 +50,7 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
-  Common::Result processInput(EInput input, const std::string &line) const;
-  std::string processResult(const Common::RecordResult &result) const;
+  smlp::Result processInput(EInput input, const std::string &line) const;
+  std::string processResult(const smlp::RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };

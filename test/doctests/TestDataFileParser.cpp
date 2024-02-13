@@ -8,7 +8,7 @@
 #include <cmath>
 #include <string>
 
-using namespace Common;
+using namespace smlp;
 
 TEST_CASE("Testing the DataFileParser class") {
   std::string test_file = "../data/test_file.csv";

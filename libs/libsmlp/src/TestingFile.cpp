@@ -24,7 +24,7 @@ void TestingFile::test(const std::string &line, size_t epoch,
   }
 
   while (true) {
-    Common::RecordResult result = fileParser_->processLine();
+    smlp::RecordResult result = fileParser_->processLine();
     if (!result.isSuccess) {
       break;
     }

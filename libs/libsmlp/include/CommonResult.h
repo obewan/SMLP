@@ -12,7 +12,7 @@
 #include <optional>
 #include <system_error>
 
-namespace Common {
+namespace smlp {
 /**
  * @brief Common HTTP code and common Unix code
  * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
@@ -40,14 +40,14 @@ enum class ErrorCode {
 
 /**
  * @brief Common results
- * Can be use with Common::ErrorCode, std::io_errc, std::future_errc and
+ * Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and
  std::errc
  * https://en.cppreference.com/w/cpp/error/errc
  * @code {.cpp}
   std::error_code code = std::make_error_code(std::io_errc::stream);
   std::error_code code = std::make_error_code(std::errc::permission_denied);
   std::error_code code =
- Common::make_error_code(Common::ErrorCode::Unauthorized); code.message();
+ smlp::make_error_code(smlp::ErrorCode::Unauthorized); code.message();
   @endcode
  */
 struct Result {
@@ -108,8 +108,8 @@ inline std::error_code make_error_code(ErrorCode e) {
   return {static_cast<int>(e), category};
 }
 
-} // namespace Common
+} // namespace smlp
 
 namespace std {
-template <> struct is_error_code_enum<Common::ErrorCode> : true_type {};
+template <> struct is_error_code_enum<smlp::ErrorCode> : true_type {};
 } // namespace std

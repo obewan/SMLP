@@ -243,7 +243,7 @@ void SimpleTCPServer::processLineBuffer(std::string &line_buffer,
     }
     line_buffer.erase(0, pos + 1);
 
-    Common::trim(line);
+    smlp::trim(line);
     if (!line.empty()) {
       processLine(line, client_info);
     }

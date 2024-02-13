@@ -2,7 +2,7 @@
 #include "Manager.h"
 
 TestingResult::TestResults
-Testing::testLine(const Common::RecordResult &record_result,
+Testing::testLine(const smlp::RecordResult &record_result,
                   const size_t line_number, const size_t epoch) const {
 
   auto predicteds = Manager::getInstance().network->forwardPropagation(

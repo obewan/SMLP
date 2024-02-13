@@ -8,11 +8,16 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
 #endif
 
+#include <cstring>
 #include <iostream>
+
+constexpr int CLIENT_RECV_BUFFER_SIZE = 4096;
+constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 10;
 
 SimpleTCPClient::SimpleTCPClient() {
 #ifdef _WIN32
@@ -26,9 +31,19 @@ SimpleTCPClient::SimpleTCPClient() {
 SimpleTCPClient::~SimpleTCPClient() { disconnect(); }
 
 void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
+  struct timeval timeout;
+  timeout.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS; // Timeout after 10 seconds
+  timeout.tv_usec = 0;
+
   client_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (client_socket == -1) {
-    throw std::runtime_error("Failed to create socket");
+    throw std::runtime_error("Client failed to create socket");
+  }
+
+  // Set the timeout for the socket
+  if (setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, &timeout,
+                 sizeof(timeout)) < 0) {
+    throw std::runtime_error("Client failed to set timeout");
   }
 
   struct sockaddr_in serv_addr {};
@@ -48,8 +63,36 @@ void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
 void SimpleTCPClient::send(const std::string &message) {
   if (::send(client_socket, message.c_str(), message.size() + 1, 0) <
       0) { // we add +1 to add the null character (\0)
-    throw std::runtime_error("Send failed");
+    throw std::runtime_error("Client send failed");
   }
+}
+
+std::string SimpleTCPClient::receive() {
+  char buffer[CLIENT_RECV_BUFFER_SIZE]; // Create a buffer to hold the incoming
+                                        // message
+  memset(buffer, 0, sizeof(buffer));    // Initialize the buffer
+
+  // Receive the message from the server
+  int bytesReceived = ::recv(client_socket, buffer, sizeof(buffer), 0);
+  if (bytesReceived < 0) {
+    throw std::runtime_error("Client receive failed");
+  }
+
+  // Return the received message as a string
+  return std::string(buffer, bytesReceived);
+}
+
+void SimpleTCPClient::sendAndReceive(const std::string &message) {
+  // Send the message to the server
+  if (::send(client_socket, message.c_str(), message.size() + 1, 0) < 0) {
+    throw std::runtime_error("Client send failed");
+  }
+
+  // Receive the response from the server
+  std::string response = receive();
+
+  // Print the response
+  std::cout << "Client received: " << response << std::endl;
 }
 
 void SimpleTCPClient::disconnect() {

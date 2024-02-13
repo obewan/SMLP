@@ -12,7 +12,7 @@ void TestingStdin::test(const std::string &line, size_t epoch,
   std::string current_line;
   while (std::getline(std::cin, current_line)) {
     fileParser_->current_line_number = current_line_number - 1;
-    Common::RecordResult result = fileParser_->processLine(current_line);
+    smlp::RecordResult result = fileParser_->processLine(current_line);
     if (!result.isSuccess) {
       continue;
     }

@@ -3,7 +3,7 @@
 #include "Manager.h"
 #include "SimpleLogger.h"
 
-Common::Result TrainingFile::train(const std::string &line) {
+smlp::Result TrainingFile::train(const std::string &line) {
   if (!fileParser_) {
     throw TrainingException(SimpleLang::Error(Error::InternalError));
   }
@@ -51,5 +51,5 @@ Common::Result TrainingFile::train(const std::string &line) {
     logger.info(testing->getTestingResults()->showDetailledResults());
   }
 
-  return {.code = Common::make_error_code(Common::ErrorCode::Success)};
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};
 }

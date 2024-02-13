@@ -6,7 +6,7 @@
 #include "exception/FileParserException.h"
 #include <string>
 
-using namespace Common;
+using namespace smlp;
 
 DataFileParser::~DataFileParser() {
   if (file && file.is_open()) {

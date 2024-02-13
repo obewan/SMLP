@@ -16,5 +16,5 @@ class TrainingFile : public Training {
 public:
   TrainingFile() : Training(TrainingType::TrainingFile) {}
 
-  Common::Result train(const std::string &line = "") override;
+  smlp::Result train(const std::string &line = "") override;
 };

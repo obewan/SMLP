@@ -3,8 +3,8 @@
 
 Training::Training(TrainingType training_type) : trainingType(training_type) {}
 
-Common::RecordResult Training::processInputLine(const std::string &line) const {
-  Common::RecordResult result = fileParser_->processLine(line);
+smlp::RecordResult Training::processInputLine(const std::string &line) const {
+  smlp::RecordResult result = fileParser_->processLine(line);
   if (result.isSuccess) {
     const auto &network = Manager::getInstance().network;
     network->forwardPropagation(result.record.inputs);

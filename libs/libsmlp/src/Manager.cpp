@@ -5,7 +5,7 @@
 #include "exception/ManagerException.h"
 #include <exception>
 
-Common::Result Manager::predict(const std::string &line) {
+smlp::Result Manager::predict(const std::string &line) {
   // no log here as the output is the result
   if (!predict_) {
     predict_ = std::make_unique<Predict>();
@@ -137,13 +137,13 @@ std::string Manager::showInlineHeader() const {
       << " HiddenLayers:" << network_params.hiddens_count
       << " LearningRate:" << network_params.learning_rate
       << " HiddenActivationFunction:"
-      << Common::GetActivationStr(network_params.hidden_activation_function);
+      << smlp::GetActivationStr(network_params.hidden_activation_function);
   if (network_params.hidden_activation_function == EActivationFunction::ELU ||
       network_params.hidden_activation_function == EActivationFunction::PReLU) {
     sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
   }
   sst << " OutputActivationFunction:"
-      << Common::GetActivationStr(network_params.output_activation_function);
+      << smlp::GetActivationStr(network_params.output_activation_function);
   if (network_params.output_activation_function == EActivationFunction::ELU ||
       network_params.output_activation_function == EActivationFunction::PReLU) {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
@@ -158,7 +158,7 @@ std::string Manager::showInlineHeader() const {
   } else {
     sst << " TrainingRatioLine:" << app_params.training_ratio_line;
   }
-  sst << " Mode:" << Common::GetModeStr(app_params.mode)
+  sst << " Mode:" << smlp::GetModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;
   return sst.str();
 }
@@ -227,7 +227,7 @@ void Manager::exportNetwork() {
   importExportJSON.exportModel(network.get(), app_params);
 }
 
-Common::Result Manager::processTCPClient(const std::string &line) {
+smlp::Result Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
@@ -250,5 +250,5 @@ Common::Result Manager::processTCPClient(const std::string &line) {
   default:
     throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
   }
-  return {.code = Common::make_error_code(Common::ErrorCode::Success)};
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};
 }

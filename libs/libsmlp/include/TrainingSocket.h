@@ -17,10 +17,10 @@ class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  Common::Result train(const std::string &line = "") override {
+  smlp::Result train(const std::string &line = "") override {
     const auto &processResult = processInputLine(line);
-    return {.code = Common::make_error_code(processResult.isSuccess
-                                                ? Common::ErrorCode::Success
-                                                : Common::ErrorCode::Failure)};
+    return {.code = smlp::make_error_code(processResult.isSuccess
+                                              ? smlp::ErrorCode::Success
+                                              : smlp::ErrorCode::Failure)};
   }
 };
