@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include "../../json/include/json.hpp"
 #include <cstdlib>
 #include <optional>
 #include <system_error>
@@ -60,6 +61,14 @@ struct Result {
   }
 
   std::string message() const { return code.message(); }
+
+  std::string json() const {
+    nlohmann::json jdata;
+    jdata["code"] = code.value();
+    jdata["message"] = message();
+    jdata["data"] = data.has_value() ? data->c_str() : "";
+    return jdata.dump();
+  }
 };
 
 class ErrorCategory : public std::error_category {

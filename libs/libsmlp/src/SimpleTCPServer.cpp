@@ -32,6 +32,8 @@ constexpr int MAX_REQUESTS = 50;
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
+using json = nlohmann::json;
+
 void SimpleTCPServer::start() {
   /**
    * @brief This function compares the current value of isStarted_ with the
@@ -264,8 +266,8 @@ void SimpleTCPServer::processLine(const std::string &line,
   try {
     const auto &result = manager.processTCPClient(line);
     if (manager.app_params.mode == EMode::Predictive) {
-      send(client_info.client_socket, result.data->c_str(),
-           result.data->length() + 1, 0);
+      send(client_info.client_socket, result.json().c_str(),
+           result.json().length() + 1, 0);
     }
 
   } catch (std::exception &ex) {
