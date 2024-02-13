@@ -137,14 +137,14 @@ void SimpleTCPServer::start() {
 #else
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
 #endif
-        SimpleLogger::LOG_ERROR(clientLog(client_info),
+        SimpleLogger::LOG_ERROR(client_info.str(),
                                 SimpleLang::Error(Error::TCPServerAcceptError));
         break;
       }
       continue;
     } // end if client_socket == -1
 
-    SimpleLogger::LOG_INFO(clientLog(client_info), " Client connection.");
+    SimpleLogger::LOG_INFO(client_info.str(), " Client connection.");
     clientHandlers_.emplace_back(
         [this, client_info](std::stop_token st) {
           handle_client(client_info, st);
@@ -193,7 +193,7 @@ void SimpleTCPServer::handle_client(const clientInfo &client_info,
         recv(client_info.client_socket, buffer, client_buff_size_, 0);
     if (bytesReceived == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        SimpleLogger::LOG_ERROR(clientLog(client_info),
+        SimpleLogger::LOG_ERROR(client_info.str(),
                                 SimpleLang::Error(Error::TCPServerRecvError));
         CLOSE_SOCKET(client_info.client_socket);
         return;
@@ -204,7 +204,7 @@ void SimpleTCPServer::handle_client(const clientInfo &client_info,
 
     if (bytesReceived == 0) {
       SimpleLogger::LOG_INFO(
-          clientLog(client_info),
+          client_info.str(),
           SimpleLang::Message(Message::TCPClientDisconnected));
 
       // Process any remaining data in lineBuffer
@@ -224,7 +224,7 @@ void SimpleTCPServer::handle_client(const clientInfo &client_info,
   }
 
   CLOSE_SOCKET(client_info.client_socket);
-  SimpleLogger::LOG_INFO(clientLog(client_info),
+  SimpleLogger::LOG_INFO(client_info.str(),
                          SimpleLang::Message(Message::TCPClientDisconnected));
 }
 
@@ -259,16 +259,16 @@ void SimpleTCPServer::processLine(const std::string &line,
   std::scoped_lock<std::mutex> lock(threadMutex_);
   auto &manager = Manager::getInstance();
   if (manager.app_params.verbose) {
-    SimpleLogger::LOG_INFO(clientLog(client_info), "[RECV FROM CLIENT] ", line);
+    SimpleLogger::LOG_INFO(client_info.str(), "[RECV FROM CLIENT] ", line);
   }
   try {
     const auto &result = manager.processTCPClient(line);
     if (manager.app_params.mode == EMode::Predictive) {
-      send(client_info.client_socket, result.message->c_str(),
-           result.message->length() + 1, 0);
+      send(client_info.client_socket, result.data->c_str(),
+           result.data->length() + 1, 0);
     }
 
   } catch (std::exception &ex) {
-    SimpleLogger::LOG_ERROR(clientLog(client_info), ex.what());
+    SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
   }
 }

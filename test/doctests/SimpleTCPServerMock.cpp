@@ -24,7 +24,7 @@ void SimpleTCPServerMock::start() {
                            [this] { return clientConnection.load(); });
     clientInfo client_info{.client_socket = 1, .client_ip = "localhost"};
 
-    SimpleLogger::LOG_INFO(clientLog(client_info), " Client connection.");
+    SimpleLogger::LOG_INFO(client_info.str(), " Client connection.");
 
     clientHandlers_.emplace_back(
         [this, client_info](std::stop_token st) {
@@ -47,7 +47,7 @@ void SimpleTCPServerMock::handle_client(const clientInfo &client_info,
   std::unique_lock lk(cv_m);
 
   while (!stoken.stop_requested()) {
-    SimpleLogger::LOG_INFO(clientLog(client_info),
+    SimpleLogger::LOG_INFO(client_info.str(),
                            "MOCK TEST - SERVER WAITING FOR DATA");
     cv_data.wait_for(lk, std::chrono::seconds(CLIENT_RECV_TIMEOUT_SECONDS),
                      [this] { return clientIsSendingData.load(); });
@@ -60,12 +60,12 @@ void SimpleTCPServerMock::handle_client(const clientInfo &client_info,
 
       lineBuffer.append(bufferQueueElement.c_str(), bytesReceived + 1);
       SimpleLogger::LOG_INFO(
-          clientLog(client_info),
+          client_info.str(),
           "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
       processLineBuffer(lineBuffer, client_info);
     }
   }
-  SimpleLogger::LOG_INFO(clientLog(client_info),
+  SimpleLogger::LOG_INFO(client_info.str(),
                          SimpleLang::Message(Message::TCPClientDisconnected));
   clientConnection = false;
   clientIsConnected = false;

@@ -79,10 +79,10 @@ std::string SimpleTCPClient::receive() {
   }
 
   // Return the received message as a string
-  return std::string(buffer, bytesReceived);
+  return std::string(buffer, bytesReceived - 1); // removing '\0'
 }
 
-void SimpleTCPClient::sendAndReceive(const std::string &message) {
+std::string SimpleTCPClient::sendAndReceive(const std::string &message) {
   // Send the message to the server
   if (::send(client_socket, message.c_str(), message.size() + 1, 0) < 0) {
     throw std::runtime_error("Client send failed");
@@ -93,6 +93,8 @@ void SimpleTCPClient::sendAndReceive(const std::string &message) {
 
   // Print the response
   std::cout << "Client received: " << response << std::endl;
+
+  return response;
 }
 
 void SimpleTCPClient::disconnect() {

@@ -30,6 +30,7 @@ public:
   struct clientInfo {
     int client_socket;
     std::string client_ip;
+    std::string str() const { return "[" + client_ip + "] "; }
   };
 
   virtual void start();
@@ -73,8 +74,6 @@ public:
   size_t getClientBufferSize() const { return this->client_buff_size_; }
 
 protected:
-  std::function<std::string(const clientInfo &)> clientLog =
-      [](const clientInfo &client) { return "[" + client.client_ip + "] "; };
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
   std::mutex threadMutex_;

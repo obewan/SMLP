@@ -23,7 +23,7 @@ public:
 
   virtual std::string receive();
 
-  virtual void sendAndReceive(const std::string &message);
+  virtual std::string sendAndReceive(const std::string &message);
 
   virtual void disconnect();
 

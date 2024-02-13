@@ -52,13 +52,14 @@ enum class ErrorCode {
  */
 struct Result {
   std::error_code code;
-  std::optional<std::string> message = std::nullopt;
-  std::optional<std::string> error = std::nullopt;
+  std::optional<std::string> data = std::nullopt;
 
   bool isSuccess() const {
     return code.value() == static_cast<int>(ErrorCode::Success) ||
            code.value() == static_cast<int>(ErrorCode::OK);
   }
+
+  std::string message() const { return code.message(); }
 };
 
 class ErrorCategory : public std::error_category {

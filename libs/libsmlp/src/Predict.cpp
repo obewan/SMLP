@@ -61,7 +61,7 @@ smlp::Result Predict::processInput(EInput input,
     fileParser_->closeFile();
   }
   return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
-          .message = output};
+          .data = output};
 }
 
 std::string Predict::processResult(const RecordResult &result) const {
