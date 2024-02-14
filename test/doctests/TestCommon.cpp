@@ -22,4 +22,13 @@ TEST_CASE("Testing the Common class") {
       CHECK(!smlp::GetActivationStr(activ).empty());
     }
   }
+
+  SUBCASE("Test trims") {
+    CHECK(smlp::ltrim("  test  ") == "test  ");
+    CHECK(smlp::rtrim("  test  ") == "  test");
+    CHECK(smlp::trim("  test  ") == "test");
+    CHECK(smlp::trimCRLF("\r\ntest") == "test");
+    CHECK(smlp::trimCRLF("\r\ntest\r\n") == "test");
+    CHECK(smlp::trimCRLF("test\r\n") == "test");
+  }
 }
