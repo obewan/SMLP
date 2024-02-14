@@ -64,8 +64,7 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
   client.send("   1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
               "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
 
-  // Allow previous messages to be processed (commented as sendAndReceive
-  // before)
+  // Allow previous messages to be processed
   std::this_thread::sleep_for(std::chrono::seconds(2));
 
   // SendAndReceive testing
@@ -73,9 +72,20 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
   const auto &response = client.sendAndReceive(
       "   0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
       "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
-  CHECK(response ==
-        "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,"
-        "0.73,0.62,0,0,1,0.92,0,1,0\",\"message\":\"Success\"}");
+
+  CHECK(client.getHttpCode(response) == 200);
+  CHECK(client.getHttpBody(response) ==
+        "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
+        "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
+        ",\"message\":\"Success\"}");
+
+  std::string expected = "HTTP/1.1 200 OK\r\n"
+                         "Content-Type: application/json\r\n"
+                         "Content-Length: 113\r\n\r\n"
+                         "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
+                         "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
+                         ",\"message\":\"Success\"}";
+  CHECK(response == expected);
 
   MESSAGE("[TEST] Closing the TCP server and client...");
 

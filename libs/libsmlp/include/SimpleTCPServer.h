@@ -10,7 +10,9 @@
 #pragma once
 
 #include "Common.h"
+#include "CommonResult.h"
 #include <cstddef>
+#include <exception>
 #include <functional>
 #include <mutex>
 #include <thread>
@@ -55,6 +57,22 @@ public:
    */
   virtual void processLine(const std::string &line,
                            const clientInfo &client_info);
+
+  /**
+   * @brief build an HTTP response from a smlp Result
+   *
+   * @param result
+   * @return std::string
+   */
+  virtual std::string buildHttpResponse(const smlp::Result &result);
+
+  /**
+   * @brief build an HTTP response from an exception.
+   *
+   * @param ex
+   * @return std::string
+   */
+  virtual std::string buildHttpResponse(std::exception &ex);
 
   /**
    * @brief Get the TCP service started flag, thread safe.

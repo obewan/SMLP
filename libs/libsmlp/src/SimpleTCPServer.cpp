@@ -266,11 +266,69 @@ void SimpleTCPServer::processLine(const std::string &line,
   try {
     const auto &result = manager.processTCPClient(line);
     if (manager.app_params.mode == EMode::Predictive) {
-      send(client_info.client_socket, result.json().c_str(),
-           result.json().length() + 1, 0);
+      const auto &httpResponse = buildHttpResponse(result);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
     }
-
   } catch (std::exception &ex) {
     SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
+    if (manager.app_params.mode == EMode::Predictive) {
+      const auto &httpResponse = buildHttpResponse(ex);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
+    }
   }
+}
+
+std::string SimpleTCPServer::buildHttpResponse(const smlp::Result &result) {
+  std::string statusLine;
+
+  switch (result.code.value()) {
+  case 0:
+  case 200:
+    statusLine = "HTTP/1.1 200 OK\r\n";
+    break;
+  case 201:
+  case 202:
+  case 400:
+  case 401:
+  case 402:
+  case 403:
+  case 404:
+  case 405:
+  case 406:
+  case 408:
+  case 409:
+  case 500:
+  case 501:
+  case 503:
+    statusLine = "HTTP/1.1 " + result.code.message() + "\r\n";
+    break;
+  default:
+    statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
+    break;
+  }
+
+  std::string httpResponse = statusLine +
+                             "Content-Type: application/json\r\n"
+                             "Content-Length: " +
+                             std::to_string(result.json().length()) +
+                             "\r\n"
+                             "\r\n" +
+                             result.json();
+  return httpResponse;
+}
+
+std::string SimpleTCPServer::buildHttpResponse(std::exception &ex) {
+  std::string statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
+  // for safety, not going to send the server exception message to the client.
+  std::string reason = "Internal Server Error";
+  std::string httpResponse = statusLine +
+                             "Content-Type: text/plain\r\n"
+                             "Content-Length: " +
+                             std::to_string(reason.length()) +
+                             "\r\n"
+                             "\r\n" +
+                             reason;
+  return httpResponse;
 }

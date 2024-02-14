@@ -73,13 +73,13 @@ std::string SimpleTCPClient::receive() {
   memset(buffer, 0, sizeof(buffer));    // Initialize the buffer
 
   // Receive the message from the server
-  int bytesReceived = ::recv(client_socket, buffer, sizeof(buffer), 0);
+  int bytesReceived = ::recv(client_socket, buffer, sizeof(buffer) - 1, 0);
   if (bytesReceived < 0) {
     throw std::runtime_error("Client receive failed");
   }
 
   // Return the received message as a string
-  return std::string(buffer, bytesReceived - 1); // removing '\0'
+  return std::string(buffer, bytesReceived);
 }
 
 std::string SimpleTCPClient::sendAndReceive(const std::string &message) {
@@ -95,6 +95,31 @@ std::string SimpleTCPClient::sendAndReceive(const std::string &message) {
   std::cout << "Client received: " << response << std::endl;
 
   return response;
+}
+
+int SimpleTCPClient::getHttpCode(const std::string &httpResponse) {
+  // Extract the status line
+  std::size_t endOfStatusLine = httpResponse.find("\r\n");
+  std::string statusLine = httpResponse.substr(0, endOfStatusLine);
+
+  // Extract the status code
+  std::size_t statusCodeStart = statusLine.find(' ') + 1;
+  std::size_t statusCodeEnd = statusLine.find(' ', statusCodeStart);
+  std::string statusCodeStr =
+      statusLine.substr(statusCodeStart, statusCodeEnd - statusCodeStart);
+  int statusCode = std::stoi(statusCodeStr);
+
+  return statusCode;
+}
+
+std::string SimpleTCPClient::getHttpBody(const std::string &httpResponse) {
+  // Find the end of the headers
+  std::size_t endOfHeaders = httpResponse.find("\r\n\r\n");
+
+  // Extract the body
+  std::string body = httpResponse.substr(endOfHeaders + 4);
+
+  return body;
 }
 
 void SimpleTCPClient::disconnect() {

@@ -25,6 +25,9 @@ public:
 
   virtual std::string sendAndReceive(const std::string &message);
 
+  virtual int getHttpCode(const std::string &httpResponse);
+  virtual std::string getHttpBody(const std::string &httpResponse);
+
   virtual void disconnect();
 
 protected:
