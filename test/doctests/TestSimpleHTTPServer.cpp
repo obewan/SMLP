@@ -68,9 +68,8 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
   // std::this_thread::sleep_for(std::chrono::seconds(2));
 
   // SendAndReceive testing
-  manager.app_params.mode = EMode::Predictive;
   const auto &httpRequest =
-      "POST /test HTTP/1.1\r\n"
+      "POST /predictive HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
       "Content-Length: 11\r\n"
@@ -78,6 +77,8 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
       "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
   const auto &response = client.sendAndReceive(httpRequest);
+
+  CHECK(manager.app_params.mode == EMode::Predictive);
 
   CHECK(client.getHttpCode(response) == 200);
   CHECK(client.getHttpBody(response) ==

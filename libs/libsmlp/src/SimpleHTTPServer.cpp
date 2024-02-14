@@ -68,6 +68,59 @@ SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
   return request;
 }
 
+EMode SimpleHTTPServer::getModeFromPath(const std::string &path) {
+  std::string lower_path = path;
+  std::transform(lower_path.begin(), lower_path.end(), lower_path.begin(),
+                 ::tolower);
+
+  for (const auto &pair : mode_map) {
+    std::string key = "/" + pair.first;
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
+    if (key == lower_path) {
+      return pair.second;
+    }
+  }
+
+  // default mode
+  return Manager::getInstance().app_params.mode;
+}
+
+smlp::Result SimpleHTTPServer::httpRequestValidation(
+    const SimpleHTTPServer::HttpRequest &request) {
+  smlp::Result result;
+  result.code = smlp::make_error_code(smlp::ErrorCode::OK);
+
+  std::string method = request.method;
+  std::transform(method.begin(), method.end(), method.begin(), ::tolower);
+  if (method != "post") {
+    result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    return result;
+  }
+
+  if (request.body.empty()) {
+    result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    return result;
+  }
+
+  std::map<std::string, EMode, std::less<>> lower_mode_map;
+  for (const auto &pair : mode_map) {
+    std::string key = "/" + pair.first;
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
+    lower_mode_map[key] = pair.second;
+  }
+
+  std::string path = request.path;
+  std::transform(path.begin(), path.end(), path.begin(), ::tolower);
+  if (lower_mode_map.find(path) != lower_mode_map.end()) {
+    Manager::getInstance().app_params.mode = getModeFromPath(path);
+  } else {
+    result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    return result;
+  }
+
+  return result;
+}
+
 void SimpleHTTPServer::start() {
   /**
    * @brief This function compares the current value of isStarted_ with the
@@ -301,7 +354,20 @@ void SimpleHTTPServer::processLine(const std::string &line,
   }
 
   try {
-    HttpRequest request = parseHttpRequest(line);
+    // parsing
+    const auto &request = parseHttpRequest(line);
+
+    // validation
+    const auto &validation = httpRequestValidation(request);
+    if (!validation.isSuccess()) {
+      SimpleLogger::LOG_ERROR(client_info.str(), validation.message());
+      const auto &httpResponseInvalid = buildHttpResponse(validation);
+      send(client_info.client_socket, httpResponseInvalid.c_str(),
+           httpResponseInvalid.length(), 0);
+      return;
+    }
+
+    // processing
     const auto &result = manager.processTCPClient(request.body);
     const auto &httpResponse = buildHttpResponse(result);
     send(client_info.client_socket, httpResponse.c_str(), httpResponse.length(),

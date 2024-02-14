@@ -43,10 +43,48 @@ public:
     std::string body;
   };
 
+  /**
+   * @brief parse the HTTP raw request
+   *
+   * @param rawRequest
+   * @return HttpRequest
+   */
   virtual HttpRequest parseHttpRequest(const std::string &rawRequest);
 
+  /**
+   * @brief Get the Mode From Path object
+   *
+   * @param path
+   * @return EMode
+   */
+  virtual EMode getModeFromPath(const std::string &path);
+
+  /**
+   * @brief http request validation
+   *
+   * @param request
+   * @return smlp::Result
+   */
+  virtual smlp::Result httpRequestValidation(const HttpRequest &request);
+
+  /**
+   * @brief start the HTTP server
+   *
+   */
   virtual void start();
+
+  /**
+   * @brief stop the HTTP server
+   *
+   */
   virtual void stop();
+
+  /**
+   * @brief handle client thread
+   *
+   * @param client_info
+   * @param stoken
+   */
   virtual void handle_client(const clientInfo &client_info,
                              const std::stop_token &stoken);
   /**
