@@ -1,11 +1,11 @@
 #pragma once
+#include "SimpleHTTPServerMock.h"
 #include "SimpleTCPClient.h"
-#include "SimpleTCPServerMock.h"
 
 class SimpleTCPClientMock : public SimpleTCPClient {
 public:
   using SimpleTCPClient::SimpleTCPClient;
-  SimpleTCPServerMock *server = nullptr;
+  SimpleHTTPServerMock *server = nullptr;
   void connect(const std::string &host, unsigned short port) override {
     connect();
   }

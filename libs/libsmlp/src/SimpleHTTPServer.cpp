@@ -1,4 +1,4 @@
-#include "SimpleTCPServer.h"
+#include "SimpleHTTPServer.h"
 #include "CommonModes.h"
 #include "Manager.h"
 #include "SimpleLang.h"
@@ -34,7 +34,41 @@ constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 using json = nlohmann::json;
 
-void SimpleTCPServer::start() {
+SimpleHTTPServer::HttpRequest
+SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
+  HttpRequest request;
+  std::istringstream requestStream(rawRequest);
+
+  // Parse the request line
+  std::string requestLine;
+  std::getline(requestStream, requestLine);
+  std::istringstream requestLineStream(requestLine);
+  requestLineStream >> request.method >> request.path;
+
+  // Parse the headers
+  std::string headerLine;
+  while (std::getline(requestStream, headerLine) && headerLine != "\r") {
+    std::istringstream headerLineStream(headerLine);
+    std::string headerName;
+    std::getline(headerLineStream, headerName, ':');
+    std::string headerValue;
+    std::getline(headerLineStream, headerValue);
+
+    // Trim leading and trailing whitespace
+    headerName = smlp::trim(headerName);
+    headerValue = smlp::trim(headerValue);
+
+    request.headers[headerName] = headerValue;
+  }
+
+  // The rest is the body
+  request.body = smlp::trimCRLF(
+      std::string(std::istreambuf_iterator<char>(requestStream), {}));
+
+  return request;
+}
+
+void SimpleHTTPServer::start() {
   /**
    * @brief This function compares the current value of isStarted_ with the
    * value of expected. If they are equal, it assigns the second argument (true
@@ -168,7 +202,7 @@ void SimpleTCPServer::start() {
   isStarted_ = false;
 }
 
-void SimpleTCPServer::stop() {
+void SimpleHTTPServer::stop() {
   SimpleLogger::LOG_INFO(server_info_, "TCP Server stop...");
   stopSource_.request_stop();
   if (server_socket_ != -1) {
@@ -177,8 +211,8 @@ void SimpleTCPServer::stop() {
   server_socket_ = -1;
 }
 
-void SimpleTCPServer::handle_client(const clientInfo &client_info,
-                                    const std::stop_token &stoken) {
+void SimpleHTTPServer::handle_client(const clientInfo &client_info,
+                                     const std::stop_token &stoken) {
   char buffer[client_buff_size_];
   std::string lineBuffer;
   struct timeval tv;
@@ -230,57 +264,58 @@ void SimpleTCPServer::handle_client(const clientInfo &client_info,
                          SimpleLang::Message(Message::TCPClientDisconnected));
 }
 
-void SimpleTCPServer::processLineBuffer(std::string &line_buffer,
-                                        const clientInfo &client_info) {
-  size_t pos_n = line_buffer.find('\n');
-  size_t pos_r = line_buffer.find('\r'); // for windows \r\n
-  size_t pos_0 = line_buffer.find('\0');
-  while (pos_n != std::string::npos || pos_r != std::string::npos ||
-         pos_0 != std::string::npos) {
-    size_t pos = std::min({pos_n, pos_r, pos_0});
+void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
+                                         const clientInfo &client_info) {
+  std::string headers;
+  std::string body;
+  bool inBody = false;
+
+  size_t pos;
+  while ((pos = line_buffer.find("\r\n")) != std::string::npos) {
     std::string line = line_buffer.substr(0, pos);
-    // If it's a Windows-style newline, consume the '\n' as well
-    if (pos_r != std::string::npos && pos_r == pos && pos_n == pos + 1) {
-      pos++;
-    }
-    line_buffer.erase(0, pos + 1);
+    line_buffer.erase(0, pos + 2); // +2 because "\r\n" is two characters
 
-    smlp::trim(line);
-    if (!line.empty()) {
-      processLine(line, client_info);
+    if (!inBody) {
+      if (line.empty()) {
+        inBody = true;
+      } else {
+        headers += line + "\r\n";
+      }
+    } else {
+      body += line + "\r\n";
     }
+  }
 
-    pos_n = line_buffer.find('\n');
-    pos_r = line_buffer.find('\r');
-    pos_0 = line_buffer.find('\0');
+  if (inBody) {
+    processLine(headers + "\r\n\r\n" + body, client_info);
   }
 }
 
-void SimpleTCPServer::processLine(const std::string &line,
-                                  const clientInfo &client_info) {
+void SimpleHTTPServer::processLine(const std::string &line,
+                                   const clientInfo &client_info) {
   std::scoped_lock<std::mutex> lock(threadMutex_);
   auto &manager = Manager::getInstance();
   if (manager.app_params.verbose) {
-    SimpleLogger::LOG_INFO(client_info.str(), "[RECV FROM CLIENT] ", line);
+    SimpleLogger::LOG_INFO(client_info.str(), "[RECV FROM CLIENT: REQUEST] ",
+                           line);
   }
+
   try {
-    const auto &result = manager.processTCPClient(line);
-    if (manager.app_params.mode == EMode::Predictive) {
-      const auto &httpResponse = buildHttpResponse(result);
-      send(client_info.client_socket, httpResponse.c_str(),
-           httpResponse.length(), 0);
-    }
+    HttpRequest request = parseHttpRequest(line);
+    const auto &result = manager.processTCPClient(request.body);
+    const auto &httpResponse = buildHttpResponse(result);
+    send(client_info.client_socket, httpResponse.c_str(), httpResponse.length(),
+         0);
+
   } catch (std::exception &ex) {
     SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
-    if (manager.app_params.mode == EMode::Predictive) {
-      const auto &httpResponse = buildHttpResponse(ex);
-      send(client_info.client_socket, httpResponse.c_str(),
-           httpResponse.length(), 0);
-    }
+    const auto &httpResponse = buildHttpResponse(ex);
+    send(client_info.client_socket, httpResponse.c_str(), httpResponse.length(),
+         0);
   }
 }
 
-std::string SimpleTCPServer::buildHttpResponse(const smlp::Result &result) {
+std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
   std::string statusLine;
 
   switch (result.code.value()) {
@@ -319,7 +354,7 @@ std::string SimpleTCPServer::buildHttpResponse(const smlp::Result &result) {
   return httpResponse;
 }
 
-std::string SimpleTCPServer::buildHttpResponse(std::exception &ex) {
+std::string SimpleHTTPServer::buildHttpResponse(std::exception &ex) {
   std::string statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
   // for safety, not going to send the server exception message to the client.
   std::string reason = "Internal Server Error";

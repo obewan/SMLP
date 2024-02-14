@@ -4,8 +4,8 @@
 
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include "Manager.h"
+#include "SimpleHTTPServerMock.h"
 #include "SimpleTCPClientMock.h"
-#include "SimpleTCPServerMock.h"
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_MSVC_SUPPRESS_WARNING(4626)
@@ -21,7 +21,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  */
 TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
           doctest::timeout(20) * doctest::skip(true)) {
-  SimpleTCPServer server;
+  SimpleHTTPServer server;
   CHECK(server.isStarted() == false);
 
   // Building the network
@@ -50,28 +50,34 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
   client.connect(server.getServerIp(), server.getServerPort());
 
   // Message testing
-  MESSAGE("[TEST] Sending first data...");
-  client.send("0,0.08,0.43,0.90,0.42,1.00,0.62,0.33,0.38,0.10,0.07,0.00,0.00,"
-              "0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
-  MESSAGE("[TEST] Sending next data...");
-  client.send("1,0.01,0.57,0.90,0.25,1.00,0.00,0.67,0.92,0.09,0.02,0.00,"
-              "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
-  MESSAGE("[TEST] Sending next data...");
-  client.send("oops");
-  MESSAGE("[TEST] Sending next data...");
-  client.send("           "); // trim check
-  MESSAGE("[TEST] Sending next data...");
-  client.send("   1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
-              "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
+  // MESSAGE("[TEST] Sending first data...");
+  // client.send("0,0.08,0.43,0.90,0.42,1.00,0.62,0.33,0.38,0.10,0.07,0.00,0.00,"
+  //             "0.38,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
+  // MESSAGE("[TEST] Sending next data...");
+  // client.send("1,0.01,0.57,0.90,0.25,1.00,0.00,0.67,0.92,0.09,0.02,0.00,"
+  //             "0.00,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00");
+  // MESSAGE("[TEST] Sending next data...");
+  // client.send("oops");
+  // MESSAGE("[TEST] Sending next data...");
+  // client.send("           "); // trim check
+  // MESSAGE("[TEST] Sending next data...");
+  // client.send("   1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
+  //             "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
 
   // Allow previous messages to be processed
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  // std::this_thread::sleep_for(std::chrono::seconds(2));
 
   // SendAndReceive testing
   manager.app_params.mode = EMode::Predictive;
-  const auto &response = client.sendAndReceive(
-      "   0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
-      "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00      ");
+  const auto &httpRequest =
+      "POST /test HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response = client.sendAndReceive(httpRequest);
 
   CHECK(client.getHttpCode(response) == 200);
   CHECK(client.getHttpBody(response) ==
@@ -97,7 +103,7 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
 }
 
 TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
-  auto server = new SimpleTCPServerMock();
+  auto server = new SimpleHTTPServerMock();
   CHECK(server->isStarted() == false);
   SimpleTCPClientMock client;
   client.server = server;

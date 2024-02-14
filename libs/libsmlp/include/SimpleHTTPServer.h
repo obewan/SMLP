@@ -1,5 +1,5 @@
 /**
- * @file SimpleTCPServer.h
+ * @file SimpleHTTPServer.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief
  * @date 2023-12-06
@@ -14,16 +14,17 @@
 #include <cstddef>
 #include <exception>
 #include <functional>
+#include <map>
 #include <mutex>
 #include <thread>
 #include <vector>
 
-class SimpleTCPServer {
+class SimpleHTTPServer {
 public:
-  SimpleTCPServer() = default;
-  SimpleTCPServer(const SimpleTCPServer &other) = delete;
-  SimpleTCPServer &operator=(const SimpleTCPServer &other) = delete;
-  virtual ~SimpleTCPServer() {
+  SimpleHTTPServer() = default;
+  SimpleHTTPServer(const SimpleHTTPServer &other) = delete;
+  SimpleHTTPServer &operator=(const SimpleHTTPServer &other) = delete;
+  virtual ~SimpleHTTPServer() {
     if (!stopSource_.stop_requested()) {
       stop();
     }
@@ -34,6 +35,15 @@ public:
     std::string client_ip;
     std::string str() const { return "[" + client_ip + "] "; }
   };
+
+  struct HttpRequest {
+    std::string method;
+    std::string path;
+    std::map<std::string, std::string> headers;
+    std::string body;
+  };
+
+  virtual HttpRequest parseHttpRequest(const std::string &rawRequest);
 
   virtual void start();
   virtual void stop();

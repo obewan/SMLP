@@ -1,10 +1,10 @@
-#include "SimpleTCPServerMock.h"
 #include "Manager.h"
+#include "SimpleHTTPServerMock.h"
 
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
-void SimpleTCPServerMock::start() {
+void SimpleHTTPServerMock::start() {
   if (bool expected = false; !isStarted_.compare_exchange_strong(
           expected, true)) { // thread safe comparison with exchange
     return;
@@ -36,13 +36,13 @@ void SimpleTCPServerMock::start() {
   }
 }
 
-void SimpleTCPServerMock::stop() {
+void SimpleHTTPServerMock::stop() {
   stopSource_.request_stop();
   isStarted_ = false;
 }
 
-void SimpleTCPServerMock::handle_client(const clientInfo &client_info,
-                                        const std::stop_token &stoken) {
+void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
+                                         const std::stop_token &stoken) {
   std::string lineBuffer;
   std::unique_lock lk(cv_m);
 

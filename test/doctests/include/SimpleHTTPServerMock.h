@@ -1,6 +1,6 @@
 #pragma once
+#include "SimpleHTTPServer.h"
 #include "SimpleLogger.h"
-#include "SimpleTCPServer.h"
 #include <SimpleLang.h>
 #include <condition_variable>
 #include <cstring>
@@ -10,9 +10,9 @@
 #include <stdexcept>
 #include <thread>
 
-class SimpleTCPServerMock : public SimpleTCPServer {
+class SimpleHTTPServerMock : public SimpleHTTPServer {
 public:
-  using SimpleTCPServer::SimpleTCPServer;
+  using SimpleHTTPServer::SimpleHTTPServer;
 
   std::atomic<bool> clientConnection = false;
   std::atomic<bool> clientIsConnected = false;

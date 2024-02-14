@@ -78,23 +78,40 @@ inline std::string GetActivationStr(EActivationFunction activation) {
   return "";
 }
 
-// Trim from start (in place)
-inline void ltrim(std::string &s) {
-  s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                                  [](char ch) { return !std::isspace(ch); }));
+// Trim from start
+inline std::string ltrim(const std::string &s) {
+  std::string trimmed(s);
+  trimmed.erase(trimmed.begin(),
+                std::find_if(trimmed.begin(), trimmed.end(),
+                             [](char ch) { return !std::isspace(ch); }));
+  return trimmed;
 }
 
-// Trim from end (in place)
-inline void rtrim(std::string &s) {
-  s.erase(std::find_if(s.rbegin(), s.rend(),
-                       [](char ch) { return !std::isspace(ch); })
-              .base(),
-          s.end());
+// Trim from end
+inline std::string rtrim(const std::string &s) {
+  std::string trimmed(s);
+  trimmed.erase(std::find_if(trimmed.rbegin(), trimmed.rend(),
+                             [](char ch) { return !std::isspace(ch); })
+                    .base(),
+                trimmed.end());
+  return trimmed;
 }
 
-// Trim from both ends (in place)
-inline void trim(std::string &s) {
-  ltrim(s);
-  rtrim(s);
+// Trim from both ends
+inline std::string trim(const std::string &s) { return rtrim(ltrim(s)); }
+
+// Trim CRLF
+inline std::string trimCRLF(const std::string &str) {
+  std::string trimmed(str);
+  while (!trimmed.empty() &&
+         (trimmed.front() == '\r' || trimmed.front() == '\n')) {
+    trimmed.erase(trimmed.begin());
+  }
+  while (!trimmed.empty() &&
+         (trimmed.back() == '\r' || trimmed.back() == '\n')) {
+    trimmed.pop_back();
+  }
+  return trimmed;
 }
+
 } // namespace smlp
