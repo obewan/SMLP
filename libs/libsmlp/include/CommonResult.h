@@ -39,38 +39,6 @@ enum class ErrorCode {
   ServiceUnavailable = 503,
 };
 
-/**
- * @brief Common results
- * Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and
- std::errc
- * https://en.cppreference.com/w/cpp/error/errc
- * @code {.cpp}
-  std::error_code code = std::make_error_code(std::io_errc::stream);
-  std::error_code code = std::make_error_code(std::errc::permission_denied);
-  std::error_code code =
- smlp::make_error_code(smlp::ErrorCode::Unauthorized); code.message();
-  @endcode
- */
-struct Result {
-  std::error_code code;
-  std::optional<std::string> data = std::nullopt;
-
-  bool isSuccess() const {
-    return code.value() == static_cast<int>(ErrorCode::Success) ||
-           code.value() == static_cast<int>(ErrorCode::OK);
-  }
-
-  std::string message() const { return code.message(); }
-
-  std::string json() const {
-    nlohmann::json jdata;
-    jdata["code"] = code.value();
-    jdata["message"] = message();
-    jdata["data"] = data.value_or("");
-    return jdata.dump();
-  }
-};
-
 class ErrorCategory : public std::error_category {
 public:
   const char *name() const noexcept override { return "server"; }
@@ -117,6 +85,38 @@ inline std::error_code make_error_code(ErrorCode e) {
   static ErrorCategory category;
   return {static_cast<int>(e), category};
 }
+
+/**
+ * @brief Common results
+ * Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and
+ std::errc
+ * https://en.cppreference.com/w/cpp/error/errc
+ * @code {.cpp}
+  std::error_code code = std::make_error_code(std::io_errc::stream);
+  std::error_code code = std::make_error_code(std::errc::permission_denied);
+  std::error_code code =
+ smlp::make_error_code(smlp::ErrorCode::Unauthorized); code.message();
+  @endcode
+ */
+struct Result {
+  std::error_code code = smlp::make_error_code(smlp::ErrorCode::Failure);
+  std::optional<std::string> data = std::nullopt;
+
+  bool isSuccess() const {
+    return code.value() == static_cast<int>(ErrorCode::Success) ||
+           code.value() == static_cast<int>(ErrorCode::OK);
+  }
+
+  std::string message() const { return code.message(); }
+
+  std::string json() const {
+    nlohmann::json jdata;
+    jdata["code"] = code.value();
+    jdata["message"] = message();
+    jdata["data"] = data.value_or("");
+    return jdata.dump();
+  }
+};
 
 } // namespace smlp
 
