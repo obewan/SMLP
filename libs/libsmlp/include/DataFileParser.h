@@ -84,9 +84,11 @@ public:
 
    * @param line if not empty it will use this line to process, else it will
    * process the next line of the fileparser.
+   * @param isTesting testing flag to skip some training data
    * @return A RecordResult containing the processed data from the line.
    */
-  smlp::RecordResult processLine(const std::string &line = "");
+  smlp::RecordResult processLine(const std::string &line = "",
+                                 bool isTesting = false);
 
   /**
    * @brief Processes a record with input only.
@@ -127,9 +129,11 @@ public:
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
-  bool getNextLine(std::string &line);
+  bool getNextLine(std::string &line, bool isTesting);
+
   void parseLine(const std::string &line,
                  std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
+
   void validateColumns(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 

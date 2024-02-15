@@ -47,11 +47,12 @@ void DataFileParser::resetPos() {
   current_line_number = 0;
 }
 
-RecordResult DataFileParser::processLine(const std::string &line) {
+RecordResult DataFileParser::processLine(const std::string &line,
+                                         bool isTesting) {
   std::string nextline;
   current_line_number++;
   if (line.empty()) {
-    if (!getNextLine(nextline)) {
+    if (!getNextLine(nextline, isTesting)) {
       return {.isSuccess = false, .isEndOfFile = true};
     }
   } else {
@@ -69,10 +70,10 @@ RecordResult DataFileParser::processLine(const std::string &line) {
   return {.isSuccess = true, .record = record};
 }
 
-bool DataFileParser::getNextLine(std::string &line) {
+bool DataFileParser::getNextLine(std::string &line, bool isTesting) {
   // if isTesting, skipping lines until testing lines
-  const auto &manager = Manager::getInstance();
-  if (manager.app_params.use_training_ratio_line &&
+  const auto &app_params = Manager::getInstance().app_params;
+  if (isTesting && app_params.use_training_ratio_line &&
       current_line_number < training_ratio_line) {
     for (; current_line_number < training_ratio_line; ++current_line_number) {
       if (!std::getline(file, line)) {

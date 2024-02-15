@@ -20,7 +20,7 @@ public:
 
   void test(const std::string &line = "", size_t epoch = 0,
             size_t current_line_number = 0) override {
-    smlp::RecordResult result = fileParser_->processLine(line);
+    smlp::RecordResult result = fileParser_->processLine(line, true);
     if (!result.isSuccess) {
       throw TestingException(SimpleLang::Error(Error::TestingError));
     }
