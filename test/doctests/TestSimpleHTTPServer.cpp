@@ -1,3 +1,5 @@
+#include "CommonModes.h"
+#include "SimpleHTTPServer.h"
 #include "doctest.h"
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
@@ -162,6 +164,58 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
 
   client.server = nullptr;
   delete server;
+}
+
+TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
+  SUBCASE("Testing parseHttpRequest") {
+    const std::string &rawRequest =
+        "POST /predict HTTP/1.1\r\n"
+        "Host: localhost\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 11\r\n"
+        "\r\n"
+        "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+    SimpleHTTPServer server;
+    const auto &httpRequest = server.parseHttpRequest(rawRequest);
+    CHECK(httpRequest.headers.size() == 3);
+    CHECK(httpRequest.headers.at("Host") == "localhost");
+    CHECK(httpRequest.headers.at("Content-Type") == "text/plain");
+    CHECK(httpRequest.headers.at("Content-Length") == "11");
+    CHECK(httpRequest.method == "POST");
+    CHECK(httpRequest.path == "/predict");
+    CHECK(httpRequest.body ==
+          "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,0."
+          "00,0.00,1.00,0.92,0.00,1.00,0.00");
+  }
+
+  SUBCASE("Testing getModeFromPath") {
+    SimpleHTTPServer server;
+    CHECK(server.getModeFromPath("/predict") == EMode::Predict);
+    CHECK(server.getModeFromPath("/testonly") == EMode::TestOnly);
+    CHECK(server.getModeFromPath("/trainonly") == EMode::TrainOnly);
+    CHECK(server.getModeFromPath("/trainthentest") == EMode::TrainThenTest);
+    CHECK(server.getModeFromPath("/traintestmonitored") ==
+          EMode::TrainTestMonitored);
+  }
+
+  SUBCASE("Testing httpRequestValidation") {
+    const std::string &rawRequest =
+        "POST /predict HTTP/1.1\r\n"
+        "Host: localhost\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 11\r\n"
+        "\r\n"
+        "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+    SimpleHTTPServer server;
+    const auto &httpRequest = server.parseHttpRequest(rawRequest);
+    auto &manager = Manager::getInstance();
+    manager.app_params.mode = EMode::TestOnly;
+    const auto &httpValidation = server.httpRequestValidation(httpRequest);
+    CHECK(httpValidation.code.value() == 200);
+    CHECK(manager.app_params.mode == EMode::Predict);
+  }
 }
 
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS

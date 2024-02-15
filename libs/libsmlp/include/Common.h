@@ -114,4 +114,21 @@ inline std::string trimCRLF(const std::string &str) {
   return trimmed;
 }
 
+// Trim end line
+inline std::string trimENDL(const std::string &str) {
+  std::string trimmed(str);
+  while (!trimmed.empty() && trimmed.front() == '\0') {
+    trimmed.erase(trimmed.begin());
+  }
+  while (!trimmed.empty() && trimmed.back() == '\0') {
+    trimmed.pop_back();
+  }
+  return trimmed;
+}
+
+// Trim spaces + CRLF + ENDL
+inline std::string trimALL(const std::string &str) {
+  return trim(trimENDL(trimCRLF(trimENDL(str))));
+}
+
 } // namespace smlp

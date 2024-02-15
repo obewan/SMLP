@@ -1,10 +1,12 @@
 #include "SimpleHTTPServer.h"
+#include "Common.h"
 #include "CommonModes.h"
 #include "Manager.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
+#include <bits/ranges_algo.h>
 #include <cstring>
 #include <exception>
 #include <functional>
@@ -64,7 +66,7 @@ SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
   }
 
   // The rest is the body
-  request.body = smlp::trimCRLF(
+  request.body = smlp::trimALL(
       std::string(std::istreambuf_iterator<char>(requestStream), {}));
 
   return request;
@@ -72,17 +74,14 @@ SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
 
 EMode SimpleHTTPServer::getModeFromPath(const std::string &path) {
   std::string lower_path = path;
-  std::transform(lower_path.begin(), lower_path.end(), lower_path.begin(),
-                 ::tolower);
-
-  for (const auto &pair : mode_map) {
-    std::string key = "/" + pair.first;
-    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
-    if (key == lower_path) {
-      return pair.second;
+  std::ranges::transform(lower_path, lower_path.begin(), ::tolower);
+  for (const auto &[key, value] : mode_map) {
+    std::string temp_path = "/" + key;
+    std::ranges::transform(temp_path, temp_path.begin(), ::tolower);
+    if (temp_path == lower_path) {
+      return value;
     }
   }
-
   // default mode
   return Manager::getInstance().app_params.mode;
 }
@@ -93,7 +92,7 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
   result.code = smlp::make_error_code(smlp::ErrorCode::OK);
 
   std::string method = request.method;
-  std::transform(method.begin(), method.end(), method.begin(), ::tolower);
+  std::ranges::transform(method, method.begin(), ::tolower);
   if (method != "post") {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
     return result;
@@ -105,15 +104,16 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
   }
 
   std::map<std::string, EMode, std::less<>> lower_mode_map;
-  for (const auto &pair : mode_map) {
-    std::string key = "/" + pair.first;
-    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
-    lower_mode_map[key] = pair.second;
+  for (const auto &[key, value] : mode_map) {
+    std::string temp_path = "/" + key;
+    std::ranges::transform(temp_path, temp_path.begin(), ::tolower);
+    lower_mode_map[temp_path] = value;
   }
 
+  // Set the new mode
   std::string path = request.path;
-  std::transform(path.begin(), path.end(), path.begin(), ::tolower);
-  if (lower_mode_map.find(path) != lower_mode_map.end()) {
+  std::ranges::transform(path, path.begin(), ::tolower);
+  if (lower_mode_map.contains(path)) {
     Manager::getInstance().app_params.mode = getModeFromPath(path);
   } else {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
@@ -147,15 +147,13 @@ void SimpleHTTPServer::start() {
 
   // Export periodically the network model
   auto exportModel = [this]() {
-    if (!Manager::getInstance().shouldExportNetwork()) {
-      return;
-    }
     while (!stopSource_.stop_requested()) {
       if (threadMutex_.try_lock_for(
               std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
-
         try {
-          Manager::getInstance().exportNetwork();
+          if (!Manager::getInstance().shouldExportNetwork()) {
+            Manager::getInstance().exportNetwork();
+          }
         } catch (...) {
           threadMutex_.unlock();
           throw;
@@ -378,6 +376,9 @@ void SimpleHTTPServer::processLine(const std::string &line,
 
   if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
     try {
+      if (smlp::trimALL(line).empty()) {
+        return;
+      }
       auto &manager = Manager::getInstance();
       if (manager.app_params.verbose) {
         SimpleLogger::LOG_INFO(client_info.str(),
