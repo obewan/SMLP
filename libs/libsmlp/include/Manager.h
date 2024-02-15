@@ -177,6 +177,7 @@ public:
       throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
     }
     http_server_ = std::make_shared<SimpleHTTPServer>();
+    http_server_->setServerPort(app_params.http_port);
   }
 
   /**
