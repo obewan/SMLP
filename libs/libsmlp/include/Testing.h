@@ -42,8 +42,6 @@ public:
 
   const TestingType testingType;
 
-  const std::string UndefinedTesting = "UndefinedTesting";
-
   /**
    * @brief Test a network
    *
@@ -51,8 +49,8 @@ public:
    * @param epoch optional epoch to indicate for testing results
    * @param current_line_number optional line number to indicate
    */
-  virtual void test(const std::string &line = "", size_t epoch = 0,
-                    size_t current_line_number = 0) = 0;
+  virtual smlp::Result test(const std::string &line = "", size_t epoch = 0,
+                            size_t current_line_number = 0) = 0;
 
   /**
    * @brief Create a File Parser object
@@ -90,7 +88,7 @@ public:
         return key;
       }
     }
-    return UndefinedTesting;
+    return "";
   }
 
 protected:

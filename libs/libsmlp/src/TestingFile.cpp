@@ -1,8 +1,9 @@
 #include "TestingFile.h"
+#include "CommonResult.h"
 #include "Manager.h"
 
-void TestingFile::test(const std::string &line, size_t epoch,
-                       size_t current_line_number) {
+smlp::Result TestingFile::test(const std::string &line, size_t epoch,
+                               size_t current_line_number) {
   testingResults_->clearStats();
   const auto &manager = Manager::getInstance();
   if (!fileParser_ || !manager.network) {
@@ -31,4 +32,8 @@ void TestingFile::test(const std::string &line, size_t epoch,
     auto testResult = testLine(result, fileParser_->current_line_number, epoch);
     testingResults_->processRecordTestingResult(testResult);
   }
+
+  const auto &finalResult = getTestingResults();
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
+          .data = finalResult->getResultsJson()};
 }

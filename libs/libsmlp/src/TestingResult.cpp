@@ -1,4 +1,5 @@
 #include "TestingResult.h"
+#include "../../json/include/json.hpp"
 #include "CommonModes.h"
 #include "Manager.h"
 #include "exception/TestingException.h"
@@ -11,7 +12,7 @@ const float LOW_THRESHOLD = 0.30f;
 const float MEDIUM_THRESHOLD = 0.20f;
 const float HIGH_THRESHOLD = 0.10f;
 
-std::string TestingResult::showResultsLine() {
+std::string TestingResult::getResultsLine() {
   calcStats();
   std::stringstream sstr;
   const auto &app_params = Manager::getInstance().app_params;
@@ -26,7 +27,19 @@ std::string TestingResult::showResultsLine() {
   return sstr.str();
 }
 
-std::string TestingResult::showDetailledResults() {
+std::string TestingResult::getResultsJson() {
+  calcStats();
+  nlohmann::json json;
+  json["accuracy_low"] = stats.accuracy_low;
+  json["accuracy_avg"] = stats.accuracy_avg;
+  json["accuracy_high"] = stats.accuracy_high;
+  json["convergence_zero"] = stats.convergence_zero;
+  json["convergence_one"] = stats.convergence_one;
+  json["convergence"] = stats.convergence;
+  return json.dump();
+}
+
+std::string TestingResult::getResultsDetailled() {
   if (!stats.isCalculate) {
     calcStats();
   }

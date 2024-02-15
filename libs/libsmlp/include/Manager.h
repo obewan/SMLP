@@ -11,6 +11,7 @@
 
 #include "Common.h"
 #include "CommonModes.h"
+#include "CommonResult.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
 #include "SimpleLang.h"
@@ -44,13 +45,13 @@ public:
    * @brief This method trains the model.
    * @param line Optional line to use.
    */
-  void train(const std::string &line = "");
+  smlp::Result train(const std::string &line = "");
 
   /**
    * @brief This method tests the model.
    * @param line Optional line to use.
    */
-  void test(const std::string &line = "");
+  smlp::Result test(const std::string &line = "");
 
   /**
    * @brief This method trains the model, testing at each epoch and monitoring
@@ -59,7 +60,7 @@ public:
    * recommended for use with smaller datasets and a lower number of epochs.
    * @param line Optional line to use.
    */
-  void trainTestMonitored(const std::string &line = "");
+  smlp::Result trainTestMonitored(const std::string &line = "");
 
   /**
    * @brief Process line from TCP Client socket.

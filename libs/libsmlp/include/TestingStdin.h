@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "CommonParameters.h"
+#include "CommonResult.h"
 #include "Testing.h"
 #include <cstddef>
 #include <iostream>
@@ -17,6 +18,6 @@ class TestingStdin : public Testing {
 public:
   explicit TestingStdin() : Testing(TestingType::TestingStdin) {}
 
-  void test(const std::string &line = "", size_t epoch = 0,
-            size_t current_line_number = 0) override;
+  smlp::Result test(const std::string &line = "", size_t epoch = 0,
+                    size_t current_line_number = 0) override;
 };

@@ -34,7 +34,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
       }
       logger.append("testing... ");
       testing->test("", epoch);
-      logger.out(testing->getTestingResults()->showResultsLine());
+      logger.out(testing->getTestingResults()->getResultsLine());
     } else {
       logger.endl();
     }
@@ -48,7 +48,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
     if (!testing) {
       throw TrainingException(SimpleLang::Error(Error::InternalError));
     }
-    logger.info(testing->getTestingResults()->showDetailledResults());
+    logger.info(testing->getTestingResults()->getResultsDetailled());
   }
 
   return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};

@@ -4,6 +4,7 @@
 #include "SimpleLang.h"
 #include "exception/ManagerException.h"
 #include <exception>
+#include <system_error>
 
 smlp::Result Manager::predict(const std::string &line) {
   // no log here as the output is the result
@@ -13,7 +14,7 @@ smlp::Result Manager::predict(const std::string &line) {
   return predict_->predict(line);
 }
 
-void Manager::train(const std::string &line) {
+smlp::Result Manager::train(const std::string &line) {
   auto handleStdinTraining = [this]() {
     logger.info("Training, using command pipe input...");
     if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
@@ -48,21 +49,10 @@ void Manager::train(const std::string &line) {
     break;
   }
 
-  try {
-    const auto &results = training_->train(line);
-    if (app_params.verbose) {
-      if (results.isSuccess()) {
-        logger.info("Training success.");
-      } else {
-        logger.error("Training error.");
-      }
-    }
-  } catch (std::exception &ex) {
-    logger.error("Training error: ", ex.what());
-  }
+  return training_->train(line);
 }
 
-void Manager::test(const std::string &line) {
+smlp::Result Manager::test(const std::string &line) {
   auto handleStdinTesting = [this]() {
     logger.info("Testing, using command pipe input... ", app_params.data_file);
   };
@@ -91,16 +81,17 @@ void Manager::test(const std::string &line) {
     break;
   }
 
-  testing_->test(line);
-  logger.out(testing_->getTestingResults()->showDetailledResults());
+  const auto &results = testing_->test(line);
+  logger.out(testing_->getTestingResults()->getResultsDetailled());
+  return results;
 }
 
-void Manager::trainTestMonitored(const std::string &line) {
+smlp::Result Manager::trainTestMonitored(const std::string &line) {
   if (app_params.output_index_to_monitor > network_params.output_size) {
     logger.error("output_index_to_monitor > output_size: ",
                  app_params.output_index_to_monitor, ">",
                  network_params.output_size);
-    return;
+    return {.code = std::make_error_code(std::errc::result_out_of_range)};
   }
 
   switch (app_params.input) {
@@ -126,7 +117,7 @@ void Manager::trainTestMonitored(const std::string &line) {
   if (!training_) {
     createTraining();
   }
-  training_->train(line);
+  return training_->train(line);
 }
 
 std::string Manager::showInlineHeader() const {
@@ -235,20 +226,15 @@ smlp::Result Manager::processTCPClient(const std::string &line) {
   case EMode::Predict:
     return predict(line);
   case EMode::TrainOnly:
-    train(line);
-    break;
+    return train(line);
   case EMode::TestOnly:
-    test(line);
-    break;
+    return test(line);
   case EMode::TrainTestMonitored:
-    trainTestMonitored(line);
-    break;
+    return trainTestMonitored(line);
   case EMode::TrainThenTest:
     train(line);
-    test(line);
-    break;
+    return test(line);
   default:
     throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
   }
-  return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};
 }

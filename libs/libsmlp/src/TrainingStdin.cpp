@@ -16,7 +16,7 @@ smlp::Result TrainingStdin::train(const std::string &line) {
   if (manager.app_params.mode == EMode::TrainTestMonitored) {
     logger.append("testing... ");
     manager.getTesting()->test();
-    logger.out(manager.getTesting()->getTestingResults()->showResultsLine());
+    logger.out(manager.getTesting()->getTestingResults()->getResultsLine());
   }
 
   return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};

@@ -68,15 +68,22 @@ public:
   };
 
   /**
-   * @brief Displays a summary of the test results on a single line.
+   * @brief Get a summary of the test results on a single line.
    */
-  std::string showResultsLine();
+  std::string getResultsLine();
 
   /**
-   * @brief Displays detailed test results.
+   * @brief Get the Results Json string
+   *
+   * @return std::string
+   */
+  std::string getResultsJson();
+
+  /**
+   * @brief Gets detailed test results.
    *
    */
-  std::string showDetailledResults();
+  std::string getResultsDetailled();
 
   /**
    * @brief Calculates the statistics of the test results

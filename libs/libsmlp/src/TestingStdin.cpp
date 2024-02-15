@@ -1,8 +1,9 @@
 #include "TestingStdin.h"
+#include "CommonResult.h"
 #include "Manager.h"
 
-void TestingStdin::test(const std::string &line, size_t epoch,
-                        size_t current_line_number) {
+smlp::Result TestingStdin::test(const std::string &line, size_t epoch,
+                                size_t current_line_number) {
   const auto &app_params = Manager::getInstance().app_params;
   if (app_params.mode == EMode::TrainThenTest ||
       app_params.use_training_ratio_line) {
@@ -20,4 +21,8 @@ void TestingStdin::test(const std::string &line, size_t epoch,
     current_line_number++;
     testingResults_->processRecordTestingResult(testResult);
   }
+
+  const auto &finalResult = getTestingResults();
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
+          .data = finalResult->getResultsJson()};
 }

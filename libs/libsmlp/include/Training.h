@@ -64,8 +64,6 @@ public:
 
   const TrainingType trainingType;
 
-  const std::string UndefinedTraining = "UndefinedTraining";
-
   /**
    * @brief Train a network.
    *
@@ -105,7 +103,7 @@ public:
         return key;
       }
     }
-    return UndefinedTraining;
+    return "";
   }
 
 protected:
