@@ -113,7 +113,7 @@ void DataFileParser::validateColumns(
   const auto &app_params = manager.app_params;
   const auto &network_params = manager.network_params;
 
-  if (app_params.mode != EMode::Predictive &&
+  if (app_params.mode != EMode::Predict &&
       cell_refs.size() !=
           network_params.input_size + network_params.output_size) {
     throw FileParserException(SimpleLang::Error(
@@ -124,7 +124,7 @@ void DataFileParser::validateColumns(
                                      network_params.output_size)}}));
   }
 
-  if (app_params.mode == EMode::Predictive &&
+  if (app_params.mode == EMode::Predict &&
       cell_refs.size() < network_params.input_size) {
     throw FileParserException(SimpleLang::Error(
         Error::CSVParsingErrorColumnsMin,
@@ -142,7 +142,7 @@ Record DataFileParser::processColumns(
     const auto &app_params = manager.app_params;
     const auto &network_params = manager.network_params;
 
-    if (app_params.mode == EMode::Predictive &&
+    if (app_params.mode == EMode::Predict &&
         cell_refs.size() == network_params.input_size) {
       record = processInputOnly(cell_refs, network_params.input_size);
     } else if (app_params.output_at_end) {

@@ -8,20 +8,20 @@ TEST_CASE("Testing the Common class") {
   SUBCASE("Test getStrings") {
     for (auto mode :
          {EMode::TestOnly, EMode::TrainOnly, EMode::TrainTestMonitored,
-          EMode::TrainThenTest, EMode::Predictive}) {
-      CHECK(!smlp::GetModeStr(mode).empty());
+          EMode::TrainThenTest, EMode::Predict}) {
+      CHECK(!smlp::getModeStr(mode).empty());
     }
 
-    for (auto pred : {EPredictiveMode::CSV, EPredictiveMode::NumberAndRaw,
-                      EPredictiveMode::NumberOnly, EPredictiveMode::RawOnly}) {
-      CHECK(!smlp::GetPredictiveModeStr(pred).empty());
+    for (auto pred : {EPredictMode::CSV, EPredictMode::NumberAndRaw,
+                      EPredictMode::NumberOnly, EPredictMode::RawOnly}) {
+      CHECK(!smlp::getPredictModeStr(pred).empty());
     }
 
     for (auto activ :
          {EActivationFunction::ELU, EActivationFunction::LReLU,
           EActivationFunction::PReLU, EActivationFunction::ReLU,
           EActivationFunction::Sigmoid, EActivationFunction::Tanh}) {
-      CHECK(!smlp::GetActivationStr(activ).empty());
+      CHECK(!smlp::getActivationStr(activ).empty());
     }
   }
 

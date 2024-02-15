@@ -33,7 +33,7 @@ struct AppParameters {
   bool use_training_ratio_line = false;
   EMode mode = EMode::TrainThenTest;
   EInput input = EInput::File;
-  EPredictiveMode predictive_mode = EPredictiveMode::CSV;
+  EPredictMode predict_mode = EPredictMode::CSV;
 };
 
 /**

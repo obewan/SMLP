@@ -107,12 +107,12 @@ TEST_CASE("Testing the DataFileParser class") {
       CHECK(outputs2[i] == doctest::Approx(expectedOuputs2[i]).epsilon(eps));
     }
 
-    // Test special Input Only of Predictive mode:
-    // in Predictive mode outputs will be
+    // Test special Input Only of Predict mode:
+    // in Predict mode outputs will be
     // predicted and added at the end, so they are
     // optional in dataset entry, but inputs are mandatory ofc.
     parser.closeFile();
-    Manager::getInstance().app_params.mode = EMode::Predictive;
+    Manager::getInstance().app_params.mode = EMode::Predict;
     Manager::getInstance().app_params.data_file =
         "../data/test_file_input_only.csv";
     parser.openFile();
@@ -176,8 +176,8 @@ TEST_CASE("Testing the DataFileParser class") {
                          FileParserException);
     parser.closeFile();
 
-    // Special Predictive mode tests
-    manager.app_params.mode = EMode::Predictive;
+    // Special Predict mode tests
+    manager.app_params.mode = EMode::Predict;
     manager.app_params.data_file = "../data/test_file_short_line.csv";
     parser.openFile();
     CHECK_THROWS_WITH_AS(

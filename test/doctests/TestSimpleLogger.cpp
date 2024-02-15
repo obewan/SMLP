@@ -29,20 +29,19 @@ TEST_CASE("Testing the SimpleLogger class") {
     Predict predict;
     std::string result;
     auto &app_params = Manager::getInstance().app_params;
-    app_params = {.output_at_end = true,
-                  .predictive_mode = EPredictiveMode::CSV};
+    app_params = {.output_at_end = true, .predict_mode = EPredictMode::CSV};
     result = predict.formatResult({1, 2, 3}, {f, g});
     CHECK(result == "1,2,3,0,0");
 
-    app_params = {.predictive_mode = EPredictiveMode::NumberAndRaw};
+    app_params = {.predict_mode = EPredictMode::NumberAndRaw};
     result = predict.formatResult({1, 2, 3}, {f, g});
     CHECK(result == "0,0 [0.123,0]");
 
-    app_params = {.predictive_mode = EPredictiveMode::NumberOnly};
+    app_params = {.predict_mode = EPredictMode::NumberOnly};
     result = predict.formatResult({1, 2, 3}, {f, g});
     CHECK(result == "0,0");
 
-    app_params = {.predictive_mode = EPredictiveMode::RawOnly};
+    app_params = {.predict_mode = EPredictMode::RawOnly};
     result = predict.formatResult({1, 2, 3}, {f, g});
     CHECK(result == "0.123,0");
   }

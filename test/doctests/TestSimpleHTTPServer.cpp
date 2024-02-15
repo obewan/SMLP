@@ -69,7 +69,7 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
 
   // SendAndReceive testing
   const auto &httpRequest =
-      "POST /predictive HTTP/1.1\r\n"
+      "POST /predict HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
       "Content-Length: 11\r\n"
@@ -78,7 +78,7 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
   const auto &response = client.sendAndReceive(httpRequest);
 
-  CHECK(manager.app_params.mode == EMode::Predictive);
+  CHECK(manager.app_params.mode == EMode::Predict);
 
   CHECK(client.getHttpCode(response) == 200);
   CHECK(client.getHttpBody(response) ==

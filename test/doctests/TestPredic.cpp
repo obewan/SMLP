@@ -32,12 +32,12 @@ TEST_CASE("Testing the Predict class") {
 
     CHECK_THROWS_WITH_AS(
         {
-          auto invalidEnum = static_cast<EPredictiveMode>(900);
-          Manager::getInstance().app_params.predictive_mode = invalidEnum;
+          auto invalidEnum = static_cast<EPredictMode>(900);
+          Manager::getInstance().app_params.predict_mode = invalidEnum;
           Predict predict;
           predict.predict();
         },
-        SimpleLang::Error(Error::UnimplementedPredictiveMode).c_str(),
+        SimpleLang::Error(Error::UnimplementedPredictMode).c_str(),
         PredictException);
   }
 }

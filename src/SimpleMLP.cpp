@@ -82,12 +82,12 @@ int SimpleMLP::init(int argc, char **argv) {
       logger.error(SimpleLang::Error(Error::InvalidDatasetFileMissing));
       return EXIT_FAILURE;
     }
-    if (app_params.mode == EMode::Predictive &&
+    if (app_params.mode == EMode::Predict &&
         app_params.network_to_import.empty()) {
-      logger.error(SimpleLang::Error(Error::InvalidPredictiveNetworkMissing));
+      logger.error(SimpleLang::Error(Error::InvalidPredictNetworkMissing));
       return EXIT_FAILURE;
     }
-    if (app_params.disable_stdin && app_params.mode != EMode::Predictive) {
+    if (app_params.disable_stdin && app_params.mode != EMode::Predict) {
       logger.info(SimpleLang::Message(Message::StdinDisabled));
     }
 
@@ -157,8 +157,8 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
             CLI::NonNegativeNumber);
   addOptionTransform("-m,--mode", app_params.mode,
                      CLI::CheckedTransformer(mode_map, CLI::ignore_case));
-  addOptionTransform("-n,--predictive_mode", app_params.predictive_mode,
-                     CLI::CheckedTransformer(predictive_map, CLI::ignore_case));
+  addOptionTransform("-n,--predict_mode", app_params.predict_mode,
+                     CLI::CheckedTransformer(predict_map, CLI::ignore_case));
   addOption("-y,--output_index_to_monitor", app_params.output_index_to_monitor,
             CLI ::NonNegativeNumber);
   addOptionTransform("-a,--hidden_activation_function",
@@ -201,7 +201,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
 
 void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   const auto &logger = SimpleLogger::getInstance();
-  if (app_params.mode != EMode::Predictive) {
+  if (app_params.mode != EMode::Predict) {
     if (config.isValidConfig) {
       logger.info(SimpleLang::Message(Message::UsingConfigFile,
                                       {{"config_file", config.config_file}}));

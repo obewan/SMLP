@@ -51,7 +51,7 @@ struct RecordResult {
   Record record;
 };
 
-inline std::string GetModeStr(EMode mode) {
+inline std::string getModeStr(EMode mode) {
   for (const auto &[key, value] : mode_map) {
     if (value == mode) {
       return key;
@@ -60,16 +60,16 @@ inline std::string GetModeStr(EMode mode) {
   return "";
 }
 
-inline std::string GetPredictiveModeStr(EPredictiveMode predictive) {
-  for (const auto &[key, value] : predictive_map) {
-    if (value == predictive) {
+inline std::string getPredictModeStr(EPredictMode predict) {
+  for (const auto &[key, value] : predict_map) {
+    if (value == predict) {
       return key;
     }
   }
   return "";
 }
 
-inline std::string GetActivationStr(EActivationFunction activation) {
+inline std::string getActivationStr(EActivationFunction activation) {
   for (const auto &[key, value] : activation_map) {
     if (value == activation) {
       return key;

@@ -57,7 +57,7 @@ TEST_CASE("Testing the Manager class") {
   SUBCASE("Test file predict") {
     manager.app_params.input = EInput::File;
     manager.app_params.data_file = "";
-    manager.app_params.mode = EMode::Predictive;
+    manager.app_params.mode = EMode::Predict;
 
     // Test predict file but without a valid file path.
     CHECK_THROWS_WITH_AS(manager.predict(),
@@ -91,11 +91,11 @@ TEST_CASE("Testing the Manager class") {
 
     // for (auto mode :
     //      {EMode::TestOnly, EMode::TrainOnly, EMode::TrainTestMonitored,
-    //       EMode::TrainThenTest, EMode::Predictive}) {
+    //       EMode::TrainThenTest, EMode::Predict}) {
     //   manager.app_params.mode = mode;
     //   CHECK_NOTHROW(manager.runMode());
     // }
-    manager.app_params.mode = EMode::Predictive;
+    manager.app_params.mode = EMode::Predict;
     CHECK_NOTHROW(manager.runMode());
     manager.app_params.mode = EMode::TestOnly;
     CHECK_NOTHROW(manager.runMode());

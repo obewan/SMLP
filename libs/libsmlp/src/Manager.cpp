@@ -137,13 +137,13 @@ std::string Manager::showInlineHeader() const {
       << " HiddenLayers:" << network_params.hiddens_count
       << " LearningRate:" << network_params.learning_rate
       << " HiddenActivationFunction:"
-      << smlp::GetActivationStr(network_params.hidden_activation_function);
+      << smlp::getActivationStr(network_params.hidden_activation_function);
   if (network_params.hidden_activation_function == EActivationFunction::ELU ||
       network_params.hidden_activation_function == EActivationFunction::PReLU) {
     sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
   }
   sst << " OutputActivationFunction:"
-      << smlp::GetActivationStr(network_params.output_activation_function);
+      << smlp::getActivationStr(network_params.output_activation_function);
   if (network_params.output_activation_function == EActivationFunction::ELU ||
       network_params.output_activation_function == EActivationFunction::PReLU) {
     sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
@@ -158,14 +158,14 @@ std::string Manager::showInlineHeader() const {
   } else {
     sst << " TrainingRatioLine:" << app_params.training_ratio_line;
   }
-  sst << " Mode:" << smlp::GetModeStr(app_params.mode)
+  sst << " Mode:" << smlp::getModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;
   return sst.str();
 }
 
 void Manager::runMode() {
   switch (app_params.mode) {
-  case EMode::Predictive:
+  case EMode::Predict:
     predict();
     break;
   case EMode::TrainOnly:
@@ -187,17 +187,17 @@ void Manager::runMode() {
 }
 
 void Manager::importOrBuildNetwork() {
-  // avoiding header lines on Predictive mode, for commands chaining with
+  // avoiding header lines on Predict mode, for commands chaining with
   // pipes
   auto logNetworkImport = [this]() {
-    if (app_params.mode != EMode::Predictive) {
+    if (app_params.mode != EMode::Predict) {
       logger.info("Importing network model from ", app_params.network_to_import,
                   "...");
     }
   };
   auto logNetworkCreation = [this]() {
     if (!app_params.network_to_import.empty() &&
-        app_params.mode != EMode::Predictive) {
+        app_params.mode != EMode::Predict) {
       logger.info("Network model ", app_params.network_to_import,
                   " not found, creating a new one...");
     }
@@ -217,7 +217,7 @@ void Manager::importOrBuildNetwork() {
 
 bool Manager::shouldExportNetwork() const {
   return !app_params.network_to_export.empty() &&
-         app_params.mode != EMode::Predictive &&
+         app_params.mode != EMode::Predict &&
          app_params.mode != EMode::TestOnly;
 }
 
@@ -232,7 +232,7 @@ smlp::Result Manager::processTCPClient(const std::string &line) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
   switch (app_params.mode) {
-  case EMode::Predictive:
+  case EMode::Predict:
     return predict(line);
   case EMode::TrainOnly:
     train(line);

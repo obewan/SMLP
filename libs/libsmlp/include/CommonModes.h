@@ -12,7 +12,7 @@
 #include <string>
 
 enum class EMode {
-  Predictive,
+  Predict,
   TestOnly,
   TrainOnly,
   TrainTestMonitored,
@@ -22,19 +22,19 @@ enum class EMode {
 enum class EInput { File, Stdin, Socket };
 
 const std::map<std::string, EMode, std::less<>> mode_map{
-    {"Predictive", EMode::Predictive},
+    {"Predict", EMode::Predict},
     {"TestOnly", EMode::TestOnly},
     {"TrainOnly", EMode::TrainOnly},
     {"TrainTestMonitored", EMode::TrainTestMonitored},
     {"TrainThenTest", EMode::TrainThenTest}};
 
-enum class EPredictiveMode { CSV, NumberAndRaw, NumberOnly, RawOnly };
+enum class EPredictMode { CSV, NumberAndRaw, NumberOnly, RawOnly };
 
-const std::map<std::string, EPredictiveMode, std::less<>> predictive_map{
-    {"CSV", EPredictiveMode::CSV},
-    {"NumberAndRaw", EPredictiveMode::NumberAndRaw},
-    {"NumberOnly", EPredictiveMode::NumberOnly},
-    {"RawOnly", EPredictiveMode::RawOnly}};
+const std::map<std::string, EPredictMode, std::less<>> predict_map{
+    {"CSV", EPredictMode::CSV},
+    {"NumberAndRaw", EPredictMode::NumberAndRaw},
+    {"NumberOnly", EPredictMode::NumberOnly},
+    {"RawOnly", EPredictMode::RawOnly}};
 
 enum class EActivationFunction { ELU, LReLU, PReLU, ReLU, Sigmoid, Tanh };
 

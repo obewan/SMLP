@@ -97,27 +97,26 @@ std::string Predict::formatResult(const std::vector<float> &inputs,
   std::stringstream sstr;
   sstr << std::setprecision(3);
 
-  switch (app_params.predictive_mode) {
-  case EPredictiveMode::CSV:
+  switch (app_params.predict_mode) {
+  case EPredictMode::CSV:
     sstr << formatValues(app_params.output_at_end ? inputs : predicteds,
                          !app_params.output_at_end)
          << ","
          << formatValues(app_params.output_at_end ? predicteds : inputs,
                          app_params.output_at_end);
     break;
-  case EPredictiveMode::NumberAndRaw:
+  case EPredictMode::NumberAndRaw:
     sstr << formatValues(predicteds, true) << " ["
          << formatValues(predicteds, false) << "]";
     break;
-  case EPredictiveMode::NumberOnly:
+  case EPredictMode::NumberOnly:
     sstr << formatValues(predicteds, true);
     break;
-  case EPredictiveMode::RawOnly:
+  case EPredictMode::RawOnly:
     sstr << formatValues(predicteds, false);
     break;
   default:
-    throw PredictException(
-        SimpleLang::Error(Error::UnimplementedPredictiveMode));
+    throw PredictException(SimpleLang::Error(Error::UnimplementedPredictMode));
   }
   return sstr.str();
 }

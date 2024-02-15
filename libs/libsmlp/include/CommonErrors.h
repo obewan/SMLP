@@ -24,7 +24,7 @@ enum class Error {
   InvalidDatasetFileMissing,
   InvalidDirectory,
   InvalidJsonFile,
-  InvalidPredictiveNetworkMissing,
+  InvalidPredictNetworkMissing,
   InvalidTotalInput,
   InvalidTotalOutput,
   InvalidTrainingRatioTooBig,
@@ -44,7 +44,7 @@ enum class Error {
   TrainingError,
   UnimplementedActivationFunction,
   UnimplementedMode,
-  UnimplementedPredictiveMode,
+  UnimplementedPredictMode,
   UnknownKey,
 };
 
@@ -61,7 +61,7 @@ const std::map<Error, std::string> errorMessages = {
     {Error::InvalidDatasetFileMissing, "InvalidDatasetFileMissing"},
     {Error::InvalidDirectory, "InvalidDirectory"},
     {Error::InvalidJsonFile, "InvalidJsonFile"},
-    {Error::InvalidPredictiveNetworkMissing, "InvalidPredictiveNetworkMissing"},
+    {Error::InvalidPredictNetworkMissing, "InvalidPredictNetworkMissing"},
     {Error::InvalidTotalInput, "InvalidTotalInput"},
     {Error::InvalidTotalOutput, "InvalidTotalOutput"},
     {Error::InvalidTrainingRatioTooBig, "InvalidTrainingRatioTooBig"},
@@ -81,7 +81,7 @@ const std::map<Error, std::string> errorMessages = {
     {Error::TrainingError, "TrainingError"},
     {Error::UnimplementedActivationFunction, "UnimplementedActivationFunction"},
     {Error::UnimplementedMode, "UnimplementedMode"},
-    {Error::UnimplementedPredictiveMode, "UnimplementedPredictiveMode"},
+    {Error::UnimplementedPredictMode, "UnimplementedPredictMode"},
     {Error::UnknownKey, "UnknownKey"}};
 
 const std::map<Error, std::string> defaultErrorMessages = {
@@ -106,8 +106,8 @@ const std::map<Error, std::string> defaultErrorMessages = {
      "A dataset file is required, but file_input is missing"},
     {Error::InvalidDirectory, "Invalid directory"},
     {Error::InvalidJsonFile, "Invalid JSON file"},
-    {Error::InvalidPredictiveNetworkMissing,
-     "Predictive mode require a trained network to import, but "
+    {Error::InvalidPredictNetworkMissing,
+     "Predict mode require a trained network to import, but "
      "network_to_import is missing"},
     {Error::InvalidTotalInput, "Invalid number of input values"},
     {Error::InvalidTotalOutput,
@@ -137,5 +137,5 @@ const std::map<Error, std::string> defaultErrorMessages = {
     {Error::UnimplementedActivationFunction,
      "Unimplemented Activation Function"},
     {Error::UnimplementedMode, "Unimplemented mode"},
-    {Error::UnimplementedPredictiveMode, "Unimplemented predictive mode"},
+    {Error::UnimplementedPredictMode, "Unimplemented predict mode"},
     {Error::UnknownKey, "Unknown key"}};
