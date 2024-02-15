@@ -14,6 +14,7 @@
 #include "CommonResult.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
+#include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "TestingFile.h"
@@ -168,6 +169,17 @@ public:
   }
 
   /**
+   * @brief Create a Http Server object
+   *
+   */
+  void createHttpServer() {
+    if (!app_params.enable_http && app_params.input != EInput::Socket) {
+      throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
+    }
+    http_server_ = std::make_shared<SimpleHTTPServer>();
+  }
+
+  /**
    * @brief This will delete the managed object if this is the last shared_ptr
    * owning it.
    *
@@ -211,10 +223,20 @@ public:
    */
   std::shared_ptr<Testing> getTesting() const { return testing_; }
 
+  /**
+   * @brief Get the Http Server object
+   *
+   * @return std::shared_ptr<SimpleHTTPServer>
+   */
+  std::shared_ptr<SimpleHTTPServer> getHttpServer() const {
+    return http_server_;
+  }
+
 private:
   Manager() = default;
   std::string showInlineHeader() const;
   std::shared_ptr<Predict> predict_ = nullptr;
   std::shared_ptr<Training> training_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
+  std::shared_ptr<SimpleHTTPServer> http_server_ = nullptr;
 };

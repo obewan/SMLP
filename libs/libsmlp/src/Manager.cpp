@@ -155,25 +155,38 @@ std::string Manager::showInlineHeader() const {
 }
 
 void Manager::runMode() {
-  switch (app_params.mode) {
-  case EMode::Predict:
-    predict();
-    break;
-  case EMode::TrainOnly:
-    train();
-    break;
-  case EMode::TestOnly:
-    test();
-    break;
-  case EMode::TrainTestMonitored:
-    trainTestMonitored();
-    break;
-  case EMode::TrainThenTest:
-    train();
-    test();
-    break;
-  default:
-    throw ManagerException("Unimplemented mode.");
+  // HTTP service mode
+  if (app_params.enable_http) {
+    createHttpServer();
+    if (!getHttpServer()) {
+      throw ManagerException(SimpleLang::Error(Error::InternalError));
+    }
+    getHttpServer()->start();
+  } else {
+    // Terminal modes
+    switch (app_params.mode) {
+    case EMode::Predict:
+      predict();
+      break;
+    case EMode::TrainOnly:
+      train();
+      break;
+    case EMode::TestOnly:
+      test();
+      break;
+    case EMode::TrainTestMonitored:
+      trainTestMonitored();
+      break;
+    case EMode::TrainThenTest:
+      train();
+      test();
+      break;
+    default:
+      throw ManagerException("Unimplemented mode.");
+    }
+    if (shouldExportNetwork()) {
+      exportNetwork();
+    }
   }
 }
 

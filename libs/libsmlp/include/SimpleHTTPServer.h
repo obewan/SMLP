@@ -129,8 +129,8 @@ public:
    */
   bool isStarted() const { return isStarted_.load(); }
 
-  void setServerPort(unsigned short port) { this->sin_port_ = port; }
-  unsigned short getServerPort() const { return this->sin_port_; }
+  void setServerPort(unsigned short http_port) { http_port_ = http_port; }
+  unsigned short getServerPort() const { return http_port_; }
 
   const std::string &getServerIp() const { return server_ip_; }
 
@@ -142,11 +142,11 @@ public:
 protected:
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
-  std::mutex threadMutex_;
+  std::timed_mutex threadMutex_;
   std::atomic<bool> isStarted_ = false;
   int server_socket_ = -1;
   std::string server_ip_;
   std::string server_info_;
-  unsigned short sin_port_ = 8080;
   size_t client_buff_size_ = 32_K;
+  unsigned short http_port_ = 8080;
 };

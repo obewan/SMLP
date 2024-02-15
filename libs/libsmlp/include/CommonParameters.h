@@ -31,6 +31,8 @@ struct AppParameters {
   bool verbose = false;
   bool disable_stdin = false;
   bool use_training_ratio_line = false;
+  bool enable_http = false;
+  unsigned short http_port = 8080;
   EMode mode = EMode::TrainThenTest;
   EInput input = EInput::File;
   EPredictMode predict_mode = EPredictMode::CSV;

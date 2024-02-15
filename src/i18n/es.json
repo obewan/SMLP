@@ -18,6 +18,8 @@
     "-b,--output_activation_function": "Selecciona la función de activación de las neuronas de salida:\n  - ELU: Exponential Linear Units, requiere un parámetro output_activation_alpha.\n  - LReLU: Leaky ReLU.\n  - PReLU: Parametric ReLU, requiere un parámetro output_activation_alpha.\n  - ReLU: Rectified Linear Unit.\n  - Sigmoid (predeterminado).\n  - Tanh: Tangente Hiperbólica",
     "-A,--hidden_activation_alpha": "El valor del parámetro alfa para las funciones de activación ELU y PReLU en capas ocultas",
     "-B,--output_activation_alpha": "El valor del parámetro alfa para las funciones de activación ELU y PReLU en la capa de salida",
+    "-H,--enable_http": "Habilitar el servicio HTTP",
+    "-P,--http_port": "Establecer el puerto del servicio HTTP",
     "-x,--disable_stdin": "Deshabilitar la entrada stdin como tuberías de comando (pipes) y pruebas interactivas",
     "-v,--version": "Mostrar la versión actual",
     "-V,--verbose": "Registros detallados",

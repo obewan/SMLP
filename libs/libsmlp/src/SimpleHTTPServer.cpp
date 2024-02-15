@@ -28,6 +28,8 @@
 #define CLOSE_SOCKET close
 #endif
 
+constexpr int MUTEX_TIMEOUT_SECONDS = 20;
+constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 5;
 constexpr int MAX_REQUESTS = 50;
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
@@ -143,6 +145,28 @@ void SimpleHTTPServer::start() {
     return;
   }
 
+  // Export periodically the network model
+  auto exportModel = [this]() {
+    if (!Manager::getInstance().shouldExportNetwork()) {
+      return;
+    }
+    while (!stopSource_.stop_requested()) {
+      if (threadMutex_.try_lock_for(
+              std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
+
+        try {
+          Manager::getInstance().exportNetwork();
+        } catch (...) {
+          threadMutex_.unlock();
+          throw;
+        }
+        threadMutex_.unlock();
+      }
+      std::this_thread::sleep_for(
+          std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
+    }
+  };
+
 #ifdef _WIN32
   WSADATA wsaData;
   if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -157,8 +181,9 @@ void SimpleHTTPServer::start() {
 
   sockaddr_in server_address{};
   server_address.sin_family = AF_INET;
-  server_address.sin_port = htons(sin_port_);
+  server_address.sin_port = htons(getServerPort());
   server_address.sin_addr.s_addr = INADDR_ANY;
+
   // Set accept timeout
   struct timeval tv;
   tv.tv_sec = SERVER_ACCEPT_TIMEOUT_SECONDS;
@@ -182,9 +207,13 @@ void SimpleHTTPServer::start() {
   inet_ntop(AF_INET, &(server_address.sin_addr), server_ip_buf,
             INET_ADDRSTRLEN);
   server_ip_ = server_ip_buf;
-  server_info_ = "[" + server_ip_ + ":" + std::to_string(sin_port_) + "] ";
+  server_info_ =
+      "[" + server_ip_ + ":" + std::to_string(getServerPort()) + "] ";
 
-  SimpleLogger::LOG_INFO(server_info_, "TCP Server started.");
+  SimpleLogger::LOG_INFO(server_info_, "TCP Server started...");
+
+  // Create and detach the export thread
+  std::jthread exportThread(exportModel);
 
   // listen for clients connections
   if (listen(server_socket_, MAX_REQUESTS) == -1) {
@@ -346,38 +375,41 @@ void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
 
 void SimpleHTTPServer::processLine(const std::string &line,
                                    const clientInfo &client_info) {
-  std::scoped_lock<std::mutex> lock(threadMutex_);
-  auto &manager = Manager::getInstance();
-  if (manager.app_params.verbose) {
-    SimpleLogger::LOG_INFO(client_info.str(), "[RECV FROM CLIENT: REQUEST] ",
-                           line);
-  }
 
-  try {
-    // parsing
-    const auto &request = parseHttpRequest(line);
+  if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
+    try {
+      auto &manager = Manager::getInstance();
+      if (manager.app_params.verbose) {
+        SimpleLogger::LOG_INFO(client_info.str(),
+                               "[RECV FROM CLIENT: REQUEST] ", line);
+      }
+      // parsing
+      const auto &request = parseHttpRequest(line);
 
-    // validation
-    const auto &validation = httpRequestValidation(request);
-    if (!validation.isSuccess()) {
-      SimpleLogger::LOG_ERROR(client_info.str(), validation.message());
-      const auto &httpResponseInvalid = buildHttpResponse(validation);
-      send(client_info.client_socket, httpResponseInvalid.c_str(),
-           httpResponseInvalid.length(), 0);
-      return;
+      // validation
+      const auto &validation = httpRequestValidation(request);
+      if (!validation.isSuccess()) {
+        SimpleLogger::LOG_ERROR(client_info.str(), validation.message());
+        const auto &httpResponseInvalid = buildHttpResponse(validation);
+        send(client_info.client_socket, httpResponseInvalid.c_str(),
+             httpResponseInvalid.length(), 0);
+        return;
+      }
+
+      // processing
+      const auto &result = manager.processTCPClient(request.body);
+      const auto &httpResponse = buildHttpResponse(result);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
+
+    } catch (std::exception &ex) {
+      SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
+      const auto &httpResponse = buildHttpResponse(ex);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
+      threadMutex_.unlock();
     }
-
-    // processing
-    const auto &result = manager.processTCPClient(request.body);
-    const auto &httpResponse = buildHttpResponse(result);
-    send(client_info.client_socket, httpResponse.c_str(), httpResponse.length(),
-         0);
-
-  } catch (std::exception &ex) {
-    SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
-    const auto &httpResponse = buildHttpResponse(ex);
-    send(client_info.client_socket, httpResponse.c_str(), httpResponse.length(),
-         0);
+    threadMutex_.unlock();
   }
 }
 

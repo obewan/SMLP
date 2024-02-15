@@ -126,6 +126,9 @@ Select the output neurons activation function: - ELU: Exponential Linear Units, 
 The alpha parameter value for ELU and PReLU activation functions on hidden layers
 -B,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
 The alpha parameter value for ELU and PReLU activation functions on output layer
+-H,--enable_http Enable the HTTP service
+-P,--http_port UINT:NONNEGATIVE [8080]
+Set the HTTP service port
 -x,--disable_stdin Disable stdin input like command pipes and interactive testing
 -v,--version Show current version
 -V,--verbose Verbose logs

@@ -31,6 +31,8 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "include/SimpleMLP.h"
 #include "Common.h"
+#include "CommonModes.h"
+#include "Manager.h"
 #include "Network.h"
 #include "Predict.h"
 #include "SimpleConfig.h"
@@ -41,6 +43,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
 #include <SimpleLogger.h>
+#include <cstdlib>
 #include <filesystem>
 #include <memory>
 #include <sstream>
@@ -67,6 +70,7 @@ int SimpleMLP::init(int argc, char **argv) {
 
     SimpleConfig config(app_params.config_file);
     SimpleLang::getInstance().parseFile(config.lang_file);
+    auto &manager = Manager::getInstance();
 
     if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
       return init;
@@ -91,7 +95,8 @@ int SimpleMLP::init(int argc, char **argv) {
       logger.info(SimpleLang::Message(Message::StdinDisabled));
     }
 
-    Manager::getInstance().importOrBuildNetwork();
+    // Import or build the neural network
+    manager.importOrBuildNetwork();
 
     return EXIT_SUCCESS;
 
@@ -160,7 +165,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addOptionTransform("-n,--predict_mode", app_params.predict_mode,
                      CLI::CheckedTransformer(predict_map, CLI::ignore_case));
   addOption("-y,--output_index_to_monitor", app_params.output_index_to_monitor,
-            CLI ::NonNegativeNumber);
+            CLI::NonNegativeNumber);
   addOptionTransform("-a,--hidden_activation_function",
                      network_params.hidden_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
@@ -173,6 +178,8 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addOption("-B,--output_activation_alpha",
             network_params.output_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
+  addFlag("-H,--enable_http", app_params.enable_http);
+  addOption("-P,--http_port", app_params.http_port, CLI::NonNegativeNumber);
   addFlag("-x,--disable_stdin", app_params.disable_stdin);
   addFlag("-v,--version", version);
   addFlag("-V,--verbose", app_params.verbose);
@@ -194,6 +201,11 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
     logger.out(app_params.title, " v", app_params.version);
     logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
     return EXIT_VERSION;
+  }
+
+  // HTTP Service input mode
+  if (app_params.enable_http) {
+    app_params.input = EInput::Socket;
   }
 
   return EXIT_SUCCESS;

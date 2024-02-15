@@ -41,9 +41,6 @@ public:
   void run() {
     auto &manager = Manager::getInstance();
     manager.runMode();
-    if (manager.shouldExportNetwork()) {
-      manager.exportNetwork();
-    }
   }
 
 private:
