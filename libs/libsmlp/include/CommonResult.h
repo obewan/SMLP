@@ -100,6 +100,8 @@ inline std::error_code make_error_code(ErrorCode e) {
  */
 struct Result {
   std::error_code code = smlp::make_error_code(smlp::ErrorCode::Failure);
+
+  std::optional<std::string> action = std::nullopt;
   std::optional<std::string> data = std::nullopt;
 
   bool isSuccess() const {
@@ -113,6 +115,7 @@ struct Result {
     nlohmann::json jdata;
     jdata["code"] = code.value();
     jdata["message"] = message();
+    jdata["action"] = action.value_or("");
     jdata["data"] = data.value_or("");
     return jdata.dump();
   }

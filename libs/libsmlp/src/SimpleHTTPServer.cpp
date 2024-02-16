@@ -91,6 +91,7 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
     const SimpleHTTPServer::HttpRequest &request) {
   smlp::Result result;
   result.code = smlp::make_error_code(smlp::ErrorCode::OK);
+  result.action = request.path;
 
   std::string method = request.method;
   std::ranges::transform(method, method.begin(), ::tolower);
@@ -464,7 +465,8 @@ std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
                              std::to_string(result.json().length()) +
                              "\r\n"
                              "\r\n" +
-                             result.json();
+                             result.json() + 
+                             "\r\n";
   return httpResponse;
 }
 

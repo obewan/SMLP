@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "Common.h"
 #include "CommonModes.h"
 #include "CommonResult.h"
 #include "SimpleLang.h"
@@ -239,19 +240,27 @@ smlp::Result Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
+  smlp::Result result;
   switch (app_params.mode) {
   case EMode::Predict:
-    return predict(line);
+    result = predict(line);
+    break;
   case EMode::TrainOnly:
-    return train(line);
+    result = train(line);
+    break;
   case EMode::TestOnly:
-    return test(line);
+    result = test(line);
+    break;
   case EMode::TrainTestMonitored:
-    return trainTestMonitored(line);
+    result = trainTestMonitored(line);
+    break;
   case EMode::TrainThenTest:
     train(line);
-    return test(line);
+    result = test(line);
+    break;
   default:
     throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
   }
+  result.action = smlp::getModeStr(app_params.mode);
+  return result;
 }

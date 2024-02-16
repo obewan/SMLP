@@ -119,6 +119,11 @@ std::string SimpleTCPClient::getHttpBody(const std::string &httpResponse) {
   // Extract the body
   std::string body = httpResponse.substr(endOfHeaders + 4);
 
+  // Check if the body ends with \r\n and remove it
+  if (body.size() >= 2 && body.substr(body.size() - 2) == "\r\n") {
+    body = body.substr(0, body.size() - 2);
+  }
+
   return body;
 }
 

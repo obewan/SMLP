@@ -21,7 +21,8 @@ smlp::Result Predict::predict(const std::string &line) const {
   case EInput::Socket:
     return processInput(app_params.input, line);
   default:
-    return {.code = smlp::make_error_code(smlp::ErrorCode::NotImplemented)};
+    return {.code = smlp::make_error_code(smlp::ErrorCode::NotImplemented),
+            .action = smlp::getModeStr(EMode::Predict)};
   }
 }
 
@@ -61,6 +62,7 @@ smlp::Result Predict::processInput(EInput input,
     fileParser_->closeFile();
   }
   return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
+          .action = smlp::getModeStr(EMode::Predict),
           .data = output};
 }
 

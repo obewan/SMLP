@@ -22,7 +22,7 @@ DOCTEST_MSVC_SUPPRESS_WARNING(4626)
  * https://github.com/doctest/doctest/blob/master/examples/all_features/concurrency.cpp
  */
 TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
-          doctest::timeout(20) * doctest::skip(true)) {
+          doctest::timeout(40) * doctest::skip(true)) {
   SimpleHTTPServer server;
   CHECK(server.isStarted() == false);
 
@@ -66,16 +66,18 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
 
   CHECK(client.getHttpCode(response) == 200);
   CHECK(client.getHttpBody(response) ==
-        "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
+        "{\"action\":\"Predict\",\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,"
+        "0.38,0,"
         "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
         ",\"message\":\"Success\"}");
 
   std::string expected = "HTTP/1.1 200 OK\r\n"
                          "Content-Type: application/json\r\n"
-                         "Content-Length: 113\r\n\r\n"
-                         "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
+                         "Content-Length: 132\r\n\r\n"
+                         "{\"action\":\"Predict\",\"code\":0,\"data\":\"1,0.04,"
+                         "0.57,0.8,0.08,1,0.38,0,"
                          "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
-                         ",\"message\":\"Success\"}";
+                         ",\"message\":\"Success\"}\r\n";
   CHECK(response == expected);
 
   MESSAGE("[TEST] Closing the TCP server and client...");
@@ -92,6 +94,9 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
   CHECK(server->isStarted() == false);
   SimpleTCPClientMock client;
   client.server = server;
+  std::mutex wait_m;
+  std::condition_variable wait_cv;
+  std::unique_lock lk(wait_m);
 
   // Building the network
   auto &manager = Manager::getInstance();
@@ -107,40 +112,61 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
   // Starting the server
   MESSAGE("[TEST] Starting the TCP server...");
   std::jthread serverThread([server]() { server->start(); });
-  std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow server to start
+  wait_cv.wait_for(lk, std::chrono::seconds(2),
+                   [server]() { return server->isStarted(); });
   CHECK(server->isStarted() == true);
 
   // Starting the client
   MESSAGE("[TEST] Starting the TCP client...");
   client.connect();
-  std::this_thread::sleep_for(std::chrono::seconds(2));
+  wait_cv.wait_for(lk, std::chrono::seconds(2),
+                   [server]() { return server->clientIsConnected.load(); });
 
   // SendAndReceive testing
-  const auto &httpRequest =
-      "POST /predict HTTP/1.1\r\n"
-      "Host: localhost\r\n"
-      "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
-      "\r\n"
-      "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
-      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
-  const auto &response = client.sendAndReceive(httpRequest);
+  SUBCASE("Testing POST predict") {
+    const auto &httpRequest =
+        "POST /predict HTTP/1.1\r\n"
+        "Host: localhost\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 11\r\n"
+        "\r\n"
+        "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+    const auto &response = client.sendAndReceive(httpRequest);
 
-  CHECK(manager.app_params.mode == EMode::Predict);
+    CHECK(manager.app_params.mode == EMode::Predict);
 
-  CHECK(client.getHttpCode(response) == 200);
-  CHECK(client.getHttpBody(response) ==
-        "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
-        "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
-        ",\"message\":\"Success\"}");
+    CHECK(client.getHttpCode(response) == 200);
+    CHECK(
+        client.getHttpBody(response) ==
+        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})");
 
-  std::string expected = "HTTP/1.1 200 OK\r\n"
-                         "Content-Type: application/json\r\n"
-                         "Content-Length: 113\r\n\r\n"
-                         "{\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,0.38,0,"
-                         "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
-                         ",\"message\":\"Success\"}";
-  CHECK(response == expected);
+    std::string expected =
+        "HTTP/1.1 200 OK\r\n"
+        "Content-Type: application/json\r\n"
+        "Content-Length: 132\r\n\r\n"
+        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})"
+        "\r\n";
+    CHECK(response == expected);
+  }
+
+  SUBCASE("Testing POST trainOnly") {
+    const auto &httpRequest =
+        "POST /trainonly HTTP/1.1\r\n"
+        "Host: localhost\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 11\r\n"
+        "\r\n"
+        "0.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+    const auto &response = client.sendAndReceive(httpRequest);
+
+    CHECK(manager.app_params.mode == EMode::TrainOnly);
+
+    CHECK(client.getHttpCode(response) == 200);
+    CHECK(client.getHttpBody(response) ==
+          R"({"action":"TrainOnly","code":0,"data":"","message":"Success"})");
+  }
 
   MESSAGE("[TEST] Closing the TCP server and client...");
 
