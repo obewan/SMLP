@@ -77,7 +77,7 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
                          "{\"action\":\"Predict\",\"code\":0,\"data\":\"1,0.04,"
                          "0.57,0.8,0.08,1,0.38,0,"
                          "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
-                         ",\"message\":\"Success\"}\r\n";
+                         ",\"message\":\"Success\"}";
   CHECK(response == expected);
 
   MESSAGE("[TEST] Closing the TCP server and client...");
@@ -145,8 +145,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
         "HTTP/1.1 200 OK\r\n"
         "Content-Type: application/json\r\n"
         "Content-Length: 132\r\n\r\n"
-        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})"
-        "\r\n";
+        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})";
     CHECK(response == expected);
   }
 

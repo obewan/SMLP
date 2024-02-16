@@ -465,8 +465,7 @@ std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
                              std::to_string(result.json().length()) +
                              "\r\n"
                              "\r\n" +
-                             result.json() + 
-                             "\r\n";
+                             result.json();
   return httpResponse;
 }
 
