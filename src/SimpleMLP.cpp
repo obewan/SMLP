@@ -88,7 +88,7 @@ int SimpleMLP::init(int argc, char **argv) {
     }
     if (app_params.mode == EMode::Predict &&
         app_params.network_to_import.empty()) {
-      logger.error(SimpleLang::Error(Error::InvalidPredictNetworkMissing));
+      logger.error(SimpleLang::Error(Error::MissingNetworkToImportParam));
       return EXIT_FAILURE;
     }
     if (app_params.disable_stdin && app_params.mode != EMode::Predict) {

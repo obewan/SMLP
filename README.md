@@ -36,7 +36,8 @@ Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
-- Preparing the release (cleaning, refactoring, testing, documentation, packaging). `[in progress]`
+- Add a Docker support. `[in progress]`
+- Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
 # Usage
 

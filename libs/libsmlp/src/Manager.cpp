@@ -221,11 +221,15 @@ void Manager::importOrBuildNetwork() {
 
 bool Manager::shouldExportNetwork() const {
   return !app_params.network_to_export.empty() &&
-         app_params.mode != EMode::Predict &&
-         app_params.mode != EMode::TestOnly;
+         (app_params.mode == EMode::TrainOnly ||
+          app_params.mode == EMode::TrainThenTest ||
+          app_params.mode == EMode::TrainTestMonitored);
 }
 
 void Manager::exportNetwork() {
+  if (app_params.network_to_export.empty()) {
+    throw ManagerException(SimpleLang::Error(Error::MissingExportFileParam));
+  }
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
   importExportJSON.exportModel(network.get(), app_params);

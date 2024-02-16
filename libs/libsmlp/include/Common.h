@@ -114,21 +114,20 @@ inline std::string trimCRLF(const std::string &str) {
   return trimmed;
 }
 
-// Trim end line
-inline std::string trimENDL(const std::string &str) {
+// Right Trim NULL char
+// note: there will be no Left Trim NULL function, because a NULL char at the
+// beginning of a string invalidate the string, like an end of buffer.
+inline std::string trimRNULL(const std::string &str) {
   std::string trimmed(str);
-  while (!trimmed.empty() && trimmed.front() == '\0') {
-    trimmed.erase(trimmed.begin());
-  }
   while (!trimmed.empty() && trimmed.back() == '\0') {
     trimmed.pop_back();
   }
   return trimmed;
 }
 
-// Trim spaces + CRLF + ENDL
+// Trim spaces + CRLF + NULL
 inline std::string trimALL(const std::string &str) {
-  return trim(trimENDL(trimCRLF(trimENDL(str))));
+  return trim(trimCRLF(trimRNULL(str)));
 }
 
 } // namespace smlp

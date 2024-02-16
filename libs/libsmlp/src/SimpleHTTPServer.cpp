@@ -7,6 +7,7 @@
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
+#include <condition_variable>
 #include <cstring>
 #include <exception>
 #include <functional>
@@ -148,11 +149,18 @@ void SimpleHTTPServer::start() {
   // Export periodically the network model
   auto exportModel = [this]() {
     while (!stopSource_.stop_requested()) {
+      std::unique_lock lk(wait_cv_m_);
+      // wait some seconds before next export, unless there's a stop request
+      wait_cv_.wait_for(lk,
+                        std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
       if (threadMutex_.try_lock_for(
               std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
         try {
-          if (!Manager::getInstance().shouldExportNetwork()) {
-            Manager::getInstance().exportNetwork();
+          auto &manager = Manager::getInstance();
+          if (isTrainedButNotExported_ &&
+              !manager.app_params.network_to_export.empty()) {
+            manager.exportNetwork();
+            isTrainedButNotExported_ = false;
           }
         } catch (...) {
           threadMutex_.unlock();
@@ -160,8 +168,6 @@ void SimpleHTTPServer::start() {
         }
         threadMutex_.unlock();
       }
-      std::this_thread::sleep_for(
-          std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
     }
   };
 
@@ -285,6 +291,7 @@ void SimpleHTTPServer::start() {
 void SimpleHTTPServer::stop() {
   SimpleLogger::LOG_INFO(server_info_, "TCP Server stop...");
   stopSource_.request_stop();
+  wait_cv_.notify_all(); // notify all waiting threads
   if (server_socket_ != -1) {
     CLOSE_SOCKET(server_socket_);
   }
@@ -380,7 +387,8 @@ void SimpleHTTPServer::processLine(const std::string &line,
         return;
       }
       auto &manager = Manager::getInstance();
-      if (manager.app_params.verbose) {
+      auto &app_params = manager.app_params;
+      if (app_params.verbose) {
         SimpleLogger::LOG_INFO(client_info.str(),
                                "[RECV FROM CLIENT: REQUEST] ", line);
       }
@@ -399,6 +407,13 @@ void SimpleHTTPServer::processLine(const std::string &line,
 
       // processing
       const auto &result = manager.processTCPClient(request.body);
+      if (app_params.mode == EMode::TrainOnly ||
+          app_params.mode == EMode::TrainThenTest ||
+          app_params.mode == EMode::TrainTestMonitored) {
+        isTrainedButNotExported_ = true;
+      }
+
+      // send response
       const auto &httpResponse = buildHttpResponse(result);
       send(client_info.client_socket, httpResponse.c_str(),
            httpResponse.length(), 0);

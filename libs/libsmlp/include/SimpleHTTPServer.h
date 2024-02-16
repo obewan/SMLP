@@ -11,6 +11,7 @@
 
 #include "Common.h"
 #include "CommonResult.h"
+#include <condition_variable>
 #include <cstddef>
 #include <exception>
 #include <functional>
@@ -143,7 +144,10 @@ protected:
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
   std::timed_mutex threadMutex_;
+  std::condition_variable wait_cv_;
+  std::mutex wait_cv_m_;
   std::atomic<bool> isStarted_ = false;
+  std::atomic<bool> isTrainedButNotExported_ = false;
   int server_socket_ = -1;
   std::string server_ip_;
   std::string server_info_;

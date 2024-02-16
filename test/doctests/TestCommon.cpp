@@ -32,6 +32,8 @@ TEST_CASE("Testing the Common class") {
     CHECK(smlp::trimCRLF("\r\ntest") == "test");
     CHECK(smlp::trimCRLF("\r\ntest\r\n") == "test");
     CHECK(smlp::trimCRLF("test\r\n") == "test");
+    CHECK(smlp::trimRNULL("test\0") == "test");
+    CHECK(smlp::trimALL("\r\n  test \r\n\0") == "test");
   }
 
   SUBCASE("Test Result") {
