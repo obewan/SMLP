@@ -1,3 +1,4 @@
+#include "CommonModes.h"
 #include "Manager.h"
 #include "NetworkImportExportJSON.h"
 #include "Predict.h"
@@ -39,5 +40,8 @@ TEST_CASE("Testing the Predict class") {
         },
         SimpleLang::Error(Error::UnimplementedPredictMode).c_str(),
         PredictException);
+
+    // Reset
+    Manager::getInstance().app_params.predict_mode = EPredictMode::CSV;
   }
 }

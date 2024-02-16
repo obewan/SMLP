@@ -20,23 +20,42 @@ public:
   std::condition_variable cv_connection;
   std::condition_variable cv_data;
   std::mutex cv_m;
-  std::mutex buffer_m;
-  std::queue<std::string> bufferQueue;
+  std::mutex recv_m;
+  std::mutex send_m;
+  std::queue<std::string> recvQueue;
+  std::queue<std::string> sendQueue;
 
   void start() override;
+
   void stop() override;
+
   void handle_client(const clientInfo &client_info,
                      const std::stop_token &stoken) override;
 
-  void buffer_write(const char *src) {
-    std::scoped_lock<std::mutex> lock(buffer_m);
-    bufferQueue.emplace(src);
+  void processLine(const std::string &line,
+                   const clientInfo &client_info) override;
+
+  void recv_write(const char *src) {
+    std::scoped_lock<std::mutex> lock(recv_m);
+    recvQueue.emplace(src);
   }
 
-  std::string buffer_get() {
-    std::scoped_lock<std::mutex> lock(buffer_m);
-    auto bufferQueueElement = bufferQueue.front();
-    bufferQueue.pop();
-    return bufferQueueElement;
+  std::string recv_read() {
+    std::scoped_lock<std::mutex> lock(recv_m);
+    auto recvData = recvQueue.front();
+    recvQueue.pop();
+    return recvData;
+  }
+
+  void send_write(const char *src) {
+    std::scoped_lock<std::mutex> lock(send_m);
+    sendQueue.emplace(src);
+  }
+
+  std::string send_read() {
+    std::scoped_lock<std::mutex> lock(send_m);
+    auto sendData = sendQueue.front();
+    sendQueue.pop();
+    return sendData;
   }
 };

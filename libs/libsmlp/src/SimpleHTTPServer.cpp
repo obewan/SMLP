@@ -150,7 +150,7 @@ void SimpleHTTPServer::start() {
   auto exportModel = [this]() {
     while (!stopSource_.stop_requested()) {
       std::unique_lock lk(wait_cv_m_);
-      // wait some seconds before next export, unless there's a stop request
+      // wait some seconds before the next export, unless there's a notify
       wait_cv_.wait_for(lk,
                         std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
       if (threadMutex_.try_lock_for(

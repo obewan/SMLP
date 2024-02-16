@@ -1,8 +1,9 @@
-#include "Manager.h"
 #include "SimpleHTTPServerMock.h"
+#include "Manager.h"
 
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
+constexpr int MUTEX_TIMEOUT_SECONDS = 20;
 
 void SimpleHTTPServerMock::start() {
   if (bool expected = false; !isStarted_.compare_exchange_strong(
@@ -54,8 +55,8 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
 
     clientIsSendingData = false;
 
-    while (!bufferQueue.empty()) {
-      auto bufferQueueElement = buffer_get();
+    while (!recvQueue.empty()) {
+      auto bufferQueueElement = recv_read();
       size_t bytesReceived = bufferQueueElement.size();
 
       lineBuffer.append(bufferQueueElement.c_str(), bytesReceived + 1);
@@ -69,4 +70,51 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
                          SimpleLang::Message(Message::TCPClientDisconnected));
   clientConnection = false;
   clientIsConnected = false;
+}
+
+void SimpleHTTPServerMock::processLine(const std::string &line,
+                                       const clientInfo &client_info) {
+  if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
+    try {
+      if (smlp::trimALL(line).empty()) {
+        return;
+      }
+      auto &manager = Manager::getInstance();
+      auto &app_params = manager.app_params;
+      if (app_params.verbose) {
+        SimpleLogger::LOG_INFO(client_info.str(),
+                               "[RECV FROM CLIENT: REQUEST] ", line);
+      }
+      // parsing
+      const auto &request = parseHttpRequest(line);
+
+      // validation
+      const auto &validation = httpRequestValidation(request);
+      if (!validation.isSuccess()) {
+        SimpleLogger::LOG_ERROR(client_info.str(), validation.message());
+        const auto &httpResponseInvalid = buildHttpResponse(validation);
+        send_write(httpResponseInvalid.c_str());
+        return;
+      }
+
+      // processing
+      const auto &result = manager.processTCPClient(request.body);
+      if (app_params.mode == EMode::TrainOnly ||
+          app_params.mode == EMode::TrainThenTest ||
+          app_params.mode == EMode::TrainTestMonitored) {
+        isTrainedButNotExported_ = true;
+      }
+
+      // send response
+      const auto &httpResponse = buildHttpResponse(result);
+      send_write(httpResponse.c_str());
+
+    } catch (std::exception &ex) {
+      SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
+      const auto &httpResponse = buildHttpResponse(ex);
+      send_write(httpResponse.c_str());
+      threadMutex_.unlock();
+    }
+    threadMutex_.unlock();
+  }
 }

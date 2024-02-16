@@ -36,7 +36,8 @@ Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
-- Add a Docker support. `[in progress]`
+- Improving the network model file. `[in progress]`
+- Add a Docker support.
 - Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
 # Usage
