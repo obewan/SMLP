@@ -74,7 +74,10 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
     lineBuffer.append(data);
     SimpleLogger::LOG_INFO(client_info.str(),
                            "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
-    processLineBuffer(lineBuffer, client_info);
+    const std::string extracted = processLineBuffer(lineBuffer);
+    if (!extracted.empty()) {
+      processLine(extracted, client_info);
+    }
   }
   SimpleLogger::LOG_INFO(client_info.str(),
                          SimpleLang::Message(Message::TCPClientDisconnected));

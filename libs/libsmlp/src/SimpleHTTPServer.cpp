@@ -34,6 +34,7 @@
 constexpr int MUTEX_TIMEOUT_SECONDS = 20;
 constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 5;
 constexpr int MAX_REQUESTS = 50;
+constexpr size_t MAX_REQUEST_SIZE = 100_M;
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
@@ -361,7 +362,24 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
 
     lineBuffer.append(buffer, bytesReceived);
 
-    processLineBuffer(lineBuffer, client_info);
+    if (lineBuffer.size() > MAX_REQUEST_SIZE) {
+      SimpleLogger::LOG_ERROR(
+          client_info.str(), "Max request data size reach (", lineBuffer.size(),
+          "): aborting and closing connection");
+      CLOSE_SOCKET(client_info.client_socket);
+      return;
+    }
+
+    if (Manager::getInstance().app_params.verbose) {
+      SimpleLogger::LOG_DEBUG(
+          client_info.str(),
+          smlp::getEscapedString(std::string(buffer, bytesReceived)));
+    }
+
+    const std::string &extracted = processLineBuffer(lineBuffer);
+    if (!extracted.empty()) {
+      processLine(extracted, client_info);
+    }
   }
 
   CLOSE_SOCKET(client_info.client_socket);
@@ -369,27 +387,14 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                          SimpleLang::Message(Message::TCPClientDisconnected));
 }
 
-void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
-                                         const clientInfo &client_info) {
+std::string SimpleHTTPServer::processLineBuffer(std::string &line_buffer) {
   if (smlp::trimALL(line_buffer).empty()) {
-    return;
-  }
-  if (Manager::getInstance().app_params.verbose) {
-    std::string fullString;
-    std::ranges::for_each(line_buffer, [&fullString](char c) {
-      if (c == '\n') {
-        fullString += "\\n";
-      } else if (c == '\r') {
-        fullString += "\\r";
-      } else {
-        fullString += c;
-      }
-    });
-    SimpleLogger::LOG_DEBUG(client_info.str(), fullString);
+    return "";
   }
 
   std::string headers;
   std::string body;
+  const std::string &backup(line_buffer);
   bool inBody = false;
 
   size_t pos;
@@ -409,14 +414,21 @@ void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
     }
   }
 
-  if (!line_buffer.empty()) {
+  if (!inBody) {
+    // reset the lineBuffer for next call
+    line_buffer = backup;
+    return "";
+  }
+
+  // in case of http request not ended by \r\n
+  if (body.empty() && !line_buffer.empty()) {
     body += line_buffer;
     line_buffer.erase();
   }
 
-  if (inBody) {
-    processLine(headers + "\r\n\r\n" + body, client_info);
-  }
+  // return the extracted request
+  return (headers.ends_with("\r\n") ? headers + "\r\n" + body
+                                    : headers + "\r\n\r\n" + body);
 }
 
 void SimpleHTTPServer::processLine(const std::string &line,

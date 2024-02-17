@@ -90,13 +90,11 @@ public:
                              const std::stop_token &stoken);
   /**
    * @brief if there is an end of line or an end of chars (\0), get the line and
-   * process it.
+   * extract it. This will erase the buffer from extracted data.
    *
    * @param line_buffer
-   * @param client_info
    */
-  virtual void processLineBuffer(std::string &line_buffer,
-                                 const clientInfo &client_info);
+  virtual std::string processLineBuffer(std::string &line_buffer);
 
   /**
    * @brief use the line data with the neural network, thread safe.

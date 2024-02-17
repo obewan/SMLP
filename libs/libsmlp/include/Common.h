@@ -78,6 +78,26 @@ inline std::string getActivationStr(EActivationFunction activation) {
   return "";
 }
 
+/**
+ * @brief Get the escaped string
+ *
+ * @param st
+ * @return std::string
+ */
+inline std::string getEscapedString(const std::string &st) {
+  std::string fullString;
+  std::ranges::for_each(st, [&fullString](char c) {
+    if (c == '\n') {
+      fullString += "\\n";
+    } else if (c == '\r') {
+      fullString += "\\r";
+    } else {
+      fullString += c;
+    }
+  });
+  return fullString;
+}
+
 // Trim from start
 inline std::string ltrim(const std::string &s) {
   std::string trimmed(s);
