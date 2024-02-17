@@ -46,24 +46,37 @@ SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
 
   // Parse the request line
   std::string requestLine;
-  std::getline(requestStream, requestLine);
+  std::getline(requestStream, requestLine, '\n');
+  while (!requestLine.empty() && requestLine.back() == '\r') {
+    requestLine.pop_back(); // Remove '\r'
+  }
   std::istringstream requestLineStream(requestLine);
-  requestLineStream >> request.method >> request.path;
+  std::string httpVersion;
+  requestLineStream >> request.method >> request.path >> httpVersion;
 
   // Parse the headers
   std::string headerLine;
-  while (std::getline(requestStream, headerLine) && headerLine != "\r") {
+  while (std::getline(requestStream, headerLine, '\n') && headerLine != "\r" &&
+         headerLine != "\r\r") {
+    while (!headerLine.empty() && headerLine.back() == '\r') {
+      headerLine.pop_back(); // Remove '\r'
+    }
     std::istringstream headerLineStream(headerLine);
-    std::string headerName;
-    std::getline(headerLineStream, headerName, ':');
-    std::string headerValue;
-    std::getline(headerLineStream, headerValue);
+    std::string header;
+    std::getline(headerLineStream, header);
 
-    // Trim leading and trailing whitespace
-    headerName = smlp::trim(headerName);
-    headerValue = smlp::trim(headerValue);
+    // Split the header into name and value
+    size_t colonPos = header.find(':');
+    if (colonPos != std::string::npos) {
+      std::string headerName = header.substr(0, colonPos);
+      std::string headerValue = header.substr(colonPos + 1);
 
-    request.headers[headerName] = headerValue;
+      // Trim leading and trailing whitespace
+      headerName = smlp::trim(headerName);
+      headerValue = smlp::trim(headerValue);
+
+      request.headers[headerName] = headerValue;
+    }
   }
 
   // The rest is the body
@@ -97,11 +110,13 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
   std::ranges::transform(method, method.begin(), ::tolower);
   if (method != "post") {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    SimpleLogger::LOG_ERROR("Unsupported HTTP method: ", request.method);
     return result;
   }
 
   if (request.body.empty()) {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    SimpleLogger::LOG_ERROR("Empty HTTP body");
     return result;
   }
 
@@ -119,6 +134,7 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
     Manager::getInstance().app_params.mode = getModeFromPath(path);
   } else {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+    SimpleLogger::LOG_ERROR("Unsupported HTTP path: ", request.path);
     return result;
   }
 
@@ -355,6 +371,23 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
 
 void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
                                          const clientInfo &client_info) {
+  if (smlp::trimALL(line_buffer).empty()) {
+    return;
+  }
+  if (Manager::getInstance().app_params.verbose) {
+    std::string fullString;
+    std::ranges::for_each(line_buffer, [&fullString](char c) {
+      if (c == '\n') {
+        fullString += "\\n";
+      } else if (c == '\r') {
+        fullString += "\\r";
+      } else {
+        fullString += c;
+      }
+    });
+    SimpleLogger::LOG_DEBUG(client_info.str(), fullString);
+  }
+
   std::string headers;
   std::string body;
   bool inBody = false;
@@ -367,12 +400,18 @@ void SimpleHTTPServer::processLineBuffer(std::string &line_buffer,
     if (!inBody) {
       if (line.empty()) {
         inBody = true;
+        continue;
       } else {
         headers += line + "\r\n";
       }
     } else {
       body += line + "\r\n";
     }
+  }
+
+  if (!line_buffer.empty()) {
+    body += line_buffer;
+    line_buffer.erase();
   }
 
   if (inBody) {
@@ -390,11 +429,8 @@ void SimpleHTTPServer::processLine(const std::string &line,
         return;
       }
       auto &manager = Manager::getInstance();
-      auto &app_params = manager.app_params;
-      if (app_params.verbose) {
-        SimpleLogger::LOG_INFO(client_info.str(),
-                               "[RECV FROM CLIENT: REQUEST] ", line);
-      }
+      const auto &app_params = manager.app_params;
+
       // parsing
       const auto &request = parseHttpRequest(line);
 

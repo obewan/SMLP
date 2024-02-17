@@ -78,6 +78,12 @@ int SimpleMLP::init(int argc, char **argv) {
 
     // check again but including -x param (stdin disable) this time
     checkStdin();
+
+    // show the title
+    if (app_params.input != EInput::Stdin) {
+      SimpleLogger::LOG_INFO(manager.getVersionHeader());
+    }
+
     // Config file settings, must be after this second checkStdin()
     ConfigSettings(config);
 

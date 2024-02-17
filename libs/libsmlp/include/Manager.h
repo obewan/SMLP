@@ -233,9 +233,22 @@ public:
     return http_server_;
   }
 
+  /**
+   * @brief Get a title line with the version
+   *
+   * @return std::string
+   */
+  std::string getVersionHeader() const;
+
+  /**
+   * @brief Get a detailled header line with the parameters
+   *
+   * @return std::string
+   */
+  std::string getInlineHeader() const;
+
 private:
   Manager() = default;
-  std::string showInlineHeader() const;
   std::shared_ptr<Predict> predict_ = nullptr;
   std::shared_ptr<Training> training_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;

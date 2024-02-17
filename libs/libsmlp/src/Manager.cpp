@@ -3,6 +3,7 @@
 #include "CommonModes.h"
 #include "CommonResult.h"
 #include "SimpleLang.h"
+#include "SimpleLogger.h"
 #include "exception/ManagerException.h"
 #include <exception>
 #include <system_error>
@@ -22,12 +23,12 @@ smlp::Result Manager::train(const std::string &line) {
       logger.warn("Epochs and training ratio are disabled using command "
                   "pipe input. Use training_ratio_line parameter instead.");
     }
-    logger.info(showInlineHeader());
+    logger.info(getInlineHeader());
   };
 
   auto handleFileTraining = [this]() {
     logger.info("Training, using file ", app_params.data_file);
-    logger.info(showInlineHeader());
+    logger.info(getInlineHeader());
   };
 
   if (!training_) {
@@ -43,7 +44,7 @@ smlp::Result Manager::train(const std::string &line) {
     break;
   case EInput::Socket:
     if (app_params.verbose) {
-      logger.info("Training using TCP socket...");
+      logger.debug("Training using TCP socket...");
     }
     break;
   default:
@@ -75,7 +76,7 @@ smlp::Result Manager::test(const std::string &line) {
     break;
   case EInput::Socket:
     if (app_params.verbose) {
-      logger.info("Testing using TCP socket...");
+      logger.debug("Testing using TCP socket...");
     }
     break;
   default:
@@ -95,24 +96,24 @@ smlp::Result Manager::trainTestMonitored(const std::string &line) {
     return {.code = std::make_error_code(std::errc::result_out_of_range)};
   }
 
-  switch (app_params.input) {
-  case EInput::File:
-    logger.info("Train and testing, using file ", app_params.data_file);
-    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-                " ", showInlineHeader());
-    break;
-  case EInput::Stdin:
-    logger.info("Train and testing, using command pipe input...");
-    logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-                " ", showInlineHeader());
-    break;
-  case EInput::Socket:
-    if (app_params.verbose) {
-      logger.info("Train and testing using TCP socket...");
+  if (app_params.verbose) {
+    switch (app_params.input) {
+    case EInput::File:
+      logger.debug("Train and testing, using file ", app_params.data_file);
+      logger.debug("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+                   " ", getInlineHeader());
+      break;
+    case EInput::Stdin:
+      logger.debug("Train and testing, using command pipe input...");
+      logger.debug("OutputIndexToMonitor:", app_params.output_index_to_monitor,
+                   " ", getInlineHeader());
+      break;
+    case EInput::Socket:
+      logger.debug("Train and testing using TCP socket...");
+      break;
+    default:
+      break;
     }
-    break;
-  default:
-    break;
   }
 
   if (!training_) {
@@ -121,7 +122,13 @@ smlp::Result Manager::trainTestMonitored(const std::string &line) {
   return training_->train(line);
 }
 
-std::string Manager::showInlineHeader() const {
+std::string Manager::getVersionHeader() const {
+  std::stringstream sst;
+  sst << app_params.title << " v" << app_params.version;
+  return sst.str();
+}
+
+std::string Manager::getInlineHeader() const {
   std::stringstream sst;
   sst << "InputSize:" << network_params.input_size
       << " OutputSize:" << network_params.output_size

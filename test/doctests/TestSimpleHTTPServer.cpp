@@ -130,7 +130,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       "POST /predict HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
+      "Content-Length: 55\r\n"
       "\r\n"
       "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -152,7 +152,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       "POST /trainonly HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
+      "Content-Length: 59\r\n"
       "\r\n"
       "0.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -167,7 +167,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       "POST /testonly HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
+      "Content-Length: 59\r\n"
       "\r\n"
       "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -183,7 +183,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       "POST /trainthentest HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
+      "Content-Length: 59\r\n"
       "\r\n"
       "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -199,7 +199,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       "POST /traintestmonitored HTTP/1.1\r\n"
       "Host: localhost\r\n"
       "Content-Type: text/plain\r\n"
-      "Content-Length: 11\r\n"
+      "Content-Length: 59\r\n"
       "\r\n"
       "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -224,7 +224,7 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
         "POST /predict HTTP/1.1\r\n"
         "Host: localhost\r\n"
         "Content-Type: text/plain\r\n"
-        "Content-Length: 11\r\n"
+        "Content-Length: 59\r\n"
         "\r\n"
         "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
         "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
@@ -233,12 +233,64 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     CHECK(httpRequest.headers.size() == 3);
     CHECK(httpRequest.headers.at("Host") == "localhost");
     CHECK(httpRequest.headers.at("Content-Type") == "text/plain");
-    CHECK(httpRequest.headers.at("Content-Length") == "11");
+    CHECK(httpRequest.headers.at("Content-Length") == "59");
     CHECK(httpRequest.method == "POST");
     CHECK(httpRequest.path == "/predict");
     CHECK(httpRequest.body ==
           "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,0."
           "00,0.00,1.00,0.92,0.00,1.00,0.00");
+  }
+
+  SUBCASE("Testing parseHttpRequest (curl)") {
+    const std::string &rawRequest =
+        "POST /testonly HTTP/1.1\r\r\n"
+        "Host: localhost:8080\r\r\n"
+        "User-Agent: curl/7.74.0\r\r\n"
+        "Accept: */*\r\r\n"
+        "Content-Type: text/plain\r\r\n"
+        "Content-Length: 103\r\r\n"
+        "\r\r\n"
+        "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
+        "0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+    SimpleHTTPServer server;
+    const auto &httpRequest = server.parseHttpRequest(rawRequest);
+    CHECK(httpRequest.headers.size() == 5);
+    CHECK(httpRequest.headers.at("Host") == "localhost:8080");
+    CHECK(httpRequest.headers.at("Content-Type") == "text/plain");
+    CHECK(httpRequest.headers.at("Content-Length") == "103");
+    CHECK(httpRequest.method == "POST");
+    CHECK(httpRequest.path == "/testonly");
+    CHECK(httpRequest.body.length() > 0);
+    CHECK(
+        httpRequest.body ==
+        "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
+        "0.00,0.00,1.00,0.92,0.00,1.00,0.00");
+  }
+
+  SUBCASE("Testing parseHttpRequest (curl) 2") {
+    const std::string &rawRequest =
+        "POST /testonly HTTP/1.1\r\n"
+        "Host: localhost:8080\r\n"
+        "User-Agent: curl/7.74.0\r\n"
+        "Accept: */*\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 103\r\n"
+        "\r\n"
+        "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
+        "0.00,0.00,1.00,0.92,0.00,1.00,0.00";
+    SimpleHTTPServer server;
+    const auto &httpRequest = server.parseHttpRequest(rawRequest);
+    CHECK(httpRequest.headers.size() == 5);
+    CHECK(httpRequest.headers.at("Host") == "localhost:8080");
+    CHECK(httpRequest.headers.at("Content-Type") == "text/plain");
+    CHECK(httpRequest.headers.at("Content-Length") == "103");
+    CHECK(httpRequest.method == "POST");
+    CHECK(httpRequest.path == "/testonly");
+    CHECK(httpRequest.body.length() > 0);
+    CHECK(
+        httpRequest.body ==
+        "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
+        "0.00,0.00,1.00,0.92,0.00,1.00,0.00");
   }
 
   SUBCASE("Testing getModeFromPath") {
@@ -256,7 +308,7 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
         "POST /predict HTTP/1.1\r\n"
         "Host: localhost\r\n"
         "Content-Type: text/plain\r\n"
-        "Content-Length: 11\r\n"
+        "Content-Length: 55\r\n"
         "\r\n"
         "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
         "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
