@@ -17,10 +17,5 @@ class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
-  smlp::Result train(const std::string &line = "") override {
-    const auto &processResult = processInputLine(line);
-    return {.code = smlp::make_error_code(processResult.isSuccess
-                                              ? smlp::ErrorCode::Success
-                                              : smlp::ErrorCode::Failure)};
-  }
+  smlp::Result train(const std::string &line = "") override;
 };

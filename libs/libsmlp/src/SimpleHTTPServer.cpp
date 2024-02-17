@@ -162,6 +162,7 @@ void SimpleHTTPServer::start() {
               !manager.app_params.network_to_export.empty()) {
             manager.exportNetwork();
             isTrainedButNotExported_ = false;
+            SimpleLogger::LOG_INFO("Neural network file saved.");
           }
         } catch (...) {
           threadMutex_.unlock();
@@ -385,6 +386,7 @@ void SimpleHTTPServer::processLine(const std::string &line,
   if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
     try {
       if (smlp::trimALL(line).empty()) {
+        threadMutex_.unlock();
         return;
       }
       auto &manager = Manager::getInstance();
@@ -403,6 +405,7 @@ void SimpleHTTPServer::processLine(const std::string &line,
         const auto &httpResponseInvalid = buildHttpResponse(validation);
         send(client_info.client_socket, httpResponseInvalid.c_str(),
              httpResponseInvalid.length(), 0);
+        threadMutex_.unlock();
         return;
       }
 

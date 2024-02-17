@@ -1,28 +1,38 @@
 #include "SimpleHTTPServerMock.h"
+#include "Event.h"
 #include "Manager.h"
+#include "SimpleLogger.h"
+#include "SimpleTCPClientMock.h"
+#include <chrono>
 
-constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
-constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
-constexpr int MUTEX_TIMEOUT_SECONDS = 20;
+constexpr int MUTEX_TIMEOUT_SECONDS = 60;
 
 void SimpleHTTPServerMock::start() {
+  if (mediator == nullptr) {
+    return;
+  }
   if (bool expected = false; !isStarted_.compare_exchange_strong(
           expected, true)) { // thread safe comparison with exchange
     return;
   }
-  isStarted_ = true;
-  clientIsConnected = false;
-  std::unique_lock lk(cv_m);
+
+  notifyClient(Event::Type::ServerStarted);
 
   while (!stopSource_.stop_requested()) {
-    if (clientIsConnected) {
-      cv_connection.wait_for(lk, std::chrono::seconds(1)); // to avoid cpu burst
+    if (mediator->is_client_connected) {
+      std::this_thread::sleep_for(std::chrono::seconds(1));
       continue;
     }
 
-    cv_connection.wait_for(lk,
-                           std::chrono::seconds(SERVER_ACCEPT_TIMEOUT_SECONDS),
-                           [this] { return clientConnection.load(); });
+    notifyClient(Event::Type::ServerListening);
+    const auto &event = mediator->popServerEvent();
+    if (event.getType() != Event::Type::ClientConnection) {
+      SimpleLogger::LOG_ERROR(
+          "MOCK TEST - SERVER RECEIVING A NON CONNECTION EVENT (",
+          (int)event.getType(), ")");
+      return;
+    }
+
     clientInfo client_info{.client_socket = 1, .client_ip = "localhost"};
 
     SimpleLogger::LOG_INFO(client_info.str(), " Client connection.");
@@ -33,7 +43,8 @@ void SimpleHTTPServerMock::start() {
         },
         stopSource_.get_token());
 
-    clientIsConnected = true;
+    mediator->is_client_connected = true;
+    notifyClient(Event::Type::ClientConnected);
   }
 }
 
@@ -45,31 +56,28 @@ void SimpleHTTPServerMock::stop() {
 void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
                                          const std::stop_token &stoken) {
   std::string lineBuffer;
-  std::unique_lock lk(cv_m);
-
-  while (!stoken.stop_requested()) {
+  while (!stoken.stop_requested() && mediator->is_client_connected) {
     SimpleLogger::LOG_INFO(client_info.str(),
-                           "MOCK TEST - SERVER WAITING FOR DATA");
-    cv_data.wait_for(lk, std::chrono::seconds(CLIENT_RECV_TIMEOUT_SECONDS),
-                     [this] { return clientIsSendingData.load(); });
+                           "MOCK TEST - SERVER WAITING FOR DATA...");
+    const auto &event = mediator->popServerEvent();
 
-    clientIsSendingData = false;
-
-    while (!recvQueue.empty()) {
-      auto bufferQueueElement = recv_read();
-      size_t bytesReceived = bufferQueueElement.size();
-
-      lineBuffer.append(bufferQueueElement.c_str(), bytesReceived + 1);
-      SimpleLogger::LOG_INFO(
-          client_info.str(),
-          "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
-      processLineBuffer(lineBuffer, client_info);
+    if (event.getType() == Event::Type::ClientDisconnection) {
+      mediator->is_client_connected = false;
+      continue;
+    } else if (event.getType() != Event::Type::Message) {
+      SimpleLogger::LOG_ERROR(
+          "MOCK TEST - SERVER RECEIVING A NON MESSAGE EVENT (",
+          (int)event.getType(), ")");
+      continue;
     }
+    const auto &data = event.getData();
+    lineBuffer.append(data);
+    SimpleLogger::LOG_INFO(client_info.str(),
+                           "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
+    processLineBuffer(lineBuffer, client_info);
   }
   SimpleLogger::LOG_INFO(client_info.str(),
                          SimpleLang::Message(Message::TCPClientDisconnected));
-  clientConnection = false;
-  clientIsConnected = false;
 }
 
 void SimpleHTTPServerMock::processLine(const std::string &line,
@@ -77,10 +85,11 @@ void SimpleHTTPServerMock::processLine(const std::string &line,
   if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
     try {
       if (smlp::trimALL(line).empty()) {
+        threadMutex_.unlock();
         return;
       }
       auto &manager = Manager::getInstance();
-      auto &app_params = manager.app_params;
+      const auto &app_params = manager.app_params;
       if (app_params.verbose) {
         SimpleLogger::LOG_INFO(client_info.str(),
                                "[RECV FROM CLIENT: REQUEST] ", line);
@@ -93,7 +102,8 @@ void SimpleHTTPServerMock::processLine(const std::string &line,
       if (!validation.isSuccess()) {
         SimpleLogger::LOG_ERROR(client_info.str(), validation.message());
         const auto &httpResponseInvalid = buildHttpResponse(validation);
-        send_write(httpResponseInvalid.c_str());
+        notifyClient(Event::Type::Message, httpResponseInvalid);
+        threadMutex_.unlock();
         return;
       }
 
@@ -107,12 +117,12 @@ void SimpleHTTPServerMock::processLine(const std::string &line,
 
       // send response
       const auto &httpResponse = buildHttpResponse(result);
-      send_write(httpResponse.c_str());
+      notifyClient(Event::Type::Message, httpResponse);
 
     } catch (std::exception &ex) {
       SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
       const auto &httpResponse = buildHttpResponse(ex);
-      send_write(httpResponse.c_str());
+      notifyClient(Event::Type::Message, httpResponse);
       threadMutex_.unlock();
     }
     threadMutex_.unlock();

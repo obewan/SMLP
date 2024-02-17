@@ -1,13 +1,15 @@
-#include "CommonModes.h"
-#include "SimpleHTTPServer.h"
 #include "doctest.h"
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
 
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
+#include "CommonModes.h"
+#include "EventMediator.h"
 #include "Manager.h"
+#include "SimpleHTTPServer.h"
 #include "SimpleHTTPServerMock.h"
 #include "SimpleTCPClientMock.h"
+#include <memory>
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_MSVC_SUPPRESS_WARNING(4626)
@@ -89,14 +91,13 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
   MESSAGE("[TEST] End of test");
 }
 
-TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
-  auto server = new SimpleHTTPServerMock();
-  CHECK(server->isStarted() == false);
+TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
+  SimpleHTTPServerMock server;
   SimpleTCPClientMock client;
-  client.server = server;
-  std::mutex wait_m;
-  std::condition_variable wait_cv;
-  std::unique_lock lk(wait_m);
+  auto mediator = std::make_shared<EventMediator>();
+  server.mediator = mediator;
+  client.mediator = mediator;
+  CHECK(server.isStarted() == false);
 
   // Building the network
   auto &manager = Manager::getInstance();
@@ -111,71 +112,110 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(40)) {
 
   // Starting the server
   MESSAGE("[TEST] Starting the TCP server...");
-  std::jthread serverThread([server]() { server->start(); });
-  wait_cv.wait_for(lk, std::chrono::seconds(2),
-                   [server]() { return server->isStarted(); });
-  CHECK(server->isStarted() == true);
+  std::jthread serverThread([&server]() { server.start(); });
+  auto ev1 = mediator->popClientEvent();
+  auto ev2 = mediator->popClientEvent();
+  CHECK(ev1.getType() == Event::Type::ServerStarted);
+  CHECK(ev2.getType() == Event::Type::ServerListening);
+  CHECK(server.isStarted() == true);
 
   // Starting the client
   MESSAGE("[TEST] Starting the TCP client...");
   client.connect();
-  wait_cv.wait_for(lk, std::chrono::seconds(2),
-                   [server]() { return server->clientIsConnected.load(); });
+  auto ev3 = mediator->popClientEvent();
+  CHECK(ev3.getType() == Event::Type::ClientConnected);
 
-  // SendAndReceive testing
-  SUBCASE("Testing POST predict") {
-    const auto &httpRequest =
-        "POST /predict HTTP/1.1\r\n"
-        "Host: localhost\r\n"
-        "Content-Type: text/plain\r\n"
-        "Content-Length: 11\r\n"
-        "\r\n"
-        "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
-        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
-    const auto &response = client.sendAndReceive(httpRequest);
+  MESSAGE("[TEST] Testing POST Predict");
+  const auto &httpRequest1 =
+      "POST /predict HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response1 = client.sendAndReceive(httpRequest1);
+  CHECK(manager.app_params.mode == EMode::Predict);
+  CHECK(client.getHttpCode(response1) == 200);
+  CHECK(
+      client.getHttpBody(response1) ==
+      R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})");
+  std::string expected1 =
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Type: application/json\r\n"
+      "Content-Length: 132\r\n\r\n"
+      R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})";
+  CHECK(response1 == expected1);
 
-    CHECK(manager.app_params.mode == EMode::Predict);
+  MESSAGE("[TEST] Testing POST TrainOnly");
+  const auto &httpRequest2 =
+      "POST /trainonly HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "0.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response2 = client.sendAndReceive(httpRequest2);
+  CHECK(manager.app_params.mode == EMode::TrainOnly);
+  CHECK(client.getHttpCode(response2) == 200);
+  CHECK(client.getHttpBody(response2) ==
+        R"({"action":"TrainOnly","code":0,"data":"","message":"Success"})");
 
-    CHECK(client.getHttpCode(response) == 200);
-    CHECK(
-        client.getHttpBody(response) ==
-        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})");
+  MESSAGE("[TEST] Testing POST TestOnly");
+  const auto &httpRequest3 =
+      "POST /testonly HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response3 = client.sendAndReceive(httpRequest3);
+  CHECK(manager.app_params.mode == EMode::TestOnly);
+  CHECK(client.getHttpCode(response3) == 200);
+  CHECK(
+      client.getHttpBody(response3) ==
+      R"({"action":"TestOnly","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
 
-    std::string expected =
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: application/json\r\n"
-        "Content-Length: 132\r\n\r\n"
-        R"({"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"})";
-    CHECK(response == expected);
-  }
+  MESSAGE("[TEST] Testing POST TrainThenTest");
+  const auto &httpRequest4 =
+      "POST /trainthentest HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response4 = client.sendAndReceive(httpRequest4);
+  CHECK(manager.app_params.mode == EMode::TrainThenTest);
+  CHECK(client.getHttpCode(response4) == 200);
+  CHECK(
+      client.getHttpBody(response4) ==
+      R"({"action":"TrainThenTest","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
 
-  SUBCASE("Testing POST trainOnly") {
-    const auto &httpRequest =
-        "POST /trainonly HTTP/1.1\r\n"
-        "Host: localhost\r\n"
-        "Content-Type: text/plain\r\n"
-        "Content-Length: 11\r\n"
-        "\r\n"
-        "0.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
-        "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
-    const auto &response = client.sendAndReceive(httpRequest);
-
-    CHECK(manager.app_params.mode == EMode::TrainOnly);
-
-    CHECK(client.getHttpCode(response) == 200);
-    CHECK(client.getHttpBody(response) ==
-          R"({"action":"TrainOnly","code":0,"data":"","message":"Success"})");
-  }
+  MESSAGE("[TEST] Testing POST TrainTestMonitored");
+  const auto &httpRequest5 =
+      "POST /traintestmonitored HTTP/1.1\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 11\r\n"
+      "\r\n"
+      "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response5 = client.sendAndReceive(httpRequest5);
+  CHECK(manager.app_params.mode == EMode::TrainTestMonitored);
+  CHECK(client.getHttpCode(response5) == 200);
+  CHECK(
+      client.getHttpBody(response5) ==
+      R"({"action":"TrainTestMonitored","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":null,\"convergence_one\":null,\"convergence_zero\":null}","message":"Success"})");
 
   MESSAGE("[TEST] Closing the TCP server and client...");
 
   client.disconnect();
-  server->stop();
+  server.stop();
   serverThread.join();
-  CHECK(server->isStarted() == false);
-
-  client.server = nullptr;
-  delete server;
+  CHECK(server.isStarted() == false);
 }
 
 TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
