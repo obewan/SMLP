@@ -1,95 +1,124 @@
 #include "Predict.h"
 #include "Common.h"
+#include "CommonModes.h"
+#include "CommonResult.h"
+#include "Manager.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/PredictException.h"
+#include <iomanip>
 #include <iostream>
 #include <math.h>
+#include <sstream>
 
-void Predict::predict() const {
-  if (app_params_.use_stdin) {
-    processStdin();
-  } else {
-    processFile();
+using namespace smlp;
+
+smlp::Result Predict::predict(const std::string &line) const {
+  const auto &app_params = Manager::getInstance().app_params;
+  switch (app_params.input) {
+  case EInput::File:
+  case EInput::Stdin:
+  case EInput::Socket:
+    return processInput(app_params.input, line);
+  default:
+    return {.code = smlp::make_error_code(smlp::ErrorCode::NotImplemented),
+            .action = smlp::getModeStr(EMode::Predict)};
   }
 }
 
-void Predict::processStdin() const {
-  std::string line;
-  while (std::getline(std::cin, line)) {
-    RecordResult result =
-        fileParser_->processLine(network_->params, app_params_, line);
-    if (result.isSuccess) {
-      auto predicteds = network_->forwardPropagation(result.record.first);
-      showOutput(result.record.first, predicteds);
-    }
-  }
-}
-
-void Predict::processFile() const {
-  if (!fileParser_->file.is_open()) {
-    fileParser_->openFile();
-  }
+smlp::Result Predict::processInput(EInput input,
+                                   const std::string &line) const {
+  std::string output;
   bool isParsing = true;
+  std::string linein;
   while (isParsing) {
-    RecordResult result =
-        fileParser_->processLine(network_->params, app_params_);
-    if (result.isSuccess) {
-      auto predicteds = network_->forwardPropagation(result.record.first);
-      showOutput(result.record.first, predicteds);
+    RecordResult result;
+    switch (input) {
+    case EInput::File:
+      if (!fileParser_->file.is_open()) {
+        fileParser_->openFile();
+      }
+      result = fileParser_->processLine();
+      isParsing = result.isSuccess && !result.isEndOfFile;
+      break;
+    case EInput::Stdin:
+      isParsing = static_cast<bool>(std::getline(std::cin, linein));
+      if (isParsing) {
+        result = fileParser_->processLine(linein);
+      }
+      break;
+    case EInput::Socket:
+      result = fileParser_->processLine(line);
+      isParsing = false;
+      break;
+    default:
+      break;
     }
-    isParsing = result.isSuccess && !result.isEndOfFile;
+    if (result.isSuccess) {
+      output = processResult(result);
+    }
   }
-  fileParser_->closeFile();
+  if (input == EInput::File) {
+    fileParser_->closeFile();
+  }
+  return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
+          .action = smlp::getModeStr(EMode::Predict),
+          .data = output};
 }
 
-void Predict::appendValues(const std::vector<float> &values,
-                           bool roundValues) const {
+std::string Predict::processResult(const RecordResult &result) const {
+  const auto &network = Manager::getInstance().network;
+  auto predicteds = network->forwardPropagation(result.record.inputs);
+  auto output = formatResult(result.record.inputs, predicteds);
+  SimpleLogger::LOG_INFO(output);
+  return output;
+}
+
+std::string Predict::formatValues(const std::vector<float> &values,
+                                  bool roundValues) const {
   // Truncate to zero if close to zero, to avoid scientific notation.
   auto truncZero = [](const float &value) {
     return value < 1e-4 ? 0.0f : value;
   };
 
   if (!values.empty()) {
-    const auto &logger = SimpleLogger::getIntance();
-    logger.append(roundValues ? round(values.front())
-                              : truncZero(values.front()));
+    std::stringstream sstr;
+    sstr << std::setprecision(3);
+    sstr << (roundValues ? round(values.front()) : truncZero(values.front()));
     for (auto it = std::next(values.begin()); it != values.end(); ++it) {
-      logger.append(",", roundValues ? round(*it) : truncZero(*it));
+      sstr << "," << (roundValues ? round(*it) : truncZero(*it));
     }
+    return sstr.str();
   }
+  return "";
 }
 
-void Predict::showOutput(const std::vector<float> &inputs,
-                         const std::vector<float> &predicteds) const {
-  const auto &logger = SimpleLogger::getIntance();
-  logger.setPrecision(3);
-  switch (app_params_.predictive_mode) {
-  case EPredictiveMode::CSV: {
-    appendValues(app_params_.output_at_end ? inputs : predicteds,
-                 !app_params_.output_at_end);
-    logger.append(",");
-    appendValues(app_params_.output_at_end ? predicteds : inputs,
-                 app_params_.output_at_end);
-    logger.endl();
-  } break;
-  case EPredictiveMode::NumberAndRaw: {
-    appendValues(predicteds, true);
-    logger.append(" [");
-    appendValues(predicteds, false);
-    logger.out("]");
-  } break;
-  case EPredictiveMode::NumberOnly: {
-    appendValues(predicteds, true);
-    logger.endl();
-  } break;
-  case EPredictiveMode::RawOnly: {
-    appendValues(predicteds, false);
-    logger.endl();
-  } break;
+std::string Predict::formatResult(const std::vector<float> &inputs,
+                                  const std::vector<float> &predicteds) const {
+  const auto &app_params = Manager::getInstance().app_params;
+  std::stringstream sstr;
+  sstr << std::setprecision(3);
+
+  switch (app_params.predict_mode) {
+  case EPredictMode::CSV:
+    sstr << formatValues(app_params.output_at_end ? inputs : predicteds,
+                         !app_params.output_at_end)
+         << ","
+         << formatValues(app_params.output_at_end ? predicteds : inputs,
+                         app_params.output_at_end);
+    break;
+  case EPredictMode::NumberAndRaw:
+    sstr << formatValues(predicteds, true) << " ["
+         << formatValues(predicteds, false) << "]";
+    break;
+  case EPredictMode::NumberOnly:
+    sstr << formatValues(predicteds, true);
+    break;
+  case EPredictMode::RawOnly:
+    sstr << formatValues(predicteds, false);
+    break;
   default:
-    logger.resetPrecision();
-    throw PredictException(
-        SimpleLang::Error(Error::UnimplementedPredictiveMode));
+    throw PredictException(SimpleLang::Error(Error::UnimplementedPredictMode));
   }
-  logger.resetPrecision();
+  return sstr.str();
 }

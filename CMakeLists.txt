@@ -24,7 +24,7 @@ set(LIBRARIES libsmlp csv-parser)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE debug)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -pthread -Wall")
 
 if(ENABLE_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")    
@@ -32,7 +32,13 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
     add_custom_target(lcov
         COMMAND lcov --capture --directory . --output-file ../coverage/lcov.info
-        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' '${CMAKE_CURRENT_SOURCE_DIR}/test/*' '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
+        COMMAND lcov --remove ../coverage/lcov.info --output-file ../coverage/lcov.info 
+        '/usr/include/*' '/usr/lib/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/libsmlp/src/SimpleHTTPServer.cpp' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/csv-parser/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/libs/json/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/test/*' 
+        '${CMAKE_CURRENT_SOURCE_DIR}/src/*'
         COMMENT "Generating lcov.info"
     )
     add_custom_target(lcov_summary

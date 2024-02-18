@@ -25,13 +25,10 @@ int main(int argc, char *argv[]) {
       return init;
     }
 
-    smlp->runMode();
+    smlp->run();
 
-    if (smlp->shouldExportNetwork()) {
-      smlp->exportNetwork();
-    }
   } catch (const std::exception &e) {
-    SimpleLogger::getIntance().error(e.what());
+    SimpleLogger::getInstance().error(e.what());
     return EXIT_FAILURE;
   }
 

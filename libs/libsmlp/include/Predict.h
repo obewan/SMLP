@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonResult.h"
 #include "DataFileParser.h"
 #include "Network.h"
 #include "exception/PredictException.h"
@@ -19,36 +20,18 @@
  */
 class Predict {
 public:
-  Predict(std::shared_ptr<Network> network,
-          std::shared_ptr<DataFileParser> fileparser,
-          const AppParameters &app_params)
-      : network_(network), fileParser_(fileparser), app_params_(app_params) {}
+  explicit Predict(std::shared_ptr<DataFileParser> fileparser)
+      : fileParser_(fileparser) {}
 
-  Predict(std::shared_ptr<Network> network, const AppParameters &app_params)
-      : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(app_params.data_file)),
-        app_params_(app_params) {}
+  Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
 
-  void predict() const;
+  smlp::Result predict(const std::string &line = "") const;
 
-  void appendValues(const std::vector<float> &values, bool roundValues) const;
+  std::string formatValues(const std::vector<float> &values,
+                           bool roundValues) const;
 
-  void showOutput(const std::vector<float> &inputs,
-                  const std::vector<float> &predicteds) const;
-
-  /**
-   * @brief Sets the network for testing.
-   *
-   * @param network Pointer to the network.
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
-
-  /**
-   * @brief Gets the network used for testing.
-   *
-   * @return Pointer to the network.
-   */
-  std::shared_ptr<Network> getNetwork() const { return network_; }
+  std::string formatResult(const std::vector<float> &inputs,
+                           const std::vector<float> &predicteds) const;
 
   /**
    * @brief Sets the file parser for testing data.
@@ -67,9 +50,7 @@ public:
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
 private:
-  void processStdin() const;
-  void processFile() const;
-  std::shared_ptr<Network> network_ = nullptr;
+  smlp::Result processInput(EInput input, const std::string &line) const;
+  std::string processResult(const smlp::RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
-  const AppParameters &app_params_;
 };

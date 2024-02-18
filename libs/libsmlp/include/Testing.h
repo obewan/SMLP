@@ -13,7 +13,15 @@
 #include "Network.h"
 #include "TestingResult.h"
 #include "exception/TestingException.h"
+#include <cstddef>
 #include <memory>
+
+enum class TestingType { TestingFile, TestingSocket, TestingStdin };
+
+const std::map<std::string, TestingType, std::less<>> testing_map{
+    {"TestingFile", TestingType::TestingFile},
+    {"TestingSocket", TestingType::TestingSocket},
+    {"TestingStdin", TestingType::TestingStdin}};
 
 /**
  * @brief The Testing class is responsible for testing the neural network model.
@@ -26,69 +34,33 @@ public:
    * @brief Constructor that takes a pointer to the network and a pointer to the
    * file parser as arguments.
    *
-   * @param network Pointer to the network.
-   * @param fileparser Pointer to the file parser.
    */
-  Testing(std::shared_ptr<Network> network,
-          std::shared_ptr<DataFileParser> fileparser)
-      : network_(network), fileParser_(fileparser),
-        testingResults_(std::make_shared<TestingResult>()) {}
+  explicit Testing(TestingType testing_type)
+      : testingType(testing_type),
+        testingResults_(std::make_shared<TestingResult>()){};
+  virtual ~Testing() = default;
+
+  const TestingType testingType;
 
   /**
-   * @brief Constructor that takes a pointer to the network and the file
-   * path to testing data as arguments.
+   * @brief Test a network
    *
-   * @param network Pointer to the network.
-   * @param file_path File path to the testing data.
+   * @param line optional data line to use for testing
+   * @param epoch optional epoch to indicate for testing results
+   * @param current_line_number optional line number to indicate
    */
-  Testing(std::shared_ptr<Network> network, const std::string &file_path)
-      : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(file_path)),
-        testingResults_(std::make_shared<TestingResult>()) {}
+  virtual smlp::Result test(const std::string &line = "", size_t epoch = 0,
+                            size_t current_line_number = 0) = 0;
 
   /**
-   * @brief test from stdin or from file, depending of parameters
-   *
-   * @param network_params
-   * @param app_params
-   * @param epoch
-   * @param current_line
-   */
-  void test(const NetworkParameters &network_params,
-            const AppParameters &app_params, size_t epoch = 0,
-            size_t current_line = 0);
-
-  /**
-   * @brief This method tests the model with the given parameters.
-   *
-   * @param network_params Network parameters.
-   * @param app_params Application parameters.
-   * @param epoch The current epoch (default is 0).
-   */
-  void testFromFile(const NetworkParameters &network_params,
-                    const AppParameters &app_params, size_t epoch = 0) const;
-
-  /**
-   * @brief For testing a with a stdin pipe
+   * @brief Create a File Parser object
    *
    */
-  void testFromStdin(const NetworkParameters &network_params,
-                     const AppParameters &app_params,
-                     size_t current_line_number) const;
-
-  /**
-   * @brief Sets the network for testing.
-   *
-   * @param network Pointer to the network.
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
-
-  /**
-   * @brief Gets the network used for testing.
-   *
-   * @return Pointer to the network.
-   */
-  std::shared_ptr<Network> getNetwork() const { return network_; }
+  void createFileParser() {
+    if (!fileParser_) {
+      fileParser_ = std::make_shared<DataFileParser>();
+    }
+  }
 
   /**
    * @brief Sets the file parser for testing data.
@@ -106,22 +78,24 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  /**
-   * @brief Get the Testing Results object
-   *
-   * @return std::shared_ptr<TestingResult>
-   */
   std::shared_ptr<TestingResult> getTestingResults() const {
     return testingResults_;
   }
 
-private:
-  void testLine(const NetworkParameters &network_params,
-                const AppParameters &app_params,
-                const RecordResult &record_result, const size_t line_number,
-                std::vector<TestingResult::TestResults> &testResults) const;
+  std::string testingTypeStr() const {
+    for (const auto &[key, mTestingType] : testing_map) {
+      if (mTestingType == testingType) {
+        return key;
+      }
+    }
+    return "";
+  }
 
-  std::shared_ptr<Network> network_ = nullptr;
+protected:
+  TestingResult::TestResults testLine(const smlp::RecordResult &record_result,
+                                      const size_t line_number = 0,
+                                      const size_t epoch = 0) const;
+
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };

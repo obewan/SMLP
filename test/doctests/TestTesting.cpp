@@ -1,7 +1,10 @@
 #include "Common.h"
+#include "CommonModes.h"
 #include "DataFileParser.h"
+#include "Manager.h"
 #include "SimpleLang.h"
-#include "Testing.h"
+#include "TestingFile.h"
+#include "TestingStdin.h"
 #include "doctest.h"
 #include "exception/TestingException.h"
 #include <iostream>
@@ -12,8 +15,9 @@ TEST_CASE("Testing the Testing class") {
   SUBCASE("Test constructor") {
     CHECK_NOTHROW({
       auto network = std::make_shared<Network>();
-      auto fileparser = std::make_shared<DataFileParser>("");
-      auto testing = new Testing(network, fileparser);
+      auto fileparser = std::make_shared<DataFileParser>();
+      auto testing = new TestingFile();
+      testing->setFileParser(fileparser);
       delete testing;
     });
   }
@@ -29,33 +33,39 @@ TEST_CASE("Testing the Testing class") {
         "0.00, 0.62,0.00, 0.00, 1.00, 0.92, 0.00, 1.00,0.00\n";
     std::stringstream inputDataStream(inputData);
 
-    auto network =
+    auto &manager = Manager::getInstance();
+    manager.network =
         std::make_shared<Network>(NetworkParameters{.input_size = 20,
                                                     .hidden_size = 12,
                                                     .output_size = 1,
                                                     .hiddens_count = 1});
-    auto fileparser = std::make_shared<DataFileParser>("");
-    auto testing = new Testing(network, fileparser);
-    AppParameters app_params = {.training_ratio_line = 0,
-                                .use_stdin = true,
-                                .use_training_ratio_line = true,
-                                .mode = EMode::TrainTestMonitored};
+    auto fileparser = std::make_shared<DataFileParser>();
+
+    manager.app_params = {.training_ratio_line = 0,
+                          .use_training_ratio_line = true,
+                          .mode = EMode::TrainTestMonitored,
+                          .input = EInput::Stdin};
+    auto testing = new TestingStdin();
+    testing->setFileParser(fileparser);
 
     // Redirect std::cin
     std::cin.rdbuf(inputDataStream.rdbuf());
 
-    CHECK_NOTHROW(testing->test(network->params, app_params););
+    CHECK_NOTHROW(testing->test(););
 
     // Restore std::cin to normal after the test
     std::cin.rdbuf(cin_buffer);
   }
   SUBCASE("Test exception") {
-    auto network = std::make_shared<Network>();
-    auto fileparser = std::make_shared<DataFileParser>("../data/test_file.csv");
-    auto testing = new Testing(network, fileparser);
+    auto &manager = Manager::getInstance();
+    manager.app_params.data_file = "../data/test_file.csv";
+    auto fileparser = std::make_shared<DataFileParser>();
+    manager.app_params.training_ratio = 1;
+    manager.app_params.mode = EMode::TrainThenTest;
+    auto testing = new TestingFile();
+    testing->setFileParser(fileparser);
     CHECK_THROWS_WITH_AS(
-        testing->testFromFile(
-            {}, {.training_ratio = 1, .mode = EMode::TrainThenTest}),
+        testing->test(),
         SimpleLang::Error(Error::InvalidTrainingRatioTooBig).c_str(),
         TestingException);
     delete testing;

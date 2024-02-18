@@ -41,5 +41,7 @@ TEST_CASE("Testing the SimpleLang class") {
     CHECK(lang.get(Error::InvalidJsonFile) == "Arquivo JSON inválido");
     CHECK(lang.get(Error::InvalidTotalInput) ==
           "Número inválido de valores de entrada");
+
+    lang.parseFile("../../i18n/en.json"); // back to english for next tests
   }
 }

@@ -24,16 +24,18 @@ struct AppParameters {
   std::string data_file = "";
   std::string config_file = "smlp.conf";
   size_t num_epochs = 1;
-  size_t output_index_to_monitor = 1;
+  size_t output_index_to_monitor = 0;
   float training_ratio = 0.7f;
   size_t training_ratio_line = 0;
   bool output_at_end = false;
   bool verbose = false;
-  bool use_stdin = false;
   bool disable_stdin = false;
   bool use_training_ratio_line = false;
+  bool enable_http = false;
+  unsigned short http_port = 8080;
   EMode mode = EMode::TrainThenTest;
-  EPredictiveMode predictive_mode = EPredictiveMode::CSV;
+  EInput input = EInput::File;
+  EPredictMode predict_mode = EPredictMode::CSV;
 };
 
 /**

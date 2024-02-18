@@ -46,14 +46,14 @@ set_tests_properties(test_testonly PROPERTIES
   PASS_REGULAR_EXPRESSION "Testing, using file .*mushroom_data.csv"
 )
 # Test predict
-add_my_test(test_predictive smlp -i ${CMAKE_BINARY_DIR}/ctestModel.json -f ${CMAKE_BINARY_DIR}/../data/mushroom/mushroom_data_to_predict.csv -m Predictive -x)
-set_tests_properties(test_predictive PROPERTIES
+add_my_test(test_predict smlp -i ${CMAKE_BINARY_DIR}/ctestModel.json -f ${CMAKE_BINARY_DIR}/../data/mushroom/mushroom_data_to_predict.csv -m Predict -x)
+set_tests_properties(test_predict PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.08,0.43,0.9,0.42,1,0.62,0.33,0.38,0.1,0.07,0,0,0.38,0,0,1,0.92,0,1,0"
 )
-set_tests_properties(test_predictive PROPERTIES
+set_tests_properties(test_predict PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.01,0.57,0.9,0.25,1,0,0.67,0.92,0.09,0.02,0,0,0.62,0,0,1,0.92,0,1,0"
 )
-set_tests_properties(test_predictive PROPERTIES
+set_tests_properties(test_predict PROPERTIES
   PASS_REGULAR_EXPRESSION "[01],0.06,0.43,0,0.75,1,0.12,0.33,0.62,0.11,0.09,0,0,0.23,0,0,1,0.92,0,1,0"
 )
 # Test config 

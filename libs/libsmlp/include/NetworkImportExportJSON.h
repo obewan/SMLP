@@ -37,7 +37,7 @@ public:
    * @return Network*
    */
   Network *importModel(const AppParameters &app_params) {
-    const auto &logger = SimpleLogger::getIntance();
+    const auto &logger = SimpleLogger::getInstance();
     const auto &lang = SimpleLang::getInstance();
 
     if (app_params.network_to_import.empty()) {
