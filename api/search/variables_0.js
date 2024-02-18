@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['accuracy_5favg_746',['accuracy_avg',['../structTestingResult_1_1Stat.html#ae83853f564da5a9b63fbc25918eb981f',1,'TestingResult::Stat']]],
-  ['accuracy_5fhigh_747',['accuracy_high',['../structTestingResult_1_1Stat.html#aaad2c9ccec6aeb4723a5e775df2c3ae0',1,'TestingResult::Stat']]],
-  ['accuracy_5flow_748',['accuracy_low',['../structTestingResult_1_1Stat.html#ac5f121e2d24df64218b412d268fc0f5d',1,'TestingResult::Stat']]],
-  ['action_749',['action',['../structsmlp_1_1Result.html#a7e427e5674faf09d7934eb5726095bbd',1,'smlp::Result']]],
-  ['activation_5fmap_750',['activation_map',['../CommonModes_8h.html#a11e1512cb716ac4b2a2d277817ecc56a',1,'CommonModes.h']]],
-  ['activationfunction_751',['activationFunction',['../classNeuron.html#a094687c299206c787bb1280acad88359',1,'Neuron']]],
-  ['activationfunctionderivative_752',['activationFunctionDerivative',['../classNeuron.html#accff7ec9287d005767f8d60393701660',1,'Neuron']]],
-  ['app_5fparams_753',['app_params',['../classManager.html#a6b9be5832c61e67c127200311acc4fe9',1,'Manager']]]
+  ['accuracy_5favg_751',['accuracy_avg',['../structsmlp_1_1TestingResult_1_1Stat.html#a468fbf70aa422eb533ded52c64e8639e',1,'smlp::TestingResult::Stat']]],
+  ['accuracy_5fhigh_752',['accuracy_high',['../structsmlp_1_1TestingResult_1_1Stat.html#a1f7b95a96e01f627af75a910e9942ecb',1,'smlp::TestingResult::Stat']]],
+  ['accuracy_5flow_753',['accuracy_low',['../structsmlp_1_1TestingResult_1_1Stat.html#ac9153ba5ae1477cdb652f4a87cb6f9fd',1,'smlp::TestingResult::Stat']]],
+  ['action_754',['action',['../structsmlp_1_1Result.html#a7e427e5674faf09d7934eb5726095bbd',1,'smlp::Result']]],
+  ['activation_5fmap_755',['activation_map',['../namespacesmlp.html#a0cc719b2f89ae1c6140a81eaca2dba19',1,'smlp']]],
+  ['activationfunction_756',['activationFunction',['../classsmlp_1_1Neuron.html#acc6a6614c23f451fc636d1963b75a299',1,'smlp::Neuron']]],
+  ['activationfunctionderivative_757',['activationFunctionDerivative',['../classsmlp_1_1Neuron.html#ae469692582be449523f707c46b31e2c9',1,'smlp::Neuron']]],
+  ['app_5fparams_758',['app_params',['../classsmlp_1_1Manager.html#a0071cf9a5b09271eb56f666cde61e8bb',1,'smlp::Manager']]]
 ];

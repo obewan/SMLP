@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['fileparserexception_604',['FileParserException',['../classFileParserException.html#a1953b542ff3a249058ab7372e389e8f7',1,'FileParserException']]],
-  ['formatresult_605',['formatResult',['../classPredict.html#aa13bb322545b178a43b199e477c057b5',1,'Predict']]],
-  ['formatvalues_606',['formatValues',['../classPredict.html#a2750f8081f814dbb75f4c374dfa4422b',1,'Predict']]],
-  ['forwardpropagation_607',['forwardPropagation',['../classHiddenLayer.html#a6601a171ab3a307ec1805cebf9c0e474',1,'HiddenLayer::forwardPropagation()'],['../classInputLayer.html#a685aa99d119993fc9dbb3c362f775ae6',1,'InputLayer::forwardPropagation()'],['../classLayer.html#a7ef0fb32ebd00f5e190025a505c04536',1,'Layer::forwardPropagation()'],['../classNetwork.html#acd8a90fa2ecdd8572584d9fe21a7931f',1,'Network::forwardPropagation()'],['../classOutputLayer.html#ab12020ad30cac32d5b1383750230a6b1',1,'OutputLayer::forwardPropagation()']]]
+  ['fileparserexception_609',['FileParserException',['../classsmlp_1_1FileParserException.html#a564835fd24e70468307309d541f508b1',1,'smlp::FileParserException']]],
+  ['formatresult_610',['formatResult',['../classsmlp_1_1Predict.html#aa13bb322545b178a43b199e477c057b5',1,'smlp::Predict']]],
+  ['formatvalues_611',['formatValues',['../classsmlp_1_1Predict.html#a2750f8081f814dbb75f4c374dfa4422b',1,'smlp::Predict']]],
+  ['forwardpropagation_612',['forwardPropagation',['../classsmlp_1_1HiddenLayer.html#a44e9a6fce7077cee57c0bd8afba39cf0',1,'smlp::HiddenLayer::forwardPropagation()'],['../classsmlp_1_1InputLayer.html#ab3ec1213e603cb3bbd1670bde81de0b2',1,'smlp::InputLayer::forwardPropagation()'],['../classsmlp_1_1Layer.html#a8a3b6286435ac6152b20527d90d59a2d',1,'smlp::Layer::forwardPropagation()'],['../classsmlp_1_1Network.html#a95a749010b8370ef7438bd81c9d81232',1,'smlp::Network::forwardPropagation()'],['../classsmlp_1_1OutputLayer.html#a456abf0c22e957220073f351bb5e8d1c',1,'smlp::OutputLayer::forwardPropagation()']]]
 ];

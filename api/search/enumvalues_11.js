@@ -1,9 +1,25 @@
 var searchData=
 [
-  ['unauthorized_986',['Unauthorized',['../namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aae06d1ba70f1331e9f9a113cc2f887d3f',1,'smlp']]],
-  ['unimplementedactivationfunction_987',['UnimplementedActivationFunction',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a23fe615c7763a2c49b0b9bb85f173048',1,'CommonErrors.h']]],
-  ['unimplementedmode_988',['UnimplementedMode',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a103fada77fc91de95669239c77e60a93',1,'CommonErrors.h']]],
-  ['unimplementedpredictmode_989',['UnimplementedPredictMode',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a35f5ab0caba9fa19dbc7c75e7c6351fb',1,'CommonErrors.h']]],
-  ['unknownkey_990',['UnknownKey',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9deb5a6d2fd3a6cfb3f626f0bcbda121',1,'CommonErrors.h']]],
-  ['usingconfigfile_991',['UsingConfigFile',['../CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efaa6079bd4b4261d61a1c3cd7483f4937b5',1,'CommonMessages.h']]]
+  ['tanh_974',['Tanh',['../namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7acc132a41cab5676334f353a22a0aa5c5',1,'smlp']]],
+  ['tcpclientconnection_975',['TCPClientConnection',['../namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa0725b3a8edf832f62bd09754d5b9ac28',1,'smlp']]],
+  ['tcpclientdisconnection_976',['TCPClientDisconnection',['../namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fab65b8c4f216655becfa8c601c1829e92',1,'smlp']]],
+  ['tcpserveraccepterror_977',['TCPServerAcceptError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a07ed169518b266b6f29c9b76834ef7c2',1,'smlp']]],
+  ['tcpserverclosed_978',['TCPServerClosed',['../namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa18652e4b02f62d38bf3d9ca989076f68',1,'smlp']]],
+  ['tcpserverrecverror_979',['TCPServerRecvError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a45c359f220ba632337ba15bd2b1f3009',1,'smlp']]],
+  ['tcpsocketbinderror_980',['TCPSocketBindError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a9fae84a2a567418bfc398d129401a17c',1,'smlp']]],
+  ['tcpsocketcreateerror_981',['TCPSocketCreateError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a7d5dfdf77cd3665c5ac0a111d86e4e89',1,'smlp']]],
+  ['tcpsocketlistenerror_982',['TCPSocketListenError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996afbdae7cdb33556d8339198b3b45a43d6',1,'smlp']]],
+  ['tcpsocketnotset_983',['TCPSocketNotSet',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996aa25b2df0ff9d6d5278e9ee8f0e52c39e',1,'smlp']]],
+  ['testingerror_984',['TestingError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a325499ce896dde44343ae609dc0e2539',1,'smlp']]],
+  ['testingfile_985',['TestingFile',['../namespacesmlp.html#a875a22e785cb471fefba161c8646ad8ba8d0ecf0adee3db85a524e2d7e8253d8d',1,'smlp']]],
+  ['testingsocket_986',['TestingSocket',['../namespacesmlp.html#a875a22e785cb471fefba161c8646ad8ba3e232da481e38639674e1a61685103aa',1,'smlp']]],
+  ['testingstdin_987',['TestingStdin',['../namespacesmlp.html#a875a22e785cb471fefba161c8646ad8baf99cf741c3d156b61f07c71c82cbb0a8',1,'smlp']]],
+  ['testonly_988',['TestOnly',['../namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecaa9463c9f72315953501239b6c265ecb1',1,'smlp']]],
+  ['trainingerror_989',['TrainingError',['../namespacesmlp.html#ae276673b372124cf32f0523f0c79e996ad53692ee11b93e9cdb01e781867eb796',1,'smlp']]],
+  ['trainingfile_990',['TrainingFile',['../namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8a757f7e5aa2407346db13ac58fb2826d6',1,'smlp']]],
+  ['trainingsocket_991',['TrainingSocket',['../namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8a130c07446e7500b9b29f3bd4a00a4fdc',1,'smlp']]],
+  ['trainingstdin_992',['TrainingStdin',['../namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8ac712bd052f9941f5c1b3a14f8c178a23',1,'smlp']]],
+  ['trainonly_993',['TrainOnly',['../namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecabb8357f076b6f40fce9113b3dc5e759d',1,'smlp']]],
+  ['traintestmonitored_994',['TrainTestMonitored',['../namespacesmlp.html#abd80101d360cabe91db05d3e9601aeeca2a7f3e6bde587a3e8d9bb4d62618bc3b',1,'smlp']]],
+  ['trainthentest_995',['TrainThenTest',['../namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecada172908d34f9b80bd5e4f4cd7b61a14',1,'smlp']]]
 ];

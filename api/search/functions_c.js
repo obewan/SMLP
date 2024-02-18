@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['name_662',['name',['../classsmlp_1_1ErrorCategory.html#afa0062cced2fbae5a2788eda7942d313',1,'smlp::ErrorCategory']]],
-  ['network_663',['Network',['../classNetwork.html#a3043240c3adcef445e8f5d21eb61eb0a',1,'Network::Network(const Network &amp;other)=delete'],['../classNetwork.html#ad2333cf79061fe62dc5980c83fea41e9',1,'Network::Network(Network &amp;&amp;other)=default'],['../classNetwork.html#a22366a210c0fb05448d1802a0e98452a',1,'Network::Network()=default'],['../classNetwork.html#a5bd901b8eebe7a3e690d47c306d8eb78',1,'Network::Network(const NetworkParameters &amp;params)']]],
-  ['networkexception_664',['NetworkException',['../classNetworkException.html#aef0219d5da0b7dc29ef06daba7d942d9',1,'NetworkException']]],
-  ['neuron_665',['Neuron',['../classNeuron.html#a33307921c924f80b7033ff097d30cdc6',1,'Neuron']]]
+  ['name_667',['name',['../classsmlp_1_1ErrorCategory.html#afa0062cced2fbae5a2788eda7942d313',1,'smlp::ErrorCategory']]],
+  ['network_668',['Network',['../classsmlp_1_1Network.html#aa04c77703298e41738aabba55e3d6d45',1,'smlp::Network::Network(const Network &amp;other)=delete'],['../classsmlp_1_1Network.html#a35f22864fd70ac13611108f3b7ad301c',1,'smlp::Network::Network(Network &amp;&amp;other)=default'],['../classsmlp_1_1Network.html#a0814b67670bd99977e3a4f9d99e20470',1,'smlp::Network::Network()=default'],['../classsmlp_1_1Network.html#ae87bef1e585047fca1f8f8727ef994c6',1,'smlp::Network::Network(const NetworkParameters &amp;params)']]],
+  ['networkexception_669',['NetworkException',['../classsmlp_1_1NetworkException.html#ab7bc9e59cc01c8878dc3f23a4c82e21a',1,'smlp::NetworkException']]],
+  ['neuron_670',['Neuron',['../classsmlp_1_1Neuron.html#a3a549e5fc18eedb7808d5d5c17618868',1,'smlp::Neuron']]]
 ];

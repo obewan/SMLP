@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-18 04:32:34</td>
+            <td class="headerValue">2024-02-18 06:15:05</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -77,13 +77,15 @@
 <a name="15"><span class="lineNum">      15 </span>            : #include &quot;exception/TestingException.h&quot;</a>
 <a name="16"><span class="lineNum">      16 </span>            : #include &lt;memory&gt;</a>
 <a name="17"><span class="lineNum">      17 </span>            : </a>
-<a name="18"><span class="lineNum">      18 </span>            : class TestingFile : public Testing {</a>
-<a name="19"><span class="lineNum">      19 </span>            : public:</a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          5 :   explicit TestingFile() : Testing(TestingType::TestingFile) {}</span></a>
-<a name="21"><span class="lineNum">      21 </span>            : </a>
-<a name="22"><span class="lineNum">      22 </span>            :   smlp::Result test(const std::string &amp;line = &quot;&quot;, size_t epoch = 0,</a>
-<a name="23"><span class="lineNum">      23 </span>            :                     size_t current_line_number = 0) override;</a>
-<a name="24"><span class="lineNum">      24 </span>            : };</a>
+<a name="18"><span class="lineNum">      18 </span>            : namespace smlp {</a>
+<a name="19"><span class="lineNum">      19 </span>            : class TestingFile : public Testing {</a>
+<a name="20"><span class="lineNum">      20 </span>            : public:</a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          5 :   explicit TestingFile() : Testing(TestingType::TestingFile) {}</span></a>
+<a name="22"><span class="lineNum">      22 </span>            : </a>
+<a name="23"><span class="lineNum">      23 </span>            :   smlp::Result test(const std::string &amp;line = &quot;&quot;, size_t epoch = 0,</a>
+<a name="24"><span class="lineNum">      24 </span>            :                     size_t current_line_number = 0) override;</a>
+<a name="25"><span class="lineNum">      25 </span>            : };</a>
+<a name="26"><span class="lineNum">      26 </span>            : } // namespace smlp</a>
 </pre>
       </td>
     </tr>

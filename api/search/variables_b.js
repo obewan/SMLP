@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['network_837',['network',['../classManager.html#a666d2572fec9b1e407b3e810145ff222',1,'Manager']]],
-  ['network_5fparams_838',['network_params',['../classManager.html#a70245fdfc40583fa734102fce314a235',1,'Manager']]],
-  ['network_5fto_5fexport_839',['network_to_export',['../structAppParameters.html#aa48ee7d1bc303e2a8a73ae2cc893635e',1,'AppParameters']]],
-  ['network_5fto_5fimport_840',['network_to_import',['../structAppParameters.html#afcb7b769da4b832372c50cb3fc455503',1,'AppParameters']]],
-  ['neurons_841',['neurons',['../classLayer.html#a093abcdd79ba1cbdad598d424a7a2edd',1,'Layer']]],
-  ['nextlayer_842',['nextLayer',['../classLayer.html#a8cd4d78772197a9a097973aaa37b2538',1,'Layer']]],
-  ['num_5fepochs_843',['num_epochs',['../structAppParameters.html#a7cdb3dbb20720c1050719044a6aae8bc',1,'AppParameters']]]
+  ['network_842',['network',['../classsmlp_1_1Manager.html#acda5ae3aa4630e8cb0f45fef75b1e4ce',1,'smlp::Manager']]],
+  ['network_5fparams_843',['network_params',['../classsmlp_1_1Manager.html#a55df22a5a8f1c563a327192531f0d8af',1,'smlp::Manager']]],
+  ['network_5fto_5fexport_844',['network_to_export',['../structsmlp_1_1AppParameters.html#aa4680c4dcb31b8ad59a6723588607be1',1,'smlp::AppParameters']]],
+  ['network_5fto_5fimport_845',['network_to_import',['../structsmlp_1_1AppParameters.html#a4d7b2ebc12349171950ba98e8b27b20d',1,'smlp::AppParameters']]],
+  ['neurons_846',['neurons',['../classsmlp_1_1Layer.html#a6edfe47699869b3cec7a0dff807e9e79',1,'smlp::Layer']]],
+  ['nextlayer_847',['nextLayer',['../classsmlp_1_1Layer.html#afb0a23c737f1974a93fb52f364ab9368',1,'smlp::Layer']]],
+  ['num_5fepochs_848',['num_epochs',['../structsmlp_1_1AppParameters.html#ad125f61b841b3e06d7aa705095b8fe3e',1,'smlp::AppParameters']]]
 ];

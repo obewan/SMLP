@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hiddenlayer_482',['HiddenLayer',['../classHiddenLayer.html',1,'']]],
-  ['httprequest_483',['HttpRequest',['../structSimpleHTTPServer_1_1HttpRequest.html',1,'SimpleHTTPServer']]]
+  ['hiddenlayer_487',['HiddenLayer',['../classsmlp_1_1HiddenLayer.html',1,'smlp']]],
+  ['httprequest_488',['HttpRequest',['../structsmlp_1_1SimpleHTTPServer_1_1HttpRequest.html',1,'smlp::SimpleHTTPServer']]]
 ];

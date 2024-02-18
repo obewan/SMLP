@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['undefinedlayer_884',['UndefinedLayer',['../classLayer.html#a66321dbb7aa215ce3172c44ee3ff4091',1,'Layer']]],
-  ['use_5ftraining_5fratio_5fline_885',['use_training_ratio_line',['../structAppParameters.html#a86ce6f228138d8fa1d3c319857e97dde',1,'AppParameters']]]
+  ['undefinedlayer_889',['UndefinedLayer',['../classsmlp_1_1Layer.html#aadc361548b881b7e52151be4df9caaf9',1,'smlp::Layer']]],
+  ['use_5ftraining_5fratio_5fline_890',['use_training_ratio_line',['../structsmlp_1_1AppParameters.html#a900e46c6648205b7a7eef485e0f9c6a1',1,'smlp::AppParameters']]]
 ];

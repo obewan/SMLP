@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['endl_598',['endl',['../classSimpleLogger.html#a35c2750369bd93198522ba578a61f714',1,'SimpleLogger']]],
-  ['err_599',['err',['../classSimpleLogger.html#ab35fdb401aa817c2a8dc265709b8c8ff',1,'SimpleLogger']]],
-  ['error_600',['error',['../classSimpleLogger.html#a6e75a568086653fb0a60e448b1c31168',1,'SimpleLogger']]],
-  ['error_601',['Error',['../classSimpleLang.html#a32e2aa97f348a97d1054150a36e1f2dd',1,'SimpleLang']]],
-  ['exportmodel_602',['exportModel',['../classNetworkImportExportJSON.html#ad893204f89be88ea6e2b6545962ff931',1,'NetworkImportExportJSON']]],
-  ['exportnetwork_603',['exportNetwork',['../classManager.html#aba29378e09dc2e3781b40d38e8d4314e',1,'Manager']]]
+  ['endl_603',['endl',['../classsmlp_1_1SimpleLogger.html#ac462e5328374d9762514acda759084fa',1,'smlp::SimpleLogger']]],
+  ['err_604',['err',['../classsmlp_1_1SimpleLogger.html#adf7d45e6a7d2c975102c51abde21d132',1,'smlp::SimpleLogger']]],
+  ['error_605',['error',['../classsmlp_1_1SimpleLogger.html#abb57ed66e8fe7060d7d0a3bb777ac1a9',1,'smlp::SimpleLogger']]],
+  ['error_606',['Error',['../classsmlp_1_1SimpleLang.html#a0e6460c3bc54dbe0bd4d506f166a8760',1,'smlp::SimpleLang']]],
+  ['exportmodel_607',['exportModel',['../classsmlp_1_1NetworkImportExportJSON.html#a36170d7ee1354b888317284e70afe9ab',1,'smlp::NetworkImportExportJSON']]],
+  ['exportnetwork_608',['exportNetwork',['../classsmlp_1_1Manager.html#aba29378e09dc2e3781b40d38e8d4314e',1,'smlp::Manager']]]
 ];

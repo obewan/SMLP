@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-18 04:32:34</td>
+            <td class="headerValue">2024-02-18 06:15:05</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -63,18 +63,20 @@
 <a name="1"><span class="lineNum">       1 </span>            : #include &quot;Training.h&quot;</a>
 <a name="2"><span class="lineNum">       2 </span>            : #include &quot;Manager.h&quot;</a>
 <a name="3"><span class="lineNum">       3 </span>            : </a>
-<a name="4"><span class="lineNum">       4 </span><span class="lineCov">         14 : Training::Training(TrainingType training_type) : trainingType(training_type) {}</span></a>
+<a name="4"><span class="lineNum">       4 </span>            : using namespace smlp;</a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
-<a name="6"><span class="lineNum">       6 </span><span class="lineCov">         62 : smlp::RecordResult Training::processInputLine(const std::string &amp;line) const {</span></a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineCov">         62 :   smlp::RecordResult result = fileParser_-&gt;processLine(line, false);</span></a>
-<a name="8"><span class="lineNum">       8 </span><span class="lineCov">         62 :   if (result.isSuccess) {</span></a>
-<a name="9"><span class="lineNum">       9 </span><span class="lineCov">         62 :     const auto &amp;network = Manager::getInstance().network;</span></a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         62 :     network-&gt;forwardPropagation(result.record.inputs);</span></a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         62 :     network-&gt;backwardPropagation(result.record.outputs);</span></a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         62 :     network-&gt;updateWeights();</span></a>
-<a name="13"><span class="lineNum">      13 </span>            :   }</a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         62 :   return result;</span></a>
-<a name="15"><span class="lineNum">      15 </span>            : }</a>
+<a name="6"><span class="lineNum">       6 </span><span class="lineCov">         14 : Training::Training(TrainingType training_type) : trainingType(training_type) {}</span></a>
+<a name="7"><span class="lineNum">       7 </span>            : </a>
+<a name="8"><span class="lineNum">       8 </span><span class="lineCov">         62 : smlp::RecordResult Training::processInputLine(const std::string &amp;line) const {</span></a>
+<a name="9"><span class="lineNum">       9 </span><span class="lineCov">         62 :   smlp::RecordResult result = fileParser_-&gt;processLine(line, false);</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         62 :   if (result.isSuccess) {</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         62 :     const auto &amp;network = Manager::getInstance().network;</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         62 :     network-&gt;forwardPropagation(result.record.inputs);</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineCov">         62 :     network-&gt;backwardPropagation(result.record.outputs);</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         62 :     network-&gt;updateWeights();</span></a>
+<a name="15"><span class="lineNum">      15 </span>            :   }</a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         62 :   return result;</span></a>
+<a name="17"><span class="lineNum">      17 </span>            : }</a>
 </pre>
       </td>
     </tr>

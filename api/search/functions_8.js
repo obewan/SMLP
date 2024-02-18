@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['importexportexception_636',['ImportExportException',['../classImportExportException.html#a0c15d5d9b05d4345d0b3cc1c5d102ed9',1,'ImportExportException']]],
-  ['importmodel_637',['importModel',['../classNetworkImportExportJSON.html#aa8aa424e251627c4fc138fdb05f09a1f',1,'NetworkImportExportJSON']]],
-  ['importorbuildnetwork_638',['importOrBuildNetwork',['../classManager.html#a936616b7371d1334a07d7d3c1afb5724',1,'Manager']]],
-  ['info_639',['info',['../classSimpleLogger.html#a2fdb014ee19e14129e548d0973860e81',1,'SimpleLogger']]],
-  ['init_640',['init',['../classSimpleMLP.html#adbdd8752f7360e63e2a5f45dd73eb720',1,'SimpleMLP']]],
-  ['initializelayers_641',['initializeLayers',['../classNetwork.html#a729bce60a77bfa0b6f2fcf79442e6c7d',1,'Network']]],
-  ['initializeweights_642',['initializeWeights',['../classNetwork.html#a9f907fe45d006591dd05cd2b21eb693c',1,'Network']]],
-  ['initweights_643',['initWeights',['../classNeuron.html#a0898d4131cbc73a0de8542facd77f8f9',1,'Neuron']]],
-  ['inputlayer_644',['InputLayer',['../classInputLayer.html#adac148f0626b911f30fd2396b8eb925a',1,'InputLayer']]],
-  ['isstarted_645',['isStarted',['../classSimpleHTTPServer.html#a8c312d02e348b44da4f84a09d6772578',1,'SimpleHTTPServer']]],
-  ['issuccess_646',['isSuccess',['../structsmlp_1_1Result.html#a044ce0964ce4a3d07014136ec2ede071',1,'smlp::Result']]]
+  ['importexportexception_641',['ImportExportException',['../classsmlp_1_1ImportExportException.html#af66ba0959cfb657666c272829b1ab792',1,'smlp::ImportExportException']]],
+  ['importmodel_642',['importModel',['../classsmlp_1_1NetworkImportExportJSON.html#a25868025e500886a4e628dc4da62e5f9',1,'smlp::NetworkImportExportJSON']]],
+  ['importorbuildnetwork_643',['importOrBuildNetwork',['../classsmlp_1_1Manager.html#a936616b7371d1334a07d7d3c1afb5724',1,'smlp::Manager']]],
+  ['info_644',['info',['../classsmlp_1_1SimpleLogger.html#a7b52412657a469d8f1e90661243f10b9',1,'smlp::SimpleLogger']]],
+  ['init_645',['init',['../classSimpleMLP.html#adbdd8752f7360e63e2a5f45dd73eb720',1,'SimpleMLP']]],
+  ['initializelayers_646',['initializeLayers',['../classsmlp_1_1Network.html#a71af5c72e7c9dd5e727549c00fd370fc',1,'smlp::Network']]],
+  ['initializeweights_647',['initializeWeights',['../classsmlp_1_1Network.html#aab74776df3b26a80a877b9af63c9849d',1,'smlp::Network']]],
+  ['initweights_648',['initWeights',['../classsmlp_1_1Neuron.html#a57ae919d1e77d9f064734bbcc92680cc',1,'smlp::Neuron']]],
+  ['inputlayer_649',['InputLayer',['../classsmlp_1_1InputLayer.html#a533f36ce28c1712dfee02bfd84014818',1,'smlp::InputLayer']]],
+  ['isstarted_650',['isStarted',['../classsmlp_1_1SimpleHTTPServer.html#aae55e98f48ae36d906b004c4ab79a4da',1,'smlp::SimpleHTTPServer']]],
+  ['issuccess_651',['isSuccess',['../structsmlp_1_1Result.html#a044ce0964ce4a3d07014136ec2ede071',1,'smlp::Result']]]
 ];

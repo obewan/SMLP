@@ -63,8 +63,10 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">smlp Namespace Reference</div>  </div>
 </div><!--header-->
@@ -78,14 +80,205 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1RecordResult.html">RecordResult</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Results of a parsed record.  <a href="structsmlp_1_1RecordResult.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application parameters.  <a href="structsmlp_1_1AppParameters.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for the neural <a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a>.  <a href="structsmlp_1_1NetworkParameters.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1ErrorCategory.html">ErrorCategory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1Result.html">Result</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common results Can be use with <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a" title="Common HTTP code and common Unix code.">smlp::ErrorCode</a>, std::io_errc, std::future_errc and std::errc <a href="https://en.cppreference.com/w/cpp/error/errc">https://en.cppreference.com/w/cpp/error/errc</a>.  <a href="structsmlp_1_1Result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FileParser class is responsible for parsing a file. It contains methods for opening, closing, and resetting the file position, as well as methods for processing lines and counting lines.  <a href="classsmlp_1_1DataFileParser.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1FileParserException.html">FileParserException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with file parsing operations.  <a href="classsmlp_1_1FileParserException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1ImportExportException.html">ImportExportException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during ImportExportJSON.  <a href="classsmlp_1_1ImportExportException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1ManagerException.html">ManagerException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during <a class="el" href="classsmlp_1_1Manager.html">Manager</a>.  <a href="classsmlp_1_1ManagerException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkException.html">NetworkException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with neural <a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> operations.  <a href="classsmlp_1_1NetworkException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1PredictException.html">PredictException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with <a class="el" href="classsmlp_1_1Predict.html" title="Predict class for predictive operations.">Predict</a> operations.  <a href="classsmlp_1_1PredictException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleConfigException.html">SimpleConfigException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during <a class="el" href="classsmlp_1_1SimpleConfig.html">SimpleConfig</a>.  <a href="classsmlp_1_1SimpleConfigException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleLangException.html">SimpleLangException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during SimpleLanguage.  <a href="classsmlp_1_1SimpleLangException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleTCPException.html">SimpleTCPException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during SimpleTCP.  <a href="classsmlp_1_1SimpleTCPException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SmlpException.html">SmlpException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are generic exceptions during SMLP.  <a href="classsmlp_1_1SmlpException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TestingException.html">TestingException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during testing.  <a href="classsmlp_1_1TestingException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TrainingException.html">TrainingException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during training.  <a href="classsmlp_1_1TrainingException.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1HiddenLayer.html">HiddenLayer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1HiddenLayer.html" title="The HiddenLayer class represents a hidden layer in a neural network. It inherits from the Layer class...">HiddenLayer</a> class represents a hidden layer in a neural network. It inherits from the <a class="el" href="classsmlp_1_1Layer.html" title="The Layer class represents a layer in a neural network. It contains a vector of Neurons and has metho...">Layer</a> class and overrides its methods as necessary. Hidden layers are responsible for processing inputs received from the input layer and passing the result to the output layer or the next hidden layer.  <a href="classsmlp_1_1HiddenLayer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1InputLayer.html">InputLayer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1InputLayer.html" title="The InputLayer class represents the input layer of a neural network. It inherits from the Layer class...">InputLayer</a> class represents the input layer of a neural network. It inherits from the <a class="el" href="classsmlp_1_1Layer.html" title="The Layer class represents a layer in a neural network. It contains a vector of Neurons and has metho...">Layer</a> class and overrides its methods as necessary. This layer is responsible for receiving input from external sources.  <a href="classsmlp_1_1InputLayer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Layer.html">Layer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1Layer.html" title="The Layer class represents a layer in a neural network. It contains a vector of Neurons and has metho...">Layer</a> class represents a layer in a neural network. It contains a vector of Neurons and has methods for forward propagation, backward propagation, and updating weights.  <a href="classsmlp_1_1Layer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html">Manager</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html">Network</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> class represents a neural network model. It contains an input layer, an output layer, and a vector of hidden layers. It also has a learning rate and methods for forward propagation, backward propagation, and updating weights.  <a href="classsmlp_1_1Network.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExportJSON.html">NetworkImportExportJSON</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsmlp_1_1NetworkImportExportJSON.html" title="NetworkImportExportJSON class to export and import network models using the JSON format.">NetworkImportExportJSON</a> class to export and import network models using the JSON format.  <a href="classsmlp_1_1NetworkImportExportJSON.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Neuron.html">Neuron</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1Neuron.html" title="The Neuron class represents a neuron in a neural network. It contains a value, bias,...">Neuron</a> class represents a neuron in a neural network. It contains a value, bias, error, and a vector of weights. It also has methods for initializing weights.  <a href="classsmlp_1_1Neuron.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1OutputLayer.html">OutputLayer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1OutputLayer.html" title="The OutputLayer class represents the output layer of a neural network. It inherits from the Layer cla...">OutputLayer</a> class represents the output layer of a neural network. It inherits from the <a class="el" href="classsmlp_1_1Layer.html" title="The Layer class represents a layer in a neural network. It contains a vector of Neurons and has metho...">Layer</a> class and overrides its methods as necessary. This layer is responsible for producing the final output of the network.  <a href="classsmlp_1_1OutputLayer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html">Predict</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsmlp_1_1Predict.html" title="Predict class for predictive operations.">Predict</a> class for predictive operations.  <a href="classsmlp_1_1Predict.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleConfig.html">SimpleConfig</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleLang.html">SimpleLang</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleLogger.html">SimpleLogger</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsmlp_1_1SimpleLogger.html" title="SimpleLogger class.">SimpleLogger</a> class.  <a href="classsmlp_1_1SimpleLogger.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html">Testing</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1Testing.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> class is responsible for testing the neural network model. It contains methods for processing test data, calculating statistics, and displaying test results.  <a href="classsmlp_1_1Testing.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TestingFile.html">TestingFile</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TestingResult.html">TestingResult</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TestingSocket.html">TestingSocket</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TestingStdin.html">TestingStdin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Training.html">Training</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classsmlp_1_1Training.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> class is responsible for training the neural network model. It contains methods for processing training data, updating the model parameters, and monitoring the progress of training.  <a href="classsmlp_1_1Training.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TrainingFile.html">TrainingFile</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TrainingSocket.html">TrainingSocket</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1TrainingStdin.html">TrainingStdin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a9809aa890e665449ee5e3f2027e7daa4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a9809aa890e665449ee5e3f2027e7daa4">mapstr</a> = std::map&lt; std::string, std::string, std::less&lt;&gt; &gt;</td></tr>
+<tr class="separator:a9809aa890e665449ee5e3f2027e7daa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:ae276673b372124cf32f0523f0c79e996"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a> { <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a181ac97466ad89aa6427438a736ce542">ConfigFileNotFound</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996aeb10d4152ed5803ed0da0f6c88045098">CSVParsingError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a6abe6f60369c8c8ba2383f907ee30cd4">CSVParsingErrorEmptyLine</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996afccaf4bc8ab349fba6debe8215f2c0e0">CSVParsingErrorColumnsBadFormat</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a540667136f1331e778c4125d1dc1584e">CSVParsingErrorColumnsMin</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a4df51cc77fad1979562c0e339d61f9b5">CSVParsingErrorColumnsSize</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a96c00faa6ce5c80e1ac8b6842cb9b30a">DifferentModelVersion</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a2d2e4f8ddafca6d4416918714f1c5ad5">FailedToOpenFile</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a8462b58246e70e5c83e5b939a9332cb5">InternalError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a5d511c4cc227d792265bfb49c82cd8ac">InvalidDatasetFileMissing</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996af1b595191d4a629ca9ad66b191103e16">InvalidDirectory</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996af71241929198b433f2b1888c4b0e3663">InvalidJsonFile</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a129a63538b54214e26c98a2bf7dc9538">InvalidTotalInput</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996abb24a979185c9b4c8756400248ea6368">InvalidTotalOutput</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a7e98ad15320a65868d6f64b6a3cb8869">InvalidTrainingRatioTooBig</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996aacca4b1a460cc41ecdbb5e81a34ca26d">InvalidTrainingRatioTooSmall</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a228d4170c4d6cb68f09322f98fa13fcc">JsonParsingError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996abf67fc3f84cfb2a61055eab2c8a950c8">LayerTypeInvalidInput</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a38e658a7240ba3ce401a33a2d26b69f9">LayerTypeInvalidOutput</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996aada8ced9eeb9f4832317f101837d4ccb">LayerTypeNotRecognized</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a7bf1788fde2fdc31a5f49dfb0ae71c7d">MissingExportFileParam</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996abc602d1c198a1b1561797ea54f6f175e">MissingImportFile</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996acddb6cd7559e6c91f10f9757a3b133ef">MissingNetworkToImportParam</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a07ed169518b266b6f29c9b76834ef7c2">TCPServerAcceptError</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a45c359f220ba632337ba15bd2b1f3009">TCPServerRecvError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a9fae84a2a567418bfc398d129401a17c">TCPSocketBindError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a7d5dfdf77cd3665c5ac0a111d86e4e89">TCPSocketCreateError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996afbdae7cdb33556d8339198b3b45a43d6">TCPSocketListenError</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996aa25b2df0ff9d6d5278e9ee8f0e52c39e">TCPSocketNotSet</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a325499ce896dde44343ae609dc0e2539">TestingError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996ad53692ee11b93e9cdb01e781867eb796">TrainingError</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a23fe615c7763a2c49b0b9bb85f173048">UnimplementedActivationFunction</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a103fada77fc91de95669239c77e60a93">UnimplementedMode</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a35f5ab0caba9fa19dbc7c75e7c6351fb">UnimplementedPredictMode</a>
+, <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a9deb5a6d2fd3a6cfb3f626f0bcbda121">UnknownKey</a>
+<br />
+ }</td></tr>
+<tr class="separator:ae276673b372124cf32f0523f0c79e996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdcf39c3bf916802482327b07c5a35f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a> { <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa3899667ffcc9dd325028d2a5d9cbe706">StdinDisabled</a>
+, <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa0725b3a8edf832f62bd09754d5b9ac28">TCPClientConnection</a>
+, <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fab65b8c4f216655becfa8c601c1829e92">TCPClientDisconnection</a>
+, <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa18652e4b02f62d38bf3d9ca989076f68">TCPServerClosed</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa6079bd4b4261d61a1c3cd7483f4937b5">UsingConfigFile</a>
+<br />
+ }</td></tr>
+<tr class="separator:a2cdcf39c3bf916802482327b07c5a35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd80101d360cabe91db05d3e9601aeec"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">EMode</a> { <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeeca76801fc396f13051b0afd9f8db4eadcc">Predict</a>
+, <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecaa9463c9f72315953501239b6c265ecb1">TestOnly</a>
+, <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecabb8357f076b6f40fce9113b3dc5e759d">TrainOnly</a>
+, <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeeca2a7f3e6bde587a3e8d9bb4d62618bc3b">TrainTestMonitored</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeecada172908d34f9b80bd5e4f4cd7b61a14">TrainThenTest</a>
+<br />
+ }</td></tr>
+<tr class="separator:abd80101d360cabe91db05d3e9601aeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dbce98413494720e001266206922fb7"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a7dbce98413494720e001266206922fb7">EInput</a> { <a class="el" href="namespacesmlp.html#a7dbce98413494720e001266206922fb7a0b27918290ff5323bea1e3b78a9cf04e">File</a>
+, <a class="el" href="namespacesmlp.html#a7dbce98413494720e001266206922fb7a765d9d9f6bc7733d00c59e5c662a0aa7">Stdin</a>
+, <a class="el" href="namespacesmlp.html#a7dbce98413494720e001266206922fb7a69f69b59aae6f4ee1a47bbc1086ecdb4">Socket</a>
+ }</td></tr>
+<tr class="separator:a7dbce98413494720e001266206922fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a783924733da593e2f65f6285157dc4e3"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">EPredictMode</a> { <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3acc8d68c551c4a9a6d5313e07de4deafd">CSV</a>
+, <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3a8a678d827202baf74f57ce223a95ff4d">NumberAndRaw</a>
+, <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3ae6634b3f3e0f5da6ab274a12812f6f7e">NumberOnly</a>
+, <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3a15dbef581f86708d2bc23c6cf8221ec2">RawOnly</a>
+ }</td></tr>
+<tr class="separator:a783924733da593e2f65f6285157dc4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a617d1df3ad765255a44cfbe9ff033fd7"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a> { <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7a5b44c930bf0ddeef48b50ef11e5ddd58">ELU</a>
+, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7a601049e29a4481e658f6745a54aa3ad9">LReLU</a>
+, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7a474e0c94ac3a455d2b98a72feba8fba4">PReLU</a>
+, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7add10d919fa85cf27fc78c0e06fe0b378">ReLU</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7a21eebb164e4b8b9bcf64fdb4d8d5dff4">Sigmoid</a>
+, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7acc132a41cab5676334f353a22a0aa5c5">Tanh</a>
+<br />
+ }</td></tr>
+<tr class="separator:a617d1df3ad765255a44cfbe9ff033fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7332cebc522f07212b0f415b2f4452a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">ErrorCode</a> { <br />
 &#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa505a83f220c02df2f85c3810cd9ceb38">Success</a> = 0
 , <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aae139a585510a502bbf1841cf589f5086">Failure</a> = 1
@@ -102,24 +295,51 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa8ba68fee5542f5fd071aed140c39bd8e">MethodNotAllowed</a> = 405
 , <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aaf83a928e6a3f3b502ffadd2a414ce48c">NotAcceptable</a> = 406
 , <br />
-&#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa3632c2e4e6225d4d9fcd2a6fd2c65048">RequestTimeout</a> = 408
+&#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa59a2898a8bf9da75a5855e76110f06f2">ProxyAuthenticationRequired</a> = 407
+, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa3632c2e4e6225d4d9fcd2a6fd2c65048">RequestTimeout</a> = 408
 , <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aaf1d4ac54357cc0932f385d56814ba7e4">Conflict</a> = 409
 , <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aaecbf01325f1c744e9d7bb586ac2eb5ed">InternalServerError</a> = 500
-, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa997ca4ce119685f40f03a9a8a6c5346e">NotImplemented</a> = 501
 , <br />
-&#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa2a4581043d849bcb0e4747970ef1489b">ServiceUnavailable</a> = 503
+&#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa997ca4ce119685f40f03a9a8a6c5346e">NotImplemented</a> = 501
+, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa0e7c9ad08be0653518bf456c9994ace5">BadGateway</a> = 502
+, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa2a4581043d849bcb0e4747970ef1489b">ServiceUnavailable</a> = 503
+, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aada405cbc74723dfdda615e3f679ef2be">GatewayTimeout</a> = 504
+, <br />
+&#160;&#160;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa036c4283fc4ecb1686f44462f75208e5">HTTPVersionNotSupported</a> = 505
+, <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aa52066ff32b30f46d30b87007cacf8f79">NetworkAuthenticationRequired</a> = 511
 <br />
  }</td></tr>
 <tr class="memdesc:ac7332cebc522f07212b0f415b2f4452a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common HTTP code and common Unix code.  <a href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">More...</a><br /></td></tr>
 <tr class="separator:ac7332cebc522f07212b0f415b2f4452a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157e446fdf3733b88ae1f7be215c4e8e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a> { <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8eae19b8d69e381495ab2dcfad0f947c5de">InputLayer</a>
+, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8ea1462c81ba3769d8f4a5a20fcf19af10d">HiddenLayer</a>
+, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8ea500cef5499f984f348ea5eabd57ee667">OutputLayer</a>
+ }</td></tr>
+<tr class="separator:a157e446fdf3733b88ae1f7be215c4e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7949934ec3e31b905b534d2f93736812"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812">LogLevel</a> { <a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812a551b723eafd6a31d444fcb2f5920fbd3">INFO</a>
+, <a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812a32bd8a1db2275458673903bdb84cb277">WARN</a>
+, <a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812abb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a>
+, <a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812adc30ec20708ef7b0f641ef78b7880a15">DEBUG</a>
+ }</td></tr>
+<tr class="separator:a7949934ec3e31b905b534d2f93736812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875a22e785cb471fefba161c8646ad8b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">TestingType</a> { <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8ba8d0ecf0adee3db85a524e2d7e8253d8d">TestingFile</a>
+, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8ba3e232da481e38639674e1a61685103aa">TestingSocket</a>
+, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8baf99cf741c3d156b61f07c71c82cbb0a8">TestingStdin</a>
+ }</td></tr>
+<tr class="separator:a875a22e785cb471fefba161c8646ad8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a232fbc890ff881a28cfc9813bf20e2e8"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a> { <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8a757f7e5aa2407346db13ac58fb2826d6">TrainingFile</a>
+, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8a130c07446e7500b9b29f3bd4a00a4fdc">TrainingSocket</a>
+, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8ac712bd052f9941f5c1b3a14f8c178a23">TrainingStdin</a>
+ }</td></tr>
+<tr class="separator:a232fbc890ff881a28cfc9813bf20e2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae3630365be2013f4d2bc6a5f3fcf86c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ae3630365be2013f4d2bc6a5f3fcf86c8">getModeStr</a> (<a class="el" href="CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a> mode)</td></tr>
+<tr class="memitem:ae3630365be2013f4d2bc6a5f3fcf86c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ae3630365be2013f4d2bc6a5f3fcf86c8">getModeStr</a> (<a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">EMode</a> mode)</td></tr>
 <tr class="separator:ae3630365be2013f4d2bc6a5f3fcf86c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfcfa987e4a711b210ee35635115b97e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#abfcfa987e4a711b210ee35635115b97e">getPredictModeStr</a> (<a class="el" href="CommonModes_8h.html#ac6af2f9b08d6c36c0d6b805ef80ac87e">EPredictMode</a> predict)</td></tr>
+<tr class="memitem:abfcfa987e4a711b210ee35635115b97e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#abfcfa987e4a711b210ee35635115b97e">getPredictModeStr</a> (<a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">EPredictMode</a> predict)</td></tr>
 <tr class="separator:abfcfa987e4a711b210ee35635115b97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af51cd3857ff6a0a5359233060275186c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af51cd3857ff6a0a5359233060275186c">getActivationStr</a> (<a class="el" href="CommonModes_8h.html#a89939c8c374f8b73d6038b7adaee95e7">EActivationFunction</a> activation)</td></tr>
+<tr class="memitem:af51cd3857ff6a0a5359233060275186c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af51cd3857ff6a0a5359233060275186c">getActivationStr</a> (<a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a> activation)</td></tr>
 <tr class="separator:af51cd3857ff6a0a5359233060275186c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41b4b0047991c1714522bf6ab3a74e18"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a41b4b0047991c1714522bf6ab3a74e18">getEscapedString</a> (const std::string &amp;st)</td></tr>
 <tr class="memdesc:a41b4b0047991c1714522bf6ab3a74e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escaped string.  <a href="namespacesmlp.html#a41b4b0047991c1714522bf6ab3a74e18">More...</a><br /></td></tr>
@@ -138,8 +358,257 @@ Functions</h2></td></tr>
 <tr class="separator:a039fff7ae14985da47d2475f758427cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab46cdd9d49ec11e07fd0341ae0a91a23"><td class="memItemLeft" align="right" valign="top">std::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ab46cdd9d49ec11e07fd0341ae0a91a23">make_error_code</a> (<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">ErrorCode</a> e)</td></tr>
 <tr class="separator:ab46cdd9d49ec11e07fd0341ae0a91a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:acfefb0d57fb5929f1016e9e7dde27272"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">sigmoid</a> = [](auto x) { return 1.0f / (1.0f + exp(-x)); }</td></tr>
+<tr class="memdesc:acfefb0d57fb5929f1016e9e7dde27272"><td class="mdescLeft">&#160;</td><td class="mdescRight">the sigmoid function is commonly used as the activation function during the forward propagation step. The reason for this is that the sigmoid function maps any input value into a range between 0 and 1, which can be useful for outputting probabilities, among other things. The sigmoid derivative can be expressed in terms of the output of the sigmoid function itself: if σ(x) is the sigmoid function, then its derivative σ'(x) can be computed as σ(x) * (1 - σ(x)).  <a href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">More...</a><br /></td></tr>
+<tr class="separator:acfefb0d57fb5929f1016e9e7dde27272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fc7989c9c78aeacb233301742663e15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2fc7989c9c78aeacb233301742663e15">sigmoidDerivative</a></td></tr>
+<tr class="separator:a2fc7989c9c78aeacb233301742663e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3947e87343001268acddb73840417c44"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a3947e87343001268acddb73840417c44">tanhFunc</a> = [](auto x) { return tanh(x); }</td></tr>
+<tr class="memdesc:a3947e87343001268acddb73840417c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the input to a range between -1 and 1. It is often used in the hidden layers of a neural network.  <a href="namespacesmlp.html#a3947e87343001268acddb73840417c44">More...</a><br /></td></tr>
+<tr class="separator:a3947e87343001268acddb73840417c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62ae3beaa17da55e2d5523e6095c0d7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af62ae3beaa17da55e2d5523e6095c0d7">tanhDerivative</a></td></tr>
+<tr class="separator:af62ae3beaa17da55e2d5523e6095c0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3bb08506b81f7b7f863a632f4b06b15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af3bb08506b81f7b7f863a632f4b06b15">relu</a> = [](auto x) { return std::max(0.0f, x); }</td></tr>
+<tr class="memdesc:af3bb08506b81f7b7f863a632f4b06b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">ReLU Function (Rectified Linear Unit): This function outputs the input directly if it’s positive; otherwise, it outputs zero. It has become very popular in recent years because it helps to alleviate the vanishing gradient problem.  <a href="namespacesmlp.html#af3bb08506b81f7b7f863a632f4b06b15">More...</a><br /></td></tr>
+<tr class="separator:af3bb08506b81f7b7f863a632f4b06b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442df31244a306fc359abf23d84580e0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a442df31244a306fc359abf23d84580e0">reluDerivative</a> = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; }</td></tr>
+<tr class="separator:a442df31244a306fc359abf23d84580e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d45f80e7880fbfc4d246e85a1b863a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a">leakyRelu</a> = [](auto x) { return std::max(0.01f * x, x); }</td></tr>
+<tr class="memdesc:a24d45f80e7880fbfc4d246e85a1b863a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaky ReLU: This is a variant of ReLU that allows small negative values when the input is less than zero. It can help to alleviate the dying ReLU problem where neurons become inactive and only output zero.  <a href="namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a">More...</a><br /></td></tr>
+<tr class="separator:a24d45f80e7880fbfc4d246e85a1b863a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05fef3a79985b00dab2a7e0e7b4a259c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a05fef3a79985b00dab2a7e0e7b4a259c">leakyReluDerivative</a> = [](auto x) { return x &gt; 0 ? 1.0f : 0.01f; }</td></tr>
+<tr class="separator:a05fef3a79985b00dab2a7e0e7b4a259c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d57a311b1145ebfc5a2f605ce948de0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a1d57a311b1145ebfc5a2f605ce948de0">parametricRelu</a></td></tr>
+<tr class="memdesc:a1d57a311b1145ebfc5a2f605ce948de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parametric ReLU (PReLU) is a type of leaky ReLU that, instead of having a predetermined slope like 0.01, learns the slope during training. This can give it a bit more flexibility and help it to learn more complex patterns.  <a href="namespacesmlp.html#a1d57a311b1145ebfc5a2f605ce948de0">More...</a><br /></td></tr>
+<tr class="separator:a1d57a311b1145ebfc5a2f605ce948de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbd319755737c46e6b1603547be9fa0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a7fbd319755737c46e6b1603547be9fa0">parametricReluDerivative</a></td></tr>
+<tr class="separator:a7fbd319755737c46e6b1603547be9fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485c23c19d9a56d4830e3f0a7c9c7291"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a485c23c19d9a56d4830e3f0a7c9c7291">elu</a></td></tr>
+<tr class="memdesc:a485c23c19d9a56d4830e3f0a7c9c7291"><td class="mdescLeft">&#160;</td><td class="mdescRight">the Exponential Linear Units (ELUs) are a great choice as they take on negative values when the input is less than zero, which allows them to push mean unit activations closer to zero like batch normalization. Unlike ReLUs, ELUs have a nonzero gradient for negative input, which avoids the “dead neuron” problem.  <a href="namespacesmlp.html#a485c23c19d9a56d4830e3f0a7c9c7291">More...</a><br /></td></tr>
+<tr class="separator:a485c23c19d9a56d4830e3f0a7c9c7291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47e24ba887acbadf99fa3dd66a3d2d42"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a47e24ba887acbadf99fa3dd66a3d2d42">eluDerivative</a></td></tr>
+<tr class="separator:a47e24ba887acbadf99fa3dd66a3d2d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2601894b23e5d122cfe143a20da2e25e"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2601894b23e5d122cfe143a20da2e25e">errorMessages</a></td></tr>
+<tr class="separator:a2601894b23e5d122cfe143a20da2e25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa051f2c978df1804e0b5cdd1771b6951"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#aa051f2c978df1804e0b5cdd1771b6951">defaultErrorMessages</a></td></tr>
+<tr class="separator:aa051f2c978df1804e0b5cdd1771b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6858cf44a0ffbd7b04933d26fd800288"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a6858cf44a0ffbd7b04933d26fd800288">messages</a></td></tr>
+<tr class="separator:a6858cf44a0ffbd7b04933d26fd800288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c09cf01b1801ea91ddbf05da71eac36"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a8c09cf01b1801ea91ddbf05da71eac36">defaultMessages</a></td></tr>
+<tr class="separator:a8c09cf01b1801ea91ddbf05da71eac36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7518a23e0e929a6e1e6c9a8b89bea930"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">EMode</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a7518a23e0e929a6e1e6c9a8b89bea930">mode_map</a></td></tr>
+<tr class="separator:a7518a23e0e929a6e1e6c9a8b89bea930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40440a8669fb36563ede865ea5e3b993"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">EPredictMode</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a40440a8669fb36563ede865ea5e3b993">predict_map</a></td></tr>
+<tr class="separator:a40440a8669fb36563ede865ea5e3b993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a0cc719b2f89ae1c6140a81eaca2dba19">activation_map</a></td></tr>
+<tr class="separator:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460f274a49feb5ded7f7283bdb592803"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a460f274a49feb5ded7f7283bdb592803">layer_map</a></td></tr>
+<tr class="separator:a460f274a49feb5ded7f7283bdb592803"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4225fb7211b950130580dff343680fad"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">TestingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a4225fb7211b950130580dff343680fad">testing_map</a></td></tr>
+<tr class="separator:a4225fb7211b950130580dff343680fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ae5c5dae7a129816e6b23566bd80348"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a8ae5c5dae7a129816e6b23566bd80348">training_map</a></td></tr>
+<tr class="separator:a8ae5c5dae7a129816e6b23566bd80348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Here's a high-level overview of the process:</p>
+<ol type="1">
+<li>Forward Propagation: Input data is fed into the network. The network performs forward propagation through each layer to compute predicted output values.</li>
+<li>Compute Loss: During the backward propagation phase, you compare the predicted output values with the actual output values from your training data. The loss function (e.g., mean squared error) is used to measure the difference between predicted and actual outputs.</li>
+<li>Compute Gradients: The gradients of the loss with respect to the network's parameters (weights and biases) are computed through the layers using the backpropagation algorithm.</li>
+<li>Update Weights and Biases: The gradients are used to update the weights and biases of the network using an optimization algorithm (e.g., Adam, SGD). The learning rate determines how large the updates to the weights and biases will be. The process repeats for multiple training examples and epochs, gradually improving the network's ability to predict the correct outputs for the given inputs. </li>
+</ol>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9809aa890e665449ee5e3f2027e7daa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9809aa890e665449ee5e3f2027e7daa4">&#9670;&nbsp;</a></span>mapstr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacesmlp.html#a9809aa890e665449ee5e3f2027e7daa4">smlp::mapstr</a> = typedef std::map&lt;std::string, std::string, std::less&lt;&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a617d1df3ad765255a44cfbe9ff033fd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a617d1df3ad765255a44cfbe9ff033fd7">&#9670;&nbsp;</a></span>EActivationFunction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">smlp::EActivationFunction</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7a5b44c930bf0ddeef48b50ef11e5ddd58"></a>ELU&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7a601049e29a4481e658f6745a54aa3ad9"></a>LReLU&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7a474e0c94ac3a455d2b98a72feba8fba4"></a>PReLU&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7add10d919fa85cf27fc78c0e06fe0b378"></a>ReLU&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7a21eebb164e4b8b9bcf64fdb4d8d5dff4"></a>Sigmoid&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a617d1df3ad765255a44cfbe9ff033fd7acc132a41cab5676334f353a22a0aa5c5"></a>Tanh&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a7dbce98413494720e001266206922fb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dbce98413494720e001266206922fb7">&#9670;&nbsp;</a></span>EInput</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a7dbce98413494720e001266206922fb7">smlp::EInput</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7dbce98413494720e001266206922fb7a0b27918290ff5323bea1e3b78a9cf04e"></a>File&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7dbce98413494720e001266206922fb7a765d9d9f6bc7733d00c59e5c662a0aa7"></a>Stdin&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7dbce98413494720e001266206922fb7a69f69b59aae6f4ee1a47bbc1086ecdb4"></a>Socket&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="abd80101d360cabe91db05d3e9601aeec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd80101d360cabe91db05d3e9601aeec">&#9670;&nbsp;</a></span>EMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">smlp::EMode</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="abd80101d360cabe91db05d3e9601aeeca76801fc396f13051b0afd9f8db4eadcc"></a>Predict&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abd80101d360cabe91db05d3e9601aeecaa9463c9f72315953501239b6c265ecb1"></a>TestOnly&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abd80101d360cabe91db05d3e9601aeecabb8357f076b6f40fce9113b3dc5e759d"></a>TrainOnly&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abd80101d360cabe91db05d3e9601aeeca2a7f3e6bde587a3e8d9bb4d62618bc3b"></a>TrainTestMonitored&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abd80101d360cabe91db05d3e9601aeecada172908d34f9b80bd5e4f4cd7b61a14"></a>TrainThenTest&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a783924733da593e2f65f6285157dc4e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a783924733da593e2f65f6285157dc4e3">&#9670;&nbsp;</a></span>EPredictMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">smlp::EPredictMode</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a783924733da593e2f65f6285157dc4e3acc8d68c551c4a9a6d5313e07de4deafd"></a>CSV&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a783924733da593e2f65f6285157dc4e3a8a678d827202baf74f57ce223a95ff4d"></a>NumberAndRaw&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a783924733da593e2f65f6285157dc4e3ae6634b3f3e0f5da6ab274a12812f6f7e"></a>NumberOnly&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a783924733da593e2f65f6285157dc4e3a15dbef581f86708d2bc23c6cf8221ec2"></a>RawOnly&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="ae276673b372124cf32f0523f0c79e996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae276673b372124cf32f0523f0c79e996">&#9670;&nbsp;</a></span>Error</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">smlp::Error</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a181ac97466ad89aa6427438a736ce542"></a>ConfigFileNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996aeb10d4152ed5803ed0da0f6c88045098"></a>CSVParsingError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a6abe6f60369c8c8ba2383f907ee30cd4"></a>CSVParsingErrorEmptyLine&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996afccaf4bc8ab349fba6debe8215f2c0e0"></a>CSVParsingErrorColumnsBadFormat&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a540667136f1331e778c4125d1dc1584e"></a>CSVParsingErrorColumnsMin&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a4df51cc77fad1979562c0e339d61f9b5"></a>CSVParsingErrorColumnsSize&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a96c00faa6ce5c80e1ac8b6842cb9b30a"></a>DifferentModelVersion&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a2d2e4f8ddafca6d4416918714f1c5ad5"></a>FailedToOpenFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a8462b58246e70e5c83e5b939a9332cb5"></a>InternalError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a5d511c4cc227d792265bfb49c82cd8ac"></a>InvalidDatasetFileMissing&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996af1b595191d4a629ca9ad66b191103e16"></a>InvalidDirectory&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996af71241929198b433f2b1888c4b0e3663"></a>InvalidJsonFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a129a63538b54214e26c98a2bf7dc9538"></a>InvalidTotalInput&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996abb24a979185c9b4c8756400248ea6368"></a>InvalidTotalOutput&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a7e98ad15320a65868d6f64b6a3cb8869"></a>InvalidTrainingRatioTooBig&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996aacca4b1a460cc41ecdbb5e81a34ca26d"></a>InvalidTrainingRatioTooSmall&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a228d4170c4d6cb68f09322f98fa13fcc"></a>JsonParsingError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996abf67fc3f84cfb2a61055eab2c8a950c8"></a>LayerTypeInvalidInput&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a38e658a7240ba3ce401a33a2d26b69f9"></a>LayerTypeInvalidOutput&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996aada8ced9eeb9f4832317f101837d4ccb"></a>LayerTypeNotRecognized&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a7bf1788fde2fdc31a5f49dfb0ae71c7d"></a>MissingExportFileParam&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996abc602d1c198a1b1561797ea54f6f175e"></a>MissingImportFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996acddb6cd7559e6c91f10f9757a3b133ef"></a>MissingNetworkToImportParam&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a07ed169518b266b6f29c9b76834ef7c2"></a>TCPServerAcceptError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a45c359f220ba632337ba15bd2b1f3009"></a>TCPServerRecvError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a9fae84a2a567418bfc398d129401a17c"></a>TCPSocketBindError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a7d5dfdf77cd3665c5ac0a111d86e4e89"></a>TCPSocketCreateError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996afbdae7cdb33556d8339198b3b45a43d6"></a>TCPSocketListenError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996aa25b2df0ff9d6d5278e9ee8f0e52c39e"></a>TCPSocketNotSet&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a325499ce896dde44343ae609dc0e2539"></a>TestingError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996ad53692ee11b93e9cdb01e781867eb796"></a>TrainingError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a23fe615c7763a2c49b0b9bb85f173048"></a>UnimplementedActivationFunction&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a103fada77fc91de95669239c77e60a93"></a>UnimplementedMode&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a35f5ab0caba9fa19dbc7c75e7c6351fb"></a>UnimplementedPredictMode&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a9deb5a6d2fd3a6cfb3f626f0bcbda121"></a>UnknownKey&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="ac7332cebc522f07212b0f415b2f4452a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7332cebc522f07212b0f415b2f4452a">&#9670;&nbsp;</a></span>ErrorCode</h2>
 
@@ -175,11 +644,154 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa38c300f4fc9ce8a77aad4a30de05cad8"></a>NotFound&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa8ba68fee5542f5fd071aed140c39bd8e"></a>MethodNotAllowed&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aaf83a928e6a3f3b502ffadd2a414ce48c"></a>NotAcceptable&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa59a2898a8bf9da75a5855e76110f06f2"></a>ProxyAuthenticationRequired&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa3632c2e4e6225d4d9fcd2a6fd2c65048"></a>RequestTimeout&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aaf1d4ac54357cc0932f385d56814ba7e4"></a>Conflict&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aaecbf01325f1c744e9d7bb586ac2eb5ed"></a>InternalServerError&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa997ca4ce119685f40f03a9a8a6c5346e"></a>NotImplemented&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa0e7c9ad08be0653518bf456c9994ace5"></a>BadGateway&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa2a4581043d849bcb0e4747970ef1489b"></a>ServiceUnavailable&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aada405cbc74723dfdda615e3f679ef2be"></a>GatewayTimeout&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa036c4283fc4ecb1686f44462f75208e5"></a>HTTPVersionNotSupported&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ac7332cebc522f07212b0f415b2f4452aa52066ff32b30f46d30b87007cacf8f79"></a>NetworkAuthenticationRequired&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a157e446fdf3733b88ae1f7be215c4e8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a157e446fdf3733b88ae1f7be215c4e8e">&#9670;&nbsp;</a></span>LayerType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">smlp::LayerType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a157e446fdf3733b88ae1f7be215c4e8eae19b8d69e381495ab2dcfad0f947c5de"></a>InputLayer&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a157e446fdf3733b88ae1f7be215c4e8ea1462c81ba3769d8f4a5a20fcf19af10d"></a>HiddenLayer&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a157e446fdf3733b88ae1f7be215c4e8ea500cef5499f984f348ea5eabd57ee667"></a>OutputLayer&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a7949934ec3e31b905b534d2f93736812"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7949934ec3e31b905b534d2f93736812">&#9670;&nbsp;</a></span>LogLevel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a7949934ec3e31b905b534d2f93736812">smlp::LogLevel</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7949934ec3e31b905b534d2f93736812a551b723eafd6a31d444fcb2f5920fbd3"></a>INFO&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7949934ec3e31b905b534d2f93736812a32bd8a1db2275458673903bdb84cb277"></a>WARN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7949934ec3e31b905b534d2f93736812abb1ca97ec761fc37101737ba0aa2e7c5"></a>ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7949934ec3e31b905b534d2f93736812adc30ec20708ef7b0f641ef78b7880a15"></a>DEBUG&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a2cdcf39c3bf916802482327b07c5a35f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cdcf39c3bf916802482327b07c5a35f">&#9670;&nbsp;</a></span>Message</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">smlp::Message</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2cdcf39c3bf916802482327b07c5a35fa3899667ffcc9dd325028d2a5d9cbe706"></a>StdinDisabled&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cdcf39c3bf916802482327b07c5a35fa0725b3a8edf832f62bd09754d5b9ac28"></a>TCPClientConnection&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cdcf39c3bf916802482327b07c5a35fab65b8c4f216655becfa8c601c1829e92"></a>TCPClientDisconnection&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cdcf39c3bf916802482327b07c5a35fa18652e4b02f62d38bf3d9ca989076f68"></a>TCPServerClosed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2cdcf39c3bf916802482327b07c5a35fa6079bd4b4261d61a1c3cd7483f4937b5"></a>UsingConfigFile&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a875a22e785cb471fefba161c8646ad8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875a22e785cb471fefba161c8646ad8b">&#9670;&nbsp;</a></span>TestingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">smlp::TestingType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a875a22e785cb471fefba161c8646ad8ba8d0ecf0adee3db85a524e2d7e8253d8d"></a>TestingFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a875a22e785cb471fefba161c8646ad8ba3e232da481e38639674e1a61685103aa"></a>TestingSocket&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a875a22e785cb471fefba161c8646ad8baf99cf741c3d156b61f07c71c82cbb0a8"></a>TestingStdin&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a232fbc890ff881a28cfc9813bf20e2e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a232fbc890ff881a28cfc9813bf20e2e8">&#9670;&nbsp;</a></span>TrainingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">smlp::TrainingType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a232fbc890ff881a28cfc9813bf20e2e8a757f7e5aa2407346db13ac58fb2826d6"></a>TrainingFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a232fbc890ff881a28cfc9813bf20e2e8a130c07446e7500b9b29f3bd4a00a4fdc"></a>TrainingSocket&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a232fbc890ff881a28cfc9813bf20e2e8ac712bd052f9941f5c1b3a14f8c178a23"></a>TrainingStdin&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -197,7 +809,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::string smlp::getActivationStr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="CommonModes_8h.html#a89939c8c374f8b73d6038b7adaee95e7">EActivationFunction</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a>&#160;</td>
           <td class="paramname"><em>activation</em></td><td>)</td>
           <td></td>
         </tr>
@@ -258,7 +870,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::string smlp::getModeStr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">EMode</a>&#160;</td>
           <td class="paramname"><em>mode</em></td><td>)</td>
           <td></td>
         </tr>
@@ -284,7 +896,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::string smlp::getPredictModeStr </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="CommonModes_8h.html#ac6af2f9b08d6c36c0d6b805ef80ac87e">EPredictMode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">EPredictMode</a>&#160;</td>
           <td class="paramname"><em>predict</em></td><td>)</td>
           <td></td>
         </tr>
@@ -478,6 +1090,494 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a0cc719b2f89ae1c6140a81eaca2dba19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc719b2f89ae1c6140a81eaca2dba19">&#9670;&nbsp;</a></span>activation_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a>, std::less&lt;&gt; &gt; smlp::activation_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;ELU&quot;</span>, EActivationFunction::ELU},</div>
+<div class="line">    {<span class="stringliteral">&quot;LReLU&quot;</span>, EActivationFunction::LReLU},</div>
+<div class="line">    {<span class="stringliteral">&quot;PReLU&quot;</span>, EActivationFunction::PReLU},</div>
+<div class="line">    {<span class="stringliteral">&quot;ReLU&quot;</span>, EActivationFunction::ReLU},</div>
+<div class="line">    {<span class="stringliteral">&quot;Sigmoid&quot;</span>, EActivationFunction::Sigmoid},</div>
+<div class="line">    {<span class="stringliteral">&quot;Tanh&quot;</span>, EActivationFunction::Tanh}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa051f2c978df1804e0b5cdd1771b6951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa051f2c978df1804e0b5cdd1771b6951">&#9670;&nbsp;</a></span>defaultErrorMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string&gt; smlp::defaultErrorMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8c09cf01b1801ea91ddbf05da71eac36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c09cf01b1801ea91ddbf05da71eac36">&#9670;&nbsp;</a></span>defaultMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a>, std::string&gt; smlp::defaultMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {Message::StdinDisabled, <span class="stringliteral">&quot;Stdin disabled.&quot;</span>},</div>
+<div class="line">    {Message::TCPClientConnection, <span class="stringliteral">&quot;Client connection.&quot;</span>},</div>
+<div class="line">    {Message::TCPClientDisconnection, <span class="stringliteral">&quot;Client disconnection.&quot;</span>},</div>
+<div class="line">    {Message::TCPServerClosed,</div>
+<div class="line">     <span class="stringliteral">&quot;TCP Server socket was closed, stopping server.&quot;</span>},</div>
+<div class="line">    {Message::UsingConfigFile, <span class="stringliteral">&quot;Using config file %%config_file%%...&quot;</span>}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a485c23c19d9a56d4830e3f0a7c9c7291"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a485c23c19d9a56d4830e3f0a7c9c7291">&#9670;&nbsp;</a></span>elu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::elu</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
+<div class="line">  <span class="keywordflow">return</span> x &gt;= 0 ? x : alpha * (exp(x) - 1);</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>the Exponential Linear Units (ELUs) are a great choice as they take on negative values when the input is less than zero, which allows them to push mean unit activations closer to zero like batch normalization. Unlike ReLUs, ELUs have a nonzero gradient for negative input, which avoids the “dead neuron” problem. </p>
+
+</div>
+</div>
+<a id="a47e24ba887acbadf99fa3dd66a3d2d42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47e24ba887acbadf99fa3dd66a3d2d42">&#9670;&nbsp;</a></span>eluDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::eluDerivative</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
+<div class="line">  <span class="keywordflow">return</span> x &gt;= 0 ? 1 : alpha * exp(x);</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2601894b23e5d122cfe143a20da2e25e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2601894b23e5d122cfe143a20da2e25e">&#9670;&nbsp;</a></span>errorMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string&gt; smlp::errorMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a460f274a49feb5ded7f7283bdb592803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a460f274a49feb5ded7f7283bdb592803">&#9670;&nbsp;</a></span>layer_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a>, std::less&lt;&gt; &gt; smlp::layer_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;InputLayer&quot;</span>, LayerType::InputLayer},</div>
+<div class="line">    {<span class="stringliteral">&quot;HiddenLayer&quot;</span>, LayerType::HiddenLayer},</div>
+<div class="line">    {<span class="stringliteral">&quot;OutputLayer&quot;</span>, LayerType::OutputLayer}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a24d45f80e7880fbfc4d246e85a1b863a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d45f80e7880fbfc4d246e85a1b863a">&#9670;&nbsp;</a></span>leakyRelu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::leakyRelu = [](auto x) { return std::max(0.01f * x, x); }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Leaky ReLU: This is a variant of ReLU that allows small negative values when the input is less than zero. It can help to alleviate the dying ReLU problem where neurons become inactive and only output zero. </p>
+
+</div>
+</div>
+<a id="a05fef3a79985b00dab2a7e0e7b4a259c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05fef3a79985b00dab2a7e0e7b4a259c">&#9670;&nbsp;</a></span>leakyReluDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::leakyReluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.01f; }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6858cf44a0ffbd7b04933d26fd800288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6858cf44a0ffbd7b04933d26fd800288">&#9670;&nbsp;</a></span>messages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a>, std::string&gt; smlp::messages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {Message::StdinDisabled, <span class="stringliteral">&quot;StdinDisabled&quot;</span>},</div>
+<div class="line">    {Message::TCPClientConnection, <span class="stringliteral">&quot;TCPClientConnection&quot;</span>},</div>
+<div class="line">    {Message::TCPClientDisconnection, <span class="stringliteral">&quot;TCPClientDisconnection&quot;</span>},</div>
+<div class="line">    {Message::TCPServerClosed, <span class="stringliteral">&quot;TCPServerClosed&quot;</span>},</div>
+<div class="line">    {Message::UsingConfigFile, <span class="stringliteral">&quot;UsingConfigFile&quot;</span>}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7518a23e0e929a6e1e6c9a8b89bea930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7518a23e0e929a6e1e6c9a8b89bea930">&#9670;&nbsp;</a></span>mode_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#abd80101d360cabe91db05d3e9601aeec">EMode</a>, std::less&lt;&gt; &gt; smlp::mode_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;Predict&quot;</span>, EMode::Predict},</div>
+<div class="line">    {<span class="stringliteral">&quot;TestOnly&quot;</span>, EMode::TestOnly},</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainOnly&quot;</span>, EMode::TrainOnly},</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainTestMonitored&quot;</span>, EMode::TrainTestMonitored},</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainThenTest&quot;</span>, EMode::TrainThenTest}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1d57a311b1145ebfc5a2f605ce948de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d57a311b1145ebfc5a2f605ce948de0">&#9670;&nbsp;</a></span>parametricRelu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::parametricRelu</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
+<div class="line">  <span class="keywordflow">return</span> std::max(alpha * x, x);</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Parametric ReLU (PReLU) is a type of leaky ReLU that, instead of having a predetermined slope like 0.01, learns the slope during training. This can give it a bit more flexibility and help it to learn more complex patterns. </p>
+
+</div>
+</div>
+<a id="a7fbd319755737c46e6b1603547be9fa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fbd319755737c46e6b1603547be9fa0">&#9670;&nbsp;</a></span>parametricReluDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::parametricReluDerivative</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
+<div class="line">  <span class="keywordflow">return</span> x &gt; 0 ? 1.0f : alpha;</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a40440a8669fb36563ede865ea5e3b993"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40440a8669fb36563ede865ea5e3b993">&#9670;&nbsp;</a></span>predict_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a783924733da593e2f65f6285157dc4e3">EPredictMode</a>, std::less&lt;&gt; &gt; smlp::predict_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;CSV&quot;</span>, EPredictMode::CSV},</div>
+<div class="line">    {<span class="stringliteral">&quot;NumberAndRaw&quot;</span>, EPredictMode::NumberAndRaw},</div>
+<div class="line">    {<span class="stringliteral">&quot;NumberOnly&quot;</span>, EPredictMode::NumberOnly},</div>
+<div class="line">    {<span class="stringliteral">&quot;RawOnly&quot;</span>, EPredictMode::RawOnly}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af3bb08506b81f7b7f863a632f4b06b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3bb08506b81f7b7f863a632f4b06b15">&#9670;&nbsp;</a></span>relu</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::relu = [](auto x) { return std::max(0.0f, x); }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>ReLU Function (Rectified Linear Unit): This function outputs the input directly if it’s positive; otherwise, it outputs zero. It has become very popular in recent years because it helps to alleviate the vanishing gradient problem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Unit</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ReLU </dd></dl>
+
+</div>
+</div>
+<a id="a442df31244a306fc359abf23d84580e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a442df31244a306fc359abf23d84580e0">&#9670;&nbsp;</a></span>reluDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::reluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acfefb0d57fb5929f1016e9e7dde27272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfefb0d57fb5929f1016e9e7dde27272">&#9670;&nbsp;</a></span>sigmoid</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::sigmoid = [](auto x) { return 1.0f / (1.0f + exp(-x)); }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>the sigmoid function is commonly used as the activation function during the forward propagation step. The reason for this is that the sigmoid function maps any input value into a range between 0 and 1, which can be useful for outputting probabilities, among other things. The sigmoid derivative can be expressed in terms of the output of the sigmoid function itself: if σ(x) is the sigmoid function, then its derivative σ'(x) can be computed as σ(x) * (1 - σ(x)). </p>
+
+</div>
+</div>
+<a id="a2fc7989c9c78aeacb233301742663e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fc7989c9c78aeacb233301742663e15">&#9670;&nbsp;</a></span>sigmoidDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::sigmoidDerivative</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x) {</div>
+<div class="line">  <span class="keywordtype">float</span> sigmoidValue = <a class="code" href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">sigmoid</a>(x);</div>
+<div class="line">  <span class="keywordflow">return</span> sigmoidValue * (1 - sigmoidValue);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespacesmlp_html_acfefb0d57fb5929f1016e9e7dde27272"><div class="ttname"><a href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">smlp::sigmoid</a></div><div class="ttdeci">auto sigmoid</div><div class="ttdoc">the sigmoid function is commonly used as the activation function during the forward propagation step....</div><div class="ttdef"><b>Definition:</b> ActivationFunctions.h:29</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af62ae3beaa17da55e2d5523e6095c0d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af62ae3beaa17da55e2d5523e6095c0d7">&#9670;&nbsp;</a></span>tanhDerivative</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::tanhDerivative</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x) {</div>
+<div class="line">  <span class="keywordtype">float</span> tanhValue = tanh(x);</div>
+<div class="line">  <span class="keywordflow">return</span> 1 - tanhValue * tanhValue;</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3947e87343001268acddb73840417c44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3947e87343001268acddb73840417c44">&#9670;&nbsp;</a></span>tanhFunc</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto smlp::tanhFunc = [](auto x) { return tanh(x); }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the input to a range between -1 and 1. It is often used in the hidden layers of a neural network. </p>
+
+</div>
+</div>
+<a id="a4225fb7211b950130580dff343680fad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4225fb7211b950130580dff343680fad">&#9670;&nbsp;</a></span>testing_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">TestingType</a>, std::less&lt;&gt; &gt; smlp::testing_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingFile&quot;</span>, TestingType::TestingFile},</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingSocket&quot;</span>, TestingType::TestingSocket},</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingStdin&quot;</span>, TestingType::TestingStdin}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8ae5c5dae7a129816e6b23566bd80348"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ae5c5dae7a129816e6b23566bd80348">&#9670;&nbsp;</a></span>training_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a>, std::less&lt;&gt; &gt; smlp::training_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainingFile&quot;</span>, TrainingType::TrainingFile},</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainingSocket&quot;</span>, TrainingType::TrainingSocket},</div>
+<div class="line">    {<span class="stringliteral">&quot;TrainingStdin&quot;</span>, TrainingType::TrainingStdin}}</div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

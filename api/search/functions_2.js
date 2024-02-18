@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['calcstats_585',['calcStats',['../classTestingResult.html#ac1c27490500b69797db736f8734ca8ee',1,'TestingResult']]],
-  ['calctrainingratioline_586',['calcTrainingRatioLine',['../classDataFileParser.html#af036f0d3906c613e375c059f50c1523e',1,'DataFileParser']]],
-  ['clearstats_587',['clearStats',['../classTestingResult.html#aac7386e6aa86c940a7b670df148eb54f',1,'TestingResult']]],
-  ['closefile_588',['closeFile',['../classDataFileParser.html#a696823cd47ab566786bdb4cff0ba4234',1,'DataFileParser']]],
-  ['computeerrors_589',['computeErrors',['../classOutputLayer.html#aa2981b73f1c34a17172a0887ca4cd300',1,'OutputLayer']]],
-  ['countline_590',['countLine',['../classDataFileParser.html#a6502370ca38722a33c0b750b18fbd6a9',1,'DataFileParser']]],
-  ['createfileparser_591',['createFileParser',['../classTesting.html#a0b24316789c6fa663ed67146d7620e77',1,'Testing::createFileParser()'],['../classTraining.html#a09aaa1b3bdb835449791c603cbbfc894',1,'Training::createFileParser()']]],
-  ['createhttpserver_592',['createHttpServer',['../classManager.html#ad27866d56cfec6deaa7373ab99c1e20d',1,'Manager']]],
-  ['createjsonneuron_593',['createJsonNeuron',['../classNetworkImportExportJSON.html#a306bf87c535daae75d02a1761244db04',1,'NetworkImportExportJSON']]],
-  ['createtesting_594',['createTesting',['../classManager.html#a9ae6df57474640f6aad4d73cfc643a3e',1,'Manager']]],
-  ['createtraining_595',['createTraining',['../classManager.html#a4bfd396ea6143eec9cfcb7e3586a185a',1,'Manager']]]
+  ['calcstats_590',['calcStats',['../classsmlp_1_1TestingResult.html#ac1c27490500b69797db736f8734ca8ee',1,'smlp::TestingResult']]],
+  ['calctrainingratioline_591',['calcTrainingRatioLine',['../classsmlp_1_1DataFileParser.html#a113bf26944802492209c508bd08c96b6',1,'smlp::DataFileParser']]],
+  ['clearstats_592',['clearStats',['../classsmlp_1_1TestingResult.html#a6a14d14f2b81af4727d09195ca406002',1,'smlp::TestingResult']]],
+  ['closefile_593',['closeFile',['../classsmlp_1_1DataFileParser.html#a696823cd47ab566786bdb4cff0ba4234',1,'smlp::DataFileParser']]],
+  ['computeerrors_594',['computeErrors',['../classsmlp_1_1OutputLayer.html#a3892839dee2db882e4bf36400d394afe',1,'smlp::OutputLayer']]],
+  ['countline_595',['countLine',['../classsmlp_1_1DataFileParser.html#a35f73e987bf29d863829c15edceb911e',1,'smlp::DataFileParser']]],
+  ['createfileparser_596',['createFileParser',['../classsmlp_1_1Testing.html#a8224434b2629aa5609a72efce96eae97',1,'smlp::Testing::createFileParser()'],['../classsmlp_1_1Training.html#a063b5d896e0253bcf3acb43557d54eaf',1,'smlp::Training::createFileParser()']]],
+  ['createhttpserver_597',['createHttpServer',['../classsmlp_1_1Manager.html#a550267da53ca3d12e7b474656c246ac2',1,'smlp::Manager']]],
+  ['createjsonneuron_598',['createJsonNeuron',['../classsmlp_1_1NetworkImportExportJSON.html#a57fc3fb48afe65305340d6c261cc60c9',1,'smlp::NetworkImportExportJSON']]],
+  ['createtesting_599',['createTesting',['../classsmlp_1_1Manager.html#a49c250fcc285bac959a6a926bcb18125',1,'smlp::Manager']]],
+  ['createtraining_600',['createTraining',['../classsmlp_1_1Manager.html#a6f28ef1ec24bf9f963731559a3eacc85',1,'smlp::Manager']]]
 ];

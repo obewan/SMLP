@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['bias_754',['bias',['../classNeuron.html#a71a7253b2b8c3f705834717006f93fa3',1,'Neuron']]],
-  ['body_755',['body',['../structSimpleHTTPServer_1_1HttpRequest.html#a15867407257622ddf41f558c2dc59992',1,'SimpleHTTPServer::HttpRequest']]]
+  ['bias_759',['bias',['../classsmlp_1_1Neuron.html#ab7112adc9ac3d508574a536dd862541e',1,'smlp::Neuron']]],
+  ['body_760',['body',['../structsmlp_1_1SimpleHTTPServer_1_1HttpRequest.html#a6f3913f828e1abc2e3df6c33ada052bb',1,'smlp::SimpleHTTPServer::HttpRequest']]]
 ];

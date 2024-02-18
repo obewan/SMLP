@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['elu_777',['elu',['../ActivationFunctions_8h.html#a35cd4bd4389d7a47d97f8ce6858ddbce',1,'ActivationFunctions.h']]],
-  ['eluderivative_778',['eluDerivative',['../ActivationFunctions_8h.html#ade662513eaa5ac6c359c04fba988dc03',1,'ActivationFunctions.h']]],
-  ['enable_5fhttp_779',['enable_http',['../structAppParameters.html#ae2f868395e33c4cd42059b4a6bb38643',1,'AppParameters']]],
-  ['epoch_780',['epoch',['../structTestingResult_1_1TestResults.html#a8e3ae2c413443c918cc4c7c9a4a195bd',1,'TestingResult::TestResults']]],
-  ['error_781',['error',['../classNeuron.html#aa90878a9bc48a0760c68725e699a8e97',1,'Neuron']]],
-  ['errormessages_782',['errorMessages',['../CommonErrors_8h.html#a85fb25f0d9624480b3e21eaeab3fd6ab',1,'CommonErrors.h']]],
-  ['exit_5fhelp_783',['EXIT_HELP',['../classSimpleMLP.html#a594ffc78e7099f3de74453fb72232383',1,'SimpleMLP']]],
-  ['exit_5fversion_784',['EXIT_VERSION',['../classSimpleMLP.html#a5611b13cd76ed4372232c31ebe660021',1,'SimpleMLP']]],
-  ['expected_785',['expected',['../structTestingResult_1_1Convergence.html#a63087bce795a37aaafdf69ca6a199a60',1,'TestingResult::Convergence']]],
-  ['expecteds_786',['expecteds',['../structTestingResult_1_1TestResults.html#a105217055687b01199c69c65b46f3ad5',1,'TestingResult::TestResults']]],
-  ['export_5fmodel_5fschedule_5fseconds_787',['EXPORT_MODEL_SCHEDULE_SECONDS',['../SimpleHTTPServer_8cpp.html#a97f4b592907120b63a63599e0ed1d32c',1,'SimpleHTTPServer.cpp']]],
-  ['export_5fnetwork_788',['export_network',['../classSimpleConfig.html#aafbc452482cc453846c73d2aa5eeb7fd',1,'SimpleConfig']]]
+  ['elu_782',['elu',['../namespacesmlp.html#a485c23c19d9a56d4830e3f0a7c9c7291',1,'smlp']]],
+  ['eluderivative_783',['eluDerivative',['../namespacesmlp.html#a47e24ba887acbadf99fa3dd66a3d2d42',1,'smlp']]],
+  ['enable_5fhttp_784',['enable_http',['../structsmlp_1_1AppParameters.html#a3134853ddaf56fb9183f655807bc17e3',1,'smlp::AppParameters']]],
+  ['epoch_785',['epoch',['../structsmlp_1_1TestingResult_1_1TestResults.html#ac5ecc4188de6ea1e0bcc7cb195185d59',1,'smlp::TestingResult::TestResults']]],
+  ['error_786',['error',['../classsmlp_1_1Neuron.html#a9b58075275f74e14a124dbf2b5c90eb7',1,'smlp::Neuron']]],
+  ['errormessages_787',['errorMessages',['../namespacesmlp.html#a2601894b23e5d122cfe143a20da2e25e',1,'smlp']]],
+  ['exit_5fhelp_788',['EXIT_HELP',['../classSimpleMLP.html#a594ffc78e7099f3de74453fb72232383',1,'SimpleMLP']]],
+  ['exit_5fversion_789',['EXIT_VERSION',['../classSimpleMLP.html#a5611b13cd76ed4372232c31ebe660021',1,'SimpleMLP']]],
+  ['expected_790',['expected',['../structsmlp_1_1TestingResult_1_1Convergence.html#a38e247ec1118d2d647c65afcc83768ba',1,'smlp::TestingResult::Convergence']]],
+  ['expecteds_791',['expecteds',['../structsmlp_1_1TestingResult_1_1TestResults.html#ab666a62a6ada69df3778f949bc3e0486',1,'smlp::TestingResult::TestResults']]],
+  ['export_5fmodel_5fschedule_5fseconds_792',['EXPORT_MODEL_SCHEDULE_SECONDS',['../SimpleHTTPServer_8cpp.html#a97f4b592907120b63a63599e0ed1d32c',1,'SimpleHTTPServer.cpp']]],
+  ['export_5fnetwork_793',['export_network',['../classsmlp_1_1SimpleConfig.html#a81e6a1ff54ffc71b691cf37034d89873',1,'smlp::SimpleConfig']]]
 ];

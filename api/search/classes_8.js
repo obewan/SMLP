@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['manager_488',['Manager',['../classManager.html',1,'']]],
-  ['managerexception_489',['ManagerException',['../classManagerException.html',1,'']]]
+  ['manager_493',['Manager',['../classsmlp_1_1Manager.html',1,'smlp']]],
+  ['managerexception_494',['ManagerException',['../classsmlp_1_1ManagerException.html',1,'smlp']]]
 ];

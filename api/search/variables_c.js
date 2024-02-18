@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['output_5factivation_5falpha_844',['output_activation_alpha',['../structNetworkParameters.html#ad1645636653ecd43dec8b9dbcabc3a40',1,'NetworkParameters']]],
-  ['output_5factivation_5ffunction_845',['output_activation_function',['../structNetworkParameters.html#adaec614d83e9c56caa24683a2a132b0f',1,'NetworkParameters']]],
-  ['output_5fat_5fend_846',['output_at_end',['../structAppParameters.html#a3d820773b9a00a59c3bfc25662d67443',1,'AppParameters']]],
-  ['output_5findex_5fto_5fmonitor_847',['output_index_to_monitor',['../structAppParameters.html#a1483371d1334b6b9f9d2c773a02c0672',1,'AppParameters']]],
-  ['output_5fsize_848',['output_size',['../structNetworkParameters.html#ac52d1bf27cd09b60d098c0211a771b9d',1,'NetworkParameters']]],
-  ['outputs_849',['outputs',['../structsmlp_1_1Record.html#aff9858617d91450fc27ab24bbe198ea3',1,'smlp::Record::outputs()'],['../structTestingResult_1_1TestResults.html#a4cbcafc059abbd42960ad45ceb3931b0',1,'TestingResult::TestResults::outputs()']]]
+  ['output_5factivation_5falpha_849',['output_activation_alpha',['../structsmlp_1_1NetworkParameters.html#aea516159f6790e4d170b67b0f43bd1ff',1,'smlp::NetworkParameters']]],
+  ['output_5factivation_5ffunction_850',['output_activation_function',['../structsmlp_1_1NetworkParameters.html#a7affe55a8d22a67f1781c24d07156a4b',1,'smlp::NetworkParameters']]],
+  ['output_5fat_5fend_851',['output_at_end',['../structsmlp_1_1AppParameters.html#af2274407cea6b9ccfd2c51cc2369a6e2',1,'smlp::AppParameters']]],
+  ['output_5findex_5fto_5fmonitor_852',['output_index_to_monitor',['../structsmlp_1_1AppParameters.html#a6a453027d56a67cc1db0969985973d43',1,'smlp::AppParameters']]],
+  ['output_5fsize_853',['output_size',['../structsmlp_1_1NetworkParameters.html#aee567eab3ce21943ca39aa6cda6b8d86',1,'smlp::NetworkParameters']]],
+  ['outputs_854',['outputs',['../structsmlp_1_1Record.html#aff9858617d91450fc27ab24bbe198ea3',1,'smlp::Record::outputs()'],['../structsmlp_1_1TestingResult_1_1TestResults.html#a1a7808dcb9cb0ca54cf9a147a1419c7e',1,'smlp::TestingResult::TestResults::outputs()']]]
 ];

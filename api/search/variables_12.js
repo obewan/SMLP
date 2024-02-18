@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['value_886',['value',['../classNeuron.html#a84ff1ee4acbb1e5a5d2db57a1ce01a87',1,'Neuron']]],
-  ['verbose_887',['verbose',['../structAppParameters.html#abda4a8fea76389fc660c06a3317e5cf8',1,'AppParameters']]],
-  ['version_888',['version',['../structAppParameters.html#a39f2305e2594857c83887f8696e54842',1,'AppParameters']]]
+  ['value_891',['value',['../classsmlp_1_1Neuron.html#aa6b50fc28106777a9a9479dbe592d2e3',1,'smlp::Neuron']]],
+  ['verbose_892',['verbose',['../structsmlp_1_1AppParameters.html#a2cfdb4511cedf07245f1806861e24a5c',1,'smlp::AppParameters']]],
+  ['version_893',['version',['../structsmlp_1_1AppParameters.html#aea80460936718fa3c60de16a6eff3ef9',1,'smlp::AppParameters']]]
 ];

@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['lang_5ffile_819',['lang_file',['../classSimpleConfig.html#aabf532d7dcbbb32a54015fe0e0549a08',1,'SimpleConfig']]],
-  ['layer_5fmap_820',['layer_map',['../Layer_8h.html#a40aad8dd77ca82d5f06eb828fe11d40a',1,'Layer.h']]],
-  ['layers_821',['layers',['../classNetwork.html#a21393b0ade4e5d02a8bc24bdd723e7ad',1,'Network']]],
-  ['layertype_822',['layerType',['../classLayer.html#a52b2b33db707dba331891137c0d5bb1e',1,'Layer']]],
-  ['leakyrelu_823',['leakyRelu',['../ActivationFunctions_8h.html#abcbe46107b7a8a823b9769434faf547d',1,'ActivationFunctions.h']]],
-  ['leakyreluderivative_824',['leakyReluDerivative',['../ActivationFunctions_8h.html#a36f24957db1d6778585a3d25a155de89',1,'ActivationFunctions.h']]],
-  ['learning_5frate_825',['learning_rate',['../structNetworkParameters.html#a8bad6561010dceefcc9791965718d7c9',1,'NetworkParameters']]],
-  ['linenumber_826',['lineNumber',['../structTestingResult_1_1TestResults.html#a10c07f1eeee92479211de9db692331fd',1,'TestingResult::TestResults']]],
-  ['logger_827',['logger',['../classManager.html#a63e7ff45c6cf99557c97a8d68620b85a',1,'Manager']]],
-  ['low_5fthreshold_828',['LOW_THRESHOLD',['../TestingResult_8cpp.html#a0759991b06468900a65e705c0d8b73a7',1,'TestingResult.cpp']]]
+  ['lang_5ffile_824',['lang_file',['../classsmlp_1_1SimpleConfig.html#ab4afe61aa65198de36ba6e47a736d9fe',1,'smlp::SimpleConfig']]],
+  ['layer_5fmap_825',['layer_map',['../namespacesmlp.html#a460f274a49feb5ded7f7283bdb592803',1,'smlp']]],
+  ['layers_826',['layers',['../classsmlp_1_1Network.html#ae939ee8b07f1a15bc0fb9103d0e66334',1,'smlp::Network']]],
+  ['layertype_827',['layerType',['../classsmlp_1_1Layer.html#aafbc096208959dbd2be12dab60abb3f5',1,'smlp::Layer']]],
+  ['leakyrelu_828',['leakyRelu',['../namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a',1,'smlp']]],
+  ['leakyreluderivative_829',['leakyReluDerivative',['../namespacesmlp.html#a05fef3a79985b00dab2a7e0e7b4a259c',1,'smlp']]],
+  ['learning_5frate_830',['learning_rate',['../structsmlp_1_1NetworkParameters.html#a3b188126a9c7f25920950e6c7c5dbb0d',1,'smlp::NetworkParameters']]],
+  ['linenumber_831',['lineNumber',['../structsmlp_1_1TestingResult_1_1TestResults.html#a3c89cc9c1af2e0310bc8733d658a6904',1,'smlp::TestingResult::TestResults']]],
+  ['logger_832',['logger',['../classsmlp_1_1Manager.html#a50b12a7838611594c5c3a16b085f84df',1,'smlp::Manager']]],
+  ['low_5fthreshold_833',['LOW_THRESHOLD',['../TestingResult_8cpp.html#a0759991b06468900a65e705c0d8b73a7',1,'TestingResult.cpp']]]
 ];

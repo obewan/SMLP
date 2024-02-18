@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['datafileparser_596',['DataFileParser',['../classDataFileParser.html#ac5d569581e16887ac1e6fb88591ae8b4',1,'DataFileParser']]],
-  ['debug_597',['debug',['../classSimpleLogger.html#aeef91566e966785347f2e64e08fa5d77',1,'SimpleLogger']]]
+  ['datafileparser_601',['DataFileParser',['../classsmlp_1_1DataFileParser.html#a1ce171a8f11826246881d1c60f21ac69',1,'smlp::DataFileParser']]],
+  ['debug_602',['debug',['../classsmlp_1_1SimpleLogger.html#ae7dd8a6dc1840a3f592110b608df28ac',1,'smlp::SimpleLogger']]]
 ];

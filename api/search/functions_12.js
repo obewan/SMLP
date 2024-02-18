@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updateweights_736',['updateWeights',['../classHiddenLayer.html#a6e990f822e515595bfdc7c2d1563fcc6',1,'HiddenLayer::updateWeights()'],['../classInputLayer.html#a8f81b83fb82ee5d32be950e12c7c35a8',1,'InputLayer::updateWeights()'],['../classLayer.html#aa0a22805b25e1c4c19337c8f2ef1a9a2',1,'Layer::updateWeights()'],['../classNetwork.html#aa74f5d430694883ebecb2d5443740476',1,'Network::updateWeights()'],['../classOutputLayer.html#a020e5ed4799ddafa274ec88058b662b3',1,'OutputLayer::updateWeights()']]]
+  ['updateweights_741',['updateWeights',['../classsmlp_1_1HiddenLayer.html#acfddab01fd3cacc5b1f989338ed3a27a',1,'smlp::HiddenLayer::updateWeights()'],['../classsmlp_1_1InputLayer.html#a1f0b0cceeb7773d35f26e08edf547394',1,'smlp::InputLayer::updateWeights()'],['../classsmlp_1_1Layer.html#af7d7c56e473afe46a4730f9ba4231f6e',1,'smlp::Layer::updateWeights()'],['../classsmlp_1_1Network.html#ac780322b5f370bb72dbdf0c33f59a8f6',1,'smlp::Network::updateWeights()'],['../classsmlp_1_1OutputLayer.html#a9580eea87f37dd65c3ad8b9e16d924f7',1,'smlp::OutputLayer::updateWeights()']]]
 ];

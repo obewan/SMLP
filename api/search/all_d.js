@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['ok_269',['OK',['../namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aae0aa021e21dddbd6d8cecec71e9cf564',1,'smlp']]],
-  ['openfile_270',['openFile',['../classDataFileParser.html#aaf306c586686b3b8d4e8196a68e3bba5',1,'DataFileParser']]],
-  ['operator_22_22_5fg_271',['operator&quot;&quot;_G',['../Common_8h.html#a4110dd5672a867b8d29de1b2c1505a1d',1,'Common.h']]],
-  ['operator_22_22_5fk_272',['operator&quot;&quot;_K',['../Common_8h.html#af19f27991c6d4daa388834b68a43d5c8',1,'Common.h']]],
-  ['operator_22_22_5fm_273',['operator&quot;&quot;_M',['../Common_8h.html#a6150af14f5ac901fc3291a28292b67e2',1,'Common.h']]],
-  ['operator_3d_274',['operator=',['../classManager.html#ad741365089d0eee8c7d2e4970ac358c4',1,'Manager::operator=()'],['../classNetwork.html#a8d9ccbd13e4117376e89e51372546e30',1,'Network::operator=(const Network &amp;other)=delete'],['../classNetwork.html#a125a8e1b2664ac75b7653876d7fd66a6',1,'Network::operator=(Network &amp;&amp;other)=default'],['../classSimpleHTTPServer.html#a66f57842a7b52f012893ce118571536a',1,'SimpleHTTPServer::operator=()'],['../classSimpleLang.html#aa5a15fa64ca30299e12d14109c9e89d4',1,'SimpleLang::operator=()'],['../classSimpleLogger.html#a053ef6f5affd38419ac143c0492cf555',1,'SimpleLogger::operator=(SimpleLogger const &amp;)=delete']]],
-  ['out_275',['out',['../classSimpleLogger.html#a7095a372f6b5b6e4f54bd0777e1546d2',1,'SimpleLogger']]],
-  ['output_5factivation_5falpha_276',['output_activation_alpha',['../structNetworkParameters.html#ad1645636653ecd43dec8b9dbcabc3a40',1,'NetworkParameters']]],
-  ['output_5factivation_5ffunction_277',['output_activation_function',['../structNetworkParameters.html#adaec614d83e9c56caa24683a2a132b0f',1,'NetworkParameters']]],
-  ['output_5fat_5fend_278',['output_at_end',['../structAppParameters.html#a3d820773b9a00a59c3bfc25662d67443',1,'AppParameters']]],
-  ['output_5findex_5fto_5fmonitor_279',['output_index_to_monitor',['../structAppParameters.html#a1483371d1334b6b9f9d2c773a02c0672',1,'AppParameters']]],
-  ['output_5fsize_280',['output_size',['../structNetworkParameters.html#ac52d1bf27cd09b60d098c0211a771b9d',1,'NetworkParameters']]],
-  ['outputlayer_281',['OutputLayer',['../Layer_8h.html#a56943a0946e5f15e5e58054b8e7a04a4a500cef5499f984f348ea5eabd57ee667',1,'OutputLayer():&#160;Layer.h'],['../classOutputLayer.html',1,'OutputLayer'],['../classOutputLayer.html#a65757bdb7320aa070ba901ea36a46663',1,'OutputLayer::OutputLayer()']]],
-  ['outputlayer_2eh_282',['OutputLayer.h',['../OutputLayer_8h.html',1,'']]],
-  ['outputs_283',['outputs',['../structTestingResult_1_1TestResults.html#a4cbcafc059abbd42960ad45ceb3931b0',1,'TestingResult::TestResults::outputs()'],['../structsmlp_1_1Record.html#aff9858617d91450fc27ab24bbe198ea3',1,'smlp::Record::outputs()']]]
+  ['ok_272',['OK',['../namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452aae0aa021e21dddbd6d8cecec71e9cf564',1,'smlp']]],
+  ['openfile_273',['openFile',['../classsmlp_1_1DataFileParser.html#aaf306c586686b3b8d4e8196a68e3bba5',1,'smlp::DataFileParser']]],
+  ['operator_22_22_5fg_274',['operator&quot;&quot;_G',['../Common_8h.html#a4110dd5672a867b8d29de1b2c1505a1d',1,'Common.h']]],
+  ['operator_22_22_5fk_275',['operator&quot;&quot;_K',['../Common_8h.html#af19f27991c6d4daa388834b68a43d5c8',1,'Common.h']]],
+  ['operator_22_22_5fm_276',['operator&quot;&quot;_M',['../Common_8h.html#a6150af14f5ac901fc3291a28292b67e2',1,'Common.h']]],
+  ['operator_3d_277',['operator=',['../classsmlp_1_1Network.html#a3dc8f632ea6b11fda1d6a34fbb2ae22b',1,'smlp::Network::operator=()'],['../classsmlp_1_1SimpleHTTPServer.html#af20c70daafb2cb011b326e1718593da7',1,'smlp::SimpleHTTPServer::operator=()'],['../classsmlp_1_1SimpleLang.html#a8c0f92e3703ddc52fc0362a94ae9c622',1,'smlp::SimpleLang::operator=()'],['../classsmlp_1_1SimpleLogger.html#a2159b2485ba36b94331a197c312d91cc',1,'smlp::SimpleLogger::operator=()'],['../classsmlp_1_1Network.html#a6071d4f7bc9a5467afed506b1a1b472c',1,'smlp::Network::operator=()'],['../classsmlp_1_1Manager.html#aad4ef99e399c54611c87eba47d90496d',1,'smlp::Manager::operator=()']]],
+  ['out_278',['out',['../classsmlp_1_1SimpleLogger.html#a463a27fc50db5e02e98d30b468e6bc8d',1,'smlp::SimpleLogger']]],
+  ['output_5factivation_5falpha_279',['output_activation_alpha',['../structsmlp_1_1NetworkParameters.html#aea516159f6790e4d170b67b0f43bd1ff',1,'smlp::NetworkParameters']]],
+  ['output_5factivation_5ffunction_280',['output_activation_function',['../structsmlp_1_1NetworkParameters.html#a7affe55a8d22a67f1781c24d07156a4b',1,'smlp::NetworkParameters']]],
+  ['output_5fat_5fend_281',['output_at_end',['../structsmlp_1_1AppParameters.html#af2274407cea6b9ccfd2c51cc2369a6e2',1,'smlp::AppParameters']]],
+  ['output_5findex_5fto_5fmonitor_282',['output_index_to_monitor',['../structsmlp_1_1AppParameters.html#a6a453027d56a67cc1db0969985973d43',1,'smlp::AppParameters']]],
+  ['output_5fsize_283',['output_size',['../structsmlp_1_1NetworkParameters.html#aee567eab3ce21943ca39aa6cda6b8d86',1,'smlp::NetworkParameters']]],
+  ['outputlayer_284',['OutputLayer',['../namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8ea500cef5499f984f348ea5eabd57ee667',1,'smlp::OutputLayer()'],['../classsmlp_1_1OutputLayer.html#a2c701e4165a298edb7ef1b3b02096a92',1,'smlp::OutputLayer::OutputLayer()'],['../classsmlp_1_1OutputLayer.html',1,'smlp::OutputLayer']]],
+  ['outputlayer_2eh_285',['OutputLayer.h',['../OutputLayer_8h.html',1,'']]],
+  ['outputs_286',['outputs',['../structsmlp_1_1TestingResult_1_1TestResults.html#a1a7808dcb9cb0ca54cf9a147a1419c7e',1,'smlp::TestingResult::TestResults::outputs()'],['../structsmlp_1_1Record.html#aff9858617d91450fc27ab24bbe198ea3',1,'smlp::Record::outputs()']]]
 ];
