@@ -21,8 +21,7 @@
 #include <fstream>
 #include <iostream>
 
-using json = nlohmann::json;
-
+namespace smlp {
 /**
  * @brief NetworkImportExportJSON class to export and import network models
  * using the JSON format.
@@ -37,6 +36,7 @@ public:
    * @return Network*
    */
   Network *importModel(const AppParameters &app_params) {
+    using json = nlohmann::json;
     const auto &logger = SimpleLogger::getInstance();
     const auto &lang = SimpleLang::getInstance();
 
@@ -161,7 +161,9 @@ public:
     }
   }
 
-  json createJsonNeuron(const Neuron &neuron, LayerType layerType) const {
+  nlohmann::json createJsonNeuron(const Neuron &neuron,
+                                  LayerType layerType) const {
+    using json = nlohmann::json;
     json json_neuron = {{"weights", json::array()}};
 
     if (layerType != LayerType::InputLayer) {
@@ -181,6 +183,7 @@ public:
    */
   void exportModel(const Network *network,
                    const AppParameters &app_params) const {
+    using json = nlohmann::json;
     json json_network;
     json_network["version"] = app_params.version;
 
@@ -223,3 +226,4 @@ public:
     file.close();
   }
 };
+} // namespace smlp

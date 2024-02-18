@@ -11,6 +11,8 @@
 #include <map>
 #include <string>
 
+namespace smlp {
+
 enum class Message {
   StdinDisabled,
   TCPClientConnection,
@@ -33,3 +35,4 @@ const std::map<Message, std::string> defaultMessages = {
     {Message::TCPServerClosed,
      "TCP Server socket was closed, stopping server."},
     {Message::UsingConfigFile, "Using config file %%config_file%%..."}};
+} // namespace smlp

@@ -15,6 +15,8 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 DOCTEST_MSVC_SUPPRESS_WARNING(4626)
 
+using namespace smlp;
+
 /** Beware:
  * networking testing must be disable for Github so add skip(true) after the
  * Test Case name to disable, or use mocks. Also the TCP classes are and should

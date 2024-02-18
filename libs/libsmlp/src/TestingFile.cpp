@@ -2,6 +2,8 @@
 #include "CommonResult.h"
 #include "Manager.h"
 
+using namespace smlp;
+
 smlp::Result TestingFile::test(const std::string &line, size_t epoch,
                                size_t current_line_number) {
   testingResults_->clearStats();

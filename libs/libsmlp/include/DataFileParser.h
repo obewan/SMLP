@@ -16,6 +16,7 @@
 #include <fstream>
 #include <functional>
 
+namespace smlp {
 /**
  * @brief The FileParser class is responsible for parsing a file. It contains
  * methods for opening, closing, and resetting the file position, as well as
@@ -152,3 +153,4 @@ public:
         return (float)cells[0].getDouble().value();
       };
 };
+} // namespace smlp

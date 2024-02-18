@@ -58,6 +58,8 @@ measures that legally restrict others from doing anything the license permits.
 #define FILENO fileno
 #endif
 
+using namespace smlp;
+
 int SimpleMLP::init(int argc, char **argv) {
   const auto &logger = SimpleLogger::getInstance();
   try {

@@ -16,6 +16,7 @@
 // were defined in each translation unit where they are used, avoiding  One
 // Definition Rule (ODR) issue.
 
+namespace smlp {
 /**
  * @brief the sigmoid function is commonly used as the
  * activation function during the forward propagation step. The reason for this
@@ -88,3 +89,5 @@ inline auto elu = [](auto x, auto alpha) {
 inline auto eluDerivative = [](auto x, auto alpha) {
   return x >= 0 ? 1 : alpha * exp(x);
 };
+
+} // namespace smlp

@@ -16,6 +16,7 @@
 #include <cstddef>
 #include <memory>
 
+namespace smlp {
 enum class TestingType { TestingFile, TestingSocket, TestingStdin };
 
 const std::map<std::string, TestingType, std::less<>> testing_map{
@@ -99,3 +100,4 @@ protected:
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
   std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };
+} // namespace smlp

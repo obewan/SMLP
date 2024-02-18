@@ -7,6 +7,8 @@
 
 constexpr int MUTEX_TIMEOUT_SECONDS = 60;
 
+using namespace smlp;
+
 void SimpleHTTPServerMock::start() {
   if (mediator == nullptr) {
     return;

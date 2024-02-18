@@ -42,6 +42,7 @@ constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 using json = nlohmann::json;
+using namespace smlp;
 
 SimpleHTTPServer::HttpRequest
 SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {

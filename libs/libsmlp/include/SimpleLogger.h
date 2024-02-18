@@ -15,6 +15,7 @@
 #include <mutex>
 #include <sstream>
 
+namespace smlp {
 enum class LogLevel { INFO, WARN, ERROR, DEBUG };
 
 /**
@@ -340,3 +341,4 @@ private:
   mutable std::streamsize current_precision = std::cout.precision();
   mutable std::mutex threadMutex_;
 };
+} // namespace smlp

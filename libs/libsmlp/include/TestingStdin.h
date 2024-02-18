@@ -14,6 +14,7 @@
 #include <cstddef>
 #include <iostream>
 
+namespace smlp {
 class TestingStdin : public Testing {
 public:
   explicit TestingStdin() : Testing(TestingType::TestingStdin) {}
@@ -21,3 +22,4 @@ public:
   smlp::Result test(const std::string &line = "", size_t epoch = 0,
                     size_t current_line_number = 0) override;
 };
+} // namespace smlp

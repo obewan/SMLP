@@ -2,6 +2,7 @@
 #include <exception>
 #include <string>
 
+namespace smlp {
 /**
  * @brief A custom exception class that inherits from std::exception.
  * This class is thrown when there are generic exceptions during SMLP.
@@ -14,3 +15,4 @@ public:
 private:
   std::string message_;
 };
+} // namespace smlp

@@ -13,6 +13,8 @@
 #include <stdexcept>
 #include <thread>
 
+namespace smlp {
+
 class SimpleHTTPServerMock : public SimpleHTTPServer {
 public:
   using SimpleHTTPServer::SimpleHTTPServer;
@@ -41,3 +43,4 @@ public:
   void processLine(const std::string &line,
                    const clientInfo &client_info) override;
 };
+} // namespace smlp

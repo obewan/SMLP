@@ -2,6 +2,8 @@
 #include "doctest.h"
 #include "exception/SimpleConfigException.h"
 
+using namespace smlp;
+
 TEST_CASE("Testing the SimpleConf class") {
   SUBCASE("Test constructor") { CHECK_NOTHROW(SimpleConfig("test")); }
 

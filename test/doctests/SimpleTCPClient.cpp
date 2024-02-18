@@ -19,6 +19,8 @@
 constexpr int CLIENT_RECV_BUFFER_SIZE = 4096;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 10;
 
+using namespace smlp;
+
 SimpleTCPClient::SimpleTCPClient() {
 #ifdef _WIN32
   WSADATA wsaData;

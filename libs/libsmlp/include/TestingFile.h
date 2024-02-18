@@ -15,6 +15,7 @@
 #include "exception/TestingException.h"
 #include <memory>
 
+namespace smlp {
 class TestingFile : public Testing {
 public:
   explicit TestingFile() : Testing(TestingType::TestingFile) {}
@@ -22,3 +23,4 @@ public:
   smlp::Result test(const std::string &line = "", size_t epoch = 0,
                     size_t current_line_number = 0) override;
 };
+} // namespace smlp

@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 
+namespace smlp {
 enum class Error {
   ConfigFileNotFound,
   CSVParsingError,
@@ -141,3 +142,4 @@ const std::map<Error, std::string> defaultErrorMessages = {
     {Error::UnimplementedMode, "Unimplemented mode"},
     {Error::UnimplementedPredictMode, "Unimplemented predict mode"},
     {Error::UnknownKey, "Unknown key"}};
+} // namespace smlp

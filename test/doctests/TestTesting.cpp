@@ -11,6 +11,8 @@
 #include <memory>
 #include <sstream>
 
+using namespace smlp;
+
 TEST_CASE("Testing the Testing class") {
   SUBCASE("Test constructor") {
     CHECK_NOTHROW({

@@ -17,9 +17,9 @@
 #include <map>
 #include <string>
 
-using json = nlohmann::json;
-using mapstr = std::map<std::string, std::string, std::less<>>;
+namespace smlp {
 
+using mapstr = std::map<std::string, std::string, std::less<>>;
 class SimpleLang {
 public:
   const static SimpleLang &getInstance() {
@@ -137,6 +137,7 @@ public:
   }
 
   void parseFile(const std::string &filename) const {
+    using json = nlohmann::json;
     strings.clear();
     currentFile = filename;
     std::string path_in_ext = filename;
@@ -194,3 +195,4 @@ private:
         return str;
       };
 };
+} // namespace smlp

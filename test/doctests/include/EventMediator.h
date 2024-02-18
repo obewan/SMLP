@@ -3,6 +3,7 @@
 #include <condition_variable>
 #include <queue>
 
+namespace smlp {
 class EventMediator {
 public:
   std::atomic<bool> is_client_connected = false;
@@ -43,3 +44,4 @@ private:
   std::mutex client_mtx;
   std::condition_variable client_cv;
 };
+} // namespace smlp

@@ -12,6 +12,8 @@ const float LOW_THRESHOLD = 0.30f;
 const float MEDIUM_THRESHOLD = 0.20f;
 const float HIGH_THRESHOLD = 0.10f;
 
+using namespace smlp;
+
 std::string TestingResult::getResultsLine() {
   calcStats();
   std::stringstream sstr;

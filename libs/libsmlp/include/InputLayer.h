@@ -12,6 +12,7 @@
 #include "SimpleLang.h"
 #include <stdexcept>
 
+namespace smlp {
 /**
  * @brief The InputLayer class represents the input layer of a neural network.
  * It inherits from the Layer class and overrides its methods as necessary. This
@@ -41,3 +42,4 @@ public:
     }
   }
 };
+} // namespace smlp

@@ -13,9 +13,11 @@
 #include "Training.h"
 #include "exception/FileParserException.h"
 
+namespace smlp {
 class TrainingSocket : public Training {
 public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
   smlp::Result train(const std::string &line = "") override;
 };
+} // namespace smlp

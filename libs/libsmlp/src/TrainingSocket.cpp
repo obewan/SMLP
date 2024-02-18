@@ -2,6 +2,8 @@
 #include "Common.h"
 #include "Manager.h"
 
+using namespace smlp;
+
 smlp::Result TrainingSocket::train(const std::string &line) {
   const auto &manager = Manager::getInstance();
 

@@ -16,8 +16,7 @@
 #include <map>
 #include <string>
 
-using json = nlohmann::json;
-
+namespace smlp {
 class SimpleConfig {
 public:
   SimpleConfig() = default;
@@ -33,6 +32,7 @@ public:
 
 private:
   void parseFile() {
+    using json = nlohmann::json;
     if (config_file.empty()) {
       return;
     }
@@ -58,6 +58,7 @@ private:
   }
 
   void parseJson(std::ifstream &file) {
+    using json = nlohmann::json;
     json json_model = json::parse(file);
 
     if (json_model.contains("lang_file")) {
@@ -79,3 +80,4 @@ private:
     isValidConfig = true;
   }
 };
+} // namespace smlp

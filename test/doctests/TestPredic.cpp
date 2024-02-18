@@ -8,6 +8,8 @@
 #include <filesystem>
 #include <memory>
 
+using namespace smlp;
+
 TEST_CASE("Testing the Predict class") {
   SUBCASE("Test constructor") { CHECK_NOTHROW(Predict()); }
 

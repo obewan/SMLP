@@ -10,6 +10,7 @@
 #pragma once
 #include "Layer.h"
 
+namespace smlp {
 /**
  * @brief The HiddenLayer class represents a hidden layer in a neural network.
  * It inherits from the Layer class and overrides its methods as necessary.
@@ -66,3 +67,4 @@ public:
     }
   }
 };
+} // namespace smlp

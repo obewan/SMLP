@@ -15,6 +15,7 @@
 #include "exception/PredictException.h"
 #include <memory>
 
+namespace smlp {
 /**
  * @brief Predict class for predictive operations.
  */
@@ -54,3 +55,4 @@ private:
   std::string processResult(const smlp::RecordResult &result) const;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };
+} // namespace smlp
