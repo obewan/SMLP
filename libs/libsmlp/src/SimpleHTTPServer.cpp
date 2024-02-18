@@ -34,7 +34,7 @@
 constexpr int MUTEX_TIMEOUT_SECONDS = 20;
 constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 5;
 constexpr int MAX_REQUESTS = 50;
-constexpr size_t MAX_REQUEST_SIZE = 100_M;
+constexpr size_t MAX_REQUEST_SIZE = 20_M;
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
 constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
@@ -394,7 +394,7 @@ std::string SimpleHTTPServer::processLineBuffer(std::string &line_buffer) {
 
   std::string headers;
   std::string body;
-  const std::string &backup(line_buffer);
+  const std::string backup(line_buffer);
   bool inBody = false;
 
   size_t pos;
