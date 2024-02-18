@@ -11,6 +11,7 @@
 
 #include "Common.h"
 #include "CommonResult.h"
+#include "exception/FileParserException.h"
 #include <condition_variable>
 #include <cstddef>
 #include <exception>
@@ -112,6 +113,14 @@ public:
    * @return std::string
    */
   virtual std::string buildHttpResponse(const smlp::Result &result);
+
+  /**
+   * @brief build an HTTP response from an file parser exception.
+   *
+   * @param fpe
+   * @return std::string
+   */
+  virtual std::string buildHttpResponse(FileParserException &fpe);
 
   /**
    * @brief build an HTTP response from an exception.

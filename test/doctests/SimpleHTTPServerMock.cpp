@@ -80,7 +80,7 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
     }
   }
   SimpleLogger::LOG_INFO(client_info.str(),
-                         SimpleLang::Message(Message::TCPClientDisconnected));
+                         SimpleLang::Message(Message::TCPClientDisconnection));
 }
 
 void SimpleHTTPServerMock::processLine(const std::string &line,

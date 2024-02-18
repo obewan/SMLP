@@ -1,9 +1,12 @@
 #include "SimpleHTTPServer.h"
 #include "Common.h"
+#include "CommonMessages.h"
 #include "CommonModes.h"
+#include "CommonResult.h"
 #include "Manager.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
+#include "exception/FileParserException.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
@@ -32,7 +35,7 @@
 #endif
 
 constexpr int MUTEX_TIMEOUT_SECONDS = 20;
-constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 5;
+constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 2;
 constexpr int MAX_REQUESTS = 50;
 constexpr size_t MAX_REQUEST_SIZE = 20_M;
 constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
@@ -285,7 +288,8 @@ void SimpleHTTPServer::start() {
       continue;
     } // end if client_socket == -1
 
-    SimpleLogger::LOG_INFO(client_info.str(), " Client connection.");
+    SimpleLogger::LOG_INFO(client_info.str(),
+                           SimpleLang::Message(Message::TCPClientConnection));
     clientHandlers_.emplace_back(
         [this, client_info](std::stop_token st) {
           handle_client(client_info, st);
@@ -298,7 +302,7 @@ void SimpleHTTPServer::start() {
     handler.join();
   }
 
-  SimpleLogger::LOG_INFO(server_info_, "TCP Server stop complete.");
+  SimpleLogger::LOG_INFO(server_info_, "Server stop complete.");
 
 #ifdef _WIN32
   WSACleanup();
@@ -347,7 +351,7 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
     if (bytesReceived == 0) {
       SimpleLogger::LOG_INFO(
           client_info.str(),
-          SimpleLang::Message(Message::TCPClientDisconnected));
+          SimpleLang::Message(Message::TCPClientDisconnection));
 
       // Process any remaining data in lineBuffer
       if (!lineBuffer.empty()) {
@@ -384,7 +388,7 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
 
   CLOSE_SOCKET(client_info.client_socket);
   SimpleLogger::LOG_INFO(client_info.str(),
-                         SimpleLang::Message(Message::TCPClientDisconnected));
+                         SimpleLang::Message(Message::TCPClientDisconnection));
 }
 
 std::string SimpleHTTPServer::processLineBuffer(std::string &line_buffer) {
@@ -470,6 +474,13 @@ void SimpleHTTPServer::processLine(const std::string &line,
       send(client_info.client_socket, httpResponse.c_str(),
            httpResponse.length(), 0);
 
+    } catch (FileParserException &fpe) {
+      SimpleLogger::LOG_ERROR(client_info.str(), fpe.what());
+      const auto &httpResponse = buildHttpResponse(fpe);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
+      threadMutex_.unlock();
+
     } catch (std::exception &ex) {
       SimpleLogger::LOG_ERROR(client_info.str(), ex.what());
       const auto &httpResponse = buildHttpResponse(ex);
@@ -477,6 +488,7 @@ void SimpleHTTPServer::processLine(const std::string &line,
            httpResponse.length(), 0);
       threadMutex_.unlock();
     }
+
     threadMutex_.unlock();
   }
 }
@@ -503,10 +515,13 @@ std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
   case 500:
   case 501:
   case 503:
-    statusLine = "HTTP/1.1 " + result.code.message() + "\r\n";
+    statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) + " " +
+                 result.code.message() + "\r\n";
     break;
   default:
-    statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
+    statusLine =
+        "HTTP/1.1 500 Internal Server Error\r\n"; // but keep the others error
+                                                  // codes for the json
     break;
   }
 
@@ -520,16 +535,33 @@ std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
   return httpResponse;
 }
 
-std::string SimpleHTTPServer::buildHttpResponse(std::exception &ex) {
-  std::string statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
-  // for safety, not going to send the server exception message to the client.
-  std::string reason = "Internal Server Error";
+std::string SimpleHTTPServer::buildHttpResponse(FileParserException &fpe) {
+  smlp::Result result;
+  result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
+  std::string statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) +
+                           " " + result.code.message() + "\r\n";
   std::string httpResponse = statusLine +
                              "Content-Type: text/plain\r\n"
                              "Content-Length: " +
-                             std::to_string(reason.length()) +
+                             std::to_string(result.json().length()) +
                              "\r\n"
                              "\r\n" +
-                             reason;
+                             result.json();
+  return httpResponse;
+}
+
+std::string SimpleHTTPServer::buildHttpResponse(std::exception &ex) {
+  // for safety, not going to send the server exception message to the client.
+  smlp::Result result;
+  result.code = smlp::make_error_code(smlp::ErrorCode::InternalServerError);
+  std::string statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) +
+                           " " + result.code.message() + "\r\n";
+  std::string httpResponse = statusLine +
+                             "Content-Type: text/plain\r\n"
+                             "Content-Length: " +
+                             std::to_string(result.json().length()) +
+                             "\r\n"
+                             "\r\n" +
+                             result.json();
   return httpResponse;
 }

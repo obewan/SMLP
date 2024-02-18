@@ -84,7 +84,11 @@ smlp::Result Manager::test(const std::string &line) {
   }
 
   const auto &results = testing_->test(line);
-  logger.out(testing_->getTestingResults()->getResultsDetailled());
+  if (app_params.input == EInput::Socket && app_params.verbose) {
+    logger.debug(testing_->getTestingResults()->getResultsLine());
+  } else {
+    logger.out(testing_->getTestingResults()->getResultsDetailled());
+  }
   return results;
 }
 
