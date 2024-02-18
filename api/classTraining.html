@@ -63,9 +63,12 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classTraining-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Training Class Reference</div>  </div>
+<div class="title">Training Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -73,51 +76,59 @@ $(function() {
  <a href="classTraining.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Training_8h_source.html">Training.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Training:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classTraining.png" usemap="#Training_map" alt=""/>
+  <map id="Training_map" name="Training_map">
+<area href="classTrainingFile.html" alt="TrainingFile" shape="rect" coords="0,56,96,80"/>
+<area href="classTrainingSocket.html" alt="TrainingSocket" shape="rect" coords="106,56,202,80"/>
+<area href="classTrainingStdin.html" alt="TrainingStdin" shape="rect" coords="212,56,308,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acedb50b9e99668d051fa14c46f05db93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#acedb50b9e99668d051fa14c46f05db93">Training</a> ()=default</td></tr>
-<tr class="separator:acedb50b9e99668d051fa14c46f05db93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc32371c55b34a9599f92a543552db52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#acc32371c55b34a9599f92a543552db52">Training</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const std::string &amp;file_path)</td></tr>
-<tr class="memdesc:acc32371c55b34a9599f92a543552db52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and the file path to training data as arguments.  <a href="classTraining.html#acc32371c55b34a9599f92a543552db52">More...</a><br /></td></tr>
-<tr class="separator:acc32371c55b34a9599f92a543552db52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a6039d7eca1aa16057e5b6645e7f4ee57">train</a> (const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;network_params, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params)</td></tr>
-<tr class="memdesc:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method trains the model with the given parameters.  <a href="classTraining.html#a6039d7eca1aa16057e5b6645e7f4ee57">More...</a><br /></td></tr>
-<tr class="separator:a6039d7eca1aa16057e5b6645e7f4ee57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb1e794a5c2a9adb51e544a19288898f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#acb1e794a5c2a9adb51e544a19288898f">setNetwork</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network)</td></tr>
-<tr class="memdesc:acb1e794a5c2a9adb51e544a19288898f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the network for training.  <a href="classTraining.html#acb1e794a5c2a9adb51e544a19288898f">More...</a><br /></td></tr>
-<tr class="separator:acb1e794a5c2a9adb51e544a19288898f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ead3b862fa81daecaede8482a93927f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a7ead3b862fa81daecaede8482a93927f">getNetwork</a> () const</td></tr>
-<tr class="memdesc:a7ead3b862fa81daecaede8482a93927f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the network used for training.  <a href="classTraining.html#a7ead3b862fa81daecaede8482a93927f">More...</a><br /></td></tr>
-<tr class="separator:a7ead3b862fa81daecaede8482a93927f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4fbd302ae11d1c085fdfc9288af1822"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#ab4fbd302ae11d1c085fdfc9288af1822">Training</a> (<a class="el" href="Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60">TrainingType</a> training_type)</td></tr>
+<tr class="separator:ab4fbd302ae11d1c085fdfc9288af1822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a109254772ee97dfe9fd2d32b10367"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a40a109254772ee97dfe9fd2d32b10367">~Training</a> ()=default</td></tr>
+<tr class="separator:a40a109254772ee97dfe9fd2d32b10367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace034e9bd8fb664e9f907252d01ebfd8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#ace034e9bd8fb664e9f907252d01ebfd8">train</a> (const std::string &amp;line=&quot;&quot;)=0</td></tr>
+<tr class="memdesc:ace034e9bd8fb664e9f907252d01ebfd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Train a network.  <a href="classTraining.html#ace034e9bd8fb664e9f907252d01ebfd8">More...</a><br /></td></tr>
+<tr class="separator:ace034e9bd8fb664e9f907252d01ebfd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09aaa1b3bdb835449791c603cbbfc894"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a09aaa1b3bdb835449791c603cbbfc894">createFileParser</a> ()</td></tr>
+<tr class="memdesc:a09aaa1b3bdb835449791c603cbbfc894"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a File Parser object.  <a href="classTraining.html#a09aaa1b3bdb835449791c603cbbfc894">More...</a><br /></td></tr>
+<tr class="separator:a09aaa1b3bdb835449791c603cbbfc894"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe78ffad87b916e22418c298346c999a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#afe78ffad87b916e22418c298346c999a">setFileParser</a> (std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt; fileParser)</td></tr>
 <tr class="memdesc:afe78ffad87b916e22418c298346c999a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the file parser for training data.  <a href="classTraining.html#afe78ffad87b916e22418c298346c999a">More...</a><br /></td></tr>
 <tr class="separator:afe78ffad87b916e22418c298346c999a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c390e8d35baf86a066382ab00a2c7ad"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a8c390e8d35baf86a066382ab00a2c7ad">getFileParser</a> () const</td></tr>
 <tr class="memdesc:a8c390e8d35baf86a066382ab00a2c7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the file parser used for training data.  <a href="classTraining.html#a8c390e8d35baf86a066382ab00a2c7ad">More...</a><br /></td></tr>
 <tr class="separator:a8c390e8d35baf86a066382ab00a2c7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a695adeddf26b32d71260789bb89ef0a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a695adeddf26b32d71260789bb89ef0a5">setTesting</a> (std::shared_ptr&lt; <a class="el" href="classTesting.html">Testing</a> &gt; tester)</td></tr>
-<tr class="memdesc:a695adeddf26b32d71260789bb89ef0a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the tester for testing during training.  <a href="classTraining.html#a695adeddf26b32d71260789bb89ef0a5">More...</a><br /></td></tr>
-<tr class="separator:a695adeddf26b32d71260789bb89ef0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a010df181591bc10641c51811b1069ade"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a010df181591bc10641c51811b1069ade">createTesting</a> ()</td></tr>
-<tr class="memdesc:a010df181591bc10641c51811b1069ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object.  <a href="classTraining.html#a010df181591bc10641c51811b1069ade">More...</a><br /></td></tr>
-<tr class="separator:a010df181591bc10641c51811b1069ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930822fced8a4350dddbb2dbb83ce51d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classTesting.html">Testing</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a930822fced8a4350dddbb2dbb83ce51d">getTesting</a> () const</td></tr>
-<tr class="memdesc:a930822fced8a4350dddbb2dbb83ce51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the tester used for testing during training.  <a href="classTraining.html#a930822fced8a4350dddbb2dbb83ce51d">More...</a><br /></td></tr>
-<tr class="separator:a930822fced8a4350dddbb2dbb83ce51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e2c1e1e77c4724e56d9365e3b11afbf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a9e2c1e1e77c4724e56d9365e3b11afbf">trainingTypeStr</a> () const</td></tr>
+<tr class="separator:a9e2c1e1e77c4724e56d9365e3b11afbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a5e634ac54ec8623920e57afc4d41c17f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60">TrainingType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a5e634ac54ec8623920e57afc4d41c17f">trainingType</a></td></tr>
+<tr class="separator:a5e634ac54ec8623920e57afc4d41c17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a042e648ac0d02181719dbd6178f76033"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a042e648ac0d02181719dbd6178f76033">processInputLine</a> (const std::string &amp;line=&quot;&quot;) const</td></tr>
+<tr class="separator:a042e648ac0d02181719dbd6178f76033"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a352a7e4d7d92397cf70194ad2b2f31a6"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTraining.html#a352a7e4d7d92397cf70194ad2b2f31a6">fileParser_</a> = nullptr</td></tr>
+<tr class="separator:a352a7e4d7d92397cf70194ad2b2f31a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classTraining.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> class is responsible for training the neural network model. It contains methods for processing training data, updating the model parameters, and monitoring the progress of training. </p>
-<p>Here's a high-level overview of the process:</p>
-<ol type="1">
-<li>Forward Propagation: Input data is fed into the network. The network performs forward propagation through each layer to compute predicted output values.</li>
-<li>Compute Loss: During the backward propagation phase, you compare the predicted output values with the actual output values from your training data. The loss function (e.g., mean squared error) is used to measure the difference between predicted and actual outputs.</li>
-<li>Compute Gradients: The gradients of the loss with respect to the network's parameters (weights and biases) are computed through the layers using the backpropagation algorithm.</li>
-<li>Update Weights and Biases: The gradients are used to update the weights and biases of the network using an optimization algorithm (e.g., Adam, SGD). The learning rate determines how large the updates to the weights and biases will be. The process repeats for multiple training examples and epochs, gradually improving the network's ability to predict the correct outputs for the given inputs. </li>
-</ol>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acedb50b9e99668d051fa14c46f05db93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acedb50b9e99668d051fa14c46f05db93">&#9670;&nbsp;</a></span>Training() <span class="overload">[1/2]</span></h2>
+<a id="ab4fbd302ae11d1c085fdfc9288af1822"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4fbd302ae11d1c085fdfc9288af1822">&#9670;&nbsp;</a></span>Training()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,6 +138,32 @@ Public Member Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">Training::Training </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60">TrainingType</a>&#160;</td>
+          <td class="paramname"><em>training_type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a40a109254772ee97dfe9fd2d32b10367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40a109254772ee97dfe9fd2d32b10367">&#9670;&nbsp;</a></span>~Training()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Training::~Training </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -134,62 +171,16 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="acc32371c55b34a9599f92a543552db52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc32371c55b34a9599f92a543552db52">&#9670;&nbsp;</a></span>Training() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Training::Training </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td>
-          <td class="paramname"><em>network</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file_path</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor that takes a pointer to the network and the file path to training data as arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>Pointer to the network. </td></tr>
-    <tr><td class="paramname">file_path</td><td>File path to the training data. </td></tr>
-    <tr><td class="paramname">logger</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a010df181591bc10641c51811b1069ade"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a010df181591bc10641c51811b1069ade">&#9670;&nbsp;</a></span>createTesting()</h2>
+<a id="a09aaa1b3bdb835449791c603cbbfc894"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09aaa1b3bdb835449791c603cbbfc894">&#9670;&nbsp;</a></span>createFileParser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +189,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Training::createTesting </td>
+          <td class="memname">void Training::createFileParser </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -211,14 +202,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network_params</td><td></td></tr>
-    <tr><td class="paramname">app_params</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Create a File Parser object. </p>
 
 </div>
 </div>
@@ -250,8 +234,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7ead3b862fa81daecaede8482a93927f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ead3b862fa81daecaede8482a93927f">&#9670;&nbsp;</a></span>getNetwork()</h2>
+<a id="a042e648ac0d02181719dbd6178f76033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a042e648ac0d02181719dbd6178f76033">&#9670;&nbsp;</a></span>processInputLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -260,49 +244,19 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classNetwork.html">Network</a>&gt; Training::getNetwork </td>
+          <td class="memname"><a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a> Training::processInputLine </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the network used for training. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the network. </dd></dl>
-
-</div>
-</div>
-<a id="a930822fced8a4350dddbb2dbb83ce51d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a930822fced8a4350dddbb2dbb83ce51d">&#9670;&nbsp;</a></span>getTesting()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classTesting.html">Testing</a>&gt; Training::getTesting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the tester used for testing during training. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the tester. </dd></dl>
 
 </div>
 </div>
@@ -340,8 +294,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acb1e794a5c2a9adb51e544a19288898f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb1e794a5c2a9adb51e544a19288898f">&#9670;&nbsp;</a></span>setNetwork()</h2>
+<a id="ace034e9bd8fb664e9f907252d01ebfd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace034e9bd8fb664e9f907252d01ebfd8">&#9670;&nbsp;</a></span>train()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,11 +304,46 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Training::setNetwork </td>
+          <td class="memname">virtual <a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Training::train </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td>
-          <td class="paramname"><em>network</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Train a network. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>optional data line to use for training </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="classTrainingStdin.html#ac6340ffd2cf11e2c4a3c5c1c6359b3dd">TrainingStdin</a>, <a class="el" href="classTrainingSocket.html#a8d266a00a830e3c0d5a538ac8abbeefa">TrainingSocket</a>, and <a class="el" href="classTrainingFile.html#a8d70ab4d88007c8f0d1ef206bd62edef">TrainingFile</a>.</p>
+
+</div>
+</div>
+<a id="a9e2c1e1e77c4724e56d9365e3b11afbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e2c1e1e77c4724e56d9365e3b11afbf">&#9670;&nbsp;</a></span>trainingTypeStr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Training::trainingTypeStr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -364,18 +353,11 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the network for training. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>Pointer to the network. </td></tr>
-  </table>
-  </dd>
-</dl>
-
 </div>
 </div>
-<a id="a695adeddf26b32d71260789bb89ef0a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a695adeddf26b32d71260789bb89ef0a5">&#9670;&nbsp;</a></span>setTesting()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a352a7e4d7d92397cf70194ad2b2f31a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a352a7e4d7d92397cf70194ad2b2f31a6">&#9670;&nbsp;</a></span>fileParser_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -384,64 +366,29 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Training::setTesting </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classTesting.html">Testing</a> &gt;&#160;</td>
-          <td class="paramname"><em>tester</em></td><td>)</td>
-          <td></td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classDataFileParser.html">DataFileParser</a>&gt; Training::fileParser_ = nullptr</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the tester for testing during training. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tester</td><td>Pointer to the tester. </td></tr>
-  </table>
-  </dd>
-</dl>
-
 </div>
 </div>
-<a id="a6039d7eca1aa16057e5b6645e7f4ee57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6039d7eca1aa16057e5b6645e7f4ee57">&#9670;&nbsp;</a></span>train()</h2>
+<a id="a5e634ac54ec8623920e57afc4d41c17f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e634ac54ec8623920e57afc4d41c17f">&#9670;&nbsp;</a></span>trainingType</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Training::train </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>network_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>app_params</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">const <a class="el" href="Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60">TrainingType</a> Training::trainingType</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>This method trains the model with the given parameters. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network_params</td><td><a class="el" href="classNetwork.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> parameters for training. </td></tr>
-    <tr><td class="paramname">app_params</td><td>Application parameters. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

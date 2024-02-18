@@ -67,17 +67,21 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Common.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classCommon.html" title="Common class.">Common</a> tools and objects.  
+<p>Common tools and objects.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="CommonErrors_8h_source.html">CommonErrors.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="CommonMessages_8h_source.html">CommonMessages.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="CommonModes_8h_source.html">CommonModes.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="CommonParameters_8h_source.html">CommonParameters.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="CommonResult_8h_source.html">CommonResult.h</a>&quot;</code><br />
+<code>#include &lt;ctime&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -86,38 +90,105 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRecordResult.html">RecordResult</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Results of a parsed record.  <a href="structRecordResult.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1Record.html">smlp::Record</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structsmlp_1_1Record.html" title="Record of inputs vector and outputs vector.">Record</a> of inputs vector and outputs vector.  <a href="structsmlp_1_1Record.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommon.html">Common</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classCommon.html" title="Common class.">Common</a> class.  <a href="classCommon.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Results of a parsed record.  <a href="structsmlp_1_1RecordResult.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a9ba12ab3f90b0424ebf0244bcf191fc2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a9ba12ab3f90b0424ebf0244bcf191fc2">Record</a> = std::pair&lt; std::vector&lt; float &gt;, std::vector&lt; float &gt; &gt;</td></tr>
-<tr class="memdesc:a9ba12ab3f90b0424ebf0244bcf191fc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record of inputs vector and outputs vector, in that order.  <a href="Common_8h.html#a9ba12ab3f90b0424ebf0244bcf191fc2">More...</a><br /></td></tr>
-<tr class="separator:a9ba12ab3f90b0424ebf0244bcf191fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacesmlp"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html">smlp</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af19f27991c6d4daa388834b68a43d5c8"><td class="memItemLeft" align="right" valign="top">consteval unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#af19f27991c6d4daa388834b68a43d5c8">operator&quot;&quot;_K</a> (unsigned long long x)</td></tr>
+<tr class="separator:af19f27991c6d4daa388834b68a43d5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6150af14f5ac901fc3291a28292b67e2"><td class="memItemLeft" align="right" valign="top">consteval unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a6150af14f5ac901fc3291a28292b67e2">operator&quot;&quot;_M</a> (unsigned long long x)</td></tr>
+<tr class="separator:a6150af14f5ac901fc3291a28292b67e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4110dd5672a867b8d29de1b2c1505a1d"><td class="memItemLeft" align="right" valign="top">consteval unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Common_8h.html#a4110dd5672a867b8d29de1b2c1505a1d">operator&quot;&quot;_G</a> (unsigned long long x)</td></tr>
+<tr class="separator:a4110dd5672a867b8d29de1b2c1505a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3630365be2013f4d2bc6a5f3fcf86c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ae3630365be2013f4d2bc6a5f3fcf86c8">smlp::getModeStr</a> (<a class="el" href="CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787e">EMode</a> mode)</td></tr>
+<tr class="separator:ae3630365be2013f4d2bc6a5f3fcf86c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfcfa987e4a711b210ee35635115b97e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#abfcfa987e4a711b210ee35635115b97e">smlp::getPredictModeStr</a> (<a class="el" href="CommonModes_8h.html#ac6af2f9b08d6c36c0d6b805ef80ac87e">EPredictMode</a> predict)</td></tr>
+<tr class="separator:abfcfa987e4a711b210ee35635115b97e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af51cd3857ff6a0a5359233060275186c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af51cd3857ff6a0a5359233060275186c">smlp::getActivationStr</a> (<a class="el" href="CommonModes_8h.html#a89939c8c374f8b73d6038b7adaee95e7">EActivationFunction</a> activation)</td></tr>
+<tr class="separator:af51cd3857ff6a0a5359233060275186c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41b4b0047991c1714522bf6ab3a74e18"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a41b4b0047991c1714522bf6ab3a74e18">smlp::getEscapedString</a> (const std::string &amp;st)</td></tr>
+<tr class="memdesc:a41b4b0047991c1714522bf6ab3a74e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escaped string.  <a href="namespacesmlp.html#a41b4b0047991c1714522bf6ab3a74e18">More...</a><br /></td></tr>
+<tr class="separator:a41b4b0047991c1714522bf6ab3a74e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3024d74d38c31f86dd7f9bd3ac1f345"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ad3024d74d38c31f86dd7f9bd3ac1f345">smlp::ltrim</a> (const std::string &amp;s)</td></tr>
+<tr class="separator:ad3024d74d38c31f86dd7f9bd3ac1f345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee366858ab32780b90699b45d9187f67"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#aee366858ab32780b90699b45d9187f67">smlp::rtrim</a> (const std::string &amp;s)</td></tr>
+<tr class="separator:aee366858ab32780b90699b45d9187f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af763ffaaac1913be28a590ea43910396"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af763ffaaac1913be28a590ea43910396">smlp::trim</a> (const std::string &amp;s)</td></tr>
+<tr class="separator:af763ffaaac1913be28a590ea43910396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a422b90b45e6802f84a7c9583f6686a70"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a422b90b45e6802f84a7c9583f6686a70">smlp::trimCRLF</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:a422b90b45e6802f84a7c9583f6686a70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80bb222a938a25bdbea3650a0c8a46dc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a80bb222a938a25bdbea3650a0c8a46dc">smlp::trimRNULL</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:a80bb222a938a25bdbea3650a0c8a46dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039fff7ae14985da47d2475f758427cb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a039fff7ae14985da47d2475f758427cb">smlp::trimALL</a> (const std::string &amp;str)</td></tr>
+<tr class="separator:a039fff7ae14985da47d2475f758427cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classCommon.html" title="Common class.">Common</a> tools and objects. </p>
+<div class="textblock"><p>Common tools and objects. </p>
 <dl class="section author"><dt>Author</dt><dd>Damien Balima (www.dams-labs.net) </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2023-10-22</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Damien Balima (c) CC-BY-NC-SA-4.0 2023 </dd></dl>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a9ba12ab3f90b0424ebf0244bcf191fc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ba12ab3f90b0424ebf0244bcf191fc2">&#9670;&nbsp;</a></span>Record</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a4110dd5672a867b8d29de1b2c1505a1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4110dd5672a867b8d29de1b2c1505a1d">&#9670;&nbsp;</a></span>operator&quot;&quot;_G()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="Common_8h.html#a9ba12ab3f90b0424ebf0244bcf191fc2">Record</a> =  std::pair&lt;std::vector&lt;float&gt;, std::vector&lt;float&gt; &gt;</td>
+          <td class="memname">consteval unsigned long long operator&quot;&quot;_G </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long long&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Record of inputs vector and outputs vector, in that order. </p>
+</div>
+</div>
+<a id="af19f27991c6d4daa388834b68a43d5c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19f27991c6d4daa388834b68a43d5c8">&#9670;&nbsp;</a></span>operator&quot;&quot;_K()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">consteval unsigned long long operator&quot;&quot;_K </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long long&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6150af14f5ac901fc3291a28292b67e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6150af14f5ac901fc3291a28292b67e2">&#9670;&nbsp;</a></span>operator&quot;&quot;_M()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">consteval unsigned long long operator&quot;&quot;_M </td>
+          <td>(</td>
+          <td class="paramtype">unsigned long long&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

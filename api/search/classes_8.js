@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['outputlayer_318',['OutputLayer',['../classOutputLayer.html',1,'']]]
+  ['manager_488',['Manager',['../classManager.html',1,'']]],
+  ['managerexception_489',['ManagerException',['../classManagerException.html',1,'']]]
 ];

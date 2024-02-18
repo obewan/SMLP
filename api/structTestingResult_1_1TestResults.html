@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="structTestingResult_1_1TestResults.html" title="TestResults structure that holds the epoch, line, expected output, and actual output of a test.">TestResults</a> structure that holds the epoch, line, expected output, and actual output of a test.  
+<p><a class="el" href="structTestingResult_1_1TestResults.html" title="TestResults structure that holds the epoch, line, expected outputs, and actual outputs of a test,...">TestResults</a> structure that holds the epoch, line, expected outputs, and actual outputs of a test, for all output neurons (not monitored).  
  <a href="structTestingResult_1_1TestResults.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="TestingResult_8h_source.html">TestingResult.h</a>&gt;</code></p>
@@ -82,17 +82,15 @@ $(function() {
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8e3ae2c413443c918cc4c7c9a4a195bd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a8e3ae2c413443c918cc4c7c9a4a195bd">epoch</a> = 0</td></tr>
 <tr class="separator:a8e3ae2c413443c918cc4c7c9a4a195bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bb235840b0d3675cde3d189b750fd5b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a0bb235840b0d3675cde3d189b750fd5b">line</a> = 0</td></tr>
-<tr class="separator:a0bb235840b0d3675cde3d189b750fd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8605ba171502d3c0bc880c27223f332f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a8605ba171502d3c0bc880c27223f332f">expected</a> = 0.0f</td></tr>
-<tr class="separator:a8605ba171502d3c0bc880c27223f332f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e1e29ab8ddd8594a4ef57d8801ec7db"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a5e1e29ab8ddd8594a4ef57d8801ec7db">output</a> = 0.0f</td></tr>
-<tr class="separator:a5e1e29ab8ddd8594a4ef57d8801ec7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3692062294bef363e78f9c668ca29c26"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a3692062294bef363e78f9c668ca29c26">progress</a></td></tr>
-<tr class="separator:a3692062294bef363e78f9c668ca29c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10c07f1eeee92479211de9db692331fd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a10c07f1eeee92479211de9db692331fd">lineNumber</a> = 0</td></tr>
+<tr class="separator:a10c07f1eeee92479211de9db692331fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105217055687b01199c69c65b46f3ad5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a105217055687b01199c69c65b46f3ad5">expecteds</a></td></tr>
+<tr class="separator:a105217055687b01199c69c65b46f3ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cbcafc059abbd42960ad45ceb3931b0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTestingResult_1_1TestResults.html#a4cbcafc059abbd42960ad45ceb3931b0">outputs</a></td></tr>
+<tr class="separator:a4cbcafc059abbd42960ad45ceb3931b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="structTestingResult_1_1TestResults.html" title="TestResults structure that holds the epoch, line, expected output, and actual output of a test.">TestResults</a> structure that holds the epoch, line, expected output, and actual output of a test. </p>
+<div class="textblock"><p><a class="el" href="structTestingResult_1_1TestResults.html" title="TestResults structure that holds the epoch, line, expected outputs, and actual outputs of a test,...">TestResults</a> structure that holds the epoch, line, expected outputs, and actual outputs of a test, for all output neurons (not monitored). </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a8e3ae2c413443c918cc4c7c9a4a195bd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8e3ae2c413443c918cc4c7c9a4a195bd">&#9670;&nbsp;</a></span>epoch</h2>
@@ -108,56 +106,42 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8605ba171502d3c0bc880c27223f332f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8605ba171502d3c0bc880c27223f332f">&#9670;&nbsp;</a></span>expected</h2>
+<a id="a105217055687b01199c69c65b46f3ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a105217055687b01199c69c65b46f3ad5">&#9670;&nbsp;</a></span>expecteds</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float TestingResult::TestResults::expected = 0.0f</td>
+          <td class="memname">std::vector&lt;float&gt; TestingResult::TestResults::expecteds</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0bb235840b0d3675cde3d189b750fd5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bb235840b0d3675cde3d189b750fd5b">&#9670;&nbsp;</a></span>line</h2>
+<a id="a10c07f1eeee92479211de9db692331fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10c07f1eeee92479211de9db692331fd">&#9670;&nbsp;</a></span>lineNumber</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t TestingResult::TestResults::line = 0</td>
+          <td class="memname">size_t TestingResult::TestResults::lineNumber = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5e1e29ab8ddd8594a4ef57d8801ec7db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e1e29ab8ddd8594a4ef57d8801ec7db">&#9670;&nbsp;</a></span>output</h2>
+<a id="a4cbcafc059abbd42960ad45ceb3931b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cbcafc059abbd42960ad45ceb3931b0">&#9670;&nbsp;</a></span>outputs</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float TestingResult::TestResults::output = 0.0f</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3692062294bef363e78f9c668ca29c26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3692062294bef363e78f9c668ca29c26">&#9670;&nbsp;</a></span>progress</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;float&gt; TestingResult::TestResults::progress</td>
+          <td class="memname">std::vector&lt;float&gt; TestingResult::TestResults::outputs</td>
         </tr>
       </table>
 </div><div class="memdoc">

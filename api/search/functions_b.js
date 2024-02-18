@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['network_423',['Network',['../classNetwork.html#a3043240c3adcef445e8f5d21eb61eb0a',1,'Network::Network(const Network &amp;other)=delete'],['../classNetwork.html#ad2333cf79061fe62dc5980c83fea41e9',1,'Network::Network(Network &amp;&amp;other)=default'],['../classNetwork.html#a22366a210c0fb05448d1802a0e98452a',1,'Network::Network()=default'],['../classNetwork.html#a5bd901b8eebe7a3e690d47c306d8eb78',1,'Network::Network(const NetworkParameters &amp;params)']]],
-  ['networkexception_424',['NetworkException',['../classNetworkException.html#aef0219d5da0b7dc29ef06daba7d942d9',1,'NetworkException']]],
-  ['neuron_425',['Neuron',['../classNeuron.html#a33307921c924f80b7033ff097d30cdc6',1,'Neuron']]]
+  ['main_656',['main',['../Main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'Main.cpp']]],
+  ['make_5ferror_5fcode_657',['make_error_code',['../namespacesmlp.html#ab46cdd9d49ec11e07fd0341ae0a91a23',1,'smlp']]],
+  ['manager_658',['Manager',['../classManager.html#a2d28ce5a6ead6ec196261307c2715bb0',1,'Manager']]],
+  ['managerexception_659',['ManagerException',['../classManagerException.html#a1ebcf258a19734fd5799fb751f5fafb3',1,'ManagerException']]],
+  ['message_660',['message',['../classsmlp_1_1ErrorCategory.html#a62ef91aae54cb5b7ce2ea2032ec89e6c',1,'smlp::ErrorCategory::message()'],['../structsmlp_1_1Result.html#a8337e151c59d80a3e3a9910c2aef7b0f',1,'smlp::Result::message()']]],
+  ['message_661',['Message',['../classSimpleLang.html#a26c6264d5cdc3485457b95e3a5f454ac',1,'SimpleLang::Message(const std::string &amp;key, const mapstr &amp;variables={})'],['../classSimpleLang.html#ace91770c24a354945936d6a8d02dd383',1,'SimpleLang::Message(enum Message message, const mapstr &amp;variables={})']]]
 ];

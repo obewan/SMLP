@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_7edatafileparser_476',['~DataFileParser',['../classDataFileParser.html#af9e0be65c74ef404744a5bcb4f603bfd',1,'DataFileParser']]],
-  ['_7elayer_477',['~Layer',['../classLayer.html#a57e5a4a6ec188de4e7b8c894aac254ea',1,'Layer']]],
-  ['_7enetwork_478',['~Network',['../classNetwork.html#a7a4e19cdb4bf0c7ecf82baa643831492',1,'Network']]]
+  ['warn_738',['warn',['../classSimpleLogger.html#aa081739991cdcae1083ac282c77f9eb2',1,'SimpleLogger']]],
+  ['what_739',['what',['../classFileParserException.html#ab1b86748fef183bb713bbfab4006e330',1,'FileParserException::what()'],['../classImportExportException.html#a497b30984b08ecb656c15a9c96acbdc7',1,'ImportExportException::what()'],['../classManagerException.html#a365d27977b1e716d9ed52ac52969bf84',1,'ManagerException::what()'],['../classNetworkException.html#a63102d45358ff27f111c9429c7adccd0',1,'NetworkException::what()'],['../classPredictException.html#a1668ee0791f0e5b06570649c4c5be249',1,'PredictException::what()'],['../classSimpleConfigException.html#a3bd9d645779d95378b224340d28dd878',1,'SimpleConfigException::what()'],['../classSimpleLangException.html#a9ece250d6d95abbf3ee1ad5abbc65bdb',1,'SimpleLangException::what()'],['../classSimpleTCPException.html#a29dcbb9a982ad49e3882521290f68298',1,'SimpleTCPException::what()'],['../classSmlpException.html#abb1eb885f45313da8d290d60e053f855',1,'SmlpException::what()'],['../classTestingException.html#ad366780a0384b3c1c046a746114db3a1',1,'TestingException::what()'],['../classTrainingException.html#ad8cad0297413fc41811fce00ab7c1bc7',1,'TrainingException::what()']]]
 ];

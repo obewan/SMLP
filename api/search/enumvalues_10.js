@@ -1,4 +1,25 @@
 var searchData=
 [
-  ['warn_631',['WARN',['../SimpleLogger_8h.html#aca1fd1d8935433e6ba2e3918214e07f9a32bd8a1db2275458673903bdb84cb277',1,'SimpleLogger.h']]]
+  ['tanh_964',['Tanh',['../CommonModes_8h.html#a89939c8c374f8b73d6038b7adaee95e7acc132a41cab5676334f353a22a0aa5c5',1,'CommonModes.h']]],
+  ['tcpclientconnection_965',['TCPClientConnection',['../CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efaa0725b3a8edf832f62bd09754d5b9ac28',1,'CommonMessages.h']]],
+  ['tcpclientdisconnection_966',['TCPClientDisconnection',['../CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efaab65b8c4f216655becfa8c601c1829e92',1,'CommonMessages.h']]],
+  ['tcpserveraccepterror_967',['TCPServerAcceptError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a07ed169518b266b6f29c9b76834ef7c2',1,'CommonErrors.h']]],
+  ['tcpserverclosed_968',['TCPServerClosed',['../CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efaa18652e4b02f62d38bf3d9ca989076f68',1,'CommonMessages.h']]],
+  ['tcpserverrecverror_969',['TCPServerRecvError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a45c359f220ba632337ba15bd2b1f3009',1,'CommonErrors.h']]],
+  ['tcpsocketbinderror_970',['TCPSocketBindError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a9fae84a2a567418bfc398d129401a17c',1,'CommonErrors.h']]],
+  ['tcpsocketcreateerror_971',['TCPSocketCreateError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a7d5dfdf77cd3665c5ac0a111d86e4e89',1,'CommonErrors.h']]],
+  ['tcpsocketlistenerror_972',['TCPSocketListenError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5afbdae7cdb33556d8339198b3b45a43d6',1,'CommonErrors.h']]],
+  ['tcpsocketnotset_973',['TCPSocketNotSet',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5aa25b2df0ff9d6d5278e9ee8f0e52c39e',1,'CommonErrors.h']]],
+  ['testingerror_974',['TestingError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a325499ce896dde44343ae609dc0e2539',1,'CommonErrors.h']]],
+  ['testingfile_975',['TestingFile',['../Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d',1,'Testing.h']]],
+  ['testingsocket_976',['TestingSocket',['../Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa',1,'Testing.h']]],
+  ['testingstdin_977',['TestingStdin',['../Testing_8h.html#a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8',1,'Testing.h']]],
+  ['testonly_978',['TestOnly',['../CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787eaa9463c9f72315953501239b6c265ecb1',1,'CommonModes.h']]],
+  ['trainingerror_979',['TrainingError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5ad53692ee11b93e9cdb01e781867eb796',1,'CommonErrors.h']]],
+  ['trainingfile_980',['TrainingFile',['../Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60a757f7e5aa2407346db13ac58fb2826d6',1,'Training.h']]],
+  ['trainingsocket_981',['TrainingSocket',['../Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60a130c07446e7500b9b29f3bd4a00a4fdc',1,'Training.h']]],
+  ['trainingstdin_982',['TrainingStdin',['../Training_8h.html#a8ad10a6dc4df5289dfab8c9a7ae62d60ac712bd052f9941f5c1b3a14f8c178a23',1,'Training.h']]],
+  ['trainonly_983',['TrainOnly',['../CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787eabb8357f076b6f40fce9113b3dc5e759d',1,'CommonModes.h']]],
+  ['traintestmonitored_984',['TrainTestMonitored',['../CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787ea2a7f3e6bde587a3e8d9bb4d62618bc3b',1,'CommonModes.h']]],
+  ['trainthentest_985',['TrainThenTest',['../CommonModes_8h.html#a837590fd5310ff5df56ffcf7c394787eada172908d34f9b80bd5e4f4cd7b61a14',1,'CommonModes.h']]]
 ];

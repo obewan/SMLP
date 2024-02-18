@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fileno_632',['FILENO',['../SimpleMLP_8cpp.html#af2832b8f489368732656ba888e493335',1,'SimpleMLP.cpp']]]
+  ['close_5fsocket_993',['CLOSE_SOCKET',['../SimpleHTTPServer_8cpp.html#a89a7b1b0ea2e73dc31bed4fcd9b857eb',1,'SimpleHTTPServer.cpp']]]
 ];

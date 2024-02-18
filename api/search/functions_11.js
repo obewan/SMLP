@@ -1,4 +1,24 @@
 var searchData=
 [
-  ['updateweights_472',['updateWeights',['../classHiddenLayer.html#a6e990f822e515595bfdc7c2d1563fcc6',1,'HiddenLayer::updateWeights()'],['../classInputLayer.html#a8f81b83fb82ee5d32be950e12c7c35a8',1,'InputLayer::updateWeights()'],['../classLayer.html#aa0a22805b25e1c4c19337c8f2ef1a9a2',1,'Layer::updateWeights()'],['../classNetwork.html#aa74f5d430694883ebecb2d5443740476',1,'Network::updateWeights()'],['../classOutputLayer.html#a020e5ed4799ddafa274ec88058b662b3',1,'OutputLayer::updateWeights()']]]
+  ['test_715',['test',['../classTesting.html#a8aa541724a4ef93ee3793cfee1c3dc60',1,'Testing::test()'],['../classTestingFile.html#a140a5094915e8d604c8080718cd3886c',1,'TestingFile::test()'],['../classTestingSocket.html#a4e636282a5faf31f796a5fb0bedef13d',1,'TestingSocket::test()'],['../classTestingStdin.html#ae3c0b158c20b86fe8a48cf028361d2dc',1,'TestingStdin::test()'],['../classManager.html#a13de89312eca3daa14f18557e112be15',1,'Manager::test()']]],
+  ['testing_716',['Testing',['../classTesting.html#ab5c797eb9c616cb9ceb19c7b4db8405b',1,'Testing']]],
+  ['testingexception_717',['TestingException',['../classTestingException.html#a7e384c36385d7f1ae4d1d8e411318c4f',1,'TestingException']]],
+  ['testingfile_718',['TestingFile',['../classTestingFile.html#a868af00462832cff3a6c115b0cdeac06',1,'TestingFile']]],
+  ['testingresult_719',['TestingResult',['../classTestingResult.html#afb71ebecd4685a01752de18def1ea25b',1,'TestingResult']]],
+  ['testingsocket_720',['TestingSocket',['../classTestingSocket.html#afa7c7459521f5a926ade80c92db0aea0',1,'TestingSocket']]],
+  ['testingstdin_721',['TestingStdin',['../classTestingStdin.html#a7361009c89215b710c042806ba03fa5a',1,'TestingStdin']]],
+  ['testingtypestr_722',['testingTypeStr',['../classTesting.html#abec615173109c5bae004754b8d82de1b',1,'Testing']]],
+  ['testline_723',['testLine',['../classTesting.html#ac26ee7bedc04561ee80ca1a773b51010',1,'Testing']]],
+  ['train_724',['train',['../classTraining.html#ace034e9bd8fb664e9f907252d01ebfd8',1,'Training::train()'],['../classTrainingStdin.html#ac6340ffd2cf11e2c4a3c5c1c6359b3dd',1,'TrainingStdin::train()'],['../classTrainingSocket.html#a8d266a00a830e3c0d5a538ac8abbeefa',1,'TrainingSocket::train()'],['../classTrainingFile.html#a8d70ab4d88007c8f0d1ef206bd62edef',1,'TrainingFile::train()'],['../classManager.html#a79fcbc6a77715bada085a8da8ae6ab71',1,'Manager::train()']]],
+  ['training_725',['Training',['../classTraining.html#ab4fbd302ae11d1c085fdfc9288af1822',1,'Training']]],
+  ['trainingexception_726',['TrainingException',['../classTrainingException.html#a75cdda28f135220c9a54e2fea1656870',1,'TrainingException']]],
+  ['trainingfile_727',['TrainingFile',['../classTrainingFile.html#adc9d43c3d9231850a25aef62f8a45f07',1,'TrainingFile']]],
+  ['trainingsocket_728',['TrainingSocket',['../classTrainingSocket.html#af186bede4ddd8471eb2588c56a0ac5f0',1,'TrainingSocket']]],
+  ['trainingstdin_729',['TrainingStdin',['../classTrainingStdin.html#a04b8e929f2bd83d01fd061bee3a79e30',1,'TrainingStdin']]],
+  ['trainingtypestr_730',['trainingTypeStr',['../classTraining.html#a9e2c1e1e77c4724e56d9365e3b11afbf',1,'Training']]],
+  ['traintestmonitored_731',['trainTestMonitored',['../classManager.html#a731b2fe18e0072d2555c6cad22623a40',1,'Manager']]],
+  ['trim_732',['trim',['../namespacesmlp.html#af763ffaaac1913be28a590ea43910396',1,'smlp']]],
+  ['trimall_733',['trimALL',['../namespacesmlp.html#a039fff7ae14985da47d2475f758427cb',1,'smlp']]],
+  ['trimcrlf_734',['trimCRLF',['../namespacesmlp.html#a422b90b45e6802f84a7c9583f6686a70',1,'smlp']]],
+  ['trimrnull_735',['trimRNULL',['../namespacesmlp.html#a80bb222a938a25bdbea3650a0c8a46dc',1,'smlp']]]
 ];

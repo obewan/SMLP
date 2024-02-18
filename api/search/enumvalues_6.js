@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jsonparsingerror_609',['JsonParsingError',['../CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5a228d4170c4d6cb68f09322f98fa13fcc',1,'CommonErrors.h']]]
+  ['hiddenlayer_924',['HiddenLayer',['../Layer_8h.html#a56943a0946e5f15e5e58054b8e7a04a4a1462c81ba3769d8f4a5a20fcf19af10d',1,'Layer.h']]]
 ];

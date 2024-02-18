@@ -1,12 +1,19 @@
 var searchData=
 [
-  ['tanhderivative_565',['tanhDerivative',['../ActivationFunctions_8h.html#a254426ace42ff806d291c4fd28e88bb4',1,'ActivationFunctions.h']]],
-  ['tanhfunc_566',['tanhFunc',['../ActivationFunctions_8h.html#ac1cf4d56656400178f9c4834ecc94b00',1,'ActivationFunctions.h']]],
-  ['title_567',['title',['../structAppParameters.html#aaebf7bd156ca22be008f29129064e935',1,'AppParameters']]],
-  ['total_5fexpected_5fone_568',['total_expected_one',['../structTestingResult_1_1Stat.html#af85b52ad1d319ba09a78b337594250d7',1,'TestingResult::Stat']]],
-  ['total_5fexpected_5fzero_569',['total_expected_zero',['../structTestingResult_1_1Stat.html#ab2ec98b2299f3fb92be529df09dc7be4',1,'TestingResult::Stat']]],
-  ['total_5flines_570',['total_lines',['../classDataFileParser.html#ab0350b8d66515128eab6768c025ea61d',1,'DataFileParser']]],
-  ['total_5fsamples_571',['total_samples',['../structTestingResult_1_1Stat.html#ad53404fdd3b179943bb4928aa8fb42fb',1,'TestingResult::Stat']]],
-  ['training_5fratio_572',['training_ratio',['../structAppParameters.html#af680b02229bdf9df8ee675ca516ec125',1,'AppParameters']]],
-  ['training_5fratio_5fline_573',['training_ratio_line',['../structAppParameters.html#a7de34a5ac9018b11c5289c5ea5bf264d',1,'AppParameters::training_ratio_line()'],['../classDataFileParser.html#adf1f8bb00cc6cb85883ea1160bf8d4c7',1,'DataFileParser::training_ratio_line()']]]
+  ['tanhderivative_868',['tanhDerivative',['../ActivationFunctions_8h.html#a254426ace42ff806d291c4fd28e88bb4',1,'ActivationFunctions.h']]],
+  ['tanhfunc_869',['tanhFunc',['../ActivationFunctions_8h.html#ac1cf4d56656400178f9c4834ecc94b00',1,'ActivationFunctions.h']]],
+  ['testing_5fmap_870',['testing_map',['../Testing_8h.html#a9a0aca120a10a234239d0d227f129e97',1,'Testing.h']]],
+  ['testingresults_5f_871',['testingResults_',['../classTesting.html#a25b8bbf169e9a15bb52eedf7d4f905b9',1,'Testing']]],
+  ['testingtype_872',['testingType',['../classTesting.html#a959f7b483ffc97aa90d795ab0272840c',1,'Testing']]],
+  ['threadmutex_5f_873',['threadMutex_',['../classSimpleHTTPServer.html#a6ab326d71cb7ec7ecedde368293a1548',1,'SimpleHTTPServer']]],
+  ['title_874',['title',['../structAppParameters.html#aaebf7bd156ca22be008f29129064e935',1,'AppParameters']]],
+  ['total_5fconvergences_875',['total_convergences',['../structTestingResult_1_1Stat.html#afe2f77a852ac6c34d02ed479617aa7eb',1,'TestingResult::Stat']]],
+  ['total_5fexpected_5fone_876',['total_expected_one',['../structTestingResult_1_1Stat.html#af85b52ad1d319ba09a78b337594250d7',1,'TestingResult::Stat']]],
+  ['total_5fexpected_5fzero_877',['total_expected_zero',['../structTestingResult_1_1Stat.html#ab2ec98b2299f3fb92be529df09dc7be4',1,'TestingResult::Stat']]],
+  ['total_5flines_878',['total_lines',['../classDataFileParser.html#ab0350b8d66515128eab6768c025ea61d',1,'DataFileParser']]],
+  ['total_5fsamples_879',['total_samples',['../structTestingResult_1_1Stat.html#ad53404fdd3b179943bb4928aa8fb42fb',1,'TestingResult::Stat']]],
+  ['training_5fmap_880',['training_map',['../Training_8h.html#a086743fb043e7fb86a8bffe0543dbe4b',1,'Training.h']]],
+  ['training_5fratio_881',['training_ratio',['../structAppParameters.html#af680b02229bdf9df8ee675ca516ec125',1,'AppParameters']]],
+  ['training_5fratio_5fline_882',['training_ratio_line',['../classDataFileParser.html#adf1f8bb00cc6cb85883ea1160bf8d4c7',1,'DataFileParser::training_ratio_line()'],['../structAppParameters.html#a7de34a5ac9018b11c5289c5ea5bf264d',1,'AppParameters::training_ratio_line()']]],
+  ['trainingtype_883',['trainingType',['../classTraining.html#a5e634ac54ec8623920e57afc4d41c17f',1,'Training']]]
 ];

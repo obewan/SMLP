@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['importexportexception_310',['ImportExportException',['../classImportExportException.html',1,'']]],
-  ['inputlayer_311',['InputLayer',['../classInputLayer.html',1,'']]]
+  ['hiddenlayer_482',['HiddenLayer',['../classHiddenLayer.html',1,'']]],
+  ['httprequest_483',['HttpRequest',['../structSimpleHTTPServer_1_1HttpRequest.html',1,'SimpleHTTPServer']]]
 ];

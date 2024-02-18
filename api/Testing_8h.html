@@ -66,7 +66,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Testing.h File Reference</div>  </div>
 </div><!--header-->
@@ -79,6 +81,7 @@ $(function() {
 <code>#include &quot;<a class="el" href="Network_8h_source.html">Network.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="TestingResult_8h_source.html">TestingResult.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="TestingException_8h_source.html">exception/TestingException.h</a>&quot;</code><br />
+<code>#include &lt;cstddef&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 </div>
 <p><a href="Testing_8h_source.html">Go to the source code of this file.</a></p>
@@ -88,13 +91,76 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html">Testing</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> class is responsible for testing the neural network model. It contains methods for processing test data, calculating statistics, and displaying test results.  <a href="classTesting.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a8502bc9b38a612113f200cca5b941d60"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a> { <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d">TestingFile</a>
+, <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa">TestingSocket</a>
+, <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8">TestingStdin</a>
+ }</td></tr>
+<tr class="separator:a8502bc9b38a612113f200cca5b941d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a9a0aca120a10a234239d0d227f129e97"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Testing_8h.html#a9a0aca120a10a234239d0d227f129e97">testing_map</a></td></tr>
+<tr class="separator:a9a0aca120a10a234239d0d227f129e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a>. </p>
 <dl class="section author"><dt>Author</dt><dd>Damien Balima (www.dams-labs.net) </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2023-08-29</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Damien Balima (c) CC-BY-NC-SA-4.0 2023 </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a8502bc9b38a612113f200cca5b941d60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8502bc9b38a612113f200cca5b941d60">&#9670;&nbsp;</a></span>TestingType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d"></a>TestingFile&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa"></a>TestingSocket&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8"></a>TestingStdin&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a9a0aca120a10a234239d0d227f129e97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a0aca120a10a234239d0d227f129e97">&#9670;&nbsp;</a></span>testing_map</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a>, std::less&lt;&gt; &gt; testing_map</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingFile&quot;</span>, <a class="code" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d">TestingType::TestingFile</a>},</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingSocket&quot;</span>, <a class="code" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa">TestingType::TestingSocket</a>},</div>
+<div class="line">    {<span class="stringliteral">&quot;TestingStdin&quot;</span>, <a class="code" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8">TestingType::TestingStdin</a>}}</div>
+<div class="ttc" id="aTesting_8h_html_a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa"><div class="ttname"><a href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a3e232da481e38639674e1a61685103aa">TestingType::TestingSocket</a></div><div class="ttdeci">@ TestingSocket</div></div>
+<div class="ttc" id="aTesting_8h_html_a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d"><div class="ttname"><a href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60a8d0ecf0adee3db85a524e2d7e8253d8d">TestingType::TestingFile</a></div><div class="ttdeci">@ TestingFile</div></div>
+<div class="ttc" id="aTesting_8h_html_a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8"><div class="ttname"><a href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60af99cf741c3d156b61f07c71c82cbb0a8">TestingType::TestingStdin</a></div><div class="ttdeci">@ TestingStdin</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1

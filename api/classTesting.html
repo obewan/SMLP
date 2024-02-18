@@ -63,9 +63,12 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classTesting-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Testing Class Reference</div>  </div>
+<div class="title">Testing Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -73,30 +76,31 @@ $(function() {
  <a href="classTesting.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Testing_8h_source.html">Testing.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Testing:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classTesting.png" usemap="#Testing_map" alt=""/>
+  <map id="Testing_map" name="Testing_map">
+<area href="classTestingFile.html" alt="TestingFile" shape="rect" coords="0,56,90,80"/>
+<area href="classTestingSocket.html" alt="TestingSocket" shape="rect" coords="100,56,190,80"/>
+<area href="classTestingStdin.html" alt="TestingStdin" shape="rect" coords="200,56,290,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8c28329e0b07e3cc982e779907d2049"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#ae8c28329e0b07e3cc982e779907d2049">Testing</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt; fileparser)</td></tr>
-<tr class="memdesc:ae8c28329e0b07e3cc982e779907d2049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and a pointer to the file parser as arguments.  <a href="classTesting.html#ae8c28329e0b07e3cc982e779907d2049">More...</a><br /></td></tr>
-<tr class="separator:ae8c28329e0b07e3cc982e779907d2049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd738f899ad00fb883eb24d4c1ebabfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#abd738f899ad00fb883eb24d4c1ebabfa">Testing</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network, const std::string &amp;file_path)</td></tr>
-<tr class="memdesc:abd738f899ad00fb883eb24d4c1ebabfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and the file path to testing data as arguments.  <a href="classTesting.html#abd738f899ad00fb883eb24d4c1ebabfa">More...</a><br /></td></tr>
-<tr class="separator:abd738f899ad00fb883eb24d4c1ebabfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91eacd27b5e1333f7233b4c3905d4945"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a91eacd27b5e1333f7233b4c3905d4945">test</a> (const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;network_params, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, size_t epoch=0, size_t current_line=0)</td></tr>
-<tr class="memdesc:a91eacd27b5e1333f7233b4c3905d4945"><td class="mdescLeft">&#160;</td><td class="mdescRight">test from stdin or from file, depending of parameters  <a href="classTesting.html#a91eacd27b5e1333f7233b4c3905d4945">More...</a><br /></td></tr>
-<tr class="separator:a91eacd27b5e1333f7233b4c3905d4945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6499d9660cf10ea55de29da2e2d64b54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a6499d9660cf10ea55de29da2e2d64b54">testFromFile</a> (const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;network_params, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, size_t epoch=0) const</td></tr>
-<tr class="memdesc:a6499d9660cf10ea55de29da2e2d64b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method tests the model with the given parameters.  <a href="classTesting.html#a6499d9660cf10ea55de29da2e2d64b54">More...</a><br /></td></tr>
-<tr class="separator:a6499d9660cf10ea55de29da2e2d64b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c985a723d3b039934b027602dd6bb84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a5c985a723d3b039934b027602dd6bb84">testFromStdin</a> (const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;network_params, const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;app_params, size_t current_line_number) const</td></tr>
-<tr class="memdesc:a5c985a723d3b039934b027602dd6bb84"><td class="mdescLeft">&#160;</td><td class="mdescRight">For testing a with a stdin pipe.  <a href="classTesting.html#a5c985a723d3b039934b027602dd6bb84">More...</a><br /></td></tr>
-<tr class="separator:a5c985a723d3b039934b027602dd6bb84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc83bbed84263f9e03423659e5470847"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#adc83bbed84263f9e03423659e5470847">setNetwork</a> (std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt; network)</td></tr>
-<tr class="memdesc:adc83bbed84263f9e03423659e5470847"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the network for testing.  <a href="classTesting.html#adc83bbed84263f9e03423659e5470847">More...</a><br /></td></tr>
-<tr class="separator:adc83bbed84263f9e03423659e5470847"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a135684a71451c30015ecbbcc7efa99d0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a135684a71451c30015ecbbcc7efa99d0">getNetwork</a> () const</td></tr>
-<tr class="memdesc:a135684a71451c30015ecbbcc7efa99d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the network used for testing.  <a href="classTesting.html#a135684a71451c30015ecbbcc7efa99d0">More...</a><br /></td></tr>
-<tr class="separator:a135684a71451c30015ecbbcc7efa99d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c797eb9c616cb9ceb19c7b4db8405b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#ab5c797eb9c616cb9ceb19c7b4db8405b">Testing</a> (<a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a> testing_type)</td></tr>
+<tr class="memdesc:ab5c797eb9c616cb9ceb19c7b4db8405b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a pointer to the network and a pointer to the file parser as arguments.  <a href="classTesting.html#ab5c797eb9c616cb9ceb19c7b4db8405b">More...</a><br /></td></tr>
+<tr class="separator:ab5c797eb9c616cb9ceb19c7b4db8405b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20b240c2c9a515427b2601bb4bba72c6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a20b240c2c9a515427b2601bb4bba72c6">~Testing</a> ()=default</td></tr>
+<tr class="separator:a20b240c2c9a515427b2601bb4bba72c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8aa541724a4ef93ee3793cfee1c3dc60"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a8aa541724a4ef93ee3793cfee1c3dc60">test</a> (const std::string &amp;line=&quot;&quot;, size_t epoch=0, size_t current_line_number=0)=0</td></tr>
+<tr class="memdesc:a8aa541724a4ef93ee3793cfee1c3dc60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test a network.  <a href="classTesting.html#a8aa541724a4ef93ee3793cfee1c3dc60">More...</a><br /></td></tr>
+<tr class="separator:a8aa541724a4ef93ee3793cfee1c3dc60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b24316789c6fa663ed67146d7620e77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a0b24316789c6fa663ed67146d7620e77">createFileParser</a> ()</td></tr>
+<tr class="memdesc:a0b24316789c6fa663ed67146d7620e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a File Parser object.  <a href="classTesting.html#a0b24316789c6fa663ed67146d7620e77">More...</a><br /></td></tr>
+<tr class="separator:a0b24316789c6fa663ed67146d7620e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4588690a3d8fee376be9cc2545f123fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a4588690a3d8fee376be9cc2545f123fb">setFileParser</a> (std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt; fileparser)</td></tr>
 <tr class="memdesc:a4588690a3d8fee376be9cc2545f123fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the file parser for testing data.  <a href="classTesting.html#a4588690a3d8fee376be9cc2545f123fb">More...</a><br /></td></tr>
 <tr class="separator:a4588690a3d8fee376be9cc2545f123fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,14 +108,32 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2a8e8846759cafa4e57a068b4ee84e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the file parser used for testing data.  <a href="classTesting.html#a2a8e8846759cafa4e57a068b4ee84e07">More...</a><br /></td></tr>
 <tr class="separator:a2a8e8846759cafa4e57a068b4ee84e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0913e63e91db5b952b60c2572d208ab1"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classTestingResult.html">TestingResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a0913e63e91db5b952b60c2572d208ab1">getTestingResults</a> () const</td></tr>
-<tr class="memdesc:a0913e63e91db5b952b60c2572d208ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> Results object.  <a href="classTesting.html#a0913e63e91db5b952b60c2572d208ab1">More...</a><br /></td></tr>
 <tr class="separator:a0913e63e91db5b952b60c2572d208ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec615173109c5bae004754b8d82de1b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#abec615173109c5bae004754b8d82de1b">testingTypeStr</a> () const</td></tr>
+<tr class="separator:abec615173109c5bae004754b8d82de1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a959f7b483ffc97aa90d795ab0272840c"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a959f7b483ffc97aa90d795ab0272840c">testingType</a></td></tr>
+<tr class="separator:a959f7b483ffc97aa90d795ab0272840c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ac26ee7bedc04561ee80ca1a773b51010"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTestingResult_1_1TestResults.html">TestingResult::TestResults</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#ac26ee7bedc04561ee80ca1a773b51010">testLine</a> (const <a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a> &amp;record_result, const size_t line_number=0, const size_t epoch=0) const</td></tr>
+<tr class="separator:ac26ee7bedc04561ee80ca1a773b51010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a421e33d3b8f9052172796dd0fc8afcaf"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a421e33d3b8f9052172796dd0fc8afcaf">fileParser_</a> = nullptr</td></tr>
+<tr class="separator:a421e33d3b8f9052172796dd0fc8afcaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b8bbf169e9a15bb52eedf7d4f905b9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classTestingResult.html">TestingResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTesting.html#a25b8bbf169e9a15bb52eedf7d4f905b9">testingResults_</a> = nullptr</td></tr>
+<tr class="separator:a25b8bbf169e9a15bb52eedf7d4f905b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> class is responsible for testing the neural network model. It contains methods for processing test data, calculating statistics, and displaying test results. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae8c28329e0b07e3cc982e779907d2049"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8c28329e0b07e3cc982e779907d2049">&#9670;&nbsp;</a></span>Testing() <span class="overload">[1/2]</span></h2>
+<a id="ab5c797eb9c616cb9ceb19c7b4db8405b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5c797eb9c616cb9ceb19c7b4db8405b">&#9670;&nbsp;</a></span>Testing()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,41 +144,24 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Testing::Testing </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td>
-          <td class="paramname"><em>network</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a>&#160;</td>
+          <td class="paramname"><em>testing_type</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classDataFileParser.html">DataFileParser</a> &gt;&#160;</td>
-          <td class="paramname"><em>fileparser</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Constructor that takes a pointer to the network and a pointer to the file parser as arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>Pointer to the network. </td></tr>
-    <tr><td class="paramname">fileparser</td><td>Pointer to the file parser. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a id="abd738f899ad00fb883eb24d4c1ebabfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd738f899ad00fb883eb24d4c1ebabfa">&#9670;&nbsp;</a></span>Testing() <span class="overload">[2/2]</span></h2>
+<a id="a20b240c2c9a515427b2601bb4bba72c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20b240c2c9a515427b2601bb4bba72c6">&#9670;&nbsp;</a></span>~Testing()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,21 +170,36 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Testing::Testing </td>
+          <td class="memname">virtual Testing::~Testing </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td>
-          <td class="paramname"><em>network</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file_path</em>&#160;</td>
         </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0b24316789c6fa663ed67146d7620e77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b24316789c6fa663ed67146d7620e77">&#9670;&nbsp;</a></span>createFileParser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
         <tr>
+          <td class="memname">void Testing::createFileParser </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -189,18 +209,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor that takes a pointer to the network and the file path to testing data as arguments. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>Pointer to the network. </td></tr>
-    <tr><td class="paramname">file_path</td><td>File path to the testing data. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Create a File Parser object. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2a8e8846759cafa4e57a068b4ee84e07"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2a8e8846759cafa4e57a068b4ee84e07">&#9670;&nbsp;</a></span>getFileParser()</h2>
 
@@ -229,34 +241,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a135684a71451c30015ecbbcc7efa99d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a135684a71451c30015ecbbcc7efa99d0">&#9670;&nbsp;</a></span>getNetwork()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classNetwork.html">Network</a>&gt; Testing::getNetwork </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the network used for testing. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the network. </dd></dl>
-
-</div>
-</div>
 <a id="a0913e63e91db5b952b60c2572d208ab1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0913e63e91db5b952b60c2572d208ab1">&#9670;&nbsp;</a></span>getTestingResults()</h2>
 
@@ -279,9 +263,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Get the <a class="el" href="classTesting.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> Results object. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;TestingResult&gt; </dd></dl>
 
 </div>
 </div>
@@ -319,8 +300,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="adc83bbed84263f9e03423659e5470847"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc83bbed84263f9e03423659e5470847">&#9670;&nbsp;</a></span>setNetwork()</h2>
+<a id="a8aa541724a4ef93ee3793cfee1c3dc60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8aa541724a4ef93ee3793cfee1c3dc60">&#9670;&nbsp;</a></span>test()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -329,47 +310,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Testing::setNetwork </td>
+          <td class="memname">virtual <a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Testing::test </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classNetwork.html">Network</a> &gt;&#160;</td>
-          <td class="paramname"><em>network</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Sets the network for testing. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network</td><td>Pointer to the network. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a91eacd27b5e1333f7233b4c3905d4945"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91eacd27b5e1333f7233b4c3905d4945">&#9670;&nbsp;</a></span>test()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Testing::test </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>network_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>app_params</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -381,7 +325,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>current_line</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>current_line_number</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -389,43 +333,77 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>test from stdin or from file, depending of parameters </p>
+<p>Test a network. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">network_params</td><td></td></tr>
-    <tr><td class="paramname">app_params</td><td></td></tr>
-    <tr><td class="paramname">epoch</td><td></td></tr>
-    <tr><td class="paramname">current_line</td><td></td></tr>
+    <tr><td class="paramname">line</td><td>optional data line to use for testing </td></tr>
+    <tr><td class="paramname">epoch</td><td>optional epoch to indicate for testing results </td></tr>
+    <tr><td class="paramname">current_line_number</td><td>optional line number to indicate </td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Implemented in <a class="el" href="classTestingStdin.html#ae3c0b158c20b86fe8a48cf028361d2dc">TestingStdin</a>, <a class="el" href="classTestingSocket.html#a4e636282a5faf31f796a5fb0bedef13d">TestingSocket</a>, and <a class="el" href="classTestingFile.html#a140a5094915e8d604c8080718cd3886c">TestingFile</a>.</p>
+
 </div>
 </div>
-<a id="a6499d9660cf10ea55de29da2e2d64b54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6499d9660cf10ea55de29da2e2d64b54">&#9670;&nbsp;</a></span>testFromFile()</h2>
+<a id="abec615173109c5bae004754b8d82de1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec615173109c5bae004754b8d82de1b">&#9670;&nbsp;</a></span>testingTypeStr()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Testing::testFromFile </td>
+          <td class="memname">std::string Testing::testingTypeStr </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>network_params</em>, </td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac26ee7bedc04561ee80ca1a773b51010"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac26ee7bedc04561ee80ca1a773b51010">&#9670;&nbsp;</a></span>testLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTestingResult_1_1TestResults.html">TestingResult::TestResults</a> Testing::testLine </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a> &amp;&#160;</td>
+          <td class="paramname"><em>record_result</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>app_params</em>, </td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>line_number</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype">const size_t&#160;</td>
           <td class="paramname"><em>epoch</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -434,53 +412,71 @@ Public Member Functions</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>This method tests the model with the given parameters. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">network_params</td><td><a class="el" href="classNetwork.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> parameters. </td></tr>
-    <tr><td class="paramname">app_params</td><td>Application parameters. </td></tr>
-    <tr><td class="paramname">epoch</td><td>The current epoch (default is 0). </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a421e33d3b8f9052172796dd0fc8afcaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a421e33d3b8f9052172796dd0fc8afcaf">&#9670;&nbsp;</a></span>fileParser_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classDataFileParser.html">DataFileParser</a>&gt; Testing::fileParser_ = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5c985a723d3b039934b027602dd6bb84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c985a723d3b039934b027602dd6bb84">&#9670;&nbsp;</a></span>testFromStdin()</h2>
+<a id="a25b8bbf169e9a15bb52eedf7d4f905b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b8bbf169e9a15bb52eedf7d4f905b9">&#9670;&nbsp;</a></span>testingResults_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classTestingResult.html">TestingResult</a>&gt; Testing::testingResults_ = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a959f7b483ffc97aa90d795ab0272840c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a959f7b483ffc97aa90d795ab0272840c">&#9670;&nbsp;</a></span>testingType</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Testing::testFromStdin </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structNetworkParameters.html">NetworkParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>network_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structAppParameters.html">AppParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>app_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>current_line_number</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="memname">const <a class="el" href="Testing_8h.html#a8502bc9b38a612113f200cca5b941d60">TestingType</a> Testing::testingType</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>For testing a with a stdin pipe. </p>
 
 </div>
 </div>

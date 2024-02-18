@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['predict_319',['Predict',['../classPredict.html',1,'']]],
-  ['predictexception_320',['PredictException',['../classPredictException.html',1,'']]]
+  ['network_490',['Network',['../classNetwork.html',1,'']]],
+  ['networkexception_491',['NetworkException',['../classNetworkException.html',1,'']]],
+  ['networkimportexportjson_492',['NetworkImportExportJSON',['../classNetworkImportExportJSON.html',1,'']]],
+  ['networkparameters_493',['NetworkParameters',['../structNetworkParameters.html',1,'']]],
+  ['neuron_494',['Neuron',['../classNeuron.html',1,'']]]
 ];

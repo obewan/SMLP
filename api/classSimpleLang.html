@@ -84,6 +84,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad72faeb41e107546e7cb9e15000719f8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#ad72faeb41e107546e7cb9e15000719f8">get</a> (enum <a class="el" href="CommonErrors_8h.html#a2c3e4bb40f36b262a5214e2da2bca9c5">Error</a> error, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={}) const</td></tr>
 <tr class="memdesc:ad72faeb41e107546e7cb9e15000719f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a string associated with a given error from the i18n file.  <a href="classSimpleLang.html#ad72faeb41e107546e7cb9e15000719f8">More...</a><br /></td></tr>
 <tr class="separator:ad72faeb41e107546e7cb9e15000719f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c42363c52f9424920c0d086b983a568"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a9c42363c52f9424920c0d086b983a568">get</a> (enum <a class="el" href="CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efa">Message</a> message, const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;variables={}) const</td></tr>
+<tr class="memdesc:a9c42363c52f9424920c0d086b983a568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches a string associated with a given error from the i18n file.  <a href="classSimpleLang.html#a9c42363c52f9424920c0d086b983a568">More...</a><br /></td></tr>
+<tr class="separator:a9c42363c52f9424920c0d086b983a568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95f0fdd9c088414034dcd33bd9faa28e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a95f0fdd9c088414034dcd33bd9faa28e">parseFile</a> (const std::string &amp;filename) const</td></tr>
 <tr class="separator:a95f0fdd9c088414034dcd33bd9faa28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03ac520b7606b217da9bb874447bc633"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a03ac520b7606b217da9bb874447bc633">getCurrentFile</a> () const</td></tr>
@@ -99,6 +102,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a26c6264d5cdc3485457b95e3a5f454ac"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#a26c6264d5cdc3485457b95e3a5f454ac">Message</a> (const std::string &amp;key, const <a class="el" href="SimpleLang_8h.html#a037443e99b5a929215e0067aed6d23e9">mapstr</a> &amp;variables={})</td></tr>
 <tr class="memdesc:a26c6264d5cdc3485457b95e3a5f454ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the key message (shortcut).  <a href="classSimpleLang.html#a26c6264d5cdc3485457b95e3a5f454ac">More...</a><br /></td></tr>
 <tr class="separator:a26c6264d5cdc3485457b95e3a5f454ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace91770c24a354945936d6a8d02dd383"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSimpleLang.html#ace91770c24a354945936d6a8d02dd383">Message</a> (enum <a class="el" href="CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efa">Message</a> message, const <a class="el" href="SimpleLang_8h.html#a037443e99b5a929215e0067aed6d23e9">mapstr</a> &amp;variables={})</td></tr>
+<tr class="memdesc:ace91770c24a354945936d6a8d02dd383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the key message (shortcut).  <a href="classSimpleLang.html#ace91770c24a354945936d6a8d02dd383">More...</a><br /></td></tr>
+<tr class="separator:ace91770c24a354945936d6a8d02dd383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abaed79421962753e9fa8ee6bf1847bd2"></a>
@@ -166,6 +172,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">error</td><td></td></tr>
+    <tr><td class="paramname">variables</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -174,7 +181,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad26c5be719cb0aa363d58af3a59710d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad26c5be719cb0aa363d58af3a59710d0">&#9670;&nbsp;</a></span>get() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad26c5be719cb0aa363d58af3a59710d0">&#9670;&nbsp;</a></span>get() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +228,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad72faeb41e107546e7cb9e15000719f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72faeb41e107546e7cb9e15000719f8">&#9670;&nbsp;</a></span>get() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad72faeb41e107546e7cb9e15000719f8">&#9670;&nbsp;</a></span>get() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,10 +266,58 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">error</td><td>The error for which to fetch the associated string. </td></tr>
+    <tr><td class="paramname">variables</td><td>Optional map of variable names and their corresponding replacement values. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The string associated with the error if it exists in the i18n file, otherwise a default error message. </dd></dl>
+
+</div>
+</div>
+<a id="a9c42363c52f9424920c0d086b983a568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c42363c52f9424920c0d086b983a568">&#9670;&nbsp;</a></span>get() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string SimpleLang::get </td>
+          <td>(</td>
+          <td class="paramtype">enum <a class="el" href="CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efa">Message</a>&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::string, std::less&lt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>variables</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fetches a string associated with a given error from the i18n file. </p>
+<p>This method retrieves the string associated with a given message from the i18n file. If the message does not exist in the i18n file, it returns a default message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The message for which to fetch the associated string. </td></tr>
+    <tr><td class="paramname">variables</td><td>Optional map of variable names and their corresponding replacement values. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The string associated with the message if it exists in the i18n file, otherwise a default message. </dd></dl>
 
 </div>
 </div>
@@ -317,7 +372,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a26c6264d5cdc3485457b95e3a5f454ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26c6264d5cdc3485457b95e3a5f454ac">&#9670;&nbsp;</a></span>Message()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a26c6264d5cdc3485457b95e3a5f454ac">&#9670;&nbsp;</a></span>Message() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,6 +409,52 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td></td></tr>
+    <tr><td class="paramname">variables</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
+
+</div>
+</div>
+<a id="ace91770c24a354945936d6a8d02dd383"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace91770c24a354945936d6a8d02dd383">&#9670;&nbsp;</a></span>Message() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string SimpleLang::Message </td>
+          <td>(</td>
+          <td class="paramtype">enum <a class="el" href="CommonMessages_8h.html#a4f09127c805cc1f5ee20e67db7b45efa">Message</a>&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="SimpleLang_8h.html#a037443e99b5a929215e0067aed6d23e9">mapstr</a> &amp;&#160;</td>
+          <td class="paramname"><em>variables</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the key message (shortcut). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td></td></tr>
     <tr><td class="paramname">variables</td><td></td></tr>
   </table>
   </dd>

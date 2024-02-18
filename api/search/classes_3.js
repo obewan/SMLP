@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fileparserexception_308',['FileParserException',['../classFileParserException.html',1,'']]]
+  ['errorcategory_480',['ErrorCategory',['../classsmlp_1_1ErrorCategory.html',1,'smlp']]]
 ];
