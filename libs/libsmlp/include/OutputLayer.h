@@ -14,6 +14,7 @@
 #include <ranges>
 #include <vector>
 
+namespace smlp {
 /**
  * @brief The OutputLayer class represents the output layer of a neural network.
  * It inherits from the Layer class and overrides its methods as necessary. This
@@ -72,3 +73,4 @@ public:
     return std::vector<float>{neuronOutputs.begin(), neuronOutputs.end()};
   }
 };
+} // namespace smlp

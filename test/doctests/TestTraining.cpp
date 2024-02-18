@@ -10,6 +10,8 @@
 #include <iostream>
 #include <memory>
 
+using namespace smlp;
+
 TEST_CASE("Testing the Training class") {
   SUBCASE("Test Constructor") {
     CHECK_NOTHROW({

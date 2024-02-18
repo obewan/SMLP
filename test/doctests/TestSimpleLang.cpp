@@ -3,6 +3,8 @@
 #include "doctest.h"
 #include "exception/SimpleLangException.h"
 
+using namespace smlp;
+
 TEST_CASE("Testing the SimpleLang class") {
   SUBCASE("Test constructor") {
     CHECK_THROWS_WITH_AS(SimpleLang::getInstance().parseFile("test"),

@@ -1,6 +1,8 @@
 #include "Testing.h"
 #include "Manager.h"
 
+using namespace smlp;
+
 TestingResult::TestResults
 Testing::testLine(const smlp::RecordResult &record_result,
                   const size_t line_number, const size_t epoch) const {

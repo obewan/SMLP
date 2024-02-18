@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <memory>
 
+namespace smlp {
 class Manager {
 public:
   static Manager &getInstance() {
@@ -254,3 +255,4 @@ private:
   std::shared_ptr<Testing> testing_ = nullptr;
   std::shared_ptr<SimpleHTTPServer> http_server_ = nullptr;
 };
+} // namespace smlp

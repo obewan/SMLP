@@ -17,6 +17,7 @@
 #include "SimpleLang.h"
 #include "exception/NetworkException.h"
 
+namespace smlp {
 /**
  * @brief The Network class represents a neural network model. It contains an
  * input layer, an output layer, and a vector of hidden layers. It also has a
@@ -176,3 +177,4 @@ public:
     }
   }
 };
+} // namespace smlp

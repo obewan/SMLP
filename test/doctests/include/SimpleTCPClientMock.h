@@ -6,6 +6,7 @@
 #include <memory>
 #include <mutex>
 
+namespace smlp {
 class SimpleTCPClientMock : public SimpleTCPClient {
 public:
   using SimpleTCPClient::SimpleTCPClient;
@@ -48,3 +49,4 @@ public:
     return response;
   }
 };
+} // namespace smlp

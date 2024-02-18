@@ -3,6 +3,8 @@
 #include "Manager.h"
 #include "SimpleLogger.h"
 
+using namespace smlp;
+
 smlp::Result TrainingFile::train(const std::string &line) {
   if (!fileParser_) {
     throw TrainingException(SimpleLang::Error(Error::InternalError));

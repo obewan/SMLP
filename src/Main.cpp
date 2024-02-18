@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     smlp->run();
 
   } catch (const std::exception &e) {
-    SimpleLogger::getInstance().error(e.what());
+    smlp::SimpleLogger::getInstance().error(e.what());
     return EXIT_FAILURE;
   }
 

@@ -13,6 +13,7 @@
 #include "SimpleConfig.h"
 #include <memory>
 
+
 /**
  * @brief Main class to train and test the neural network after parsing the
  * arguments.
@@ -39,14 +40,14 @@ public:
    *
    */
   void run() {
-    auto &manager = Manager::getInstance();
+    auto &manager = smlp::Manager::getInstance();
     manager.runMode();
   }
 
 private:
   int parseArgs(int argc, char **argv);
-  void ConfigSettings(const SimpleConfig &config);
+  void ConfigSettings(const smlp::SimpleConfig &config);
   void checkStdin();
-  AppParameters &app_params = Manager::getInstance().app_params;
-  NetworkParameters &network_params = Manager::getInstance().network_params;
+  smlp::AppParameters &app_params = smlp::Manager::getInstance().app_params;
+  smlp::NetworkParameters &network_params = smlp::Manager::getInstance().network_params;
 };

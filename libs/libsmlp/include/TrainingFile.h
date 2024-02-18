@@ -12,9 +12,11 @@
 #include "Training.h"
 #include "exception/TrainingException.h"
 
+namespace smlp {
 class TrainingFile : public Training {
 public:
   TrainingFile() : Training(TrainingType::TrainingFile) {}
 
   smlp::Result train(const std::string &line = "") override;
 };
+} // namespace smlp

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+namespace smlp {
 class Event {
 public:
   enum class Type {
@@ -24,3 +25,5 @@ private:
   Type type_;
   std::string data_;
 };
+
+} // namespace smlp

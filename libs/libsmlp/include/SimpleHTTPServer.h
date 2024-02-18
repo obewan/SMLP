@@ -21,6 +21,7 @@
 #include <thread>
 #include <vector>
 
+namespace smlp {
 class SimpleHTTPServer {
 public:
   SimpleHTTPServer() = default;
@@ -161,3 +162,4 @@ protected:
   size_t client_buff_size_ = 32_K;
   unsigned short http_port_ = 8080;
 };
+} // namespace smlp

@@ -1,6 +1,8 @@
 #include "Training.h"
 #include "Manager.h"
 
+using namespace smlp;
+
 Training::Training(TrainingType training_type) : trainingType(training_type) {}
 
 smlp::RecordResult Training::processInputLine(const std::string &line) const {

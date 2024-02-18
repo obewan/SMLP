@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <vector>
 
+namespace smlp {
 class TestingResult {
 public:
   /**
@@ -145,3 +146,4 @@ private:
   std::map<size_t, Convergence> progress;
   TestingResult::Stat stats;
 };
+} // namespace smlp

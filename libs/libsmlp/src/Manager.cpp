@@ -8,6 +8,8 @@
 #include <exception>
 #include <system_error>
 
+using namespace smlp;
+
 smlp::Result Manager::predict(const std::string &line) {
   // no log here as the output is the result
   if (!predict_) {

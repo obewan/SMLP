@@ -15,6 +15,7 @@
 #include "Testing.h"
 #include "exception/TestingException.h"
 
+namespace smlp {
 class TestingSocket : public Testing {
 public:
   explicit TestingSocket() : Testing(TestingType::TestingSocket){};
@@ -34,3 +35,4 @@ public:
             .data = finalResult->getResultsJson()};
   }
 };
+} // namespace smlp

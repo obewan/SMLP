@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 
+namespace smlp {
 /**
  * @brief Application parameters
  *
@@ -52,3 +53,4 @@ struct NetworkParameters {
   EActivationFunction hidden_activation_function = EActivationFunction::Sigmoid;
   EActivationFunction output_activation_function = EActivationFunction::Sigmoid;
 };
+} // namespace smlp

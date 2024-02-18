@@ -11,6 +11,7 @@
 
 #include <string>
 
+namespace smlp {
 class SimpleTCPClient {
 public:
   SimpleTCPClient();
@@ -33,3 +34,4 @@ public:
 protected:
   int client_socket = -1;
 };
+} // namespace smlp

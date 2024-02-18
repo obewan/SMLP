@@ -3,6 +3,8 @@
 #include "CommonResult.h"
 #include "doctest.h"
 
+using namespace smlp;
+
 TEST_CASE("Testing the Common class") {
 
   SUBCASE("Test getStrings") {

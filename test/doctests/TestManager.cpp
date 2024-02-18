@@ -9,6 +9,8 @@
 #include "exception/ManagerException.h"
 #include <filesystem>
 
+using namespace smlp;
+
 TEST_CASE("Testing the Manager class") {
   SUBCASE("Test constructor") {
     CHECK_NOTHROW({

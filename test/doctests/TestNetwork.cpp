@@ -6,6 +6,8 @@
 #include "doctest.h"
 #include "exception/NetworkException.h"
 
+using namespace smlp;
+
 TEST_CASE("Testing the Network class") {
   const float eps = 1e-6f; // epsilon for float testing
 

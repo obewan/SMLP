@@ -14,6 +14,7 @@
 #include <random>
 #include <vector>
 
+namespace smlp {
 /**
  * @brief The Neuron class represents a neuron in a neural network. It contains
  * a value, bias, error, and a vector of weights. It also has methods for
@@ -58,3 +59,4 @@ public:
   std::function<float(float)> activationFunction;
   std::function<float(float)> activationFunctionDerivative;
 };
+} // namespace smlp

@@ -6,6 +6,8 @@
 #include <math.h>
 #include <memory>
 
+using namespace smlp;
+
 TEST_CASE("Testing the SimpleLogger class") {
   const auto &logger = SimpleLogger::getInstance();
 

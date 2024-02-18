@@ -12,6 +12,7 @@
 #include "SimpleLang.h"
 #include <map>
 
+namespace smlp {
 enum class LayerType { InputLayer, HiddenLayer, OutputLayer };
 
 const std::map<std::string, LayerType, std::less<>> layer_map{
@@ -75,3 +76,4 @@ public:
     }
   }
 };
+} // namespace smlp

@@ -45,6 +45,7 @@ predict the correct outputs for the given inputs.
  *
  */
 
+namespace smlp {
 enum class TrainingType { TrainingFile, TrainingSocket, TrainingStdin };
 
 const std::map<std::string, TrainingType, std::less<>> training_map{
@@ -111,3 +112,4 @@ protected:
 
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };
+} // namespace smlp

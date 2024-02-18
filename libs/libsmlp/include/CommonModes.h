@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 
+namespace smlp {
 enum class EMode {
   Predict,
   TestOnly,
@@ -45,3 +46,4 @@ const std::map<std::string, EActivationFunction, std::less<>> activation_map{
     {"ReLU", EActivationFunction::ReLU},
     {"Sigmoid", EActivationFunction::Sigmoid},
     {"Tanh", EActivationFunction::Tanh}};
+} // namespace smlp

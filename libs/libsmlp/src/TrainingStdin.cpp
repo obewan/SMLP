@@ -1,6 +1,8 @@
 #include "TrainingStdin.h"
 #include "Manager.h"
 
+using namespace smlp;
+
 smlp::Result TrainingStdin::train(const std::string &line) {
   const auto &logger = SimpleLogger::getInstance();
   logger.log(LogLevel::INFO, false, "Training...");
