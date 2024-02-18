@@ -30,17 +30,15 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
 - [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) code metrics.
 - [Valgrind](https://valgrind.org/) memory check.
+- [Microsoft Copilot](https://www.microsoft.com/en-us/bing?ep=140&es=31&form=MA13FV), [OpenAI ChatGPT](https://chat.openai.com/) and [Google Gemini](https://gemini.google.com/) code reviews.
 
 Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
-- Add a socket input. `[in progress]`
-- Add an interactive testing (command line input).
-- Add an auto-training feature (searching for the best parameters).
-- Prepare the release (cleaning, refactoring, testing, documentation, packaging).
-
-_Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be for an other and more advanced AI project._
+- Improving the network model file. `[in progress]`
+- Add a Docker support.
+- Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
 # Usage
 
@@ -48,7 +46,7 @@ _Tensors, CUDA support and ONNX (Open Neural Network Exchange) format will be fo
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
 4. You can specify the running mode with the `mode` option (`-m` parameter):
-   - Predictive: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
+   - Predict: This mode uses an input file to predict the outputs. If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file. Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter. This mode requires a network model that has been imported and trained (be sure that the model has good testing results).
    - TestOnly: Test an imported network without training.
    - TrainOnly: Train the network without testing.
    - TrainThenTest: Train and then test the network (default mode).
@@ -108,26 +106,29 @@ By default smlp will look at the firsts columns
 The training ratio of the file to switch between data for training and data for testing, should be around 0.7
 -R,--training_ratio_line UINT:NONNEGATIVE [0]
 The training ratio line number of the file to switch between data for training and data for testing, should be located at 70% of the file.
--m,--mode ENUM:value in {Predictive->0,TestOnly->1,TrainOnly->2,TrainTestMonitored->3,TrainThenTest->4} OR {0,1,2,3,4} [4]
-Select the running mode: - Predictive:This mode uses an input file to predict the outputs.
+-m,--mode ENUM:value in {Predict->0,TestOnly->1,TrainOnly->2,TrainTestMonitored->3,TrainThenTest->4} OR {0,1,2,3,4} [4]
+Select the running mode: - Predict:This mode uses an input file to predict the outputs.
 If the input file contains output columns, the predicted CSV outputs will replace them without modifying the original input file.
 Please be mindful of the parameters (input_size, output_size, output_ends). If the input file does not contain output columns, pay close attention to the input_size parameter.
 This mode requires a network that has been imported and trained (be sure that the model has good testing results). - TestOnly: Test an imported network without training. - TrainOnly: Train the network without testing. - TrainThenTest: Train and then test the network (default). - TrainTestMonitored: Train and test at each epoch while monitoring the progress of an output neuron. Be aware that this is slower and uses more memory.
--n,--predictive_mode ENUM:value in {CSV->0,NumberAndRaw->1,NumberOnly->2,RawOnly->3} OR {0,1,2,3} [0]
-If using Predictive mode, select the output render mode: - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your output_ends option (default). - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values. - NumberOnly: This will show only the predicted outputs number. - RawOnly: This will only show the output(s) raw values.
+-n,--predict_mode ENUM:value in {CSV->0,NumberAndRaw->1,NumberOnly->2,RawOnly->3} OR {0,1,2,3} [0]
+If using Predict mode, select the output render mode: - CSV: This will render the output(s) at the end or at the begining of the input line, depending of your output_ends option (default). - NumberAndRaw: This will show both the predicted output(s) numbers and their raw values. - NumberOnly: This will show only the predicted outputs number. - RawOnly: This will only show the output(s) raw values.
 -y,--output_index_to_monitor UINT:NONNEGATIVE [1]
 Indicate the output neuron index to monitor during a TrainTestMonitored mode. If index = 0 there will be no progress monitoring. Default is 1, the first neuron output.
 -a,--hidden_activation_function ENUM:value in {ELU->0,LReLU->1,PReLU->2,ReLU->3,Sigmoid->4,Tanh->5} OR {0,1,2,3,4,5} [4]
 Select the hidden neurons activation function: - ELU: Exponential Linear Units, require an hidden_activation_alpha parameter. - LReLU: Leaky ReLU. - PReLU: Parametric ReLU, require an hidden_activation_alpha_parameter. - ReLU: Rectified Linear Unit. - Sigmoid (default). - Tanh: Hyperbolic Tangent
 -b,--output_activation_function ENUM:value in {ELU->0,LReLU->1,PReLU->2,ReLU->3,Sigmoid->4,Tanh->5} OR {0,1,2,3,4,5} [4]
 Select the output neurons activation function: - ELU: Exponential Linear Units, require an output_activation_alpha parameter. - LReLU: Leaky ReLU. - PReLU: Parametric ReLU, require an output_activation_alpha parameter. - ReLU: Rectified Linear Unit. - Sigmoid (default). - Tanh: Hyperbolic Tangent
--k,--hidden_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+-A,--hidden_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
 The alpha parameter value for ELU and PReLU activation functions on hidden layers
--q,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
+-B,--output_activation_alpha FLOAT:FLOAT in [-100 - 100] [0.1]
 The alpha parameter value for ELU and PReLU activation functions on output layer
+-H,--enable_http Enable the HTTP service
+-P,--http_port UINT:NONNEGATIVE [8080]
+Set the HTTP service port
 -x,--disable_stdin Disable stdin input like command pipes and interactive testing
 -v,--version Show current version
--w,--verbose Verbose logs
+-V,--verbose Verbose logs
 
 ```
 
@@ -198,7 +199,7 @@ High accuracy (correct at 90%): 79.6%
 <summary>Example 3: predict</summary>
 
 Using a new data file that doesn't have outputs to predict the outputs with our previous mushroom mlp model.
-`smlp -i myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -m Predictive`
+`smlp -i myMushroomMLP.json -f ../data/mushroom/mushroom_data_to_predict.csv -m Predict`
 
 mushroom_data_to_predict.csv:
 
@@ -263,8 +264,33 @@ $ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mush
 $ cat ../data/mushroom/mushroom_data.csv | ./smlp -i mushroom_model.json -e mushroom_model.json -R 40000 -m TrainOnly
 
 # do some prediction then chain the output with another command, for example here to train a new model.
-$ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.json -m Predictive | ./smlp -e new_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
+$ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.json -m Predict | ./smlp -e new_model.json -s 20 -o 1 -d 12 -c 1 -R 40000 -a ReLU -m TrainTestMonitored
 ```
+
+</details>
+
+<details>
+<summary>Example 5: using http</summary>
+
+To enable the HTTP service of SMLP, follow these steps:
+
+Start SMLP on the server with the HTTP service enabled on port 8080:
+
+```bash
+./smlp -e "myMushroomMLP.json" -i "myMushroomMLP.json" -V -H -P 8080
+```
+
+On the client side, send HTTP requests using the POST method. Make sure to use a path that corresponds to a supported SMLP mode (such as predict, trainonly, testonly, trainthentest, or traintestmonitored). The data result for the client will be in JSON format in the HTTP response body.
+Here’s an example using curl:
+
+```bash
+response=$(curl -s -X POST -H "Content-Type: text/plain" -d '1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00' http://localhost:8080/testonly)
+echo "$response"
+```
+
+Please note that this is a simple homemade HTTP service designed for development purposes. Use it with caution.
+
+You can also explore additional HTTP examples in the [./test/httpTests.sh](./test/httpTests.sh) script.
 
 </details>
 

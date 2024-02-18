@@ -12,6 +12,7 @@
 #include <ctime>
 #include <iomanip>
 #include <iostream>
+#include <mutex>
 #include <sstream>
 
 enum class LogLevel { INFO, WARN, ERROR, DEBUG };
@@ -22,7 +23,12 @@ enum class LogLevel { INFO, WARN, ERROR, DEBUG };
  */
 class SimpleLogger {
 public:
-  const static SimpleLogger &getIntance() {
+  /**
+   * @brief Get the Instance object
+   * @remark This use a thread safe Meyers’ Singleton
+   * @return const SimpleLogger&
+   */
+  const static SimpleLogger &getInstance() {
     static SimpleLogger instance;
     return instance;
   }
@@ -272,8 +278,65 @@ public:
     return *this;
   }
 
+  /**
+   * @brief static shortcut for log info.
+   * @remark thread safe
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_INFO(Args &&...args) {
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.info(args...);
+  }
+
+  /**
+   * @brief static shortcut for log warning.
+   * @remark thread safe
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_WARN(Args &&...args) {
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.warn(args...);
+  }
+
+  /**
+   * @brief static shortcut for log error.
+   * @remark thread safe
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_ERROR(Args &&...args) {
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.error(args...);
+  }
+
+  /**
+   * @brief static shortcut for log debug.
+   * @remark thread safe
+   * @tparam Args
+   * @param args
+   * @return const SimpleLogger&
+   */
+  template <typename... Args>
+  static const SimpleLogger &LOG_DEBUG(Args &&...args) {
+    auto &instance = getInstance();
+    std::scoped_lock<std::mutex> lock(instance.threadMutex_);
+    return instance.debug(args...);
+  }
+
 private:
   SimpleLogger() = default;
   std::streamsize default_precision = std::cout.precision();
   mutable std::streamsize current_precision = std::cout.precision();
+  mutable std::mutex threadMutex_;
 };

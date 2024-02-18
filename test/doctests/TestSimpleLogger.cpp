@@ -1,4 +1,5 @@
 #include "Common.h"
+#include "Manager.h"
 #include "Predict.h"
 #include "SimpleLogger.h"
 #include "doctest.h"
@@ -6,9 +7,8 @@
 #include <memory>
 
 TEST_CASE("Testing the SimpleLogger class") {
-  const auto &logger = SimpleLogger::getIntance();
-  const Predict predict(nullptr,
-                        {.predictive_mode = EPredictiveMode::NumberAndRaw});
+  const auto &logger = SimpleLogger::getInstance();
+
   float f = 0.1234567890123456789f;
   float g = 0.0000000000000000001f;
 
@@ -26,17 +26,23 @@ TEST_CASE("Testing the SimpleLogger class") {
 
   // CHECK THE LOG OUTPUT
   SUBCASE("Test predict precision") {
-    const Predict predict1(nullptr, {.output_at_end = true,
-                                     .predictive_mode = EPredictiveMode::CSV});
-    const Predict predict2(nullptr,
-                           {.predictive_mode = EPredictiveMode::NumberAndRaw});
-    const Predict predict3(nullptr,
-                           {.predictive_mode = EPredictiveMode::NumberOnly});
-    const Predict predict4(nullptr,
-                           {.predictive_mode = EPredictiveMode::RawOnly});
-    predict1.showOutput({1, 2, 3}, {f, g});
-    predict2.showOutput({1, 2, 3}, {f, g});
-    predict3.showOutput({1, 2, 3}, {f, g});
-    predict4.showOutput({1, 2, 3}, {f, g});
+    Predict predict;
+    std::string result;
+    auto &app_params = Manager::getInstance().app_params;
+    app_params = {.output_at_end = true, .predict_mode = EPredictMode::CSV};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "1,2,3,0,0");
+
+    app_params = {.predict_mode = EPredictMode::NumberAndRaw};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0,0 [0.123,0]");
+
+    app_params = {.predict_mode = EPredictMode::NumberOnly};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0,0");
+
+    app_params = {.predict_mode = EPredictMode::RawOnly};
+    result = predict.formatResult({1, 2, 3}, {f, g});
+    CHECK(result == "0.123,0");
   }
 }

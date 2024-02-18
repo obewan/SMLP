@@ -3,6 +3,7 @@
  * A Simple Multi-Layer Perceptron to study artificial networks.
  * \author  Damien Balima (https://dams-labs.net)
  * \date    August 2023
+ * \see https://github.com/obewan/SMLP
  * \copyright
  *
  * [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
@@ -30,6 +31,8 @@ measures that legally restrict others from doing anything the license permits.
 
 #include "include/SimpleMLP.h"
 #include "Common.h"
+#include "CommonModes.h"
+#include "Manager.h"
 #include "Network.h"
 #include "Predict.h"
 #include "SimpleConfig.h"
@@ -40,6 +43,7 @@ measures that legally restrict others from doing anything the license permits.
 #include "exception/SmlpException.h"
 #include "include/CLI11.hpp"
 #include <SimpleLogger.h>
+#include <cstdlib>
 #include <filesystem>
 #include <memory>
 #include <sstream>
@@ -55,43 +59,50 @@ measures that legally restrict others from doing anything the license permits.
 #endif
 
 int SimpleMLP::init(int argc, char **argv) {
-  const auto &logger = SimpleLogger::getIntance();
+  const auto &logger = SimpleLogger::getInstance();
   try {
     checkStdin(); // check in case using defaults options
 
-    if (argc == 1 && !app_params.use_stdin) {
+    if (argc == 1 && app_params.input != EInput::Stdin) {
       argv[1] = (char *)"-h"; // showing help by default
       argc++;
     }
 
     SimpleConfig config(app_params.config_file);
     SimpleLang::getInstance().parseFile(config.lang_file);
+    auto &manager = Manager::getInstance();
 
     if (int init = parseArgs(argc, argv); init != EXIT_SUCCESS) {
       return init;
     }
 
-    // check again but including -x param this time
+    // check again but including -x param (stdin disable) this time
     checkStdin();
+
+    // show the title
+    if (app_params.input != EInput::Stdin) {
+      SimpleLogger::LOG_INFO(manager.getVersionHeader());
+    }
+
     // Config file settings, must be after this second checkStdin()
     ConfigSettings(config);
 
     // Some post validations
-    if (app_params.data_file.empty() && !app_params.use_stdin) {
-      logger.error("A dataset file is required, but file_input is missing.");
+    if (app_params.data_file.empty() && app_params.input == EInput::File) {
+      logger.error(SimpleLang::Error(Error::InvalidDatasetFileMissing));
       return EXIT_FAILURE;
     }
-    if (app_params.mode == EMode::Predictive &&
+    if (app_params.mode == EMode::Predict &&
         app_params.network_to_import.empty()) {
-      logger.error("Predictive mode require a trained network to import, but "
-                   "network_to_import is missing.");
+      logger.error(SimpleLang::Error(Error::MissingNetworkToImportParam));
       return EXIT_FAILURE;
     }
-    if (app_params.disable_stdin && app_params.mode != EMode::Predictive) {
-      logger.info("Stdin disabled");
+    if (app_params.disable_stdin && app_params.mode != EMode::Predict) {
+      logger.info(SimpleLang::Message(Message::StdinDisabled));
     }
 
-    importOrBuildNetwork();
+    // Import or build the neural network
+    manager.importOrBuildNetwork();
 
     return EXIT_SUCCESS;
 
@@ -99,94 +110,6 @@ int SimpleMLP::init(int argc, char **argv) {
     logger.error(ex.what());
     return EXIT_FAILURE;
   }
-}
-
-void SimpleMLP::predict() {
-  auto predict = std::make_unique<Predict>(network, app_params);
-  predict->predict();
-}
-
-void SimpleMLP::train() {
-  const auto &logger = SimpleLogger::getIntance();
-  if (app_params.use_stdin) {
-    logger.info("Training, using command pipe input...");
-    if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
-      logger.warn("Epochs and training ratio are disabled using command "
-                  "pipe input. Use training_ratio_line parameter instead.");
-    }
-  } else {
-    logger.info("Training, using file ", app_params.data_file);
-  }
-  logger.info(showInlineHeader());
-  auto training = std::make_unique<Training>(network, app_params.data_file);
-  training->train(network_params, app_params);
-}
-
-void SimpleMLP::test() {
-  const auto &logger = SimpleLogger::getIntance();
-  auto testing = std::make_unique<Testing>(network, app_params.data_file);
-  if (app_params.use_stdin) {
-    logger.info("Testing, using command pipe input... ", app_params.data_file);
-  } else {
-    logger.info("Testing, using file ", app_params.data_file);
-  }
-  testing->test(network_params, app_params);
-  logger.out(
-      testing->getTestingResults()->showDetailledResults(app_params.mode));
-}
-
-void SimpleMLP::trainTestMonitored() {
-  const auto &logger = SimpleLogger::getIntance();
-  if (app_params.output_index_to_monitor > network_params.output_size) {
-    logger.error("output_index_to_monitor > output_size: ",
-                 app_params.output_index_to_monitor, ">",
-                 network_params.output_size);
-    return;
-  }
-
-  if (app_params.use_stdin) {
-    logger.info("Train and testing, using command pipe input...");
-  } else {
-    logger.info("Train and testing, using file ", app_params.data_file);
-  }
-  logger.info("OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
-              showInlineHeader());
-  Training training(network, app_params.data_file);
-  training.train(network_params, app_params);
-}
-
-std::string SimpleMLP::showInlineHeader() const {
-  std::stringstream sst;
-  sst << "InputSize:" << network_params.input_size
-      << " OutputSize:" << network_params.output_size
-      << " HiddenSize:" << network_params.hidden_size
-      << " HiddenLayers:" << network_params.hiddens_count
-      << " LearningRate:" << network_params.learning_rate
-      << " HiddenActivationFunction:"
-      << Common::getActivationStr(network_params.hidden_activation_function);
-  if (network_params.hidden_activation_function == EActivationFunction::ELU ||
-      network_params.hidden_activation_function == EActivationFunction::PReLU) {
-    sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
-  }
-  sst << " OutputActivationFunction:"
-      << Common::getActivationStr(network_params.output_activation_function);
-  if (network_params.output_activation_function == EActivationFunction::ELU ||
-      network_params.output_activation_function == EActivationFunction::PReLU) {
-    sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
-  }
-  if (!app_params.use_stdin) {
-    sst << " Epochs:" << app_params.num_epochs;
-    if (app_params.training_ratio_line > 0) {
-      sst << " TrainingRatioLine:" << app_params.training_ratio_line;
-    } else {
-      sst << " TrainingRatio:" << app_params.training_ratio;
-    }
-  } else {
-    sst << " TrainingRatioLine:" << app_params.training_ratio_line;
-  }
-  sst << " Mode:" << Common::getModeStr(app_params.mode)
-      << " Verbose:" << app_params.verbose;
-  return sst.str();
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
@@ -199,7 +122,7 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   auto valid_path = [](auto filename) {
     if (std::filesystem::path p(filename);
         p.has_parent_path() && !std::filesystem::exists(p.parent_path())) {
-      return std::string("The directory of the file does not exist.");
+      return SimpleLang::Error(Error::InvalidDirectory);
     }
     return std::string();
   };
@@ -245,25 +168,27 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
             CLI::NonNegativeNumber);
   addOptionTransform("-m,--mode", app_params.mode,
                      CLI::CheckedTransformer(mode_map, CLI::ignore_case));
-  addOptionTransform("-n,--predictive_mode", app_params.predictive_mode,
-                     CLI::CheckedTransformer(predictive_map, CLI::ignore_case));
+  addOptionTransform("-n,--predict_mode", app_params.predict_mode,
+                     CLI::CheckedTransformer(predict_map, CLI::ignore_case));
   addOption("-y,--output_index_to_monitor", app_params.output_index_to_monitor,
-            CLI ::NonNegativeNumber);
+            CLI::NonNegativeNumber);
   addOptionTransform("-a,--hidden_activation_function",
                      network_params.hidden_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
   addOptionTransform("-b,--output_activation_function",
                      network_params.output_activation_function,
                      CLI::CheckedTransformer(activation_map, CLI::ignore_case));
-  addOption("-k,--hidden_activation_alpha",
+  addOption("-A,--hidden_activation_alpha",
             network_params.hidden_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
-  addOption("-q,--output_activation_alpha",
+  addOption("-B,--output_activation_alpha",
             network_params.output_activation_alpha,
             CLI::Range(-100.0f, 100.0f));
+  addFlag("-H,--enable_http", app_params.enable_http);
+  addOption("-P,--http_port", app_params.http_port, CLI::NonNegativeNumber);
   addFlag("-x,--disable_stdin", app_params.disable_stdin);
   addFlag("-v,--version", version);
-  addFlag("-w,--verbose", app_params.verbose);
+  addFlag("-V,--verbose", app_params.verbose);
 
   // Parsing
   try {
@@ -278,26 +203,33 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
 
   // Version special exit
   if (version) {
-    const auto &logger = SimpleLogger::getIntance();
+    const auto &logger = SimpleLogger::getInstance();
     logger.out(app_params.title, " v", app_params.version);
     logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
     return EXIT_VERSION;
+  }
+
+  // HTTP Service input mode
+  if (app_params.enable_http) {
+    app_params.input = EInput::Socket;
   }
 
   return EXIT_SUCCESS;
 }
 
 void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
-  const auto &logger = SimpleLogger::getIntance();
-  if (app_params.mode != EMode::Predictive) {
+  const auto &logger = SimpleLogger::getInstance();
+  if (app_params.mode != EMode::Predict) {
     if (config.isValidConfig) {
-      logger.info("Using config file ", config.config_file, "...");
-    } else {
-      logger.info("No valid config file ", config.config_file, " found...");
+      logger.info(SimpleLang::Message(Message::UsingConfigFile,
+                                      {{"config_file", config.config_file}}));
+    } else if (app_params.verbose) {
+      logger.info(SimpleLang::Error(Error::ConfigFileNotFound,
+                                    {{"config_file", config.config_file}}));
     }
   }
   if (!config.file_input.empty() && app_params.data_file.empty() &&
-      !app_params.use_stdin) {
+      app_params.input == EInput::File) {
     app_params.data_file = config.file_input;
   }
   if (!config.import_network.empty() && app_params.network_to_import.empty()) {
@@ -308,75 +240,12 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   }
 }
 
-void SimpleMLP::runMode() {
-  switch (app_params.mode) {
-  case EMode::Predictive:
-    predict();
-    break;
-  case EMode::TrainOnly:
-    train();
-    break;
-  case EMode::TestOnly:
-    test();
-    break;
-  case EMode::TrainTestMonitored:
-    trainTestMonitored();
-    break;
-  case EMode::TrainThenTest:
-    train();
-    test();
-    break;
-  default:
-    throw SmlpException("Unimplemented mode.");
-  }
-}
-
-void SimpleMLP::importOrBuildNetwork() {
-  const auto &logger = SimpleLogger::getIntance();
-  // avoiding header lines on Predictive mode, for commands chaining with pipes
-  auto logNetworkImport = [this, &logger]() {
-    if (app_params.mode != EMode::Predictive) {
-      logger.info("Importing network model from ", app_params.network_to_import,
-                  "...");
-    }
-  };
-  auto logNetworkCreation = [this, &logger]() {
-    if (!app_params.network_to_import.empty() &&
-        app_params.mode != EMode::Predictive) {
-      logger.info("Network model ", app_params.network_to_import,
-                  " not found, creating a new one...");
-    }
-  };
-
-  if (!app_params.network_to_import.empty() &&
-      std::filesystem::exists(app_params.network_to_import)) {
-    logNetworkImport();
-    network =
-        std::shared_ptr<Network>(importExportJSON.importModel(app_params));
-    network_params = network->params;
-  } else {
-    logNetworkCreation();
-    network = std::make_shared<Network>(network_params);
-  }
-}
-
-bool SimpleMLP::shouldExportNetwork() const {
-  return !app_params.network_to_export.empty() &&
-         (app_params.mode == EMode::TrainOnly ||
-          app_params.mode == EMode::TrainTestMonitored ||
-          app_params.mode == EMode::TrainThenTest);
-}
-
-void SimpleMLP::exportNetwork() {
-  const auto &logger = SimpleLogger::getIntance();
-  logger.info("Exporting network model to ", app_params.network_to_export,
-              "...");
-  importExportJSON.exportModel(network.get(), app_params);
-}
-
 void SimpleMLP::checkStdin() {
-  app_params.use_stdin = false; // important
-  if (!app_params.disable_stdin) {
-    app_params.use_stdin = !ISATTY(FILENO(stdin));
+  if (app_params.input == EInput::Socket) {
+    return;
+  }
+  app_params.input = EInput::File; // important
+  if (!app_params.disable_stdin && !ISATTY(FILENO(stdin))) {
+    app_params.input = EInput::Stdin;
   }
 }

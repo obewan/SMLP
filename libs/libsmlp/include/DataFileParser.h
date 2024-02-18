@@ -10,8 +10,11 @@
 #pragma once
 #include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
+#include "CommonModes.h"
+#include "CommonParameters.h"
 #include <cstddef>
 #include <fstream>
+#include <functional>
 
 /**
  * @brief The FileParser class is responsible for parsing a file. It contains
@@ -21,11 +24,9 @@
 class DataFileParser {
 public:
   /**
-   * @brief Constructor that takes a file path as an argument.
-   *
-   * @param path The path to the file.
+   * @brief Constructor
    */
-  explicit DataFileParser(const std::string &path) : path(path) {}
+  DataFileParser() = default;
 
   // Virtual destructor
   virtual ~DataFileParser();
@@ -33,7 +34,7 @@ public:
   /**
    * @brief Opens the file.
    */
-  void openFile(const std::string &filepath = "");
+  void openFile();
 
   /**
    * @brief Closes the file.
@@ -49,21 +50,18 @@ public:
    * @brief Calculates the line number that corresponds to the given training
    * ratio.
    *
-   * @param trainingRatio The ratio of training data to total data.
-   * @param trainingRatioLine A training ratio line to use instead.
-   * @param use_stdin if true this will use training_ratio_line
-   * @return The line number that corresponds to the training ratio.
+   * @param app_params The application parameters.
    */
-  size_t getTrainingRatioLine(float trainingRatio, size_t trainingRatioLine,
-                              bool use_stdin) {
-    if (use_stdin) {
-      training_ratio_line = trainingRatioLine;
+  void calcTrainingRatioLine(const AppParameters &app_params) {
+    if (app_params.input != EInput::File ||
+        app_params.training_ratio_line > 0) {
+      training_ratio_line = app_params.training_ratio_line;
     } else {
       total_lines = countLine();
-      training_ratio_line = (size_t)((float)total_lines * trainingRatio);
+      training_ratio_line =
+          (size_t)((float)total_lines * app_params.training_ratio);
     }
     isTrainingRatioLineProcessed = true;
-    return training_ratio_line;
   }
 
   /**
@@ -83,16 +81,14 @@ public:
   /**
    * @brief Processes a line from the file and returns a RecordResult. This
    * method can be used for both testing and training data.
-   *
-   * @param network_params The parameters to use when processing the line.
-   * @param app_params The application parameters.
+
    * @param line if not empty it will use this line to process, else it will
    * process the next line of the fileparser.
+   * @param isTesting testing flag to skip some training data
    * @return A RecordResult containing the processed data from the line.
    */
-  RecordResult processLine(const NetworkParameters &network_params,
-                           const AppParameters &app_params,
-                           const std::string &line = "");
+  smlp::RecordResult processLine(const std::string &line = "",
+                                 bool isTesting = false);
 
   /**
    * @brief Processes a record with input only.
@@ -101,7 +97,7 @@ public:
    * @param input_size The size of the input data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processInputOnly(
+  smlp::Record processInputOnly(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size) const;
 
@@ -115,7 +111,7 @@ public:
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processInputFirst(
+  smlp::Record processInputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
@@ -129,22 +125,20 @@ public:
    * @param output_size The size of the output data in the record.
    * @return A Record containing the processed data from the record.
    */
-  Record processOutputFirst(
+  smlp::Record processOutputFirst(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs,
       size_t input_size, size_t output_size) const;
 
-  bool getNextLine(std::string &line, const AppParameters &app_params);
+  bool getNextLine(std::string &line, bool isTesting);
+
   void parseLine(const std::string &line,
                  std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
-  void
-  validateColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-                  const NetworkParameters &network_params,
-                  const AppParameters &app_params) const;
 
-  Record
-  processColumns(const std::vector<std::vector<Csv::CellReference>> &cell_refs,
-                 const NetworkParameters &network_params,
-                 const AppParameters &app_params) const;
+  void validateColumns(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
+
+  smlp::Record processColumns(
+      const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
   std::ifstream file;
   Csv::Parser csv_parser;
@@ -152,5 +146,9 @@ public:
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
-  std::string path = "";
+
+  std::function<float(const std::vector<Csv::CellReference> &)> getFloatValue =
+      [](const std::vector<Csv::CellReference> &cells) {
+        return (float)cells[0].getDouble().value();
+      };
 };

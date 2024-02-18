@@ -9,20 +9,35 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonParameters.h"
+#include <cstddef>
 #include <vector>
 
 class TestingResult {
 public:
   /**
-   * @brief TestResults structure that holds the epoch, line, expected output,
-   * and actual output of a test.
+   * @brief Construct a new Testing Result object
+   *
+   * @param app_params
+   */
+  explicit TestingResult() = default;
+
+  struct Convergence {
+    float previous = 0.0f;
+    float current = 0.0f;
+    float expected = 0.0f;
+    bool hasPrevious = false;
+  };
+
+  /**
+   * @brief TestResults structure that holds the epoch, line, expected outputs,
+   * and actual outputs of a test, for all output neurons (not monitored).
    */
   struct TestResults {
     size_t epoch = 0;
-    size_t line = 0;
-    float expected = 0.0f;
-    float output = 0.0f;
-    std::vector<float> progress; // This will be empty for unmonitored data
+    size_t lineNumber = 0;
+    std::vector<float> expecteds;
+    std::vector<float> outputs;
   };
 
   /**
@@ -33,78 +48,100 @@ public:
   struct Stat {
     size_t total_samples = 0;
     size_t correct_predictions_low = 0;
-    size_t correct_predictions = 0;
+    size_t correct_predictions_avg = 0;
     size_t correct_predictions_high = 0;
     size_t good_convergence = 0;
     size_t good_convergence_zero = 0;
     size_t good_convergence_one = 0;
     size_t total_expected_zero = 0;
     size_t total_expected_one = 0;
+    size_t total_convergences = 0;
 
-    float accuracy = 0.0f;
+    float accuracy_avg = 0.0f;
     float accuracy_low = 0.0f;
     float accuracy_high = 0.0f;
     float convergence = 0.0f;
     float convergence_zero = 0.0f;
     float convergence_one = 0.0f;
+
+    bool isCalculate = false;
   };
 
   /**
-   * @brief Displays a summary of the test results on a single line.
+   * @brief Get a summary of the test results on a single line.
    */
-  std::string showResultsLine(bool withConvergence);
+  std::string getResultsLine();
 
   /**
-   * @brief Displays detailed test results. If the verbose parameter is set to
-   * true, additional information will be displayed.
+   * @brief Get the Results Json string
    *
-   * @param mode Mode of the training.
-   * @param verbose If true, additional details are displayed (default is
-   * false).
+   * @return std::string
    */
-  std::string showDetailledResults(EMode mode, bool verbose = false);
+  std::string getResultsJson();
 
   /**
-   * @brief Display some verbose results.
+   * @brief Gets detailed test results.
    *
    */
-  std::string showResultsVerbose(const TestResults &result, EMode mode) const;
+  std::string getResultsDetailled();
 
   /**
-   * @brief Calculates and returns the statistics of the test results, including
-   * monitored progress if monitored is true.
-   *
-   * @param monitored If true, return stats with progress
-   * @return A Stat object containing the calculated statistics.
+   * @brief Calculates the statistics of the test results
    */
-  Stat calcStats(bool monitored);
+  void calcStats();
+
+  /**
+   * @brief Get the Stats object
+   *
+   * @return const TestingResult::Stat&
+   */
+  const TestingResult::Stat &getStats() const { return stats; }
 
   /**
    * @brief process the results to get the training progress
    *
-   * @param testResults
-   * @param mode
-   * @param last_epoch
+   * @param testResult
    */
-  void
-  processResults(const std::vector<TestingResult::TestResults> &testResults,
-                 EMode mode, size_t last_epoch = 0);
+  void processRecordTestingResult(const TestingResult::TestResults &testResult);
 
-  const std::map<size_t, std::vector<float>> &getProgress() const {
-    return progress;
+  /**
+   * @brief Get the Progress object
+   *
+   * @return const std::map<size_t, Convergence>&
+   */
+  const std::map<size_t, Convergence> &getProgress() const { return progress; }
+
+  /**
+   * @brief clear stats
+   *
+   */
+  void clearStats() {
+    stats.convergence = 0.f;
+    stats.convergence_one = 0.f;
+    stats.convergence_zero = 0.f;
+    stats.good_convergence_zero = 0;
+    stats.good_convergence = 0;
+    stats.good_convergence_one = 0;
+    stats.total_convergences = 0;
+    stats.accuracy_avg = 0.f;
+    stats.accuracy_high = 0.f;
+    stats.accuracy_low = 0.f;
+    stats.correct_predictions_avg = 0;
+    stats.correct_predictions_high = 0;
+    stats.correct_predictions_low = 0;
+    stats.total_expected_one = 0;
+    stats.total_expected_zero = 0;
+    stats.total_samples = 0;
+    stats.isCalculate = false;
   }
 
 private:
-  std::string showAccuracyResults(const TestingResult::Stat &stats) const;
-  std::string showConvergenceResults(const TestingResult::Stat &stats) const;
-  void updateStats(TestingResult::Stat &stats, const TestResults &result,
-                   bool monitored);
-  void updateConvergenceStats(Stat &stats, const TestResults &result) const;
-  void updatePredictionStats(Stat &stats, const TestResults &result) const;
-  void calculatePercentages(Stat &stats, bool monitored) const;
+  std::string showAccuracyResults() const;
+  std::string showConvergenceResults() const;
+  void updateMonitoredProgress(const TestingResult::TestResults &result);
+  void calculateConvergences();
+  void calculatePercentages();
 
-  std::vector<TestResults> testResultExts;
-  std::map<size_t, std::vector<float>> progress;
-  std::vector<TestResults> lastEpochTestResultTemp_;
-  size_t last_epoch_ = 0;
+  std::map<size_t, Convergence> progress;
+  TestingResult::Stat stats;
 };

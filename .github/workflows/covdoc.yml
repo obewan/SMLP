@@ -40,7 +40,14 @@ jobs:
           mkdir -p ${{github.workspace}}/coverage
           mkdir -p ${{github.workspace}}/coverage/html
           lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info '/usr/include/*' '/usr/lib/*' '${{github.workspace}}/libs/csv-parser/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/test/*' '${{github.workspace}}/libs/json/*' '${{github.workspace}}/src/*'
+          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info \
+          '/usr/include/*' '/usr/lib/*' \
+          '${{github.workspace}}/libs/libsmlp/src/SimpleHTTPServer.cpp' \
+          '${{github.workspace}}/libs/csv-parser/*' \
+          '${{github.workspace}}/libs/json/*' \
+          '${{github.workspace}}/test/*' \
+          '${{github.workspace}}/libs/json/*' \
+          '${{github.workspace}}/src/*'
           lcov --summary ${{github.workspace}}/coverage/lcov.info
           genhtml ${{github.workspace}}/coverage/lcov.info --output-directory ${{github.workspace}}/coverage/html
 

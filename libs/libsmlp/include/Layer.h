@@ -28,7 +28,7 @@ class Layer {
 public:
   explicit Layer(LayerType layerType) : layerType(layerType) {}
 
-  LayerType layerType;
+  const LayerType layerType;
   std::vector<Neuron> neurons;
   Layer *previousLayer = nullptr;
   Layer *nextLayer = nullptr;

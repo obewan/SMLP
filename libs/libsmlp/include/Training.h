@@ -9,10 +9,12 @@
  */
 #pragma once
 #include "Common.h"
+#include "CommonParameters.h"
 #include "DataFileParser.h"
 #include "Network.h"
 #include "Testing.h"
 #include "exception/TrainingException.h"
+#include <map>
 #include <memory>
 #include <string>
 
@@ -43,6 +45,13 @@ predict the correct outputs for the given inputs.
  *
  */
 
+enum class TrainingType { TrainingFile, TrainingSocket, TrainingStdin };
+
+const std::map<std::string, TrainingType, std::less<>> training_map{
+    {"TrainingFile", TrainingType::TrainingFile},
+    {"TrainingSocket", TrainingType::TrainingSocket},
+    {"TrainingStdin", TrainingType::TrainingStdin}};
+
 /**
  * @brief The Training class is responsible for training the neural network
  * model. It contains methods for processing training data, updating the model
@@ -50,43 +59,27 @@ predict the correct outputs for the given inputs.
  */
 class Training {
 public:
-  // Default constructor
-  Training() = default;
+  explicit Training(TrainingType training_type);
+  virtual ~Training() = default;
+
+  const TrainingType trainingType;
 
   /**
-   * @brief Constructor that takes a pointer to the network and the file path to
-   * training data as arguments.
+   * @brief Train a network.
    *
-   * @param network Pointer to the network.
-   * @param file_path File path to the training data.
-   * @param logger
+   * @param line optional data line to use for training
    */
-  Training(std::shared_ptr<Network> network, const std::string &file_path)
-      : network_(network),
-        fileParser_(std::make_shared<DataFileParser>(file_path)) {}
+  virtual smlp::Result train(const std::string &line = "") = 0;
 
   /**
-   * @brief This method trains the model with the given parameters.
+   * @brief Create a File Parser object
    *
-   * @param network_params Network parameters for training.
-   * @param app_params Application parameters.
    */
-  void train(const NetworkParameters &network_params,
-             const AppParameters &app_params);
-
-  /**
-   * @brief Sets the network for training.
-   *
-   * @param network Pointer to the network.
-   */
-  void setNetwork(std::shared_ptr<Network> network) { network_ = network; }
-
-  /**
-   * @brief Gets the network used for training.
-   *
-   * @return Pointer to the network.
-   */
-  std::shared_ptr<Network> getNetwork() const { return network_; }
+  void createFileParser() {
+    if (!fileParser_) {
+      fileParser_ = std::make_shared<DataFileParser>();
+    }
+  }
 
   /**
    * @brief Sets the file parser for training data.
@@ -104,39 +97,17 @@ public:
    */
   std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
 
-  /**
-   * @brief Sets the tester for testing during training.
-   *
-   * @param tester Pointer to the tester.
-   */
-  void setTesting(std::shared_ptr<Testing> tester) { testing_ = tester; }
-
-  /**
-   * @brief Create a Testing object
-   *
-   * @param network_params
-   * @param app_params
-   */
-  void createTesting() {
-    testing_ = std::make_shared<Testing>(network_, fileParser_);
+  std::string trainingTypeStr() const {
+    for (const auto &[key, mTrainingType] : training_map) {
+      if (mTrainingType == trainingType) {
+        return key;
+      }
+    }
+    return "";
   }
 
-  /**
-   * @brief Gets the tester used for testing during training.
-   *
-   * @return Pointer to the tester.
-   */
-  std::shared_ptr<Testing> getTesting() const { return testing_; }
+protected:
+  smlp::RecordResult processInputLine(const std::string &line = "") const;
 
-private:
-  void trainFromStdin(const NetworkParameters &network_params,
-                      const AppParameters &app_params);
-  void trainFromFile(const NetworkParameters &network_params,
-                     const AppParameters &app_params);
-  void processInputLine(const NetworkParameters &network_params,
-                        const AppParameters &app_params,
-                        const std::string &line = "") const;
-  std::shared_ptr<Network> network_ = nullptr;
   std::shared_ptr<DataFileParser> fileParser_ = nullptr;
-  std::shared_ptr<Testing> testing_ = nullptr;
 };
