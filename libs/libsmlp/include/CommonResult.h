@@ -32,11 +32,16 @@ enum class ErrorCode {
   NotFound = 404,
   MethodNotAllowed = 405,
   NotAcceptable = 406,
+  ProxyAuthenticationRequired = 407,
   RequestTimeout = 408,
   Conflict = 409,
   InternalServerError = 500,
   NotImplemented = 501,
+  BadGateway = 502,
   ServiceUnavailable = 503,
+  GatewayTimeout = 504,
+  HTTPVersionNotSupported = 505,
+  NetworkAuthenticationRequired = 511,
 };
 
 class ErrorCategory : public std::error_category {
@@ -59,6 +64,8 @@ public:
       return "Bad Request";
     case ErrorCode::Unauthorized:
       return "Unauthorized";
+    case ErrorCode::PaymentRequired:
+      return "Payment Required";
     case ErrorCode::Forbidden:
       return "Forbidden";
     case ErrorCode::NotFound:
@@ -67,16 +74,28 @@ public:
       return "Method Not Allowed";
     case ErrorCode::NotAcceptable:
       return "Not Acceptable";
+    case ErrorCode::ProxyAuthenticationRequired:
+      return "Proxy Authentication Required";
     case ErrorCode::RequestTimeout:
       return "Request Timeout";
+    case ErrorCode::Conflict:
+      return "Conflict";
     case ErrorCode::InternalServerError:
       return "Internal Server Error";
     case ErrorCode::NotImplemented:
       return "Not Implemented";
+    case ErrorCode::BadGateway:
+      return "Bad Gateway";
     case ErrorCode::ServiceUnavailable:
       return "Service Unavailable";
+    case ErrorCode::GatewayTimeout:
+      return "Gateway Timeout";
+    case ErrorCode::HTTPVersionNotSupported:
+      return "HTTP Version Not Supported";
+    case ErrorCode::NetworkAuthenticationRequired:
+      return "Network Authentication Required";
     default:
-      return "Unknown error";
+      return "Unknown Error";
     }
   }
 };
@@ -106,7 +125,9 @@ struct Result {
 
   bool isSuccess() const {
     return code.value() == static_cast<int>(ErrorCode::Success) ||
-           code.value() == static_cast<int>(ErrorCode::OK);
+           code.value() == static_cast<int>(ErrorCode::OK) ||
+           code.value() == static_cast<int>(ErrorCode::Created) ||
+           code.value() == static_cast<int>(ErrorCode::Accepted);
   }
 
   std::string message() const { return code.message(); }
