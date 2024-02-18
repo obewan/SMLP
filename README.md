@@ -269,6 +269,31 @@ $ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.j
 
 </details>
 
+<details>
+<summary>Example 5: using http</summary>
+
+To enable the HTTP service of SMLP, follow these steps:
+
+Start SMLP on the server with the HTTP service enabled on port 8080:
+
+```bash
+./smlp -e "myMushroomMLP.json" -i "myMushroomMLP.json" -V -H -P 8080
+```
+
+On the client side, send HTTP requests using the POST method. Make sure to use a path that corresponds to a supported SMLP mode (such as predict, trainonly, testonly, trainthentest, or traintestmonitored). The data result for the client will be in JSON format in the HTTP response body.
+Here’s an example using curl:
+
+```bash
+response=$(curl -s -X POST -H "Content-Type: text/plain" -d '1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00' http://localhost:8080/testonly)
+echo "$response"
+```
+
+Please note that this is a simple homemade HTTP service designed for development purposes. Use it with caution.
+
+You can also explore additional HTTP examples in the [./test/httpTests.sh](./test/httpTests.sh) script.
+
+</details>
+
 ---
 
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
