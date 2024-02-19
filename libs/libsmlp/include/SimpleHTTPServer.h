@@ -27,11 +27,7 @@ public:
   SimpleHTTPServer() = default;
   SimpleHTTPServer(const SimpleHTTPServer &other) = delete;
   SimpleHTTPServer &operator=(const SimpleHTTPServer &other) = delete;
-  virtual ~SimpleHTTPServer() {
-    if (!stopSource_.stop_requested()) {
-      stop();
-    }
-  }
+  virtual ~SimpleHTTPServer();
 
   struct clientInfo {
     int client_socket;
@@ -96,8 +92,10 @@ public:
    * buffer from extracted request.
    *
    * @param request_buffer
+   * @param client_info
    */
-  virtual std::string processRequestBuffer(std::string &request_buffer);
+  virtual std::string processRequestBuffer(std::stringstream &request_buffer,
+                                           const clientInfo &client_info);
 
   /**
    * @brief process the request body data with the neural network, thread safe.

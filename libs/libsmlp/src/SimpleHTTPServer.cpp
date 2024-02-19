@@ -16,6 +16,7 @@
 #include <exception>
 #include <functional>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <mutex>
 #include <netinet/in.h>
@@ -44,6 +45,12 @@ constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 using json = nlohmann::json;
 using namespace smlp;
+
+SimpleHTTPServer::~SimpleHTTPServer() {
+  if (isStarted_ && !stopSource_.stop_requested()) {
+    stop();
+  }
+}
 
 SimpleHTTPServer::HttpRequest
 SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
@@ -184,11 +191,12 @@ void SimpleHTTPServer::start() {
   auto exportModel = [this]() {
     while (!stopSource_.stop_requested()) {
       std::unique_lock lk(wait_cv_m_);
-      // wait some seconds before the next export, unless there's a notify
       wait_cv_.wait_for(lk,
                         std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
+
       if (threadMutex_.try_lock_for(
               std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
+        std::lock_guard lock(threadMutex_, std::adopt_lock);
         try {
           auto &manager = Manager::getInstance();
           if (isTrainedButNotExported_ &&
@@ -197,11 +205,13 @@ void SimpleHTTPServer::start() {
             isTrainedButNotExported_ = false;
             SimpleLogger::LOG_INFO("Neural network file saved.");
           }
+        } catch (const std::exception &e) {
+          SimpleLogger::LOG_ERROR("Exception caught during model export: ",
+                                  e.what());
         } catch (...) {
-          threadMutex_.unlock();
-          throw;
+          SimpleLogger::LOG_ERROR(
+              "Unknown exception caught during model export.");
         }
-        threadMutex_.unlock();
       }
     }
   };
@@ -224,9 +234,7 @@ void SimpleHTTPServer::start() {
   server_address.sin_addr.s_addr = INADDR_ANY;
 
   // Set accept timeout
-  struct timeval tv;
-  tv.tv_sec = SERVER_ACCEPT_TIMEOUT_SECONDS;
-  tv.tv_usec = 0;
+  struct timeval tv = {.tv_sec = SERVER_ACCEPT_TIMEOUT_SECONDS, .tv_usec = 0};
   setsockopt(server_socket_, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv,
              sizeof tv);
   setsockopt(server_socket_, SOL_SOCKET, SO_SNDTIMEO, (const char *)&tv,
@@ -260,55 +268,61 @@ void SimpleHTTPServer::start() {
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketListenError));
   }
 
-  while (!stopSource_.stop_requested()) {
-    sockaddr_in client_address{};
-    socklen_t client_len = sizeof(client_address);
-    clientInfo client_info;
-    client_info.client_socket =
-        accept(server_socket_, (struct sockaddr *)&client_address, &client_len);
+  try {
+    while (!stopSource_.stop_requested()) {
+      sockaddr_in client_address{};
+      socklen_t client_len = sizeof(client_address);
+      clientInfo client_info;
+      client_info.client_socket = accept(
+          server_socket_, (struct sockaddr *)&client_address, &client_len);
 
-    // If you’re working with IPv6 addresses, you can replace AF_INET with
-    // AF_INET6, client_address.sin_addr with client_address.sin6_addr, and
-    // INET_ADDRSTRLEN with INET6_ADDRSTRLEN
-    char client_ip_buf[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &(client_address.sin_addr), client_ip_buf,
-              INET_ADDRSTRLEN);
-    client_info.client_ip = client_ip_buf;
+      // If you’re working with IPv6 addresses, you can replace AF_INET with
+      // AF_INET6, client_address.sin_addr with client_address.sin6_addr, and
+      // INET_ADDRSTRLEN with INET6_ADDRSTRLEN
+      char client_ip_buf[INET_ADDRSTRLEN];
+      inet_ntop(AF_INET, &(client_address.sin_addr), client_ip_buf,
+                INET_ADDRSTRLEN);
+      client_info.client_ip = client_ip_buf;
 
-    if (stopSource_.stop_requested()) {
-      break;
-    }
-    if (client_info.client_socket == -1) {
-      // Check if the error is because the socket was closed
-#ifdef _WIN32
-      int lastError = WSAGetLastError();
-      if (lastError == WSAENOTSOCK) {
-#else
-      if (errno == EBADF) {
-#endif
-        SimpleLogger::LOG_INFO(SimpleLang::Message(Message::TCPServerClosed));
+      if (stopSource_.stop_requested()) {
         break;
       }
+      if (client_info.client_socket == -1) {
+        // Check if the error is because the socket was closed
 #ifdef _WIN32
-      if (lastError != WSAEWOULDBLOCK) {
+        int lastError = WSAGetLastError();
+        if (lastError == WSAENOTSOCK) {
 #else
-      if (errno != EAGAIN && errno != EWOULDBLOCK) {
+        if (errno == EBADF) {
 #endif
-        SimpleLogger::LOG_ERROR(client_info.str(),
-                                SimpleLang::Error(Error::TCPServerAcceptError));
-        break;
-      }
-      continue;
-    } // end if client_socket == -1
+          SimpleLogger::LOG_INFO(SimpleLang::Message(Message::TCPServerClosed));
+          break;
+        }
+#ifdef _WIN32
+        if (lastError != WSAEWOULDBLOCK) {
+#else
+        if (errno != EAGAIN && errno != EWOULDBLOCK) {
+#endif
+          SimpleLogger::LOG_ERROR(
+              client_info.str(),
+              SimpleLang::Error(Error::TCPServerAcceptError));
+          break;
+        }
+        continue;
+      } // end if client_socket == -1
 
-    SimpleLogger::LOG_INFO(client_info.str(),
-                           SimpleLang::Message(Message::TCPClientConnection));
-    clientHandlers_.emplace_back(
-        [this, client_info](std::stop_token st) {
-          handle_client(client_info, st);
-        },
-        stopSource_.get_token());
-  } // while
+      SimpleLogger::LOG_INFO(client_info.str(),
+                             SimpleLang::Message(Message::TCPClientConnection));
+      clientHandlers_.emplace_back(
+          [this, client_info](std::stop_token st) {
+            handle_client(client_info, st);
+          },
+          stopSource_.get_token());
+    } // while
+
+  } catch (std::exception &e) {
+    SimpleLogger::LOG_ERROR(e.what());
+  }
 
   // Wait for all client handlers to finish
   for (auto &handler : clientHandlers_) {
@@ -337,65 +351,73 @@ void SimpleHTTPServer::stop() {
 void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                                      const std::stop_token &stoken) {
   char client_buff[client_buff_size_];
-  std::string requestBuffer;
-  struct timeval tv;
-  tv.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS;
-  tv.tv_usec = 0;
+  std::stringstream requestBuffer;
+  struct timeval tv = {.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS, .tv_usec = 0};
   setsockopt(client_info.client_socket, SOL_SOCKET, SO_RCVTIMEO,
              (const char *)&tv,
              sizeof(tv)); // Set the timeout
 
   while (!stoken.stop_requested()) {
-    memset(client_buff, 0, client_buff_size_);
+    try {
+      memset(client_buff, 0, client_buff_size_);
+      ssize_t bytesReceived =
+          recv(client_info.client_socket, client_buff, client_buff_size_, 0);
 
-    ssize_t bytesReceived =
-        recv(client_info.client_socket, client_buff, client_buff_size_, 0);
-    if (bytesReceived == -1) {
-      if (errno != EAGAIN && errno != EWOULDBLOCK) {
-        SimpleLogger::LOG_ERROR(client_info.str(),
-                                SimpleLang::Error(Error::TCPServerRecvError));
+      if (bytesReceived == -1) {
+        if (errno != EAGAIN && errno != EWOULDBLOCK) {
+          SimpleLogger::LOG_ERROR(client_info.str(),
+                                  SimpleLang::Error(Error::TCPServerRecvError));
+          CLOSE_SOCKET(client_info.client_socket);
+          return;
+        }
+        // Retry receiving data
+        continue;
+      }
+
+      if (bytesReceived == 0) {
+        SimpleLogger::LOG_INFO(
+            client_info.str(),
+            SimpleLang::Message(Message::TCPClientDisconnection));
+        // Process any remaining data in lineBuffer
+        if (requestBuffer.rdbuf()->in_avail() != 0) {
+          processRequest(requestBuffer.str(), client_info);
+          requestBuffer.str(std::string());
+        }
         CLOSE_SOCKET(client_info.client_socket);
         return;
       }
-      // Retry receiving data
-      continue;
-    }
 
-    if (bytesReceived == 0) {
-      SimpleLogger::LOG_INFO(
-          client_info.str(),
-          SimpleLang::Message(Message::TCPClientDisconnection));
+      requestBuffer.write(client_buff, bytesReceived);
 
-      // Process any remaining data in lineBuffer
-      if (!requestBuffer.empty()) {
-        std::string line = requestBuffer;
-        requestBuffer.erase();
-        processRequest(line, client_info);
+      if (requestBuffer.str().size() > MAX_REQUEST_SIZE) {
+        SimpleLogger::LOG_ERROR(
+            client_info.str(), "Max request data size reach (",
+            requestBuffer.str().size(), "): aborting and closing connection");
+        CLOSE_SOCKET(client_info.client_socket);
+        return;
       }
 
+      if (Manager::getInstance().app_params.verbose) {
+        SimpleLogger::LOG_DEBUG(
+            client_info.str(),
+            smlp::getEscapedString(std::string(client_buff, bytesReceived)));
+      }
+
+      const std::string &request =
+          processRequestBuffer(requestBuffer, client_info);
+      if (!request.empty()) {
+        processRequest(request, client_info);
+        requestBuffer.str(
+            std::string()); // Clear requestBuffer after processing a request
+        requestBuffer.clear();
+      }
+    } catch (std::exception &e) {
+      SimpleLogger::LOG_ERROR(client_info.str(), e.what());
+      const auto &httpResponse = buildHttpResponse(e);
+      send(client_info.client_socket, httpResponse.c_str(),
+           httpResponse.length(), 0);
       CLOSE_SOCKET(client_info.client_socket);
       return;
-    }
-
-    requestBuffer.append(client_buff, bytesReceived);
-
-    if (requestBuffer.size() > MAX_REQUEST_SIZE) {
-      SimpleLogger::LOG_ERROR(
-          client_info.str(), "Max request data size reach (",
-          requestBuffer.size(), "): aborting and closing connection");
-      CLOSE_SOCKET(client_info.client_socket);
-      return;
-    }
-
-    if (Manager::getInstance().app_params.verbose) {
-      SimpleLogger::LOG_DEBUG(
-          client_info.str(),
-          smlp::getEscapedString(std::string(client_buff, bytesReceived)));
-    }
-
-    const std::string &request = processRequestBuffer(requestBuffer);
-    if (!request.empty()) {
-      processRequest(request, client_info);
     }
   }
 
@@ -404,48 +426,68 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                          SimpleLang::Message(Message::TCPClientDisconnection));
 }
 
-std::string SimpleHTTPServer::processRequestBuffer(std::string &line_buffer) {
-  if (smlp::trimALL(line_buffer).empty()) {
+std::string
+SimpleHTTPServer::processRequestBuffer(std::stringstream &request_buffer,
+                                       const clientInfo &client_info) {
+  const std::string CRLF = "\r\n";
+  const std::string CONTENT_LENGTH = "Content-Length: ";
+  const std::string backup(request_buffer.str());
+  if (smlp::trimALL(backup).empty()) {
     return "";
   }
 
-  std::string headers;
-  std::string body;
-  const std::string backup(line_buffer);
+  std::stringstream headers;
+  std::stringstream body;
   bool inBody = false;
+  bool hasContentLength = false;
+  int contentLength = 0;
 
-  size_t pos;
-  while ((pos = line_buffer.find("\r\n")) != std::string::npos) {
-    std::string line = line_buffer.substr(0, pos);
-    line_buffer.erase(0, pos + 2); // +2 because "\r\n" is two characters
+  std::string line;
+  while (std::getline(request_buffer, line)) {
+    // Remove '\r' from the end of the line, if present
+    if (!line.empty() && line.back() == '\r') {
+      line.pop_back();
+    }
 
     if (!inBody) {
       if (line.empty()) {
         inBody = true;
         continue;
       } else {
-        headers += line + "\r\n";
+        headers << line << CRLF;
+        if (line.find(CONTENT_LENGTH) == 0) {
+          hasContentLength = true;
+          contentLength =
+              std::stoi(smlp::trimALL(line.substr(CONTENT_LENGTH.size())));
+        }
       }
     } else {
-      body += line + "\r\n";
+      body << line << CRLF;
     }
   }
+  // Create a new stringstream with the remaining content and swap it with the
+  // old one to remove request_buffer of extracted lines
+  std::stringstream remaining_stream;
+  remaining_stream << request_buffer.rdbuf();
+  request_buffer.swap(remaining_stream);
 
-  if (!inBody) {
-    // reset the lineBuffer for next call
-    line_buffer = backup;
+  // in case of http request not ended by \r\n
+  if (inBody && !request_buffer.str().empty()) {
+    body << request_buffer.str();
+    request_buffer.str(std::string());
+    request_buffer.clear();
+  }
+
+  // in case of incomplete request, reset the request buffer for next call
+  if (!inBody || (hasContentLength &&
+                  static_cast<int>(body.str().length()) < contentLength)) {
+    request_buffer.str(backup);
+    request_buffer.clear();
     return "";
   }
 
-  // in case of http request not ended by \r\n
-  if (body.empty() && !line_buffer.empty()) {
-    body += line_buffer;
-    line_buffer.erase();
-  }
-
   // return the extracted request
-  return (headers.ends_with("\r\n") ? headers + "\r\n" + body
-                                    : headers + "\r\n\r\n" + body);
+  return headers.str() + CRLF + body.str();
 }
 
 void SimpleHTTPServer::processRequest(const std::string &rawRequest,
