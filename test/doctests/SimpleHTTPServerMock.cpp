@@ -76,20 +76,20 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
     lineBuffer.append(data);
     SimpleLogger::LOG_INFO(client_info.str(),
                            "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
-    const std::string extracted = processLineBuffer(lineBuffer);
+    const std::string extracted = processRequestBuffer(lineBuffer);
     if (!extracted.empty()) {
-      processLine(extracted, client_info);
+      processRequest(extracted, client_info);
     }
   }
   SimpleLogger::LOG_INFO(client_info.str(),
                          SimpleLang::Message(Message::TCPClientDisconnection));
 }
 
-void SimpleHTTPServerMock::processLine(const std::string &line,
-                                       const clientInfo &client_info) {
+void SimpleHTTPServerMock::processRequest(const std::string &rawRequest,
+                                          const clientInfo &client_info) {
   if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
     try {
-      if (smlp::trimALL(line).empty()) {
+      if (smlp::trimALL(rawRequest).empty()) {
         threadMutex_.unlock();
         return;
       }
@@ -97,10 +97,10 @@ void SimpleHTTPServerMock::processLine(const std::string &line,
       const auto &app_params = manager.app_params;
       if (app_params.verbose) {
         SimpleLogger::LOG_INFO(client_info.str(),
-                               "[RECV FROM CLIENT: REQUEST] ", line);
+                               "[RECV FROM CLIENT: REQUEST] ", rawRequest);
       }
       // parsing
-      const auto &request = parseHttpRequest(line);
+      const auto &request = parseHttpRequest(rawRequest);
 
       // validation
       const auto &validation = httpRequestValidation(request);

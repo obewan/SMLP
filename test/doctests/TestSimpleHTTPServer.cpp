@@ -66,16 +66,13 @@ TEST_CASE("Testing the SimpleTCPServer class - unmocked" *
       "0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
       "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
   const auto &response = client.sendAndReceive(httpRequest);
-
   CHECK(manager.app_params.mode == EMode::Predict);
-
   CHECK(client.getHttpCode(response) == 200);
   CHECK(client.getHttpBody(response) ==
         "{\"action\":\"Predict\",\"code\":0,\"data\":\"1,0.04,0.57,0.8,0.08,1,"
         "0.38,0,"
         "0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0\""
         ",\"message\":\"Success\"}");
-
   std::string expected = "HTTP/1.1 200 OK\r\n"
                          "Content-Type: application/json\r\n"
                          "Content-Length: 132\r\n\r\n"
@@ -213,6 +210,22 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
       client.getHttpBody(response5) ==
       R"({"action":"TrainTestMonitored","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":null,\"convergence_one\":null,\"convergence_zero\":null}","message":"Success"})");
 
+  MESSAGE("[TEST] Testing unsupported HTTP version");
+  const auto &httpRequest6 =
+      "POST /traintestmonitored HTTP/2.0\r\n"
+      "Host: localhost\r\n"
+      "Content-Type: text/plain\r\n"
+      "Content-Length: 59\r\n"
+      "\r\n"
+      "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,"
+      "0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00\r\n";
+  const auto &response6 = client.sendAndReceive(httpRequest6);
+  CHECK(manager.app_params.mode == EMode::TrainTestMonitored);
+  CHECK(client.getHttpCode(response6) == 505);
+  CHECK(
+      client.getHttpBody(response6) ==
+      R"({"action":"/traintestmonitored","code":505,"data":"","message":"HTTP Version Not Supported"})");
+
   MESSAGE("[TEST] Closing the TCP server and client...");
 
   client.disconnect();
@@ -235,7 +248,7 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
         "0.00,0.00,1.00,0.92,0.00,1.00,0.00";
     std::string buffer(rawRequest);
     SimpleHTTPServer server;
-    const std::string &extracted = server.processLineBuffer(buffer);
+    const std::string &extracted = server.processRequestBuffer(buffer);
     CHECK_MESSAGE(extracted == rawRequest, smlp::getEscapedString(extracted));
   }
 

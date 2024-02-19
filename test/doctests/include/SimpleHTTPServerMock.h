@@ -40,7 +40,7 @@ public:
   void handle_client(const clientInfo &client_info,
                      const std::stop_token &stoken) override;
 
-  void processLine(const std::string &line,
-                   const clientInfo &client_info) override;
+  void processRequest(const std::string &request,
+                      const clientInfo &client_info) override;
 };
 } // namespace smlp
