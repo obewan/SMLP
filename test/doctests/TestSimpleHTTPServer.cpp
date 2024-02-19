@@ -235,7 +235,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
 }
 
 TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
-  SUBCASE("Testing processLineBuffer") {
+  SUBCASE("Testing processRequestBuffer") {
     const std::string &rawRequest =
         "POST /testonly HTTP/1.1\r\n"
         "Host: localhost:8080\r\n"
@@ -248,11 +248,12 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
         "0.00,0.00,1.00,0.92,0.00,1.00,0.00";
     std::stringstream buffer;
     buffer << rawRequest;
-    SimpleHTTPServer server;
+    auto server = new SimpleHTTPServer();
     SimpleHTTPServer::clientInfo ci;
-    const std::string &extracted = server.processRequestBuffer(buffer, ci);
+    const std::string &extracted = server->processRequestBuffer(buffer, ci);
     CHECK_MESSAGE(extracted == rawRequest + "\r\n",
                   smlp::getEscapedString(extracted));
+    delete server;
   }
 
   SUBCASE("Testing parseHttpRequest") {

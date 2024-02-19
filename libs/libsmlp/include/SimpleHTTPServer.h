@@ -27,11 +27,7 @@ public:
   SimpleHTTPServer() = default;
   SimpleHTTPServer(const SimpleHTTPServer &other) = delete;
   SimpleHTTPServer &operator=(const SimpleHTTPServer &other) = delete;
-  virtual ~SimpleHTTPServer() {
-    if (!stopSource_.stop_requested()) {
-      stop();
-    }
-  }
+  virtual ~SimpleHTTPServer();
 
   struct clientInfo {
     int client_socket;
