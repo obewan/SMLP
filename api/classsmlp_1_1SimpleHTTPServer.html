@@ -112,12 +112,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ae997d31ca95fba25cc5095e0871bc0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a6ae997d31ca95fba25cc5095e0871bc0">handle_client</a> (const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info, const std::stop_token &amp;stoken)</td></tr>
 <tr class="memdesc:a6ae997d31ca95fba25cc5095e0871bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle client thread  <a href="classsmlp_1_1SimpleHTTPServer.html#a6ae997d31ca95fba25cc5095e0871bc0">More...</a><br /></td></tr>
 <tr class="separator:a6ae997d31ca95fba25cc5095e0871bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1edddb4fc2cfccdd9dd87b6c8a64dbef"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a1edddb4fc2cfccdd9dd87b6c8a64dbef">processLineBuffer</a> (std::string &amp;line_buffer)</td></tr>
-<tr class="memdesc:a1edddb4fc2cfccdd9dd87b6c8a64dbef"><td class="mdescLeft">&#160;</td><td class="mdescRight">if there is an end of line or an end of chars (\0), get the line and extract it. This will erase the buffer from extracted data.  <a href="classsmlp_1_1SimpleHTTPServer.html#a1edddb4fc2cfccdd9dd87b6c8a64dbef">More...</a><br /></td></tr>
-<tr class="separator:a1edddb4fc2cfccdd9dd87b6c8a64dbef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a152e86a3312bf38d9180145425a7e9a9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a152e86a3312bf38d9180145425a7e9a9">processLine</a> (const std::string &amp;line, const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info)</td></tr>
-<tr class="memdesc:a152e86a3312bf38d9180145425a7e9a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">use the line data with the neural network, thread safe.  <a href="classsmlp_1_1SimpleHTTPServer.html#a152e86a3312bf38d9180145425a7e9a9">More...</a><br /></td></tr>
-<tr class="separator:a152e86a3312bf38d9180145425a7e9a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#aa778c8fc4a7d99b9b98a2b35ea59384d">processRequestBuffer</a> (std::string &amp;request_buffer)</td></tr>
+<tr class="memdesc:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="mdescLeft">&#160;</td><td class="mdescRight">extract the request from the request buffer. This will erase the buffer from extracted request.  <a href="classsmlp_1_1SimpleHTTPServer.html#aa778c8fc4a7d99b9b98a2b35ea59384d">More...</a><br /></td></tr>
+<tr class="separator:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7747026ce6ea920036af3b8276a8832"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#ae7747026ce6ea920036af3b8276a8832">processRequest</a> (const std::string &amp;request, const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info)</td></tr>
+<tr class="memdesc:ae7747026ce6ea920036af3b8276a8832"><td class="mdescLeft">&#160;</td><td class="mdescRight">process the request body data with the neural network, thread safe.  <a href="classsmlp_1_1SimpleHTTPServer.html#ae7747026ce6ea920036af3b8276a8832">More...</a><br /></td></tr>
+<tr class="separator:ae7747026ce6ea920036af3b8276a8832"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84ce77a3dc62781f752816f3b769b825"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a84ce77a3dc62781f752816f3b769b825">buildHttpResponse</a> (const <a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> &amp;result)</td></tr>
 <tr class="memdesc:a84ce77a3dc62781f752816f3b769b825"><td class="mdescLeft">&#160;</td><td class="mdescRight">build an HTTP response from a smlp <a class="el" href="structsmlp_1_1Result.html" title="Common results Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and std::errc https://...">Result</a>  <a href="classsmlp_1_1SimpleHTTPServer.html#a84ce77a3dc62781f752816f3b769b825">More...</a><br /></td></tr>
 <tr class="separator:a84ce77a3dc62781f752816f3b769b825"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -632,8 +632,8 @@ false if server not started </dd></dl>
 
 </div>
 </div>
-<a id="a152e86a3312bf38d9180145425a7e9a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a152e86a3312bf38d9180145425a7e9a9">&#9670;&nbsp;</a></span>processLine()</h2>
+<a id="ae7747026ce6ea920036af3b8276a8832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7747026ce6ea920036af3b8276a8832">&#9670;&nbsp;</a></span>processRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -642,10 +642,10 @@ false if server not started </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void SimpleHTTPServer::processLine </td>
+          <td class="memname">void SimpleHTTPServer::processRequest </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em>, </td>
+          <td class="paramname"><em>request</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -666,10 +666,10 @@ false if server not started </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>use the line data with the neural network, thread safe. </p>
+<p>process the request body data with the neural network, thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">line</td><td></td></tr>
+    <tr><td class="paramname">request</td><td></td></tr>
     <tr><td class="paramname">client_info</td><td></td></tr>
   </table>
   </dd>
@@ -677,8 +677,8 @@ false if server not started </dd></dl>
 
 </div>
 </div>
-<a id="a1edddb4fc2cfccdd9dd87b6c8a64dbef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1edddb4fc2cfccdd9dd87b6c8a64dbef">&#9670;&nbsp;</a></span>processLineBuffer()</h2>
+<a id="aa778c8fc4a7d99b9b98a2b35ea59384d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa778c8fc4a7d99b9b98a2b35ea59384d">&#9670;&nbsp;</a></span>processRequestBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -687,10 +687,10 @@ false if server not started </dd></dl>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string SimpleHTTPServer::processLineBuffer </td>
+          <td class="memname">std::string SimpleHTTPServer::processRequestBuffer </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>line_buffer</em></td><td>)</td>
+          <td class="paramname"><em>request_buffer</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -701,10 +701,10 @@ false if server not started </dd></dl>
 </table>
 </div><div class="memdoc">
 
-<p>if there is an end of line or an end of chars (\0), get the line and extract it. This will erase the buffer from extracted data. </p>
+<p>extract the request from the request buffer. This will erase the buffer from extracted request. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">line_buffer</td><td></td></tr>
+    <tr><td class="paramname">request_buffer</td><td></td></tr>
   </table>
   </dd>
 </dl>

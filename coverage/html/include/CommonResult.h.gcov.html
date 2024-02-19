@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">62</td>
-            <td class="headerCovTableEntry">65</td>
-            <td class="headerCovTableEntryHi">95.4 %</td>
+            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntry">63</td>
+            <td class="headerCovTableEntryHi">95.2 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-18 06:20:10</td>
+            <td class="headerValue">2024-02-19 06:20:45</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -110,8 +110,8 @@
 <a name="48"><span class="lineNum">      48 </span>            : public:</a>
 <a name="49"><span class="lineNum">      49 </span><span class="lineNoCov">          0 :   const char *name() const noexcept override { return &quot;server&quot;; }</span></a>
 <a name="50"><span class="lineNum">      50 </span>            : </a>
-<a name="51"><span class="lineNum">      51 </span><span class="lineCov">         54 :   std::string message(int ev) const override {</span></a>
-<a name="52"><span class="lineNum">      52 </span><span class="lineCov">         54 :     switch (static_cast&lt;ErrorCode&gt;(ev)) {</span></a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">         59 :   std::string message(int ev) const override {</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">         59 :     switch (static_cast&lt;ErrorCode&gt;(ev)) {</span></a>
 <a name="53"><span class="lineNum">      53 </span><span class="lineCov">         12 :     case ErrorCode::Success:</span></a>
 <a name="54"><span class="lineNum">      54 </span><span class="lineCov">         12 :       return &quot;Success&quot;;</span></a>
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">          2 :     case ErrorCode::Failure:</span></a>
@@ -152,8 +152,8 @@
 <a name="90"><span class="lineNum">      90 </span><span class="lineCov">          2 :       return &quot;Service Unavailable&quot;;</span></a>
 <a name="91"><span class="lineNum">      91 </span><span class="lineCov">          2 :     case ErrorCode::GatewayTimeout:</span></a>
 <a name="92"><span class="lineNum">      92 </span><span class="lineCov">          2 :       return &quot;Gateway Timeout&quot;;</span></a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          2 :     case ErrorCode::HTTPVersionNotSupported:</span></a>
-<a name="94"><span class="lineNum">      94 </span><span class="lineCov">          2 :       return &quot;HTTP Version Not Supported&quot;;</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">          7 :     case ErrorCode::HTTPVersionNotSupported:</span></a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineCov">          7 :       return &quot;HTTP Version Not Supported&quot;;</span></a>
 <a name="95"><span class="lineNum">      95 </span><span class="lineCov">          2 :     case ErrorCode::NetworkAuthenticationRequired:</span></a>
 <a name="96"><span class="lineNum">      96 </span><span class="lineCov">          2 :       return &quot;Network Authentication Required&quot;;</span></a>
 <a name="97"><span class="lineNum">      97 </span><span class="lineNoCov">          0 :     default:</span></a>
@@ -162,9 +162,9 @@
 <a name="100"><span class="lineNum">     100 </span>            :   }</a>
 <a name="101"><span class="lineNum">     101 </span>            : };</a>
 <a name="102"><span class="lineNum">     102 </span>            : </a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">         64 : inline std::error_code make_error_code(ErrorCode e) {</span></a>
-<a name="104"><span class="lineNum">     104 </span><span class="lineCov">         64 :   static ErrorCategory category;</span></a>
-<a name="105"><span class="lineNum">     105 </span><span class="lineCov">         64 :   return {static_cast&lt;int&gt;(e), category};</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">         67 : inline std::error_code make_error_code(ErrorCode e) {</span></a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">         67 :   static ErrorCategory category;</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">         67 :   return {static_cast&lt;int&gt;(e), category};</span></a>
 <a name="106"><span class="lineNum">     106 </span>            : }</a>
 <a name="107"><span class="lineNum">     107 </span>            : </a>
 <a name="108"><span class="lineNum">     108 </span>            : /**</a>
@@ -183,32 +183,31 @@
 <a name="121"><span class="lineNum">     121 </span>            :   std::error_code code = smlp::make_error_code(smlp::ErrorCode::Failure);</a>
 <a name="122"><span class="lineNum">     122 </span>            : </a>
 <a name="123"><span class="lineNum">     123 </span>            :   std::optional&lt;std::string&gt; action = std::nullopt;</a>
-<a name="124"><span class="lineNum">     124 </span>            :   std::optional&lt;std::string&gt; data = std::nullopt;</a>
-<a name="125"><span class="lineNum">     125 </span>            : </a>
-<a name="126"><span class="lineNum">     126 </span><span class="lineCov">         28 :   bool isSuccess() const {</span></a>
-<a name="127"><span class="lineNum">     127 </span><span class="lineCov">         55 :     return code.value() == static_cast&lt;int&gt;(ErrorCode::Success) ||</span></a>
-<a name="128"><span class="lineNum">     128 </span><span class="lineCov">         48 :            code.value() == static_cast&lt;int&gt;(ErrorCode::OK) ||</span></a>
-<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         76 :            code.value() == static_cast&lt;int&gt;(ErrorCode::Created) ||</span></a>
-<a name="130"><span class="lineNum">     130 </span><span class="lineCov">         48 :            code.value() == static_cast&lt;int&gt;(ErrorCode::Accepted);</span></a>
-<a name="131"><span class="lineNum">     131 </span>            :   }</a>
-<a name="132"><span class="lineNum">     132 </span>            : </a>
-<a name="133"><span class="lineNum">     133 </span><span class="lineCov">         56 :   std::string message() const { return code.message(); }</span></a>
-<a name="134"><span class="lineNum">     134 </span>            : </a>
-<a name="135"><span class="lineNum">     135 </span><span class="lineCov">         33 :   std::string json() const {</span></a>
-<a name="136"><span class="lineNum">     136 </span><span class="lineCov">         66 :     nlohmann::json jdata;</span></a>
-<a name="137"><span class="lineNum">     137 </span><span class="lineCov">         33 :     jdata[&quot;code&quot;] = code.value();</span></a>
-<a name="138"><span class="lineNum">     138 </span><span class="lineCov">         33 :     jdata[&quot;message&quot;] = message();</span></a>
-<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         33 :     jdata[&quot;action&quot;] = action.value_or(&quot;&quot;);</span></a>
-<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         33 :     jdata[&quot;data&quot;] = data.value_or(&quot;&quot;);</span></a>
-<a name="141"><span class="lineNum">     141 </span><span class="lineCov">         66 :     return jdata.dump();</span></a>
-<a name="142"><span class="lineNum">     142 </span>            :   }</a>
-<a name="143"><span class="lineNum">     143 </span>            : };</a>
-<a name="144"><span class="lineNum">     144 </span>            : </a>
-<a name="145"><span class="lineNum">     145 </span>            : } // namespace smlp</a>
-<a name="146"><span class="lineNum">     146 </span>            : </a>
-<a name="147"><span class="lineNum">     147 </span>            : namespace std {</a>
-<a name="148"><span class="lineNum">     148 </span>            : template &lt;&gt; struct is_error_code_enum&lt;smlp::ErrorCode&gt; : true_type {};</a>
-<a name="149"><span class="lineNum">     149 </span>            : } // namespace std</a>
+<a name="124"><span class="lineNum">     124 </span>            :   std::optional&lt;std::string&gt; technical = std::nullopt;</a>
+<a name="125"><span class="lineNum">     125 </span>            :   std::optional&lt;std::string&gt; data = std::nullopt;</a>
+<a name="126"><span class="lineNum">     126 </span>            : </a>
+<a name="127"><span class="lineNum">     127 </span><span class="lineCov">         29 :   bool isSuccess() const {</span></a>
+<a name="128"><span class="lineNum">     128 </span><span class="lineCov">         83 :     return code.value() == static_cast&lt;int&gt;(ErrorCode::Success) ||</span></a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         83 :            (code.value() &gt;= 200 &amp;&amp; code.value() &lt; 300);</span></a>
+<a name="130"><span class="lineNum">     130 </span>            :   }</a>
+<a name="131"><span class="lineNum">     131 </span>            : </a>
+<a name="132"><span class="lineNum">     132 </span><span class="lineCov">        120 :   std::string message() const { return technical.value_or(code.message()); }</span></a>
+<a name="133"><span class="lineNum">     133 </span>            : </a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">         35 :   std::string json() const {</span></a>
+<a name="135"><span class="lineNum">     135 </span><span class="lineCov">         70 :     nlohmann::json jdata;</span></a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineCov">         35 :     jdata[&quot;code&quot;] = code.value();</span></a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">         35 :     jdata[&quot;message&quot;] = message();</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">         35 :     jdata[&quot;action&quot;] = action.value_or(&quot;&quot;);</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         35 :     jdata[&quot;data&quot;] = data.value_or(&quot;&quot;);</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         70 :     return jdata.dump();</span></a>
+<a name="141"><span class="lineNum">     141 </span>            :   }</a>
+<a name="142"><span class="lineNum">     142 </span>            : };</a>
+<a name="143"><span class="lineNum">     143 </span>            : </a>
+<a name="144"><span class="lineNum">     144 </span>            : } // namespace smlp</a>
+<a name="145"><span class="lineNum">     145 </span>            : </a>
+<a name="146"><span class="lineNum">     146 </span>            : namespace std {</a>
+<a name="147"><span class="lineNum">     147 </span>            : template &lt;&gt; struct is_error_code_enum&lt;smlp::ErrorCode&gt; : true_type {};</a>
+<a name="148"><span class="lineNum">     148 </span>            : } // namespace std</a>
 </pre>
       </td>
     </tr>
