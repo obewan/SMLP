@@ -42,6 +42,7 @@ public:
   struct HttpRequest {
     std::string method;
     std::string path;
+    std::string httpVersion;
     std::map<std::string, std::string> headers;
     std::string body;
   };
@@ -91,21 +92,21 @@ public:
   virtual void handle_client(const clientInfo &client_info,
                              const std::stop_token &stoken);
   /**
-   * @brief if there is an end of line or an end of chars (\0), get the line and
-   * extract it. This will erase the buffer from extracted data.
+   * @brief extract the request from the request buffer. This will erase the
+   * buffer from extracted request.
    *
-   * @param line_buffer
+   * @param request_buffer
    */
-  virtual std::string processLineBuffer(std::string &line_buffer);
+  virtual std::string processRequestBuffer(std::string &request_buffer);
 
   /**
-   * @brief use the line data with the neural network, thread safe.
+   * @brief process the request body data with the neural network, thread safe.
    *
-   * @param line
+   * @param request
    * @param client_info
    */
-  virtual void processLine(const std::string &line,
-                           const clientInfo &client_info);
+  virtual void processRequest(const std::string &request,
+                              const clientInfo &client_info);
 
   /**
    * @brief build an HTTP response from a smlp Result

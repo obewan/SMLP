@@ -10,6 +10,7 @@
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
+#include <cctype>
 #include <condition_variable>
 #include <cstring>
 #include <exception>
@@ -56,8 +57,7 @@ SimpleHTTPServer::parseHttpRequest(const std::string &rawRequest) {
     requestLine.pop_back(); // Remove '\r'
   }
   std::istringstream requestLineStream(requestLine);
-  std::string httpVersion;
-  requestLineStream >> request.method >> request.path >> httpVersion;
+  requestLineStream >> request.method >> request.path >> request.httpVersion;
 
   // Parse the headers
   std::string headerLine;
@@ -111,17 +111,28 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
   result.code = smlp::make_error_code(smlp::ErrorCode::OK);
   result.action = request.path;
 
+  std::string httpVersion = request.httpVersion;
+  std::ranges::transform(httpVersion, httpVersion.begin(), ::toupper);
+  if (httpVersion != "HTTP/1.0" && httpVersion != "HTTP/1.1") {
+    result.code =
+        smlp::make_error_code(smlp::ErrorCode::HTTPVersionNotSupported);
+    SimpleLogger::LOG_ERROR(result.message());
+    return result;
+  }
+
   std::string method = request.method;
-  std::ranges::transform(method, method.begin(), ::tolower);
-  if (method != "post") {
+  std::ranges::transform(method, method.begin(), ::toupper);
+  if (method != "POST") {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
-    SimpleLogger::LOG_ERROR("Unsupported HTTP method: ", request.method);
+    result.technical = "Unsupported HTTP method: " + request.method;
+    SimpleLogger::LOG_ERROR(result.message());
     return result;
   }
 
   if (request.body.empty()) {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
-    SimpleLogger::LOG_ERROR("Empty HTTP body");
+    result.technical = "Empty HTTP body";
+    SimpleLogger::LOG_ERROR(result.message());
     return result;
   }
 
@@ -139,7 +150,8 @@ smlp::Result SimpleHTTPServer::httpRequestValidation(
     Manager::getInstance().app_params.mode = getModeFromPath(path);
   } else {
     result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
-    SimpleLogger::LOG_ERROR("Unsupported HTTP path: ", request.path);
+    result.technical = "Unsupported HTTP path: " + request.path;
+    SimpleLogger::LOG_ERROR(result.message());
     return result;
   }
 
@@ -324,8 +336,8 @@ void SimpleHTTPServer::stop() {
 
 void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                                      const std::stop_token &stoken) {
-  char buffer[client_buff_size_];
-  std::string lineBuffer;
+  char client_buff[client_buff_size_];
+  std::string requestBuffer;
   struct timeval tv;
   tv.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS;
   tv.tv_usec = 0;
@@ -334,10 +346,10 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
              sizeof(tv)); // Set the timeout
 
   while (!stoken.stop_requested()) {
-    memset(buffer, 0, client_buff_size_);
+    memset(client_buff, 0, client_buff_size_);
 
     ssize_t bytesReceived =
-        recv(client_info.client_socket, buffer, client_buff_size_, 0);
+        recv(client_info.client_socket, client_buff, client_buff_size_, 0);
     if (bytesReceived == -1) {
       if (errno != EAGAIN && errno != EWOULDBLOCK) {
         SimpleLogger::LOG_ERROR(client_info.str(),
@@ -355,22 +367,22 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
           SimpleLang::Message(Message::TCPClientDisconnection));
 
       // Process any remaining data in lineBuffer
-      if (!lineBuffer.empty()) {
-        std::string line = lineBuffer;
-        lineBuffer.erase();
-        processLine(line, client_info);
+      if (!requestBuffer.empty()) {
+        std::string line = requestBuffer;
+        requestBuffer.erase();
+        processRequest(line, client_info);
       }
 
       CLOSE_SOCKET(client_info.client_socket);
       return;
     }
 
-    lineBuffer.append(buffer, bytesReceived);
+    requestBuffer.append(client_buff, bytesReceived);
 
-    if (lineBuffer.size() > MAX_REQUEST_SIZE) {
+    if (requestBuffer.size() > MAX_REQUEST_SIZE) {
       SimpleLogger::LOG_ERROR(
-          client_info.str(), "Max request data size reach (", lineBuffer.size(),
-          "): aborting and closing connection");
+          client_info.str(), "Max request data size reach (",
+          requestBuffer.size(), "): aborting and closing connection");
       CLOSE_SOCKET(client_info.client_socket);
       return;
     }
@@ -378,12 +390,12 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
     if (Manager::getInstance().app_params.verbose) {
       SimpleLogger::LOG_DEBUG(
           client_info.str(),
-          smlp::getEscapedString(std::string(buffer, bytesReceived)));
+          smlp::getEscapedString(std::string(client_buff, bytesReceived)));
     }
 
-    const std::string &extracted = processLineBuffer(lineBuffer);
-    if (!extracted.empty()) {
-      processLine(extracted, client_info);
+    const std::string &request = processRequestBuffer(requestBuffer);
+    if (!request.empty()) {
+      processRequest(request, client_info);
     }
   }
 
@@ -392,7 +404,7 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                          SimpleLang::Message(Message::TCPClientDisconnection));
 }
 
-std::string SimpleHTTPServer::processLineBuffer(std::string &line_buffer) {
+std::string SimpleHTTPServer::processRequestBuffer(std::string &line_buffer) {
   if (smlp::trimALL(line_buffer).empty()) {
     return "";
   }
@@ -436,12 +448,12 @@ std::string SimpleHTTPServer::processLineBuffer(std::string &line_buffer) {
                                     : headers + "\r\n\r\n" + body);
 }
 
-void SimpleHTTPServer::processLine(const std::string &line,
-                                   const clientInfo &client_info) {
+void SimpleHTTPServer::processRequest(const std::string &rawRequest,
+                                      const clientInfo &client_info) {
 
   if (threadMutex_.try_lock_for(std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
     try {
-      if (smlp::trimALL(line).empty()) {
+      if (smlp::trimALL(rawRequest).empty()) {
         threadMutex_.unlock();
         return;
       }
@@ -449,7 +461,7 @@ void SimpleHTTPServer::processLine(const std::string &line,
       const auto &app_params = manager.app_params;
 
       // parsing
-      const auto &request = parseHttpRequest(line);
+      const auto &request = parseHttpRequest(rawRequest);
 
       // validation
       const auto &validation = httpRequestValidation(request);
@@ -497,33 +509,14 @@ void SimpleHTTPServer::processLine(const std::string &line,
 std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
   std::string statusLine;
 
-  switch (result.code.value()) {
-  case 0:
-  case 200:
+  // map values to http status
+  if (result.code.value() == static_cast<int>(ErrorCode::Success)) {
     statusLine = "HTTP/1.1 200 OK\r\n";
-    break;
-  case 201:
-  case 202:
-  case 400:
-  case 401:
-  case 402:
-  case 403:
-  case 404:
-  case 405:
-  case 406:
-  case 408:
-  case 409:
-  case 500:
-  case 501:
-  case 503:
+  } else if (result.code.value() < 200) { // Failure and std::errc errors
+    statusLine = "HTTP/1.1 500 Internal Server Error\r\n";
+  } else { // HTTP codes
     statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) + " " +
                  result.code.message() + "\r\n";
-    break;
-  default:
-    statusLine =
-        "HTTP/1.1 500 Internal Server Error\r\n"; // but keep the others error
-                                                  // codes for the json
-    break;
   }
 
   std::string httpResponse = statusLine +
@@ -542,7 +535,7 @@ std::string SimpleHTTPServer::buildHttpResponse(FileParserException &fpe) {
   std::string statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) +
                            " " + result.code.message() + "\r\n";
   std::string httpResponse = statusLine +
-                             "Content-Type: text/plain\r\n"
+                             "Content-Type: application/json\r\n"
                              "Content-Length: " +
                              std::to_string(result.json().length()) +
                              "\r\n"
@@ -558,7 +551,7 @@ std::string SimpleHTTPServer::buildHttpResponse(std::exception &ex) {
   std::string statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) +
                            " " + result.code.message() + "\r\n";
   std::string httpResponse = statusLine +
-                             "Content-Type: text/plain\r\n"
+                             "Content-Type: application/json\r\n"
                              "Content-Length: " +
                              std::to_string(result.json().length()) +
                              "\r\n"

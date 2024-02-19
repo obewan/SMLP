@@ -37,6 +37,7 @@ Includes a mushroom edibility dataset example.
 # Roadmap to first release
 
 - Improving the network model file. `[in progress]`
+- Check cross-platform compilation.
 - Add a Docker support.
 - Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
@@ -274,7 +275,7 @@ $ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.j
 
 To enable the HTTP service of SMLP, follow these steps:
 
-Start SMLP on the server with the HTTP service enabled on port 8080:
+Start SMLP on the server with the HTTP service enabled, for example on port 8080:
 
 ```bash
 ./smlp -e "myMushroomMLP.json" -i "myMushroomMLP.json" -V -H -P 8080

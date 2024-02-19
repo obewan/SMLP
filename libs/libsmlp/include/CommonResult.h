@@ -121,16 +121,15 @@ struct Result {
   std::error_code code = smlp::make_error_code(smlp::ErrorCode::Failure);
 
   std::optional<std::string> action = std::nullopt;
+  std::optional<std::string> technical = std::nullopt;
   std::optional<std::string> data = std::nullopt;
 
   bool isSuccess() const {
     return code.value() == static_cast<int>(ErrorCode::Success) ||
-           code.value() == static_cast<int>(ErrorCode::OK) ||
-           code.value() == static_cast<int>(ErrorCode::Created) ||
-           code.value() == static_cast<int>(ErrorCode::Accepted);
+           (code.value() >= 200 && code.value() < 300);
   }
 
-  std::string message() const { return code.message(); }
+  std::string message() const { return technical.value_or(code.message()); }
 
   std::string json() const {
     nlohmann::json jdata;
