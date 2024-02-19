@@ -246,10 +246,13 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
         "\r\n"
         "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
         "0.00,0.00,1.00,0.92,0.00,1.00,0.00";
-    std::string buffer(rawRequest);
+    std::stringstream buffer;
+    buffer << rawRequest;
     SimpleHTTPServer server;
-    const std::string &extracted = server.processRequestBuffer(buffer);
-    CHECK_MESSAGE(extracted == rawRequest, smlp::getEscapedString(extracted));
+    SimpleHTTPServer::clientInfo ci;
+    const std::string &extracted = server.processRequestBuffer(buffer, ci);
+    CHECK_MESSAGE(extracted == rawRequest + "\r\n",
+                  smlp::getEscapedString(extracted));
   }
 
   SUBCASE("Testing parseHttpRequest") {

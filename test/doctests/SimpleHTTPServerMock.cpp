@@ -57,7 +57,7 @@ void SimpleHTTPServerMock::stop() {
 
 void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
                                          const std::stop_token &stoken) {
-  std::string lineBuffer;
+  std::stringstream lineBuffer;
   while (!stoken.stop_requested() && mediator->is_client_connected) {
     SimpleLogger::LOG_INFO(client_info.str(),
                            "MOCK TEST - SERVER WAITING FOR DATA...");
@@ -73,12 +73,16 @@ void SimpleHTTPServerMock::handle_client(const clientInfo &client_info,
       continue;
     }
     const auto &data = event.getData();
-    lineBuffer.append(data);
-    SimpleLogger::LOG_INFO(client_info.str(),
-                           "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer);
-    const std::string extracted = processRequestBuffer(lineBuffer);
+    lineBuffer << data;
+    SimpleLogger::LOG_INFO(
+        client_info.str(),
+        "MOCK TEST - SERVER DATA PROCESSING: ", lineBuffer.str());
+    const std::string extracted = processRequestBuffer(lineBuffer, client_info);
     if (!extracted.empty()) {
       processRequest(extracted, client_info);
+      lineBuffer.str(
+          std::string()); // Clear lineBuffer after processing a request
+      lineBuffer.clear();
     }
   }
   SimpleLogger::LOG_INFO(client_info.str(),
