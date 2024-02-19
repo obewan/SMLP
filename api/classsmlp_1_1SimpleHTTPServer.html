@@ -92,8 +92,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aec79f455d08ed94402d3c6f3edae696c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af20c70daafb2cb011b326e1718593da7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#af20c70daafb2cb011b326e1718593da7">operator=</a> (const <a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a> &amp;other)=delete</td></tr>
 <tr class="separator:af20c70daafb2cb011b326e1718593da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c0e2472692442815d433c7ed418e743"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a9c0e2472692442815d433c7ed418e743">~SimpleHTTPServer</a> ()</td></tr>
-<tr class="separator:a9c0e2472692442815d433c7ed418e743"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6abcee25ee4c79cf3d97183d85e3c6"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#aca6abcee25ee4c79cf3d97183d85e3c6">~SimpleHTTPServer</a> ()</td></tr>
+<tr class="separator:aca6abcee25ee4c79cf3d97183d85e3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3679ec76cff605cae703c7b8fd901436"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1HttpRequest.html">HttpRequest</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a3679ec76cff605cae703c7b8fd901436">parseHttpRequest</a> (const std::string &amp;rawRequest)</td></tr>
 <tr class="memdesc:a3679ec76cff605cae703c7b8fd901436"><td class="mdescLeft">&#160;</td><td class="mdescRight">parse the HTTP raw request  <a href="classsmlp_1_1SimpleHTTPServer.html#a3679ec76cff605cae703c7b8fd901436">More...</a><br /></td></tr>
 <tr class="separator:a3679ec76cff605cae703c7b8fd901436"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -112,9 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ae997d31ca95fba25cc5095e0871bc0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a6ae997d31ca95fba25cc5095e0871bc0">handle_client</a> (const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info, const std::stop_token &amp;stoken)</td></tr>
 <tr class="memdesc:a6ae997d31ca95fba25cc5095e0871bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle client thread  <a href="classsmlp_1_1SimpleHTTPServer.html#a6ae997d31ca95fba25cc5095e0871bc0">More...</a><br /></td></tr>
 <tr class="separator:a6ae997d31ca95fba25cc5095e0871bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#aa778c8fc4a7d99b9b98a2b35ea59384d">processRequestBuffer</a> (std::string &amp;request_buffer)</td></tr>
-<tr class="memdesc:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="mdescLeft">&#160;</td><td class="mdescRight">extract the request from the request buffer. This will erase the buffer from extracted request.  <a href="classsmlp_1_1SimpleHTTPServer.html#aa778c8fc4a7d99b9b98a2b35ea59384d">More...</a><br /></td></tr>
-<tr class="separator:aa778c8fc4a7d99b9b98a2b35ea59384d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a718bc2b6238aaa8567bf35c9da7a44ca"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a718bc2b6238aaa8567bf35c9da7a44ca">processRequestBuffer</a> (std::stringstream &amp;request_buffer, const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info)</td></tr>
+<tr class="memdesc:a718bc2b6238aaa8567bf35c9da7a44ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">extract the request from the request buffer. This will erase the buffer from extracted request.  <a href="classsmlp_1_1SimpleHTTPServer.html#a718bc2b6238aaa8567bf35c9da7a44ca">More...</a><br /></td></tr>
+<tr class="separator:a718bc2b6238aaa8567bf35c9da7a44ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7747026ce6ea920036af3b8276a8832"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#ae7747026ce6ea920036af3b8276a8832">processRequest</a> (const std::string &amp;request, const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;client_info)</td></tr>
 <tr class="memdesc:ae7747026ce6ea920036af3b8276a8832"><td class="mdescLeft">&#160;</td><td class="mdescRight">process the request body data with the neural network, thread safe.  <a href="classsmlp_1_1SimpleHTTPServer.html#ae7747026ce6ea920036af3b8276a8832">More...</a><br /></td></tr>
 <tr class="separator:ae7747026ce6ea920036af3b8276a8832"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,8 +220,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a9c0e2472692442815d433c7ed418e743"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c0e2472692442815d433c7ed418e743">&#9670;&nbsp;</a></span>~SimpleHTTPServer()</h2>
+<a id="aca6abcee25ee4c79cf3d97183d85e3c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca6abcee25ee4c79cf3d97183d85e3c6">&#9670;&nbsp;</a></span>~SimpleHTTPServer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -230,7 +230,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual smlp::SimpleHTTPServer::~SimpleHTTPServer </td>
+          <td class="memname">SimpleHTTPServer::~SimpleHTTPServer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -238,7 +238,7 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -677,8 +677,8 @@ false if server not started </dd></dl>
 
 </div>
 </div>
-<a id="aa778c8fc4a7d99b9b98a2b35ea59384d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa778c8fc4a7d99b9b98a2b35ea59384d">&#9670;&nbsp;</a></span>processRequestBuffer()</h2>
+<a id="a718bc2b6238aaa8567bf35c9da7a44ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a718bc2b6238aaa8567bf35c9da7a44ca">&#9670;&nbsp;</a></span>processRequestBuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -689,9 +689,19 @@ false if server not started </dd></dl>
         <tr>
           <td class="memname">std::string SimpleHTTPServer::processRequestBuffer </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>request_buffer</em></td><td>)</td>
+          <td class="paramtype">std::stringstream &amp;&#160;</td>
+          <td class="paramname"><em>request_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="structsmlp_1_1SimpleHTTPServer_1_1clientInfo.html">clientInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>client_info</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -705,6 +715,7 @@ false if server not started </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">request_buffer</td><td></td></tr>
+    <tr><td class="paramname">client_info</td><td></td></tr>
   </table>
   </dd>
 </dl>
