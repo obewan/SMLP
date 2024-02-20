@@ -78,14 +78,25 @@ $(function() {
  <a href="classsmlp_1_1DataFileParser.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DataFileParser_8h_source.html">DataFileParser.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for smlp::DataFileParser:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classsmlp_1_1DataFileParser.png" usemap="#smlp::DataFileParser_map" alt=""/>
+  <map id="smlp::DataFileParser_map" name="smlp::DataFileParser_map">
+<area href="classsmlp_1_1DataParser.html" alt="smlp::DataParser" shape="rect" coords="0,0,128,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1ce171a8f11826246881d1c60f21ac69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a1ce171a8f11826246881d1c60f21ac69">DataFileParser</a> ()=default</td></tr>
-<tr class="memdesc:a1ce171a8f11826246881d1c60f21ac69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classsmlp_1_1DataFileParser.html#a1ce171a8f11826246881d1c60f21ac69">More...</a><br /></td></tr>
-<tr class="separator:a1ce171a8f11826246881d1c60f21ac69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9e0be65c74ef404744a5bcb4f603bfd"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#af9e0be65c74ef404744a5bcb4f603bfd">~DataFileParser</a> ()</td></tr>
-<tr class="separator:af9e0be65c74ef404744a5bcb4f603bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d9a45ead8b1a6e4515f971c49f7b22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a67d9a45ead8b1a6e4515f971c49f7b22">DataFileParser</a> ()</td></tr>
+<tr class="separator:a67d9a45ead8b1a6e4515f971c49f7b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19b39db468522d87df3b523371f0d693"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a19b39db468522d87df3b523371f0d693">~DataFileParser</a> () override</td></tr>
+<tr class="separator:a19b39db468522d87df3b523371f0d693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039f05717356176ca57ef30344eb0a61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1RecordResult.html">RecordResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a039f05717356176ca57ef30344eb0a61">processLine</a> (const std::string &amp;line=&quot;&quot;, bool isTesting=false) override</td></tr>
+<tr class="memdesc:a039f05717356176ca57ef30344eb0a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a line returns a <a class="el" href="structsmlp_1_1RecordResult.html" title="Results of a parsed record.">RecordResult</a>. This method can be used for both testing and training data.  <a href="classsmlp_1_1DataFileParser.html#a039f05717356176ca57ef30344eb0a61">More...</a><br /></td></tr>
+<tr class="separator:a039f05717356176ca57ef30344eb0a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf306c586686b3b8d4e8196a68e3bba5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#aaf306c586686b3b8d4e8196a68e3bba5">openFile</a> ()</td></tr>
 <tr class="memdesc:aaf306c586686b3b8d4e8196a68e3bba5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the file.  <a href="classsmlp_1_1DataFileParser.html#aaf306c586686b3b8d4e8196a68e3bba5">More...</a><br /></td></tr>
 <tr class="separator:aaf306c586686b3b8d4e8196a68e3bba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -101,49 +112,54 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a35f73e987bf29d863829c15edceb911e"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a35f73e987bf29d863829c15edceb911e">countLine</a> ()</td></tr>
 <tr class="memdesc:a35f73e987bf29d863829c15edceb911e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the total number of lines in the file.  <a href="classsmlp_1_1DataFileParser.html#a35f73e987bf29d863829c15edceb911e">More...</a><br /></td></tr>
 <tr class="separator:a35f73e987bf29d863829c15edceb911e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94c822b67dc4f47ebc6e8733196493b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a94c822b67dc4f47ebc6e8733196493b9">processLine</a> (const std::string &amp;line=&quot;&quot;, bool isTesting=false)</td></tr>
-<tr class="memdesc:a94c822b67dc4f47ebc6e8733196493b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a line from the file and returns a <a class="el" href="structsmlp_1_1RecordResult.html" title="Results of a parsed record.">RecordResult</a>. This method can be used for both testing and training data.  <a href="classsmlp_1_1DataFileParser.html#a94c822b67dc4f47ebc6e8733196493b9">More...</a><br /></td></tr>
-<tr class="separator:a94c822b67dc4f47ebc6e8733196493b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adec46fe74414faf82a0767c2535598bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Record.html">smlp::Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#adec46fe74414faf82a0767c2535598bc">processInputOnly</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size) const</td></tr>
-<tr class="memdesc:adec46fe74414faf82a0767c2535598bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with input only.  <a href="classsmlp_1_1DataFileParser.html#adec46fe74414faf82a0767c2535598bc">More...</a><br /></td></tr>
-<tr class="separator:adec46fe74414faf82a0767c2535598bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d171ff80021a35f3781bd406d52c25e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Record.html">smlp::Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a7d171ff80021a35f3781bd406d52c25e">processInputFirst</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size, size_t output_size) const</td></tr>
-<tr class="memdesc:a7d171ff80021a35f3781bd406d52c25e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with input first. This method is used when the input values are located before the output values in a record.  <a href="classsmlp_1_1DataFileParser.html#a7d171ff80021a35f3781bd406d52c25e">More...</a><br /></td></tr>
-<tr class="separator:a7d171ff80021a35f3781bd406d52c25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522591855fa6fb8128b593a66c95959e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Record.html">smlp::Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a522591855fa6fb8128b593a66c95959e">processOutputFirst</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size, size_t output_size) const</td></tr>
-<tr class="memdesc:a522591855fa6fb8128b593a66c95959e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with output first. This method is used when the output values are located before the input values in a record.  <a href="classsmlp_1_1DataFileParser.html#a522591855fa6fb8128b593a66c95959e">More...</a><br /></td></tr>
-<tr class="separator:a522591855fa6fb8128b593a66c95959e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a217518dab1dcb4cb492164f49b4004f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a217518dab1dcb4cb492164f49b4004f8">getNextLine</a> (std::string &amp;line, bool isTesting)</td></tr>
 <tr class="separator:a217518dab1dcb4cb492164f49b4004f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab18cc9bd32946f48f755ccb736d5eb54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#ab18cc9bd32946f48f755ccb736d5eb54">parseLine</a> (const std::string &amp;line, std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
-<tr class="separator:ab18cc9bd32946f48f755ccb736d5eb54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36b194281fbf831e8f8f4bb6fd71fbe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a36b194281fbf831e8f8f4bb6fd71fbe0">validateColumns</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
-<tr class="separator:a36b194281fbf831e8f8f4bb6fd71fbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89b2ff5678ad8f224f5be28bf1ec6e20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Record.html">smlp::Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a89b2ff5678ad8f224f5be28bf1ec6e20">processColumns</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
-<tr class="separator:a89b2ff5678ad8f224f5be28bf1ec6e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classsmlp_1_1DataParser"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classsmlp_1_1DataParser')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classsmlp_1_1DataParser.html">smlp::DataParser</a></td></tr>
+<tr class="memitem:a9e489b7eeb6de19d3351d651f87360cc inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a9e489b7eeb6de19d3351d651f87360cc">DataParser</a> (<a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6">DataParserType</a> data_type=DataParserType::DataParser)</td></tr>
+<tr class="separator:a9e489b7eeb6de19d3351d651f87360cc inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ad58da9b43e38a4dbbb73214cf19ea7 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a7ad58da9b43e38a4dbbb73214cf19ea7">~DataParser</a> ()=default</td></tr>
+<tr class="separator:a7ad58da9b43e38a4dbbb73214cf19ea7 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c96f450565fab5b465aad3f7a7d75e3 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Record.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a2c96f450565fab5b465aad3f7a7d75e3">processInputOnly</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size) const</td></tr>
+<tr class="memdesc:a2c96f450565fab5b465aad3f7a7d75e3 inherit pub_methods_classsmlp_1_1DataParser"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with input only.  <a href="classsmlp_1_1DataParser.html#a2c96f450565fab5b465aad3f7a7d75e3">More...</a><br /></td></tr>
+<tr class="separator:a2c96f450565fab5b465aad3f7a7d75e3 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d2efcb81ea79a5588f3d4ab1279aba9 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Record.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a2d2efcb81ea79a5588f3d4ab1279aba9">processInputFirst</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size, size_t output_size) const</td></tr>
+<tr class="memdesc:a2d2efcb81ea79a5588f3d4ab1279aba9 inherit pub_methods_classsmlp_1_1DataParser"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with input first. This method is used when the input values are located before the output values in a record.  <a href="classsmlp_1_1DataParser.html#a2d2efcb81ea79a5588f3d4ab1279aba9">More...</a><br /></td></tr>
+<tr class="separator:a2d2efcb81ea79a5588f3d4ab1279aba9 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a586053896a71c4b9d5ef25d26c30cf25 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Record.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a586053896a71c4b9d5ef25d26c30cf25">processOutputFirst</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs, size_t input_size, size_t output_size) const</td></tr>
+<tr class="memdesc:a586053896a71c4b9d5ef25d26c30cf25 inherit pub_methods_classsmlp_1_1DataParser"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processes a record with output first. This method is used when the output values are located before the input values in a record.  <a href="classsmlp_1_1DataParser.html#a586053896a71c4b9d5ef25d26c30cf25">More...</a><br /></td></tr>
+<tr class="separator:a586053896a71c4b9d5ef25d26c30cf25 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321ba9e3fa5fecf45001c2455ac84931 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a321ba9e3fa5fecf45001c2455ac84931">parseLine</a> (const std::string &amp;line, std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
+<tr class="separator:a321ba9e3fa5fecf45001c2455ac84931 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ab41c6f364d6b9d559be627e77ecc7f inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a9ab41c6f364d6b9d559be627e77ecc7f">validateColumns</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
+<tr class="separator:a9ab41c6f364d6b9d559be627e77ecc7f inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30733b6e859ca90767c3c6eb987acbb3 inherit pub_methods_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Record.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a30733b6e859ca90767c3c6eb987acbb3">processColumns</a> (const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;cell_refs) const</td></tr>
+<tr class="separator:a30733b6e859ca90767c3c6eb987acbb3 inherit pub_methods_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae219aafe889bb0fb9a4abae29c8f7918"><td class="memItemLeft" align="right" valign="top">std::ifstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#ae219aafe889bb0fb9a4abae29c8f7918">file</a></td></tr>
 <tr class="separator:ae219aafe889bb0fb9a4abae29c8f7918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cfe78e1d6f82066cf9b6059c2d7494f"><td class="memItemLeft" align="right" valign="top">Csv::Parser&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a9cfe78e1d6f82066cf9b6059c2d7494f">csv_parser</a></td></tr>
-<tr class="separator:a9cfe78e1d6f82066cf9b6059c2d7494f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8724f780a2c65909bf3d13f5f28776c2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a8724f780a2c65909bf3d13f5f28776c2">current_line_number</a> = 0</td></tr>
-<tr class="separator:a8724f780a2c65909bf3d13f5f28776c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa03a5842cbf601483361175808908f36"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#aa03a5842cbf601483361175808908f36">total_lines</a> = 0</td></tr>
-<tr class="separator:aa03a5842cbf601483361175808908f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1ecd694ced67c6be2d9557af8924271"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#ad1ecd694ced67c6be2d9557af8924271">training_ratio_line</a> = 0</td></tr>
-<tr class="separator:ad1ecd694ced67c6be2d9557af8924271"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59712bcbb8d1ed172b95ef2e3bcb287a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a59712bcbb8d1ed172b95ef2e3bcb287a">isTrainingRatioLineProcessed</a> = false</td></tr>
-<tr class="separator:a59712bcbb8d1ed172b95ef2e3bcb287a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7089a67b49872702174fed21c03b9e08"><td class="memItemLeft" align="right" valign="top">std::function&lt; float(const std::vector&lt; Csv::CellReference &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html#a7089a67b49872702174fed21c03b9e08">getFloatValue</a></td></tr>
-<tr class="separator:a7089a67b49872702174fed21c03b9e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classsmlp_1_1DataParser"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classsmlp_1_1DataParser')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classsmlp_1_1DataParser.html">smlp::DataParser</a></td></tr>
+<tr class="memitem:a62be8479e246cc48291f2d753cde6ed4 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6">DataParserType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a62be8479e246cc48291f2d753cde6ed4">dataType</a></td></tr>
+<tr class="separator:a62be8479e246cc48291f2d753cde6ed4 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a549bdd8c344f7f29842d002f817acc inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">Csv::Parser&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a8a549bdd8c344f7f29842d002f817acc">csv_parser</a></td></tr>
+<tr class="separator:a8a549bdd8c344f7f29842d002f817acc inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa27a83d1c22745666f7c42fcf3fb83af inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#aa27a83d1c22745666f7c42fcf3fb83af">current_line_number</a> = 0</td></tr>
+<tr class="separator:aa27a83d1c22745666f7c42fcf3fb83af inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9fa9c64ace30ab1b335e4760c965344 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#af9fa9c64ace30ab1b335e4760c965344">total_lines</a> = 0</td></tr>
+<tr class="separator:af9fa9c64ace30ab1b335e4760c965344 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6283d79e60d7a2046f078224811af551 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a6283d79e60d7a2046f078224811af551">training_ratio_line</a> = 0</td></tr>
+<tr class="separator:a6283d79e60d7a2046f078224811af551 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037265fe2b83ca0634966a2e7b571a1b inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#a037265fe2b83ca0634966a2e7b571a1b">isTrainingRatioLineProcessed</a> = false</td></tr>
+<tr class="separator:a037265fe2b83ca0634966a2e7b571a1b inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb2d73b2ec9764ed61cd99a798798097 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memItemLeft" align="right" valign="top">std::function&lt; float(const std::vector&lt; Csv::CellReference &gt; &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html#afb2d73b2ec9764ed61cd99a798798097">getFloatValue</a></td></tr>
+<tr class="separator:afb2d73b2ec9764ed61cd99a798798097 inherit pub_attribs_classsmlp_1_1DataParser"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The FileParser class is responsible for parsing a file. It contains methods for opening, closing, and resetting the file position, as well as methods for processing lines and counting lines. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1ce171a8f11826246881d1c60f21ac69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ce171a8f11826246881d1c60f21ac69">&#9670;&nbsp;</a></span>DataFileParser()</h2>
+<a id="a67d9a45ead8b1a6e4515f971c49f7b22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67d9a45ead8b1a6e4515f971c49f7b22">&#9670;&nbsp;</a></span>DataFileParser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -160,17 +176,15 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor. </p>
-
 </div>
 </div>
-<a id="af9e0be65c74ef404744a5bcb4f603bfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9e0be65c74ef404744a5bcb4f603bfd">&#9670;&nbsp;</a></span>~DataFileParser()</h2>
+<a id="a19b39db468522d87df3b523371f0d693"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19b39db468522d87df3b523371f0d693">&#9670;&nbsp;</a></span>~DataFileParser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +201,7 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -323,140 +337,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab18cc9bd32946f48f755ccb736d5eb54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab18cc9bd32946f48f755ccb736d5eb54">&#9670;&nbsp;</a></span>parseLine()</h2>
+<a id="a039f05717356176ca57ef30344eb0a61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a039f05717356176ca57ef30344eb0a61">&#9670;&nbsp;</a></span>processLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DataFileParser::parseLine </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a89b2ff5678ad8f224f5be28bf1ec6e20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89b2ff5678ad8f224f5be28bf1ec6e20">&#9670;&nbsp;</a></span>processColumns()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Record.html">Record</a> DataFileParser::processColumns </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7d171ff80021a35f3781bd406d52c25e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d171ff80021a35f3781bd406d52c25e">&#9670;&nbsp;</a></span>processInputFirst()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Record.html">Record</a> DataFileParser::processInputFirst </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>input_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>output_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Processes a record with input first. This method is used when the input values are located before the output values in a record. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cell_refs</td><td>A 2D vector containing Csv::CellReference objects for each cell in the record. </td></tr>
-    <tr><td class="paramname">input_size</td><td>The size of the input data in the record. </td></tr>
-    <tr><td class="paramname">output_size</td><td>The size of the output data in the record. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structsmlp_1_1Record.html" title="Record of inputs vector and outputs vector.">Record</a> containing the processed data from the record. </dd></dl>
-
-</div>
-</div>
-<a id="adec46fe74414faf82a0767c2535598bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adec46fe74414faf82a0767c2535598bc">&#9670;&nbsp;</a></span>processInputOnly()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Record.html">Record</a> DataFileParser::processInputOnly </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>input_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Processes a record with input only. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cell_refs</td><td>A 2D vector containing Csv::CellReference objects for each cell in the record. </td></tr>
-    <tr><td class="paramname">input_size</td><td>The size of the input data in the record. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structsmlp_1_1Record.html" title="Record of inputs vector and outputs vector.">Record</a> containing the processed data from the record. </dd></dl>
-
-</div>
-</div>
-<a id="a94c822b67dc4f47ebc6e8733196493b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94c822b67dc4f47ebc6e8733196493b9">&#9670;&nbsp;</a></span>processLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structsmlp_1_1RecordResult.html">RecordResult</a> DataFileParser::processLine </td>
@@ -476,62 +364,24 @@ Public Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Processes a line from the file and returns a <a class="el" href="structsmlp_1_1RecordResult.html" title="Results of a parsed record.">RecordResult</a>. This method can be used for both testing and training data. </p>
+<p>Processes a line returns a <a class="el" href="structsmlp_1_1RecordResult.html" title="Results of a parsed record.">RecordResult</a>. This method can be used for both testing and training data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">line</td><td>if not empty it will use this line to process, else it will process the next line of the fileparser. </td></tr>
+    <tr><td class="paramname">line</td><td>the raw line to process or the next line if empty </td></tr>
     <tr><td class="paramname">isTesting</td><td>testing flag to skip some training data </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structsmlp_1_1RecordResult.html" title="Results of a parsed record.">RecordResult</a> containing the processed data from the line. </dd></dl>
 
-</div>
-</div>
-<a id="a522591855fa6fb8128b593a66c95959e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a522591855fa6fb8128b593a66c95959e">&#9670;&nbsp;</a></span>processOutputFirst()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Record.html">Record</a> DataFileParser::processOutputFirst </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>input_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>output_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Processes a record with output first. This method is used when the output values are located before the input values in a record. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cell_refs</td><td>A 2D vector containing Csv::CellReference objects for each cell in the record. </td></tr>
-    <tr><td class="paramname">input_size</td><td>The size of the input data in the record. </td></tr>
-    <tr><td class="paramname">output_size</td><td>The size of the output data in the record. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structsmlp_1_1Record.html" title="Record of inputs vector and outputs vector.">Record</a> containing the processed data from the record. </dd></dl>
+<p>Reimplemented from <a class="el" href="classsmlp_1_1DataParser.html#a3254dc1e7bd79e50638440a933ceafb3">smlp::DataParser</a>.</p>
 
 </div>
 </div>
@@ -554,53 +404,7 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a36b194281fbf831e8f8f4bb6fd71fbe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36b194281fbf831e8f8f4bb6fd71fbe0">&#9670;&nbsp;</a></span>validateColumns()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DataFileParser::validateColumns </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::vector&lt; Csv::CellReference &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>cell_refs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9cfe78e1d6f82066cf9b6059c2d7494f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cfe78e1d6f82066cf9b6059c2d7494f">&#9670;&nbsp;</a></span>csv_parser</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Csv::Parser smlp::DataFileParser::csv_parser</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8724f780a2c65909bf3d13f5f28776c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8724f780a2c65909bf3d13f5f28776c2">&#9670;&nbsp;</a></span>current_line_number</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t smlp::DataFileParser::current_line_number = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae219aafe889bb0fb9a4abae29c8f7918"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae219aafe889bb0fb9a4abae29c8f7918">&#9670;&nbsp;</a></span>file</h2>
 
@@ -609,66 +413,6 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">std::ifstream smlp::DataFileParser::file</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7089a67b49872702174fed21c03b9e08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7089a67b49872702174fed21c03b9e08">&#9670;&nbsp;</a></span>getFloatValue</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::function&lt;float(const std::vector&lt;Csv::CellReference&gt; &amp;)&gt; smlp::DataFileParser::getFloatValue</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">      [](<span class="keyword">const</span> std::vector&lt;Csv::CellReference&gt; &amp;cells) {</div>
-<div class="line">        <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)cells[0].getDouble().value();</div>
-<div class="line">      }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a59712bcbb8d1ed172b95ef2e3bcb287a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59712bcbb8d1ed172b95ef2e3bcb287a">&#9670;&nbsp;</a></span>isTrainingRatioLineProcessed</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool smlp::DataFileParser::isTrainingRatioLineProcessed = false</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa03a5842cbf601483361175808908f36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa03a5842cbf601483361175808908f36">&#9670;&nbsp;</a></span>total_lines</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t smlp::DataFileParser::total_lines = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad1ecd694ced67c6be2d9557af8924271"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1ecd694ced67c6be2d9557af8924271">&#9670;&nbsp;</a></span>training_ratio_line</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t smlp::DataFileParser::training_ratio_line = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,13 +1,15 @@
 var searchData=
 [
-  ['simpleconfig_510',['SimpleConfig',['../classsmlp_1_1SimpleConfig.html',1,'smlp']]],
-  ['simpleconfigexception_511',['SimpleConfigException',['../classsmlp_1_1SimpleConfigException.html',1,'smlp']]],
-  ['simplehttpserver_512',['SimpleHTTPServer',['../classsmlp_1_1SimpleHTTPServer.html',1,'smlp']]],
-  ['simplelang_513',['SimpleLang',['../classsmlp_1_1SimpleLang.html',1,'smlp']]],
-  ['simplelangexception_514',['SimpleLangException',['../classsmlp_1_1SimpleLangException.html',1,'smlp']]],
-  ['simplelogger_515',['SimpleLogger',['../classsmlp_1_1SimpleLogger.html',1,'smlp']]],
-  ['simplemlp_516',['SimpleMLP',['../classSimpleMLP.html',1,'']]],
-  ['simpletcpexception_517',['SimpleTCPException',['../classsmlp_1_1SimpleTCPException.html',1,'smlp']]],
-  ['smlpexception_518',['SmlpException',['../classsmlp_1_1SmlpException.html',1,'smlp']]],
-  ['stat_519',['Stat',['../structsmlp_1_1TestingResult_1_1Stat.html',1,'smlp::TestingResult']]]
+  ['testing_527',['Testing',['../classsmlp_1_1Testing.html',1,'smlp']]],
+  ['testingexception_528',['TestingException',['../classsmlp_1_1TestingException.html',1,'smlp']]],
+  ['testingfile_529',['TestingFile',['../classsmlp_1_1TestingFile.html',1,'smlp']]],
+  ['testingresult_530',['TestingResult',['../classsmlp_1_1TestingResult.html',1,'smlp']]],
+  ['testingsocket_531',['TestingSocket',['../classsmlp_1_1TestingSocket.html',1,'smlp']]],
+  ['testingstdin_532',['TestingStdin',['../classsmlp_1_1TestingStdin.html',1,'smlp']]],
+  ['testresults_533',['TestResults',['../structsmlp_1_1TestingResult_1_1TestResults.html',1,'smlp::TestingResult']]],
+  ['training_534',['Training',['../classsmlp_1_1Training.html',1,'smlp']]],
+  ['trainingexception_535',['TrainingException',['../classsmlp_1_1TrainingException.html',1,'smlp']]],
+  ['trainingfile_536',['TrainingFile',['../classsmlp_1_1TrainingFile.html',1,'smlp']]],
+  ['trainingsocket_537',['TrainingSocket',['../classsmlp_1_1TrainingSocket.html',1,'smlp']]],
+  ['trainingstdin_538',['TrainingStdin',['../classsmlp_1_1TrainingStdin.html',1,'smlp']]]
 ];

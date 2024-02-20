@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SMLP: /home/runner/work/SMLP/SMLP/libs/libsmlp/include/exception/FileParserException.h Source File</title>
+<title>SMLP: /home/runner/work/SMLP/SMLP/libs/libsmlp/include/exception/DataParserException.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,28 +66,28 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">FileParserException.h</div>  </div>
+<div class="title">DataParserException.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="FileParserException_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<a href="DataParserException_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesmlp.html">smlp</a> {</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classsmlp_1_1FileParserException.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsmlp_1_1FileParserException.html">FileParserException</a> : <span class="keyword">public</span> std::exception {</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classsmlp_1_1DataParserException.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classsmlp_1_1DataParserException.html">DataParserException</a> : <span class="keyword">public</span> std::exception {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classsmlp_1_1FileParserException.html#a564835fd24e70468307309d541f508b1">   13</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classsmlp_1_1FileParserException.html#a564835fd24e70468307309d541f508b1">FileParserException</a>(<span class="keyword">const</span> std::string &amp;message)</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classsmlp_1_1DataParserException.html#aae9bdeb88c251ec0eb822fa5caf61ef1">   13</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classsmlp_1_1DataParserException.html#aae9bdeb88c251ec0eb822fa5caf61ef1">DataParserException</a>(<span class="keyword">const</span> std::string &amp;message)</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;      : message_(message) {}</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classsmlp_1_1FileParserException.html#ab5501d8e1e4e4693037f49d32e096d7b">   15</a></span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classsmlp_1_1FileParserException.html#ab5501d8e1e4e4693037f49d32e096d7b">what</a>() const noexcept<span class="keyword"> override </span>{ <span class="keywordflow">return</span> message_.c_str(); }</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classsmlp_1_1DataParserException.html#a67e4c5676131370f445b398d75840c21">   15</a></span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classsmlp_1_1DataParserException.html#a67e4c5676131370f445b398d75840c21">what</a>() const noexcept<span class="keyword"> override </span>{ <span class="keywordflow">return</span> message_.c_str(); }</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  std::string message_;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;};</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;} <span class="comment">// namespace smlp</span></div>
-<div class="ttc" id="aclasssmlp_1_1FileParserException_html"><div class="ttname"><a href="classsmlp_1_1FileParserException.html">smlp::FileParserException</a></div><div class="ttdoc">A custom exception class that inherits from std::exception. This class is thrown when there are issue...</div><div class="ttdef"><b>Definition:</b> FileParserException.h:11</div></div>
-<div class="ttc" id="aclasssmlp_1_1FileParserException_html_a564835fd24e70468307309d541f508b1"><div class="ttname"><a href="classsmlp_1_1FileParserException.html#a564835fd24e70468307309d541f508b1">smlp::FileParserException::FileParserException</a></div><div class="ttdeci">FileParserException(const std::string &amp;message)</div><div class="ttdef"><b>Definition:</b> FileParserException.h:13</div></div>
-<div class="ttc" id="aclasssmlp_1_1FileParserException_html_ab5501d8e1e4e4693037f49d32e096d7b"><div class="ttname"><a href="classsmlp_1_1FileParserException.html#ab5501d8e1e4e4693037f49d32e096d7b">smlp::FileParserException::what</a></div><div class="ttdeci">const char * what() const noexcept override</div><div class="ttdef"><b>Definition:</b> FileParserException.h:15</div></div>
+<div class="ttc" id="aclasssmlp_1_1DataParserException_html"><div class="ttname"><a href="classsmlp_1_1DataParserException.html">smlp::DataParserException</a></div><div class="ttdoc">A custom exception class that inherits from std::exception. This class is thrown when there are issue...</div><div class="ttdef"><b>Definition:</b> DataParserException.h:11</div></div>
+<div class="ttc" id="aclasssmlp_1_1DataParserException_html_a67e4c5676131370f445b398d75840c21"><div class="ttname"><a href="classsmlp_1_1DataParserException.html#a67e4c5676131370f445b398d75840c21">smlp::DataParserException::what</a></div><div class="ttdeci">const char * what() const noexcept override</div><div class="ttdef"><b>Definition:</b> DataParserException.h:15</div></div>
+<div class="ttc" id="aclasssmlp_1_1DataParserException_html_aae9bdeb88c251ec0eb822fa5caf61ef1"><div class="ttname"><a href="classsmlp_1_1DataParserException.html#aae9bdeb88c251ec0eb822fa5caf61ef1">smlp::DataParserException::DataParserException</a></div><div class="ttdeci">DataParserException(const std::string &amp;message)</div><div class="ttdef"><b>Definition:</b> DataParserException.h:13</div></div>
 <div class="ttc" id="anamespacesmlp_html"><div class="ttname"><a href="namespacesmlp.html">smlp</a></div><div class="ttdef"><b>Definition:</b> ActivationFunctions.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -94,8 +94,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FileParser class is responsible for parsing a file. It contains methods for opening, closing, and resetting the file position, as well as methods for processing lines and counting lines.  <a href="classsmlp_1_1DataFileParser.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1FileParserException.html">FileParserException</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with file parsing operations.  <a href="classsmlp_1_1FileParserException.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html">DataParser</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParserException.html">DataParserException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with file parsing operations.  <a href="classsmlp_1_1DataParserException.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1ImportExportException.html">ImportExportException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during ImportExportJSON.  <a href="classsmlp_1_1ImportExportException.html#details">More...</a><br /></td></tr>
@@ -236,6 +238,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996a9deb5a6d2fd3a6cfb3f626f0bcbda121">UnknownKey</a>
 <br />
  }</td></tr>
+<tr class="memdesc:ae276673b372124cf32f0523f0c79e996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Errors types.  <a href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">More...</a><br /></td></tr>
 <tr class="separator:ae276673b372124cf32f0523f0c79e996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cdcf39c3bf916802482327b07c5a35f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a> { <br />
 &#160;&#160;<a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35fa3899667ffcc9dd325028d2a5d9cbe706">StdinDisabled</a>
@@ -311,6 +314,10 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ac7332cebc522f07212b0f415b2f4452a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common HTTP code and common Unix code.  <a href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">More...</a><br /></td></tr>
 <tr class="separator:ac7332cebc522f07212b0f415b2f4452a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcd0cca2d73081b179a67d8c63f2f0e6"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6">DataParserType</a> { <a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6a87816d8336c942fd7b0c9f634efad85e">DataParser</a>
+, <a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6a8390f612c6a16d0d1590e555daad7780">DataFileParser</a>
+ }</td></tr>
+<tr class="separator:afcd0cca2d73081b179a67d8c63f2f0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a157e446fdf3733b88ae1f7be215c4e8e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a> { <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8eae19b8d69e381495ab2dcfad0f947c5de">InputLayer</a>
 , <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8ea1462c81ba3769d8f4a5a20fcf19af10d">HiddenLayer</a>
 , <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8ea500cef5499f984f348ea5eabd57ee667">OutputLayer</a>
@@ -392,8 +399,10 @@ Variables</h2></td></tr>
 <tr class="memitem:a47e24ba887acbadf99fa3dd66a3d2d42"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a47e24ba887acbadf99fa3dd66a3d2d42">eluDerivative</a></td></tr>
 <tr class="separator:a47e24ba887acbadf99fa3dd66a3d2d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2601894b23e5d122cfe143a20da2e25e"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2601894b23e5d122cfe143a20da2e25e">errorMessages</a></td></tr>
+<tr class="memdesc:a2601894b23e5d122cfe143a20da2e25e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Errors messages.  <a href="namespacesmlp.html#a2601894b23e5d122cfe143a20da2e25e">More...</a><br /></td></tr>
 <tr class="separator:a2601894b23e5d122cfe143a20da2e25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa051f2c978df1804e0b5cdd1771b6951"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#ae276673b372124cf32f0523f0c79e996">Error</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#aa051f2c978df1804e0b5cdd1771b6951">defaultErrorMessages</a></td></tr>
+<tr class="memdesc:aa051f2c978df1804e0b5cdd1771b6951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Errors default messages.  <a href="namespacesmlp.html#aa051f2c978df1804e0b5cdd1771b6951">More...</a><br /></td></tr>
 <tr class="separator:aa051f2c978df1804e0b5cdd1771b6951"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6858cf44a0ffbd7b04933d26fd800288"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#a2cdcf39c3bf916802482327b07c5a35f">Message</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a6858cf44a0ffbd7b04933d26fd800288">messages</a></td></tr>
 <tr class="separator:a6858cf44a0ffbd7b04933d26fd800288"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -407,8 +416,6 @@ Variables</h2></td></tr>
 <tr class="separator:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460f274a49feb5ded7f7283bdb592803"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a460f274a49feb5ded7f7283bdb592803">layer_map</a></td></tr>
 <tr class="separator:a460f274a49feb5ded7f7283bdb592803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4225fb7211b950130580dff343680fad"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">TestingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a4225fb7211b950130580dff343680fad">testing_map</a></td></tr>
-<tr class="separator:a4225fb7211b950130580dff343680fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ae5c5dae7a129816e6b23566bd80348"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a8ae5c5dae7a129816e6b23566bd80348">training_map</a></td></tr>
 <tr class="separator:a8ae5c5dae7a129816e6b23566bd80348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -436,6 +443,32 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="afcd0cca2d73081b179a67d8c63f2f0e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcd0cca2d73081b179a67d8c63f2f0e6">&#9670;&nbsp;</a></span>DataParserType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacesmlp.html#afcd0cca2d73081b179a67d8c63f2f0e6">smlp::DataParserType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afcd0cca2d73081b179a67d8c63f2f0e6a87816d8336c942fd7b0c9f634efad85e"></a>DataParser&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="afcd0cca2d73081b179a67d8c63f2f0e6a8390f612c6a16d0d1590e555daad7780"></a>DataFileParser&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a617d1df3ad765255a44cfbe9ff033fd7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a617d1df3ad765255a44cfbe9ff033fd7">&#9670;&nbsp;</a></span>EActivationFunction</h2>
 
@@ -569,6 +602,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Errors types. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996a181ac97466ad89aa6427438a736ce542"></a>ConfigFileNotFound&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ae276673b372124cf32f0523f0c79e996aeb10d4152ed5803ed0da0f6c88045098"></a>CSVParsingError&#160;</td><td class="fielddoc"></td></tr>
@@ -1126,6 +1161,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Errors default messages. </p>
+
 </div>
 </div>
 <a id="a8c09cf01b1801ea91ddbf05da71eac36"></a>
@@ -1212,6 +1249,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Errors messages. </p>
 
 </div>
 </div>
@@ -1542,24 +1581,6 @@ Variables</h2></td></tr>
 
 <p>Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the input to a range between -1 and 1. It is often used in the hidden layers of a neural network. </p>
 
-</div>
-</div>
-<a id="a4225fb7211b950130580dff343680fad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4225fb7211b950130580dff343680fad">&#9670;&nbsp;</a></span>testing_map</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a875a22e785cb471fefba161c8646ad8b">TestingType</a>, std::less&lt;&gt; &gt; smlp::testing_map</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    {<span class="stringliteral">&quot;TestingFile&quot;</span>, TestingType::TestingFile},</div>
-<div class="line">    {<span class="stringliteral">&quot;TestingSocket&quot;</span>, TestingType::TestingSocket},</div>
-<div class="line">    {<span class="stringliteral">&quot;TestingStdin&quot;</span>, TestingType::TestingStdin}}</div>
-</div><!-- fragment -->
 </div>
 </div>
 <a id="a8ae5c5dae7a129816e6b23566bd80348"></a>

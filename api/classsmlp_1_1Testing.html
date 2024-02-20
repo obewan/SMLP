@@ -105,16 +105,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8224434b2629aa5609a72efce96eae97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a8224434b2629aa5609a72efce96eae97">createFileParser</a> ()</td></tr>
 <tr class="memdesc:a8224434b2629aa5609a72efce96eae97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a File Parser object.  <a href="classsmlp_1_1Testing.html#a8224434b2629aa5609a72efce96eae97">More...</a><br /></td></tr>
 <tr class="separator:a8224434b2629aa5609a72efce96eae97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52416504a84d8ec8168e3616b289091d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a52416504a84d8ec8168e3616b289091d">setFileParser</a> (std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt; fileparser)</td></tr>
-<tr class="memdesc:a52416504a84d8ec8168e3616b289091d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the file parser for testing data.  <a href="classsmlp_1_1Testing.html#a52416504a84d8ec8168e3616b289091d">More...</a><br /></td></tr>
-<tr class="separator:a52416504a84d8ec8168e3616b289091d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad438ddc27f82653ee7430d1729a4cef5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#ad438ddc27f82653ee7430d1729a4cef5">getFileParser</a> () const</td></tr>
-<tr class="memdesc:ad438ddc27f82653ee7430d1729a4cef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the file parser used for testing data.  <a href="classsmlp_1_1Testing.html#ad438ddc27f82653ee7430d1729a4cef5">More...</a><br /></td></tr>
-<tr class="separator:ad438ddc27f82653ee7430d1729a4cef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4331eb48d69767750ef1cfa7fc37a08a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a4331eb48d69767750ef1cfa7fc37a08a">setDataParser</a> (std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataParser.html">DataParser</a> &gt; dataparser)</td></tr>
+<tr class="memdesc:a4331eb48d69767750ef1cfa7fc37a08a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data parser for testing data.  <a href="classsmlp_1_1Testing.html#a4331eb48d69767750ef1cfa7fc37a08a">More...</a><br /></td></tr>
+<tr class="separator:a4331eb48d69767750ef1cfa7fc37a08a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30a038854dc7bab0255b1109dfabdb08"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataParser.html">DataParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a30a038854dc7bab0255b1109dfabdb08">getDataParser</a> () const</td></tr>
+<tr class="memdesc:a30a038854dc7bab0255b1109dfabdb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data parser used for testing data.  <a href="classsmlp_1_1Testing.html#a30a038854dc7bab0255b1109dfabdb08">More...</a><br /></td></tr>
+<tr class="separator:a30a038854dc7bab0255b1109dfabdb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46b631f84980e4d3acd5304b4d6aadf5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1TestingResult.html">TestingResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a46b631f84980e4d3acd5304b4d6aadf5">getTestingResults</a> () const</td></tr>
 <tr class="separator:a46b631f84980e4d3acd5304b4d6aadf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64c23189594c96d6f7ce9a4e5cc4c9be"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a64c23189594c96d6f7ce9a4e5cc4c9be">testingTypeStr</a> () const</td></tr>
-<tr class="separator:a64c23189594c96d6f7ce9a4e5cc4c9be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -128,8 +126,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a39942056da89d3e29ff6abe4aa4f0ea9"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#a39942056da89d3e29ff6abe4aa4f0ea9">fileParser_</a> = nullptr</td></tr>
-<tr class="separator:a39942056da89d3e29ff6abe4aa4f0ea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa6dd112d5ed4ef10a3bbdea595a10a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataParser.html">DataParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#aeaa6dd112d5ed4ef10a3bbdea595a10a">dataParser_</a> = nullptr</td></tr>
+<tr class="separator:aeaa6dd112d5ed4ef10a3bbdea595a10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8028cd10d1e7996861c644c3fd6a506"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1TestingResult.html">TestingResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Testing.html#ac8028cd10d1e7996861c644c3fd6a506">testingResults_</a> = nullptr</td></tr>
 <tr class="separator:ac8028cd10d1e7996861c644c3fd6a506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -217,8 +215,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad438ddc27f82653ee7430d1729a4cef5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad438ddc27f82653ee7430d1729a4cef5">&#9670;&nbsp;</a></span>getFileParser()</h2>
+<a id="a30a038854dc7bab0255b1109dfabdb08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30a038854dc7bab0255b1109dfabdb08">&#9670;&nbsp;</a></span>getDataParser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,7 +225,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a>&gt; smlp::Testing::getFileParser </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1DataParser.html">DataParser</a>&gt; smlp::Testing::getDataParser </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -240,8 +238,8 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the file parser used for testing data. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the file parser. </dd></dl>
+<p>Gets the data parser used for testing data. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the data parser. </dd></dl>
 
 </div>
 </div>
@@ -270,8 +268,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a52416504a84d8ec8168e3616b289091d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52416504a84d8ec8168e3616b289091d">&#9670;&nbsp;</a></span>setFileParser()</h2>
+<a id="a4331eb48d69767750ef1cfa7fc37a08a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4331eb48d69767750ef1cfa7fc37a08a">&#9670;&nbsp;</a></span>setDataParser()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,10 +278,10 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Testing::setFileParser </td>
+          <td class="memname">void smlp::Testing::setDataParser </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td>
-          <td class="paramname"><em>fileparser</em></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataParser.html">DataParser</a> &gt;&#160;</td>
+          <td class="paramname"><em>dataparser</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -294,10 +292,10 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the file parser for testing data. </p>
+<p>Sets the data parser for testing data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fileparser</td><td>Pointer to the file parser. </td></tr>
+    <tr><td class="paramname">dataparser</td><td>Pointer to the data parser. </td></tr>
   </table>
   </dd>
 </dl>
@@ -358,31 +356,6 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a64c23189594c96d6f7ce9a4e5cc4c9be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64c23189594c96d6f7ce9a4e5cc4c9be">&#9670;&nbsp;</a></span>testingTypeStr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string smlp::Testing::testingTypeStr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ac26ee7bedc04561ee80ca1a773b51010"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac26ee7bedc04561ee80ca1a773b51010">&#9670;&nbsp;</a></span>testLine()</h2>
 
@@ -426,8 +399,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a39942056da89d3e29ff6abe4aa4f0ea9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39942056da89d3e29ff6abe4aa4f0ea9">&#9670;&nbsp;</a></span>fileParser_</h2>
+<a id="aeaa6dd112d5ed4ef10a3bbdea595a10a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaa6dd112d5ed4ef10a3bbdea595a10a">&#9670;&nbsp;</a></span>dataParser_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +409,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a>&gt; smlp::Testing::fileParser_ = nullptr</td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1DataParser.html">DataParser</a>&gt; smlp::Testing::dataParser_ = nullptr</td>
         </tr>
       </table>
   </td>
