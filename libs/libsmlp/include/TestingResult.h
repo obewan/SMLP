@@ -23,6 +23,10 @@ public:
    */
   explicit TestingResult() = default;
 
+  /**
+   * @brief Convergence struct
+   *
+   */
   struct Convergence {
     float previous = 0.0f;
     float current = 0.0f;
