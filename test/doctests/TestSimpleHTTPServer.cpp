@@ -256,6 +256,44 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     delete server;
   }
 
+  SUBCASE("Testing processRequestBuffer - splitted") {
+    const std::string &rawRequest =
+        "POST /testonly HTTP/1.1\r\n"
+        "Host: localhost:8080\r\n"
+        "User-Agent: curl/7.74.0\r\n"
+        "Accept: */*\r\n"
+        "Content-Type: text/plain\r\n"
+        "Content-Length: 103\r\n"
+        "\r\n"
+        "1.0,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,"
+        "0.00,0.00,1.00,0.92,0.00,1.00,0.00";
+    auto server = new SimpleHTTPServer();
+    SimpleHTTPServer::clientInfo ci;
+
+    std::stringstream buffer1;
+    buffer1 << rawRequest.substr(
+        0, sizeof("POST /testonly HTTP/1.1\r\nHost: localhost:8080\r\n"));
+    const std::string &extracted1 = server->processRequestBuffer(buffer1, ci);
+    CHECK_MESSAGE(extracted1.empty(), smlp::getEscapedString(extracted1));
+
+    std::stringstream buffer2;
+    buffer2 << rawRequest.substr(
+        0,
+        sizeof("POST /testonly HTTP/1.1\r\nHost: localhost:8080\r\nUser-Agent: "
+               "curl/7.74.0\r\nAccept: */*\r\nContent-Type: text/plain\r\n"
+               "Content-Length: 103\r\n\r\n1.0,0.04,0.57"));
+    const std::string &extracted2 = server->processRequestBuffer(buffer2, ci);
+    CHECK_MESSAGE(extracted2.empty(), smlp::getEscapedString(extracted2));
+
+    std::stringstream buffer3;
+    buffer3 << rawRequest;
+    const std::string &extracted3 = server->processRequestBuffer(buffer3, ci);
+    CHECK_MESSAGE(extracted3 == rawRequest + "\r\n",
+                  smlp::getEscapedString(extracted3));
+
+    delete server;
+  }
+
   SUBCASE("Testing parseHttpRequest") {
     const std::string &rawRequest =
         "POST /predict HTTP/1.1\r\n"

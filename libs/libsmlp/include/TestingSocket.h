@@ -22,11 +22,11 @@ public:
 
   smlp::Result test(const std::string &line = "", size_t epoch = 0,
                     size_t current_line_number = 0) override {
-    smlp::RecordResult result = fileParser_->processLine(line, true);
+    smlp::RecordResult result = dataParser_->processLine(line, true);
     if (!result.isSuccess) {
       throw TestingException(SimpleLang::Error(Error::TestingError));
     }
-    auto testResult = testLine(result, fileParser_->current_line_number);
+    auto testResult = testLine(result, dataParser_->current_line_number);
     current_line_number++;
     testingResults_->processRecordTestingResult(testResult);
 

@@ -11,7 +11,7 @@
 
 #include "Common.h"
 #include "CommonResult.h"
-#include "exception/FileParserException.h"
+#include "exception/DataParserException.h"
 #include <condition_variable>
 #include <cstddef>
 #include <exception>
@@ -120,7 +120,7 @@ public:
    * @param fpe
    * @return std::string
    */
-  virtual std::string buildHttpResponse(FileParserException &fpe);
+  virtual std::string buildHttpResponse(DataParserException &fpe);
 
   /**
    * @brief build an HTTP response from an exception.

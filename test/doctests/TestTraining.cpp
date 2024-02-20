@@ -33,7 +33,7 @@ TEST_CASE("Testing the Training class") {
   auto &app_params = manager.app_params;
 
   TrainingFile training;
-  training.createFileParser();
+  training.createDataParser();
 
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {
@@ -67,7 +67,7 @@ TEST_CASE("Testing the Training class") {
       std::cin.rdbuf(inputDataStream.rdbuf());
 
       TrainingStdin trainingStdin;
-      trainingStdin.createFileParser();
+      trainingStdin.createDataParser();
       CHECK_NOTHROW(trainingStdin.train());
 
       // Restore std::cin to normal after the test
@@ -85,9 +85,9 @@ TEST_CASE("Testing the Training class") {
     SUBCASE("valid training_ratio") {
       app_params.training_ratio = 0.5f;
       CHECK_NOTHROW(training.train());
-      CHECK(training.getFileParser()->isTrainingRatioLineProcessed == true);
-      CHECK(training.getFileParser()->training_ratio_line == 5);
-      CHECK(training.getFileParser()->total_lines == 10);
+      CHECK(training.getDataParser()->isTrainingRatioLineProcessed == true);
+      CHECK(training.getDataParser()->training_ratio_line == 5);
+      CHECK(training.getDataParser()->total_lines == 10);
     }
 
     SUBCASE("valid testing") {
@@ -101,26 +101,26 @@ TEST_CASE("Testing the Training class") {
       manager.createTesting();
       const auto &testing = manager.getTesting();
       CHECK(testing != nullptr);
-      testing->setFileParser(training.getFileParser());
+      testing->setDataParser(training.getDataParser());
       CHECK_NOTHROW(training.train());
 
       auto testProgress = testing->getTestingResults()->getProgress();
       CHECK(testProgress.empty() == false);
       CHECK(testProgress.size() ==
-            training.getFileParser()->total_lines -
-                training.getFileParser()->training_ratio_line);
+            training.getDataParser()->total_lines -
+                training.getDataParser()->training_ratio_line);
 
       // Get the first element
       auto it_first = testProgress.begin();
       auto firstKey = it_first->first;
       auto firstValue = it_first->second;
-      CHECK(firstKey == training.getFileParser()->training_ratio_line + 1);
+      CHECK(firstKey == training.getDataParser()->training_ratio_line + 1);
 
       // Get the last element
       auto it_last = --testProgress.end();
       auto lastKey = it_last->first;
       auto lastValue = it_last->second;
-      CHECK(lastKey == training.getFileParser()->total_lines);
+      CHECK(lastKey == training.getDataParser()->total_lines);
       CHECK(lastKey > firstKey);
       CHECK(lastValue.current > firstValue.previous);
 

@@ -289,7 +289,7 @@ response=$(curl -s -X POST -H "Content-Type: text/plain" -d '1.0,0.04,0.57,0.80,
 echo "$response"
 ```
 
-Please note that this is a simple homemade HTTP service designed for development purposes. Use it with caution.
+Please note that this is a basic HTTP service designed for development purposes. Exercise caution while using it. It does not include SSL, so if you’re using it on the Internet or require security, ensure it’s used under an SSL layer (for example, using Apache’s SSL module).
 
 You can also explore additional HTTP examples in the [./test/httpTests.sh](./test/httpTests.sh) script.
 

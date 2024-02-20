@@ -12,6 +12,11 @@
 #include <string>
 
 namespace smlp {
+
+/**
+ * @brief Errors types
+ *
+ */
 enum class Error {
   ConfigFileNotFound,
   CSVParsingError,
@@ -50,6 +55,10 @@ enum class Error {
   UnknownKey,
 };
 
+/**
+ * @brief Errors messages
+ *
+ */
 const std::map<Error, std::string> errorMessages = {
     {Error::ConfigFileNotFound, "ConfigFileNotFound"},
     {Error::CSVParsingError, "CSVParsingError"},
@@ -87,6 +96,10 @@ const std::map<Error, std::string> errorMessages = {
     {Error::UnimplementedPredictMode, "UnimplementedPredictMode"},
     {Error::UnknownKey, "UnknownKey"}};
 
+/**
+ * @brief Errors default messages
+ *
+ */
 const std::map<Error, std::string> defaultErrorMessages = {
     {Error::ConfigFileNotFound, "Config file not found: %%config_file%%"},
     {Error::CSVParsingError, "CSV parsing error at line %%line_number%%"},

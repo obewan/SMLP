@@ -11,7 +11,6 @@
 #include "CommonResult.h"
 #include "SimpleLogger.h"
 #include "Training.h"
-#include "exception/FileParserException.h"
 
 namespace smlp {
 class TrainingSocket : public Training {

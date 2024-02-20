@@ -5,7 +5,7 @@
 #include "Testing.h"
 #include "Training.h"
 #include "doctest.h"
-#include "exception/FileParserException.h"
+#include "exception/DataParserException.h"
 #include "exception/ManagerException.h"
 #include <filesystem>
 
@@ -64,7 +64,7 @@ TEST_CASE("Testing the Manager class") {
     // Test predict file but without a valid file path.
     CHECK_THROWS_WITH_AS(manager.predict(),
                          SimpleLang::Error(Error::FailedToOpenFile).c_str(),
-                         FileParserException);
+                         DataParserException);
 
     // Test predict file with a valid file path and network.
     manager.app_params.network_to_import = "../data/testModel.json";

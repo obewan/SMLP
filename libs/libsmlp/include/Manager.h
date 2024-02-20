@@ -134,10 +134,10 @@ public:
       throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
     }
 
-    training_->createFileParser();
+    training_->createDataParser();
     if (app_params.mode == EMode::TrainTestMonitored) {
       createTesting();
-      testing_->setFileParser(training_->getFileParser());
+      testing_->setDataParser(training_->getDataParser());
     }
   }
 
