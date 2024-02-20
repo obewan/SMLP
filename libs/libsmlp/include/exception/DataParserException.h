@@ -6,7 +6,7 @@
 namespace smlp {
 /**
  * @brief A custom exception class that inherits from std::exception.
- * This class is thrown when there are issues with file parsing operations.
+ * This class is thrown when there are issues with parsing operations.
  */
 class DataParserException : public std::exception {
 public:

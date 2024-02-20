@@ -1,6 +1,7 @@
 #include "Manager.h"
 #include "Common.h"
 #include "CommonModes.h"
+#include "CommonParameters.h"
 #include "CommonResult.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -135,35 +136,49 @@ std::string Manager::getVersionHeader() const {
 }
 
 std::string Manager::getInlineHeader() const {
+  // lambda helper
+  auto getActivationParams = [](const std::string &prefix,
+                                EActivationFunction activation_function,
+                                double activation_alpha) {
+    std::stringstream sst;
+    sst << " " << prefix
+        << "ActivationFunction:" << smlp::getActivationStr(activation_function);
+    if (activation_function == EActivationFunction::ELU ||
+        activation_function == EActivationFunction::PReLU) {
+      sst << " " << prefix << "ActivationAlpha:" << activation_alpha;
+    }
+    return sst.str();
+  };
+  // lambda helper
+  auto getTrainingParams = [](const AppParameters &app_parameters) {
+    std::stringstream sst;
+    if (app_parameters.input != EInput::Stdin) {
+      sst << " Epochs:" << app_parameters.num_epochs;
+      if (app_parameters.training_ratio_line > 0) {
+        sst << " TrainingRatioLine:" << app_parameters.training_ratio_line;
+      } else {
+        sst << " TrainingRatio:" << app_parameters.training_ratio;
+      }
+    } else {
+      sst << " TrainingRatioLine:" << app_parameters.training_ratio_line;
+    }
+    return sst.str();
+  };
+
   std::stringstream sst;
   sst << "InputSize:" << network_params.input_size
       << " OutputSize:" << network_params.output_size
       << " HiddenSize:" << network_params.hidden_size
       << " HiddenLayers:" << network_params.hiddens_count
       << " LearningRate:" << network_params.learning_rate
-      << " HiddenActivationFunction:"
-      << smlp::getActivationStr(network_params.hidden_activation_function);
-  if (network_params.hidden_activation_function == EActivationFunction::ELU ||
-      network_params.hidden_activation_function == EActivationFunction::PReLU) {
-    sst << " HiddenActivationAlpha:" << network_params.hidden_activation_alpha;
-  }
-  sst << " OutputActivationFunction:"
-      << smlp::getActivationStr(network_params.output_activation_function);
-  if (network_params.output_activation_function == EActivationFunction::ELU ||
-      network_params.output_activation_function == EActivationFunction::PReLU) {
-    sst << " OutputActivationAlpha:" << network_params.output_activation_alpha;
-  }
-  if (app_params.input != EInput::Stdin) {
-    sst << " Epochs:" << app_params.num_epochs;
-    if (app_params.training_ratio_line > 0) {
-      sst << " TrainingRatioLine:" << app_params.training_ratio_line;
-    } else {
-      sst << " TrainingRatio:" << app_params.training_ratio;
-    }
-  } else {
-    sst << " TrainingRatioLine:" << app_params.training_ratio_line;
-  }
-  sst << " Mode:" << smlp::getModeStr(app_params.mode)
+      << getActivationParams("Hidden",
+                             network_params.hidden_activation_function,
+                             network_params.hidden_activation_alpha)
+      << getActivationParams("Output",
+                             network_params.output_activation_function,
+                             network_params.output_activation_alpha)
+      << getTrainingParams(app_params)
+      << " Mode:" << smlp::getModeStr(app_params.mode)
       << " Verbose:" << app_params.verbose;
   return sst.str();
 }
