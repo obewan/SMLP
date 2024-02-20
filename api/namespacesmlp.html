@@ -97,7 +97,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParser.html">DataParser</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1DataParserException.html">DataParserException</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with file parsing operations.  <a href="classsmlp_1_1DataParserException.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues with parsing operations.  <a href="classsmlp_1_1DataParserException.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1ImportExportException.html">ImportExportException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A custom exception class that inherits from std::exception. This class is thrown when there are issues during ImportExportJSON.  <a href="classsmlp_1_1ImportExportException.html#details">More...</a><br /></td></tr>
@@ -416,8 +416,6 @@ Variables</h2></td></tr>
 <tr class="separator:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460f274a49feb5ded7f7283bdb592803"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a460f274a49feb5ded7f7283bdb592803">layer_map</a></td></tr>
 <tr class="separator:a460f274a49feb5ded7f7283bdb592803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ae5c5dae7a129816e6b23566bd80348"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a8ae5c5dae7a129816e6b23566bd80348">training_map</a></td></tr>
-<tr class="separator:a8ae5c5dae7a129816e6b23566bd80348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Here's a high-level overview of the process:</p>
@@ -1581,24 +1579,6 @@ Variables</h2></td></tr>
 
 <p>Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the input to a range between -1 and 1. It is often used in the hidden layers of a neural network. </p>
 
-</div>
-</div>
-<a id="a8ae5c5dae7a129816e6b23566bd80348"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ae5c5dae7a129816e6b23566bd80348">&#9670;&nbsp;</a></span>training_map</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::map&lt;std::string, <a class="el" href="namespacesmlp.html#a232fbc890ff881a28cfc9813bf20e2e8">TrainingType</a>, std::less&lt;&gt; &gt; smlp::training_map</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    {<span class="stringliteral">&quot;TrainingFile&quot;</span>, TrainingType::TrainingFile},</div>
-<div class="line">    {<span class="stringliteral">&quot;TrainingSocket&quot;</span>, TrainingType::TrainingSocket},</div>
-<div class="line">    {<span class="stringliteral">&quot;TrainingStdin&quot;</span>, TrainingType::TrainingStdin}}</div>
-</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
