@@ -1,24 +1,32 @@
 #include "TrainingFile.h"
 #include "CommonResult.h"
+#include "DataParser.h"
 #include "Manager.h"
 #include "SimpleLogger.h"
 
 using namespace smlp;
 
 smlp::Result TrainingFile::train(const std::string &line) {
-  if (!fileParser_) {
+  if (!dataParser_ || dataParser_->dataType != DataParserType::DataFileParser) {
     throw TrainingException(SimpleLang::Error(Error::InternalError));
   }
+
+  std::shared_ptr<DataFileParser> dataFileParser =
+      std::dynamic_pointer_cast<DataFileParser>(dataParser_);
+  if (dataFileParser == nullptr) {
+    throw TestingException(SimpleLang::Error(Error::InternalError));
+  }
+
   const auto &app_params = Manager::getInstance().app_params;
 
-  if (!fileParser_->isTrainingRatioLineProcessed) {
-    fileParser_->calcTrainingRatioLine(app_params);
+  if (!dataFileParser->isTrainingRatioLineProcessed) {
+    dataFileParser->calcTrainingRatioLine(app_params);
   }
-  if (fileParser_->training_ratio_line == 0) {
+  if (dataFileParser->training_ratio_line == 0) {
     throw TrainingException(
         SimpleLang::Error(Error::InvalidTrainingRatioTooSmall));
   }
-  fileParser_->openFile();
+  dataFileParser->openFile();
   const auto &testing = Manager::getInstance().getTesting();
 
   const auto &logger = SimpleLogger::getInstance();
@@ -26,8 +34,8 @@ smlp::Result TrainingFile::train(const std::string &line) {
   for (size_t epoch = 0; epoch < app_params.num_epochs; epoch++) {
     logger.log(LogLevel::INFO, false, "Training epoch ", epoch + 1, "/",
                app_params.num_epochs, "... ");
-    fileParser_->resetPos();
-    for (size_t i = 0; i < fileParser_->training_ratio_line; i++) {
+    dataFileParser->resetPos();
+    for (size_t i = 0; i < dataFileParser->training_ratio_line; i++) {
       processInputLine();
     }
     if (app_params.mode == EMode::TrainTestMonitored) {
@@ -42,7 +50,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
     }
   }
   const auto end{std::chrono::steady_clock::now()};
-  fileParser_->closeFile();
+  dataFileParser->closeFile();
 
   const std::chrono::duration<double> elapsed_seconds{end - start};
   logger.info("Elapsed time: ", elapsed_seconds.count(), "s");

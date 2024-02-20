@@ -19,7 +19,7 @@ TEST_CASE("Testing the Testing class") {
       auto network = std::make_shared<Network>();
       auto fileparser = std::make_shared<DataFileParser>();
       auto testing = new TestingFile();
-      testing->setFileParser(fileparser);
+      testing->setDataParser(fileparser);
       delete testing;
     });
   }
@@ -48,7 +48,7 @@ TEST_CASE("Testing the Testing class") {
                           .mode = EMode::TrainTestMonitored,
                           .input = EInput::Stdin};
     auto testing = new TestingStdin();
-    testing->setFileParser(fileparser);
+    testing->setDataParser(fileparser);
 
     // Redirect std::cin
     std::cin.rdbuf(inputDataStream.rdbuf());
@@ -65,7 +65,7 @@ TEST_CASE("Testing the Testing class") {
     manager.app_params.training_ratio = 1;
     manager.app_params.mode = EMode::TrainThenTest;
     auto testing = new TestingFile();
-    testing->setFileParser(fileparser);
+    testing->setDataParser(fileparser);
     CHECK_THROWS_WITH_AS(
         testing->test(),
         SimpleLang::Error(Error::InvalidTrainingRatioTooBig).c_str(),

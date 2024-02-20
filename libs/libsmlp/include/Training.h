@@ -73,30 +73,34 @@ public:
   virtual smlp::Result train(const std::string &line = "") = 0;
 
   /**
-   * @brief Create a File Parser object
+   * @brief Create a Data Parser object
    *
    */
-  void createFileParser() {
-    if (!fileParser_) {
-      fileParser_ = std::make_shared<DataFileParser>();
+  void createDataParser() {
+    if (!dataParser_) {
+      if (trainingType == TrainingType::TrainingFile) {
+        dataParser_ = std::make_shared<DataFileParser>();
+      } else {
+        dataParser_ = std::make_shared<DataParser>();
+      }
     }
   }
 
   /**
-   * @brief Sets the file parser for training data.
+   * @brief Sets the data parser for training data.
    *
-   * @param fileParser Pointer to the file parser.
+   * @param dataParser Pointer to the file parser.
    */
-  void setFileParser(std::shared_ptr<DataFileParser> fileParser) {
-    fileParser_ = fileParser;
+  void setDataParser(std::shared_ptr<DataParser> dataParser) {
+    dataParser_ = dataParser;
   }
 
   /**
-   * @brief Gets the file parser used for training data.
+   * @brief Gets the data parser used for training data.
    *
-   * @return Pointer to the file parser.
+   * @return Pointer to the data parser.
    */
-  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
+  std::shared_ptr<DataParser> getDataParser() const { return dataParser_; }
 
   std::string trainingTypeStr() const {
     for (const auto &[key, mTrainingType] : training_map) {
@@ -110,6 +114,6 @@ public:
 protected:
   smlp::RecordResult processInputLine(const std::string &line = "") const;
 
-  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
+  std::shared_ptr<DataParser> dataParser_ = nullptr;
 };
 } // namespace smlp

@@ -6,7 +6,7 @@
 #include "Manager.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
-#include "exception/FileParserException.h"
+#include "exception/DataParserException.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
 #include <bits/ranges_algo.h>
@@ -529,7 +529,7 @@ void SimpleHTTPServer::processRequest(const std::string &rawRequest,
       send(client_info.client_socket, httpResponse.c_str(),
            httpResponse.length(), 0);
 
-    } catch (FileParserException &fpe) {
+    } catch (DataParserException &fpe) {
       SimpleLogger::LOG_ERROR(client_info.str(), fpe.what());
       const auto &httpResponse = buildHttpResponse(fpe);
       send(client_info.client_socket, httpResponse.c_str(),
@@ -571,7 +571,7 @@ std::string SimpleHTTPServer::buildHttpResponse(const smlp::Result &result) {
   return httpResponse;
 }
 
-std::string SimpleHTTPServer::buildHttpResponse(FileParserException &fpe) {
+std::string SimpleHTTPServer::buildHttpResponse(DataParserException &fpe) {
   smlp::Result result;
   result.code = smlp::make_error_code(smlp::ErrorCode::BadRequest);
   std::string statusLine = "HTTP/1.1 " + std::to_string(result.code.value()) +

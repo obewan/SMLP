@@ -19,11 +19,6 @@
 namespace smlp {
 enum class TestingType { TestingFile, TestingSocket, TestingStdin };
 
-const std::map<std::string, TestingType, std::less<>> testing_map{
-    {"TestingFile", TestingType::TestingFile},
-    {"TestingSocket", TestingType::TestingSocket},
-    {"TestingStdin", TestingType::TestingStdin}};
-
 /**
  * @brief The Testing class is responsible for testing the neural network model.
  * It contains methods for processing test data, calculating statistics, and
@@ -58,38 +53,33 @@ public:
    *
    */
   void createFileParser() {
-    if (!fileParser_) {
-      fileParser_ = std::make_shared<DataFileParser>();
+    if (!dataParser_) {
+      if (testingType == TestingType::TestingFile) {
+        dataParser_ = std::make_shared<DataFileParser>();
+      } else {
+        dataParser_ = std::make_shared<DataParser>();
+      }
     }
   }
 
   /**
-   * @brief Sets the file parser for testing data.
+   * @brief Sets the data parser for testing data.
    *
-   * @param fileparser Pointer to the file parser.
+   * @param dataparser Pointer to the data parser.
    */
-  void setFileParser(std::shared_ptr<DataFileParser> fileparser) {
-    fileParser_ = fileparser;
+  void setDataParser(std::shared_ptr<DataParser> dataparser) {
+    dataParser_ = dataparser;
   }
 
   /**
-   * @brief Gets the file parser used for testing data.
+   * @brief Gets the data parser used for testing data.
    *
-   * @return Pointer to the file parser.
+   * @return Pointer to the data parser.
    */
-  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
+  std::shared_ptr<DataParser> getDataParser() const { return dataParser_; }
 
   std::shared_ptr<TestingResult> getTestingResults() const {
     return testingResults_;
-  }
-
-  std::string testingTypeStr() const {
-    for (const auto &[key, mTestingType] : testing_map) {
-      if (mTestingType == testingType) {
-        return key;
-      }
-    }
-    return "";
   }
 
 protected:
@@ -97,7 +87,7 @@ protected:
                                       const size_t line_number = 0,
                                       const size_t epoch = 0) const;
 
-  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
+  std::shared_ptr<DataParser> dataParser_ = nullptr;
   std::shared_ptr<TestingResult> testingResults_ = nullptr;
 };
 } // namespace smlp

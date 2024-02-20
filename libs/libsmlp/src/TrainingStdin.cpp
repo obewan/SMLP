@@ -9,8 +9,8 @@ smlp::Result TrainingStdin::train(const std::string &line) {
   size_t current_line = 0;
   std::string lineIn;
   while (std::getline(std::cin, lineIn) &&
-         (fileParser_->training_ratio_line == 0 ||
-          current_line < fileParser_->training_ratio_line)) {
+         (dataParser_->training_ratio_line == 0 ||
+          current_line < dataParser_->training_ratio_line)) {
     processInputLine(lineIn);
     current_line++;
   }
