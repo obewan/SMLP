@@ -48,11 +48,6 @@ predict the correct outputs for the given inputs.
 namespace smlp {
 enum class TrainingType { TrainingFile, TrainingSocket, TrainingStdin };
 
-const std::map<std::string, TrainingType, std::less<>> training_map{
-    {"TrainingFile", TrainingType::TrainingFile},
-    {"TrainingSocket", TrainingType::TrainingSocket},
-    {"TrainingStdin", TrainingType::TrainingStdin}};
-
 /**
  * @brief The Training class is responsible for training the neural network
  * model. It contains methods for processing training data, updating the model
@@ -101,15 +96,6 @@ public:
    * @return Pointer to the data parser.
    */
   std::shared_ptr<DataParser> getDataParser() const { return dataParser_; }
-
-  std::string trainingTypeStr() const {
-    for (const auto &[key, mTrainingType] : training_map) {
-      if (mTrainingType == trainingType) {
-        return key;
-      }
-    }
-    return "";
-  }
 
 protected:
   smlp::RecordResult processInputLine(const std::string &line = "") const;
