@@ -253,6 +253,10 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     const std::string &extracted = server->processRequestBuffer(buffer, ci);
     CHECK_MESSAGE(extracted == rawRequest + "\r\n",
                   smlp::getEscapedString(extracted));
+    buffer.seekg(0); // move current pos to 0
+    CHECK(
+        buffer.peek() ==
+        std::char_traits<char>::eof()); // no character after pos 0 so is empty
     delete server;
   }
 
@@ -271,25 +275,35 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     SimpleHTTPServer::clientInfo ci;
 
     std::stringstream buffer1;
-    buffer1 << rawRequest.substr(
+    const std::string split1 = rawRequest.substr(
         0, sizeof("POST /testonly HTTP/1.1\r\nHost: localhost:8080\r\n"));
+    buffer1 << split1;
     const std::string &extracted1 = server->processRequestBuffer(buffer1, ci);
     CHECK_MESSAGE(extracted1.empty(), smlp::getEscapedString(extracted1));
+    buffer1.seekp(0, std::ios::end);           // get current pos
+    CHECK(buffer1.tellp() == split1.length()); // check current pos
 
     std::stringstream buffer2;
-    buffer2 << rawRequest.substr(
+    const std::string split2 = rawRequest.substr(
         0,
         sizeof("POST /testonly HTTP/1.1\r\nHost: localhost:8080\r\nUser-Agent: "
                "curl/7.74.0\r\nAccept: */*\r\nContent-Type: text/plain\r\n"
                "Content-Length: 103\r\n\r\n1.0,0.04,0.57"));
+    buffer2 << split2;
     const std::string &extracted2 = server->processRequestBuffer(buffer2, ci);
     CHECK_MESSAGE(extracted2.empty(), smlp::getEscapedString(extracted2));
+    buffer2.seekp(0, std::ios::end);           // get current pos
+    CHECK(buffer2.tellp() == split2.length()); // check current pos
 
     std::stringstream buffer3;
     buffer3 << rawRequest;
     const std::string &extracted3 = server->processRequestBuffer(buffer3, ci);
     CHECK_MESSAGE(extracted3 == rawRequest + "\r\n",
                   smlp::getEscapedString(extracted3));
+    buffer3.seekg(0); // move current pos to 0
+    CHECK(
+        buffer3.peek() ==
+        std::char_traits<char>::eof()); // no character after pos 0 so is empty
 
     delete server;
   }
