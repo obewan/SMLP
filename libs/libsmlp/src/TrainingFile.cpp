@@ -1,28 +1,31 @@
 #include "TrainingFile.h"
-#include "CommonResult.h"
-#include "DataParser.h"
 #include "Manager.h"
 #include "SimpleLogger.h"
+#include "exception/TrainingFileException.h"
 
 using namespace smlp;
 
 smlp::Result TrainingFile::train(const std::string &line) {
-  // Check if dataParser_ is initialized and is of type DataFileParser
-  if (!dataParser_ || dataParser_->dataType != DataParserType::DataFileParser) {
-    throw TrainingException(SimpleLang::Error(Error::InternalError));
+  // Check the manager neural network
+  const auto &manager = Manager::getInstance();
+  if (!manager.network) {
+    throw TrainingFileException(SimpleLang::Error(Error::TrainingError));
   }
 
   // Downcast dataParser_ to DataFileParser
+  if (!dataParser_ || dataParser_->dataType != DataParserType::DataFileParser) {
+    throw TrainingFileException(
+        SimpleLang::Error(Error::DataFileParserInstanceError));
+  }
   std::shared_ptr<DataFileParser> dataFileParser =
       std::dynamic_pointer_cast<DataFileParser>(dataParser_);
-
-  // Check if downcast was successful
   if (dataFileParser == nullptr) {
-    throw TestingException(SimpleLang::Error(Error::InternalError));
+    throw TrainingFileException(
+        SimpleLang::Error(Error::DataFileParserDowncastError));
   }
 
   // Get application parameters from the singleton instance of Manager
-  const auto &app_params = Manager::getInstance().app_params;
+  const auto &app_params = manager.app_params;
 
   // Calculate training ratio line if not already done
   if (!dataFileParser->isTrainingRatioLineProcessed) {
@@ -31,7 +34,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
 
   // If training_ratio_line is 0, throw an exception
   if (dataFileParser->training_ratio_line == 0) {
-    throw TrainingException(
+    throw TrainingFileException(
         SimpleLang::Error(Error::InvalidTrainingRatioTooSmall));
   }
 
@@ -64,7 +67,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
     // If mode is TrainTestMonitored, test the network
     if (app_params.mode == EMode::TrainTestMonitored) {
       if (!testing) {
-        throw TrainingException(SimpleLang::Error(Error::InternalError));
+        throw TrainingFileException(SimpleLang::Error(Error::InternalError));
       }
       logger.append("testing... ");
       testing->test("", epoch);
@@ -87,7 +90,7 @@ smlp::Result TrainingFile::train(const std::string &line) {
   // If mode is TrainTestMonitored, log the detailed testing results
   if (app_params.mode == EMode::TrainTestMonitored) {
     if (!testing) {
-      throw TrainingException(SimpleLang::Error(Error::InternalError));
+      throw TrainingFileException(SimpleLang::Error(Error::InternalError));
     }
     logger.info(testing->getTestingResults()->getResultsDetailled());
   }

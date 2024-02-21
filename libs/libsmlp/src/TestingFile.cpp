@@ -1,7 +1,6 @@
 #include "TestingFile.h"
-#include "CommonResult.h"
-#include "DataParser.h"
 #include "Manager.h"
+#include "exception/TestingFileException.h"
 
 using namespace smlp;
 
@@ -10,23 +9,22 @@ smlp::Result TestingFile::test(const std::string &line, size_t epoch,
   // Clear previous testing results
   testingResults_->clearStats();
 
-  // Get the singleton instance of Manager
+  // Check the manager neural network
   const auto &manager = Manager::getInstance();
-
-  // Check if dataParser_ is initialized, is of type DataFileParser, and if
-  // network is available
-  if (!dataParser_ || dataParser_->dataType != DataParserType::DataFileParser ||
-      !manager.network) {
-    throw TestingException(SimpleLang::Error(Error::InternalError));
+  if (!manager.network) {
+    throw TestingFileException(SimpleLang::Error(Error::TestingError));
   }
 
   // Downcast dataParser_ to DataFileParser
+  if (!dataParser_ || dataParser_->dataType != DataParserType::DataFileParser) {
+    throw TestingFileException(
+        SimpleLang::Error(Error::DataFileParserInstanceError));
+  }
   std::shared_ptr<DataFileParser> dataFileParser =
       std::dynamic_pointer_cast<DataFileParser>(dataParser_);
-
-  // Check if downcast was successful
   if (dataFileParser == nullptr) {
-    throw TestingException(SimpleLang::Error(Error::InternalError));
+    throw TestingFileException(
+        SimpleLang::Error(Error::DataFileParserDowncastError));
   }
 
   // If mode is TrainThenTest or use_training_ratio_line is true, calculate
@@ -38,7 +36,7 @@ smlp::Result TestingFile::test(const std::string &line, size_t epoch,
     }
     // If training_ratio_line is greater than total_lines, throw an exception
     if (dataFileParser->training_ratio_line >= dataFileParser->total_lines) {
-      throw TestingException(
+      throw TestingFileException(
           SimpleLang::Error(Error::InvalidTrainingRatioTooBig));
     }
   }
