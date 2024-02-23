@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-20 15:50:18</td>
+            <td class="headerValue">2024-02-23 13:16:52</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">7</td>
@@ -111,11 +111,11 @@
 <a name="49"><span class="lineNum">      49 </span><span class="lineNoCov">          0 :       return;</span></a>
 <a name="50"><span class="lineNum">      50 </span>            :     }</a>
 <a name="51"><span class="lineNum">      51 </span><span class="lineCov">        124 :     for (Neuron &amp;n : neurons) {</span></a>
-<a name="52"><span class="lineNum">      52 </span><span class="lineCov">        758 :       for (size_t j = 0; j &lt; n.weights.size(); ++j) {</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">       1062 :       for (size_t j = 0; j &lt; n.weights.size(); ++j) {</span></a>
 <a name="53"><span class="lineNum">      53 </span>            :         // Gradient descent</a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">        696 :         float dE_dw = previousLayer-&gt;neurons[j].value * n.error;</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">       1000 :         float dE_dw = previousLayer-&gt;neurons[j].value * n.error;</span></a>
 <a name="55"><span class="lineNum">      55 </span>            :         // Update weights</a>
-<a name="56"><span class="lineNum">      56 </span><span class="lineCov">        696 :         n.weights[j] -= learningRate * dE_dw;</span></a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">       1000 :         n.weights[j] -= learningRate * dE_dw;</span></a>
 <a name="57"><span class="lineNum">      57 </span>            :       }</a>
 <a name="58"><span class="lineNum">      58 </span>            :     }</a>
 <a name="59"><span class="lineNum">      59 </span>            :   }</a>
