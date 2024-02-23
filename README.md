@@ -60,8 +60,8 @@ Includes a mushroom edibility dataset example.
      - `i18n/it.json` (italian)
      - `i18n/pt.json` (portuguese)
    - `file_input`: The dataset file to use, similar to the file_input option.
-   - `import_network`: The model file to import, similar to the import_network option.
-   - `export_network`: The model file to export, similar to the export_network option.
+   - `import_network`: The JSON model file to import, similar to the import_network option. Ensure that the corresponding CSV file is available.
+   - `export_network`: The JSON model file to export, similar to the export_network option. Executing this will also create or update the corresponding CSV file.
 
 If you use the corresponding command line options, they will override the config file parameters. Here an example of `smlp.conf`:
 
