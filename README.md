@@ -36,8 +36,7 @@ Includes a mushroom edibility dataset example.
 
 # Roadmap to first release
 
-- Improving the network model file. `[in progress]`
-- Check cross-platform compilation.
+- Check cross-platform compilation. `[in progress]`
 - Add a Docker support.
 - Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
