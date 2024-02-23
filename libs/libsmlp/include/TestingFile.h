@@ -8,12 +8,7 @@
  *
  */
 #pragma once
-#include "CommonModes.h"
-#include "CommonResult.h"
-#include "SimpleLang.h"
 #include "Testing.h"
-#include "exception/TestingException.h"
-#include <memory>
 
 namespace smlp {
 class TestingFile : public Testing {

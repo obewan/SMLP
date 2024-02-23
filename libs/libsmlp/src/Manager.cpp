@@ -239,8 +239,7 @@ void Manager::importOrBuildNetwork() {
   if (!app_params.network_to_import.empty() &&
       std::filesystem::exists(app_params.network_to_import)) {
     logNetworkImport();
-    network =
-        std::shared_ptr<Network>(importExportJSON.importModel(app_params));
+    network = std::shared_ptr<Network>(importExport.importModel(app_params));
     network_params = network->params;
   } else {
     logNetworkCreation();
@@ -261,7 +260,7 @@ void Manager::exportNetwork() {
   }
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
-  importExportJSON.exportModel(network.get(), app_params);
+  importExport.exportModel(network.get(), app_params);
 }
 
 smlp::Result Manager::processTCPClient(const std::string &line) {

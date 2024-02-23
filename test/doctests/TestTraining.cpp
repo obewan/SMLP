@@ -7,6 +7,7 @@
 #include "TrainingSocket.h"
 #include "TrainingStdin.h"
 #include "doctest.h"
+#include "exception/TrainingFileException.h"
 #include <iostream>
 #include <memory>
 
@@ -38,7 +39,7 @@ TEST_CASE("Testing the Training class") {
   SUBCASE("Test train function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.train(), TrainingException);
+      CHECK_THROWS_AS(training.train(), TrainingFileException);
     }
 
     SUBCASE("valid training_ratio") {
@@ -79,7 +80,7 @@ TEST_CASE("Testing the Training class") {
   SUBCASE("Test trainTestMonitored function") {
     SUBCASE("invalid training_ratio") {
       app_params.training_ratio = 0;
-      CHECK_THROWS_AS(training.train(), TrainingException);
+      CHECK_THROWS_AS(training.train(), TrainingFileException);
     }
 
     SUBCASE("valid training_ratio") {
