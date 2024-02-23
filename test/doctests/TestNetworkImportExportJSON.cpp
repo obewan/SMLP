@@ -1,6 +1,6 @@
 #include "Common.h"
 #include "Layer.h"
-#include "NetworkImportExportJSON.h"
+#include "NetworkImportExport.h"
 #include "doctest.h"
 #include "exception/ImportExportException.h"
 #include <cstddef>
@@ -8,7 +8,7 @@
 
 using namespace smlp;
 
-TEST_CASE("Testing the ImportExportJSON class") {
+TEST_CASE("Testing the ImportExport") {
   std::string test_file = "data/test_file.csv";
   const float eps = 1e-6f; // epsilon for float testing
 
@@ -18,11 +18,12 @@ TEST_CASE("Testing the ImportExportJSON class") {
                            .hiddens_count = 1};
   AppParameters app_params{.version = "1.0.0", .data_file = test_file};
   std::string modelJsonFile = "testModel.json";
+  std::string modelCsvFile = "testModel.csv";
 
   SUBCASE("Test exceptions") {
-    NetworkImportExportJSON importExportJSON;
+    NetworkImportExport importExport;
     CHECK_THROWS_AS(
-        importExportJSON.importModel({.network_to_import = "wrongfile"}),
+        importExport.importModel({.network_to_import = "wrongfile"}),
         ImportExportException);
   }
 
@@ -30,23 +31,29 @@ TEST_CASE("Testing the ImportExportJSON class") {
     if (std::filesystem::exists(modelJsonFile)) {
       std::filesystem::remove(modelJsonFile);
     }
+    if (std::filesystem::exists(modelCsvFile)) {
+      std::filesystem::remove(modelCsvFile);
+    }
     CHECK(std::filesystem::exists(modelJsonFile) == false);
+    CHECK(std::filesystem::exists(modelCsvFile) == false);
     app_params.network_to_export = modelJsonFile;
 
-    NetworkImportExportJSON importExportJSON;
+    NetworkImportExport importExport;
     auto network = new Network(params);
-    CHECK_NOTHROW(importExportJSON.exportModel(network, app_params));
+    CHECK_NOTHROW(importExport.exportModel(network, app_params));
 
     CHECK(std::filesystem::exists(modelJsonFile) == true);
+    CHECK(std::filesystem::exists(modelCsvFile) == true);
   }
 
   SUBCASE("Test importModel function") {
     CHECK(std::filesystem::exists(modelJsonFile) == true);
+    CHECK(std::filesystem::exists(modelCsvFile) == true);
 
-    NetworkImportExportJSON importExportJSON;
+    NetworkImportExport importExport;
     app_params.network_to_import = modelJsonFile;
     Network *network = nullptr;
-    CHECK_NOTHROW(network = importExportJSON.importModel(app_params));
+    CHECK_NOTHROW(network = importExport.importModel(app_params));
     CHECK(network != nullptr);
     CHECK(network->layers.front()->layerType == LayerType::InputLayer);
     CHECK(network->layers.front()->neurons.size() == params.input_size);

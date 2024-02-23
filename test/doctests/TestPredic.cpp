@@ -1,6 +1,6 @@
 #include "CommonModes.h"
 #include "Manager.h"
-#include "NetworkImportExportJSON.h"
+#include "NetworkImportExport.h"
 #include "Predict.h"
 #include "doctest.h"
 #include "exception/PredictException.h"
@@ -15,6 +15,7 @@ TEST_CASE("Testing the Predict class") {
 
   SUBCASE("Test predict") {
     std::string modelJsonFile = "testModel.json";
+    std::string modelCsvFile = "testModel.csv";
     std::string test_file = "../data/test_file.csv";
     Manager::getInstance().app_params = {
         .version = "1.0.0",
@@ -22,13 +23,14 @@ TEST_CASE("Testing the Predict class") {
         .data_file = test_file,
         .output_at_end = false,
     };
-    NetworkImportExportJSON importExportJSON;
+    NetworkImportExport importExport;
     CHECK(std::filesystem::exists(modelJsonFile) == true);
+    CHECK(std::filesystem::exists(modelCsvFile) == true);
 
     const auto &app_params = Manager::getInstance().app_params;
     CHECK_NOTHROW({
       Manager::getInstance().network =
-          std::shared_ptr<Network>(importExportJSON.importModel(app_params));
+          std::shared_ptr<Network>(importExport.importModel(app_params));
       Predict predict;
       predict.predict();
     });

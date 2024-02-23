@@ -27,11 +27,11 @@ public:
 
   const DataParserType dataType;
 
-  Csv::Parser csv_parser;
   size_t current_line_number = 0;
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
+  Csv::Parser csv_parser;
 
   /**
    * @brief Processes a line returns a RecordResult. This
@@ -93,9 +93,10 @@ public:
   virtual Record processColumns(
       const std::vector<std::vector<Csv::CellReference>> &cell_refs) const;
 
+  // lambda function to convert to float (this will throw if no value)
   std::function<float(const std::vector<Csv::CellReference> &)> getFloatValue =
       [](const std::vector<Csv::CellReference> &cells) {
-        return (float)cells[0].getDouble().value();
+        return static_cast<float>(cells[0].getDouble().value());
       };
 };
 

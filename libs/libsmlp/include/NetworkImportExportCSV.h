@@ -8,7 +8,28 @@
  *
  */
 #pragma once
+#include "CommonParameters.h"
+#include "Network.h"
 
 namespace smlp {
-class NetworkImportExportCSV {};
+class NetworkImportExportCSV {
+public:
+  /**
+   * @brief Import the network neurons data from a CSV file.
+   *
+   * @param network
+   * @param app_params
+   */
+  void importNeuronsWeights(const Network *network,
+                            const AppParameters &app_params) const;
+
+  /**
+   * @brief Export the network neurons data to a CSV file.
+   *
+   * @param network
+   * @param app_params
+   */
+  void exportNeuronsWeights(const Network *network,
+                            const AppParameters &app_params) const;
+};
 } // namespace smlp
