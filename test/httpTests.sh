@@ -5,7 +5,7 @@
 
 cd ../build
 
-./smlp  -e "myMushroomMLP.json" -i "myMushroomMLP.json" -V -H -P 8080 &
+./smlp  -e "ctestModel.json" -i "ctestModel.json" -V -H -P 8080 &
 
 # Get the process ID of the most recently executed background command
 jobId=$!
@@ -137,6 +137,6 @@ kill $jobId
 
 echo "[CLIENT] Tests end: SUCCESS"
 
-#rq: if the job is not killed, try a kill -9 <PID>, with <PID> the PID of the process (command "ps ux")
+#rq: if the job is not killed, try a kill -9 <PID>, with <PID> the PID of the process (command "ps ux | grep slmp")
 
 

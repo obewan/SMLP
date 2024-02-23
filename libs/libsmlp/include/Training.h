@@ -9,12 +9,7 @@
  */
 #pragma once
 #include "Common.h"
-#include "CommonParameters.h"
 #include "DataFileParser.h"
-#include "Network.h"
-#include "Testing.h"
-#include "exception/TrainingException.h"
-#include <map>
 #include <memory>
 #include <string>
 

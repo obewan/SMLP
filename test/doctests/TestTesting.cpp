@@ -6,7 +6,7 @@
 #include "TestingFile.h"
 #include "TestingStdin.h"
 #include "doctest.h"
-#include "exception/TestingException.h"
+#include "exception/TestingFileException.h"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -69,7 +69,7 @@ TEST_CASE("Testing the Testing class") {
     CHECK_THROWS_WITH_AS(
         testing->test(),
         SimpleLang::Error(Error::InvalidTrainingRatioTooBig).c_str(),
-        TestingException);
+        TestingFileException);
     delete testing;
   }
 }

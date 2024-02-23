@@ -12,7 +12,7 @@
 #include "Common.h"
 #include "CommonModes.h"
 #include "CommonResult.h"
-#include "NetworkImportExportJSON.h"
+#include "NetworkImportExport.h"
 #include "Predict.h"
 #include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
@@ -108,9 +108,9 @@ public:
   std::shared_ptr<Network> network = nullptr;
 
   /**
-   * @brief ImportExportJSON tool.
+   * @brief ImportExport tool.
    */
-  NetworkImportExportJSON importExportJSON;
+  NetworkImportExport importExport;
 
   /**
    * @brief Create a Training object

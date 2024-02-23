@@ -8,9 +8,7 @@
  *
  */
 #pragma once
-#include "SimpleLang.h"
 #include "Training.h"
-#include "exception/TrainingException.h"
 
 namespace smlp {
 class TrainingFile : public Training {

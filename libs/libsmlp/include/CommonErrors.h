@@ -24,6 +24,8 @@ enum class Error {
   CSVParsingErrorColumnsBadFormat,
   CSVParsingErrorColumnsMin,
   CSVParsingErrorColumnsSize,
+  DataFileParserDowncastError,
+  DataFileParserInstanceError,
   DifferentModelVersion,
   FailedToOpenFile,
   InternalError,
@@ -66,6 +68,8 @@ const std::map<Error, std::string> errorMessages = {
     {Error::CSVParsingErrorColumnsBadFormat, "CSVParsingErrorColumnsBadFormat"},
     {Error::CSVParsingErrorColumnsMin, "CSVParsingErrorColumnsMin"},
     {Error::CSVParsingErrorColumnsSize, "CSVParsingErrorColumnsSize"},
+    {Error::DataFileParserDowncastError, "DataFileParserDowncastError"},
+    {Error::DataFileParserInstanceError, "DataFileParserInstanceError"},
     {Error::DifferentModelVersion, "DifferentModelVersion"},
     {Error::FailedToOpenFile, "FailedToOpenFile"},
     {Error::InternalError, "InternalError"},
@@ -113,6 +117,8 @@ const std::map<Error, std::string> defaultErrorMessages = {
     {Error::CSVParsingErrorColumnsSize,
      "CSV parsing error at line %%line_number%%: there are %%value%% columns "
      "instead of %%expected%%."},
+    {Error::DataFileParserDowncastError, "DataFileParser downcast error"},
+    {Error::DataFileParserInstanceError, "DataFileParser instance error"},
     {Error::DifferentModelVersion,
      "Your file model version (%%vuser%%) is not the same as current version "
      "(%%vcurrent%%)"},
