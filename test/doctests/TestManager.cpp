@@ -122,4 +122,19 @@ TEST_CASE("Testing the Manager class") {
     CHECK_THROWS_WITH_AS(manager.processTCPClient(""), "TCP socket not set.",
                          ManagerException);
   }
+
+  SUBCASE("Test create http server") {
+    CHECK(manager.getHttpServer() == nullptr);
+    CHECK_THROWS_WITH_AS(manager.createHttpServer(), "TCP socket not set.",
+                         ManagerException);
+    manager.app_params.input = EInput::Socket;
+    manager.app_params.http_port = 8989;
+    CHECK_NOTHROW(manager.createHttpServer());
+    CHECK(manager.getHttpServer() != nullptr);
+    CHECK(manager.getHttpServer()->getServerPort() ==
+          manager.app_params.http_port);
+    CHECK_NOTHROW(manager.resetHttpServer());
+    CHECK(manager.getHttpServer() == nullptr);
+    manager.app_params.input = EInput::File;
+  }
 }

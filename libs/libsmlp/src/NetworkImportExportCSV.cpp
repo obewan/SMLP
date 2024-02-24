@@ -1,5 +1,6 @@
 #include "NetworkImportExportCSV.h"
 #include "../../csv-parser/include/csv_parser.h"
+#include "exception/EmptyCellException.h"
 #include "exception/ImportExportException.h"
 #include <algorithm> // for std::transform
 #include <cctype>    // for std::tolower
@@ -15,7 +16,12 @@ void NetworkImportExportCSV::importNeuronsWeights(
     const Network *network, const AppParameters &app_params) const {
   // lambda function to convert to float
   auto getFloatValue = [](const std::vector<Csv::CellReference> &cells) {
-    return static_cast<float>(cells[0].getDouble().value_or(0));
+    auto val = cells[0].getDouble();
+    if (val.has_value()) {
+      return static_cast<float>(val.value());
+    } else {
+      throw EmptyCellException();
+    }
   };
 
   // get the csv filename
@@ -59,13 +65,23 @@ void NetworkImportExportCSV::importNeuronsWeights(
     auto layer_index = (size_t)getFloatValue(cell_refs.at(0));
     auto neuron_index = (size_t)getFloatValue(cell_refs.at(1));
     std::vector<float> weights;
-    std::transform(cell_refs.begin() + 2, cell_refs.end(),
-                   std::back_inserter(weights), getFloatValue);
+
+    // lambda function to add cell value to the weights vector
+    auto processCell = [&weights, &getFloatValue](
+                           const std::vector<Csv::CellReference> &cells) {
+      try {
+        weights.push_back(getFloatValue(cells));
+      } catch (EmptyCellException &) {
+        // ignore the exception caused by an empty cell
+        return;
+      }
+    };
+
     try {
+      std::for_each(cell_refs.begin() + 2, cell_refs.end(), processCell);
       network->layers.at(layer_index)
           ->neurons.at(neuron_index)
           .weights.swap(weights);
-
     } catch (std::exception &ex) {
       throw ImportExportException(ex.what());
     }

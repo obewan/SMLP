@@ -206,6 +206,18 @@ public:
   }
 
   /**
+   * @brief This will delete the managed object if this is the last shared_ptr
+   * owning it.
+   *
+   */
+  void resetHttpServer() {
+    if (http_server_ == nullptr) {
+      return;
+    }
+    http_server_.reset();
+  }
+
+  /**
    * @brief Logger
    *
    */
