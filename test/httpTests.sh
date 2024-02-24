@@ -137,6 +137,6 @@ kill $jobId
 
 echo "[CLIENT] Tests end: SUCCESS"
 
-#rq: if the job is not killed, try a kill -9 <PID>, with <PID> the PID of the process (command "ps ux | grep slmp")
+#rq: if the job is not killed, try a kill -9 <PID>, with <PID> the PID of the process (command "ps ux | grep smlp")
 
 

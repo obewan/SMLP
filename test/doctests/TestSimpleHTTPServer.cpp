@@ -176,7 +176,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   CHECK(client.getHttpCode(response3) == 200);
   CHECK(
       client.getHttpBody(response3) ==
-      R"({"action":"TestOnly","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
+      R"({"action":"TestOnly","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
 
   MESSAGE("[TEST] Testing POST TrainThenTest");
   const auto &httpRequest4 =
@@ -192,7 +192,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   CHECK(client.getHttpCode(response4) == 200);
   CHECK(
       client.getHttpBody(response4) ==
-      R"({"action":"TrainThenTest","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
+      R"({"action":"TrainThenTest","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
 
   MESSAGE("[TEST] Testing POST TrainTestMonitored");
   const auto &httpRequest5 =
@@ -208,7 +208,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   CHECK(client.getHttpCode(response5) == 200);
   CHECK(
       client.getHttpBody(response5) ==
-      R"({"action":"TrainTestMonitored","code":0,"data":"{\"accuracy_avg\":0.0,\"accuracy_high\":0.0,\"accuracy_low\":0.0,\"convergence\":null,\"convergence_one\":null,\"convergence_zero\":null}","message":"Success"})");
+      R"({"action":"TrainTestMonitored","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":null,\"convergence_one\":null,\"convergence_zero\":null}","message":"Success"})");
 
   MESSAGE("[TEST] Testing unsupported HTTP version");
   const auto &httpRequest6 =
