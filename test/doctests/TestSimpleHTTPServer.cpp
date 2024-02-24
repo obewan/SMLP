@@ -107,6 +107,7 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   manager.app_params.network_to_import = "../data/testModel.json";
   manager.resetTraining();
   manager.resetTesting();
+  manager.resetHttpServer();
   CHECK_NOTHROW(manager.importOrBuildNetwork());
   CHECK(manager.network != nullptr);
 
