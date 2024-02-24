@@ -409,6 +409,13 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     CHECK(httpValidation.code.value() == 200);
     CHECK(manager.app_params.mode == EMode::Predict);
   }
+
+  SUBCASE("Testing others") {
+    SimpleHTTPServer server;
+    server.setServerPort(8089);
+    CHECK(server.getServerPort() == 8089);
+    CHECK(server.getServerIp() == std::string());
+  }
 }
 
 #endif // DOCTEST_CONFIG_NO_EXCEPTIONS
