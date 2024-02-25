@@ -1,5 +1,7 @@
 #include "Common.h"
+#include "SimpleTCPClient.h"
 #include "doctest.h"
+#include "exception/SimpleTCPException.h"
 
 #ifndef DOCTEST_CONFIG_NO_EXCEPTIONS
 
@@ -416,6 +418,9 @@ TEST_CASE("Testing the SimpleTCPServer class - inner methods") {
     server.setServerPort(8089);
     CHECK(server.getServerPort() == 8089);
     CHECK(server.getServerIp() == std::string());
+    CHECK_NOTHROW(SimpleTCPException ex("test"));
+    SimpleTCPException ex("test");
+    CHECK(std::string(ex.what()) == "test");
   }
 }
 

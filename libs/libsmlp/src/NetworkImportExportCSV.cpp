@@ -24,6 +24,18 @@ void NetworkImportExportCSV::importNeuronsWeights(
     }
   };
 
+  // lambda function to add cell value to the weights vector
+  auto processCell =
+      [&getFloatValue](std::vector<float> &weights,
+                       const std::vector<Csv::CellReference> &cells) {
+        try {
+          weights.push_back(getFloatValue(cells));
+        } catch (EmptyCellException &) {
+          // ignore the exception caused by an empty cell
+          return;
+        }
+      };
+
   // get the csv filename
   std::string filename = app_params.network_to_import;
   filename = std::regex_replace(
@@ -46,6 +58,7 @@ void NetworkImportExportCSV::importNeuronsWeights(
       continue;
     }
     std::vector<std::vector<Csv::CellReference>> cell_refs;
+
     try {
       std::string_view data(line);
       csv_parser.parseTo(data, cell_refs);
@@ -62,23 +75,18 @@ void NetworkImportExportCSV::importNeuronsWeights(
           Error::CSVParsingErrorEmptyLine,
           {{"line_number", std::to_string(current_line_number)}}));
     }
-    auto layer_index = (size_t)getFloatValue(cell_refs.at(0));
-    auto neuron_index = (size_t)getFloatValue(cell_refs.at(1));
-    std::vector<float> weights;
-
-    // lambda function to add cell value to the weights vector
-    auto processCell = [&weights, &getFloatValue](
-                           const std::vector<Csv::CellReference> &cells) {
-      try {
-        weights.push_back(getFloatValue(cells));
-      } catch (EmptyCellException &) {
-        // ignore the exception caused by an empty cell
-        return;
-      }
-    };
+    if (cell_refs.size() == 2) {
+      continue;
+    }
 
     try {
-      std::for_each(cell_refs.begin() + 2, cell_refs.end(), processCell);
+      auto layer_index = (size_t)getFloatValue(cell_refs.at(0));
+      auto neuron_index = (size_t)getFloatValue(cell_refs.at(1));
+      std::vector<float> weights;
+
+      std::for_each(cell_refs.begin() + 2, cell_refs.end(),
+                    std::bind_front(processCell, std::ref(weights)));
+
       network->layers.at(layer_index)
           ->neurons.at(neuron_index)
           .weights.swap(weights);
