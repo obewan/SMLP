@@ -8,9 +8,9 @@
  *
  */
 #pragma once
-#include "../../json/include/json.hpp"
 #include "Common.h"
 #include "exception/SimpleLangException.h"
+#include "json.hpp"
 #include <filesystem>
 #include <fstream>
 #include <functional>

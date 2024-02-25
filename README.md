@@ -34,10 +34,9 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 Includes a mushroom edibility dataset example.
 
-# Roadmap to first release
+# Roadmap to the first release
 
-- Check cross-platform compilation. `[in progress]`
-- Add a Docker support.
+- Add a Docker support. `[in progress]`
 - Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
 # Usage
@@ -293,6 +292,14 @@ Please note that this is a basic HTTP service designed for development purposes.
 You can also explore additional HTTP examples in the [./test/httpTests.sh](./test/httpTests.sh) script.
 
 </details>
+
+&nbsp;
+
+# Notes for Developers
+
+If you are using Visual Studio on Windows, please ensure that exceptions are enabled in the `tester` project. This is necessary because some unit tests check for exceptions. You can enable exceptions by navigating to `Properties > C/C++ > Code Generation > Enable C++ Exceptions`.
+
+&nbsp;
 
 ---
 

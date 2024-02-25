@@ -8,10 +8,10 @@
  *
  */
 #pragma once
-#include "../../csv-parser/include/csv_parser.h"
 #include "Common.h"
 #include "CommonModes.h"
 #include "CommonParameters.h"
+#include "csv_parser.h"
 #include "exception/DataParserException.h"
 #include <cstddef>
 #include <functional>
@@ -27,11 +27,11 @@ public:
 
   const DataParserType dataType;
 
+  Csv::Parser csv_parser;
   size_t current_line_number = 0;
   size_t total_lines = 0;
   size_t training_ratio_line = 0;
   bool isTrainingRatioLineProcessed = false;
-  Csv::Parser csv_parser;
 
   /**
    * @brief Processes a line returns a RecordResult. This

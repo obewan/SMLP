@@ -30,9 +30,15 @@ public:
   virtual ~SimpleHTTPServer();
 
   struct clientInfo {
-    int client_socket;
-    std::string client_ip;
+    std::string client_ip = "";
     std::string str() const { return "[" + client_ip + "] "; }
+#ifdef _WIN32
+    // Sockets are unsigned long long on Windows
+    unsigned long long client_socket = 0;
+#else
+    // Sockets are int on Linux
+    int client_socket = -1;
+#endif
   };
 
   struct HttpRequest {
@@ -142,23 +148,23 @@ public:
 
   const std::string &getServerIp() const { return server_ip_; }
 
-  void setClientBufferSize(size_t bytes_length) {
-    this->client_buff_size_ = bytes_length;
-  }
-  size_t getClientBufferSize() const { return this->client_buff_size_; }
-
 protected:
   std::stop_source stopSource_;
   std::vector<std::jthread> clientHandlers_;
   std::timed_mutex threadMutex_;
   std::condition_variable wait_cv_;
   std::mutex wait_cv_m_;
-  std::atomic<bool> isStarted_ = false;
-  std::atomic<bool> isTrainedButNotExported_ = false;
-  int server_socket_ = -1;
   std::string server_ip_;
   std::string server_info_;
-  size_t client_buff_size_ = 32_K;
+#ifdef _WIN32
+  // Sockets are unsigned long long on Windows
+  unsigned long long server_socket_ = 0;
+#else
+  // Sockets are int on Linux
+  int server_socket_ = -1;
+#endif
   unsigned short http_port_ = 8080;
+  std::atomic<bool> isStarted_ = false;
+  std::atomic<bool> isTrainedButNotExported_ = false;
 };
 } // namespace smlp

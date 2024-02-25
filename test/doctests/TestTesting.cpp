@@ -44,9 +44,9 @@ TEST_CASE("Testing the Testing class") {
     auto fileparser = std::make_shared<DataFileParser>();
 
     manager.app_params = {.training_ratio_line = 0,
-                          .use_training_ratio_line = true,
                           .mode = EMode::TrainTestMonitored,
-                          .input = EInput::Stdin};
+                          .input = EInput::Stdin,
+                          .use_training_ratio_line = true};
     auto testing = new TestingStdin();
     testing->setDataParser(fileparser);
 

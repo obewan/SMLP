@@ -44,11 +44,11 @@ struct Record {
  * @brief Results of a parsed record.
  */
 struct RecordResult {
+  Record record;
   bool isSuccess = false;
   bool isLineSkipped = false;
   bool isEndOfFile = false;
   bool isEndOfTrainingLines = false;
-  Record record;
 };
 
 inline std::string getModeStr(EMode mode) {
