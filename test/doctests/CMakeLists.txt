@@ -9,7 +9,6 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")
 endif()
 
-add_library(nlohmann-json INTERFACE)
 target_sources(nlohmann-json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/../../libs/json/include/json.hpp)
 add_library(lib_doctest INTERFACE)
 target_sources(lib_doctest INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/doctest.h)

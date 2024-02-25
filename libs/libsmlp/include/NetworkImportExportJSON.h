@@ -9,7 +9,6 @@
  *
  */
 #pragma once
-#include "../../json/include/json.hpp"
 #include "Common.h"
 #include "Layer.h"
 #include "Network.h"
@@ -17,6 +16,7 @@
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/ImportExportException.h"
+#include "json.hpp"
 #include <filesystem>
 #include <fstream>
 #include <iostream>

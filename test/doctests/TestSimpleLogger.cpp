@@ -31,7 +31,7 @@ TEST_CASE("Testing the SimpleLogger class") {
     Predict predict;
     std::string result;
     auto &app_params = Manager::getInstance().app_params;
-    app_params = {.output_at_end = true, .predict_mode = EPredictMode::CSV};
+    app_params = {.predict_mode = EPredictMode::CSV, .output_at_end = true};
     result = predict.formatResult({1, 2, 3}, {f, g});
     CHECK(result == "1,2,3,0,0");
 

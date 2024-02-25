@@ -9,7 +9,6 @@
 #include "exception/DataParserException.h"
 #include "exception/SimpleTCPException.h"
 #include <algorithm>
-#include <bits/ranges_algo.h>
 #include <cctype>
 #include <condition_variable>
 #include <cstring>
@@ -19,29 +18,31 @@
 #include <iterator>
 #include <memory>
 #include <mutex>
-#include <netinet/in.h>
 #include <stop_token>
 #include <string>
-#include <sys/socket.h>
 #include <vector>
 
 #ifdef _WIN32
-#include <winsock2.h>
 #include <ws2tcpip.h> // for inet_ntop
 #pragma comment(lib, "ws2_32.lib")
 #define CLOSE_SOCKET closesocket
 #else
 #include <arpa/inet.h> // for inet_ntop
+#include <bits/ranges_algo.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #define CLOSE_SOCKET close
+#define INVALID_SOCKET -1
+#define SOCKET_ERROR -1
 #endif
 
 constexpr int MUTEX_TIMEOUT_SECONDS = 20;
 constexpr int EXPORT_MODEL_SCHEDULE_SECONDS = 2;
 constexpr int MAX_REQUESTS = 50;
+constexpr long SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
+constexpr long CLIENT_RECV_TIMEOUT_SECONDS = 5;
 constexpr size_t MAX_REQUEST_SIZE = 20_M;
-constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5;
-constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5;
 
 using json = nlohmann::json;
 using namespace smlp;
@@ -190,13 +191,14 @@ void SimpleHTTPServer::start() {
   // Export periodically the network model
   auto exportModel = [this]() {
     while (!stopSource_.stop_requested()) {
-      std::unique_lock lk(wait_cv_m_);
-      wait_cv_.wait_for(lk,
-                        std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
+      {
+        std::unique_lock lk(wait_cv_m_);
+        wait_cv_.wait_for(lk,
+                          std::chrono::seconds(EXPORT_MODEL_SCHEDULE_SECONDS));
+      } // lk is automatically unlocked here
 
       if (threadMutex_.try_lock_for(
               std::chrono::seconds(MUTEX_TIMEOUT_SECONDS))) {
-        std::lock_guard lock(threadMutex_, std::adopt_lock);
         try {
           auto &manager = Manager::getInstance();
           if (isTrainedButNotExported_ &&
@@ -212,6 +214,7 @@ void SimpleHTTPServer::start() {
           SimpleLogger::LOG_ERROR(
               "Unknown exception caught during model export.");
         }
+        threadMutex_.unlock();
       }
     }
   };
@@ -219,18 +222,18 @@ void SimpleHTTPServer::start() {
 #ifdef _WIN32
   WSADATA wsaData;
   if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
-    throw SimpleSocketException("Failed to initialize winsock");
+    throw SimpleTCPException("Failed to initialize winsock");
   }
 #endif
+
   server_socket_ = socket(AF_INET, SOCK_STREAM, 0);
-  if (server_socket_ == -1) {
+  if (server_socket_ == INVALID_SOCKET) {
     isStarted_ = false;
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketCreateError));
   }
 
-  sockaddr_in server_address{};
-  server_address.sin_family = AF_INET;
-  server_address.sin_port = htons(getServerPort());
+  sockaddr_in server_address{.sin_family = AF_INET,
+                             .sin_port = htons(getServerPort())};
   server_address.sin_addr.s_addr = INADDR_ANY;
 
   // Set accept timeout
@@ -242,7 +245,7 @@ void SimpleHTTPServer::start() {
 
   // bind to the tcp port
   if (bind(server_socket_, (struct sockaddr *)&server_address,
-           sizeof(server_address)) == -1) {
+           sizeof(server_address)) == SOCKET_ERROR) {
     isStarted_ = false;
     throw SimpleTCPException(SimpleLang::Error(Error::TCPSocketBindError));
   }
@@ -287,7 +290,8 @@ void SimpleHTTPServer::start() {
       if (stopSource_.stop_requested()) {
         break;
       }
-      if (client_info.client_socket == -1) {
+
+      if (client_info.client_socket == INVALID_SOCKET) {
         // Check if the error is because the socket was closed
 #ifdef _WIN32
         int lastError = WSAGetLastError();
@@ -309,7 +313,7 @@ void SimpleHTTPServer::start() {
           break;
         }
         continue;
-      } // end if client_socket == -1
+      } // end if client_socket == INVALID_SOCKET
 
       SimpleLogger::LOG_INFO(client_info.str(),
                              SimpleLang::Message(Message::TCPClientConnection));
@@ -319,7 +323,6 @@ void SimpleHTTPServer::start() {
           },
           stopSource_.get_token());
     } // while
-
   } catch (std::exception &e) {
     SimpleLogger::LOG_ERROR(e.what());
   }
@@ -342,15 +345,16 @@ void SimpleHTTPServer::stop() {
   SimpleLogger::LOG_INFO(server_info_, "TCP Server stop...");
   stopSource_.request_stop();
   wait_cv_.notify_all(); // notify all waiting threads
-  if (server_socket_ != -1) {
+  if (server_socket_ != INVALID_SOCKET) {
     CLOSE_SOCKET(server_socket_);
   }
-  server_socket_ = -1;
+  server_socket_ = INVALID_SOCKET;
 }
 
 void SimpleHTTPServer::handle_client(const clientInfo &client_info,
                                      const std::stop_token &stoken) {
-  char client_buff[client_buff_size_];
+  const size_t buff_size = 32_K;
+  std::vector<char> client_buff(buff_size);
   std::stringstream requestBuffer;
   struct timeval tv = {.tv_sec = CLIENT_RECV_TIMEOUT_SECONDS, .tv_usec = 0};
   setsockopt(client_info.client_socket, SOL_SOCKET, SO_RCVTIMEO,
@@ -359,9 +363,9 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
 
   while (!stoken.stop_requested()) {
     try {
-      memset(client_buff, 0, client_buff_size_);
-      ssize_t bytesReceived =
-          recv(client_info.client_socket, client_buff, client_buff_size_, 0);
+      std::fill(client_buff.begin(), client_buff.end(), 0);
+      long bytesReceived =
+          recv(client_info.client_socket, client_buff.data(), buff_size, 0);
 
       if (bytesReceived == -1) {
         if (errno != EAGAIN && errno != EWOULDBLOCK) {
@@ -387,7 +391,7 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
         return;
       }
 
-      requestBuffer.write(client_buff, bytesReceived);
+      requestBuffer.write(client_buff.data(), bytesReceived);
 
       if (requestBuffer.str().size() > MAX_REQUEST_SIZE) {
         SimpleLogger::LOG_ERROR(
@@ -398,9 +402,9 @@ void SimpleHTTPServer::handle_client(const clientInfo &client_info,
       }
 
       if (Manager::getInstance().app_params.verbose) {
-        SimpleLogger::LOG_DEBUG(
-            client_info.str(),
-            smlp::getEscapedString(std::string(client_buff, bytesReceived)));
+        SimpleLogger::LOG_DEBUG(client_info.str(),
+                                smlp::getEscapedString(std::string(
+                                    client_buff.data(), bytesReceived)));
       }
 
       const std::string &request =
@@ -528,6 +532,7 @@ void SimpleHTTPServer::processRequest(const std::string &rawRequest,
       const auto &httpResponse = buildHttpResponse(result);
       send(client_info.client_socket, httpResponse.c_str(),
            httpResponse.length(), 0);
+      threadMutex_.unlock();
 
     } catch (DataParserException &fpe) {
       SimpleLogger::LOG_ERROR(client_info.str(), fpe.what());
@@ -543,8 +548,6 @@ void SimpleHTTPServer::processRequest(const std::string &rawRequest,
            httpResponse.length(), 0);
       threadMutex_.unlock();
     }
-
-    threadMutex_.unlock();
   }
 }
 

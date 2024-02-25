@@ -8,6 +8,9 @@ if(ENABLE_COVERAGE)
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov") 
 endif()
 
+# Add the csv-parser and json libraries
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../csv-parser csv-parser)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../json json)
 
 set(PROJECT_NAME libsmlp)
 set(LIBRARY_NAME libsmlp)
@@ -26,7 +29,12 @@ add_library(${LIBRARY_NAME} STATIC
     ${LIBRARY_SOURCE}
 )
 
+# Link the csv-parser and json libraries
+#target_link_libraries(${LIBRARY_NAME} PUBLIC csv-parser json)
+
 target_include_directories(${LIBRARY_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../csv-parser/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../json/include>
     $<INSTALL_INTERFACE:include>
 )

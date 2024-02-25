@@ -59,9 +59,9 @@ TEST_CASE("Testing the Training class") {
       std::stringstream inputDataStream(inputData);
 
       AppParameters app_params_for_stdin = {.training_ratio_line = 1,
-                                            .use_training_ratio_line = true,
                                             .mode = EMode::TrainOnly,
-                                            .input = EInput::Stdin};
+                                            .input = EInput::Stdin,
+                                            .use_training_ratio_line = true};
 
       manager.app_params = app_params_for_stdin;
       // Redirect std::cin

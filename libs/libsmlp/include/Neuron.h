@@ -22,6 +22,9 @@ namespace smlp {
  */
 class Neuron {
 public:
+  // The weights of the neuron
+  std::vector<float> weights;
+  
   // The value of the neuron
   float value = 0.0;
 
@@ -30,9 +33,6 @@ public:
 
   // The error of the neuron
   float error = 0.0;
-
-  // The weights of the neuron
-  std::vector<float> weights;
 
   // Default constructor
   Neuron() = default;

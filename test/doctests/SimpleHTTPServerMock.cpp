@@ -35,7 +35,7 @@ void SimpleHTTPServerMock::start() {
       return;
     }
 
-    clientInfo client_info{.client_socket = 1, .client_ip = "localhost"};
+    clientInfo client_info{.client_ip = "localhost", .client_socket = 1};
 
     SimpleLogger::LOG_INFO(client_info.str(), " Client connection.");
 

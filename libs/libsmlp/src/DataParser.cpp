@@ -20,7 +20,7 @@ RecordResult DataParser::processLine(const std::string &line, bool isTesting) {
 
   Record record = processColumns(cell_refs);
 
-  return {.isSuccess = true, .record = record};
+  return {.record = record, .isSuccess = true};
 }
 
 void DataParser::parseLine(
