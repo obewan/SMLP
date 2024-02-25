@@ -136,10 +136,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae60601ca69a8debbbd92b14f35fb93bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1688150be37f46e3b989b8af619c2c0d"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a1688150be37f46e3b989b8af619c2c0d">getServerIp</a> () const</td></tr>
 <tr class="separator:a1688150be37f46e3b989b8af619c2c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbf9bcc65d8fa96e5299c845167bdf53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#abbf9bcc65d8fa96e5299c845167bdf53">setClientBufferSize</a> (size_t bytes_length)</td></tr>
-<tr class="separator:abbf9bcc65d8fa96e5299c845167bdf53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fb9bdc78a8311e0fec0c4964b699322"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a5fb9bdc78a8311e0fec0c4964b699322">getClientBufferSize</a> () const</td></tr>
-<tr class="separator:a5fb9bdc78a8311e0fec0c4964b699322"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -153,20 +149,18 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a82ff93c5b17801d101c33033fde3315f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c8cb4fefe277a2709525f95aabdd22f"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a7c8cb4fefe277a2709525f95aabdd22f">wait_cv_m_</a></td></tr>
 <tr class="separator:a7c8cb4fefe277a2709525f95aabdd22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0408315bfabaab866c3e14f36d1936dd"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a0408315bfabaab866c3e14f36d1936dd">isStarted_</a> = false</td></tr>
-<tr class="separator:a0408315bfabaab866c3e14f36d1936dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b04b0cc291fa6e566e29e343e436636"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a3b04b0cc291fa6e566e29e343e436636">isTrainedButNotExported_</a> = false</td></tr>
-<tr class="separator:a3b04b0cc291fa6e566e29e343e436636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62e15c87f5f80a1c6e957af5e752659b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a62e15c87f5f80a1c6e957af5e752659b">server_socket_</a> = -1</td></tr>
-<tr class="separator:a62e15c87f5f80a1c6e957af5e752659b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a914d4b32547bf43695cc9c90a99eb0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a6a914d4b32547bf43695cc9c90a99eb0">server_ip_</a></td></tr>
 <tr class="separator:a6a914d4b32547bf43695cc9c90a99eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bdc5af3226984bcdc3c95d5a4a2a007"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a9bdc5af3226984bcdc3c95d5a4a2a007">server_info_</a></td></tr>
 <tr class="separator:a9bdc5af3226984bcdc3c95d5a4a2a007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add6aa626dcaad9d09a0d2fd0ddbfaf9c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#add6aa626dcaad9d09a0d2fd0ddbfaf9c">client_buff_size_</a> = 32_K</td></tr>
-<tr class="separator:add6aa626dcaad9d09a0d2fd0ddbfaf9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e15c87f5f80a1c6e957af5e752659b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a62e15c87f5f80a1c6e957af5e752659b">server_socket_</a> = -1</td></tr>
+<tr class="separator:a62e15c87f5f80a1c6e957af5e752659b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab853a383d7fd1f63b0adecbc783f3e22"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#ab853a383d7fd1f63b0adecbc783f3e22">http_port_</a> = 8080</td></tr>
 <tr class="separator:ab853a383d7fd1f63b0adecbc783f3e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0408315bfabaab866c3e14f36d1936dd"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a0408315bfabaab866c3e14f36d1936dd">isStarted_</a> = false</td></tr>
+<tr class="separator:a0408315bfabaab866c3e14f36d1936dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b04b0cc291fa6e566e29e343e436636"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html#a3b04b0cc291fa6e566e29e343e436636">isTrainedButNotExported_</a> = false</td></tr>
+<tr class="separator:a3b04b0cc291fa6e566e29e343e436636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6b19281a4e465f4b2b35d0c2b80cc493"></a>
@@ -348,31 +342,6 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
-
-</div>
-</div>
-<a id="a5fb9bdc78a8311e0fec0c4964b699322"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5fb9bdc78a8311e0fec0c4964b699322">&#9670;&nbsp;</a></span>getClientBufferSize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t smlp::SimpleHTTPServer::getClientBufferSize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -722,32 +691,6 @@ false if server not started </dd></dl>
 
 </div>
 </div>
-<a id="abbf9bcc65d8fa96e5299c845167bdf53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbf9bcc65d8fa96e5299c845167bdf53">&#9670;&nbsp;</a></span>setClientBufferSize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::SimpleHTTPServer::setClientBufferSize </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>bytes_length</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="afc28edb0d3c4e0d6a213d0bc3054a306"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc28edb0d3c4e0d6a213d0bc3054a306">&#9670;&nbsp;</a></span>setServerPort()</h2>
 
@@ -838,28 +781,6 @@ false if server not started </dd></dl>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="add6aa626dcaad9d09a0d2fd0ddbfaf9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add6aa626dcaad9d09a0d2fd0ddbfaf9c">&#9670;&nbsp;</a></span>client_buff_size_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t smlp::SimpleHTTPServer::client_buff_size_ = 32_K</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="abc6fc49496ea8e80ef43f4b6a64a007d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc6fc49496ea8e80ef43f4b6a64a007d">&#9670;&nbsp;</a></span>clientHandlers_</h2>
 

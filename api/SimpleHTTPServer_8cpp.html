@@ -84,7 +84,6 @@ $(function() {
 <code>#include &quot;<a class="el" href="DataParserException_8h_source.html">exception/DataParserException.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="SimpleTCPException_8h_source.html">exception/SimpleTCPException.h</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;bits/ranges_algo.h&gt;</code><br />
 <code>#include &lt;cctype&gt;</code><br />
 <code>#include &lt;condition_variable&gt;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
@@ -94,18 +93,23 @@ $(function() {
 <code>#include &lt;iterator&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
-<code>#include &lt;netinet/in.h&gt;</code><br />
 <code>#include &lt;stop_token&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;sys/socket.h&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;arpa/inet.h&gt;</code><br />
+<code>#include &lt;bits/ranges_algo.h&gt;</code><br />
+<code>#include &lt;netinet/in.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a89a7b1b0ea2e73dc31bed4fcd9b857eb">CLOSE_SOCKET</a>&#160;&#160;&#160;close</td></tr>
 <tr class="separator:a89a7b1b0ea2e73dc31bed4fcd9b857eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26769957ec1a2beaf223f33b66ee64ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a26769957ec1a2beaf223f33b66ee64ab">INVALID_SOCKET</a>&#160;&#160;&#160;-1</td></tr>
+<tr class="separator:a26769957ec1a2beaf223f33b66ee64ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a633b0396ff93d336a088412a190a5072"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a633b0396ff93d336a088412a190a5072">SOCKET_ERROR</a>&#160;&#160;&#160;-1</td></tr>
+<tr class="separator:a633b0396ff93d336a088412a190a5072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -120,12 +124,12 @@ Variables</h2></td></tr>
 <tr class="separator:a97f4b592907120b63a63599e0ed1d32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a877f931be0f348a6917427a2a0d2be6b"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a877f931be0f348a6917427a2a0d2be6b">MAX_REQUESTS</a> = 50</td></tr>
 <tr class="separator:a877f931be0f348a6917427a2a0d2be6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f0e7d7969f186093eb5194fc054b2f9"><td class="memItemLeft" align="right" valign="top">constexpr long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a6f0e7d7969f186093eb5194fc054b2f9">SERVER_ACCEPT_TIMEOUT_SECONDS</a> = 5</td></tr>
+<tr class="separator:a6f0e7d7969f186093eb5194fc054b2f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a643203cedc1db816b25b9a6e5bb731ae"><td class="memItemLeft" align="right" valign="top">constexpr long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a643203cedc1db816b25b9a6e5bb731ae">CLIENT_RECV_TIMEOUT_SECONDS</a> = 5</td></tr>
+<tr class="separator:a643203cedc1db816b25b9a6e5bb731ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5521789c057cc9305aed66d100b9f263"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a5521789c057cc9305aed66d100b9f263">MAX_REQUEST_SIZE</a> = 20_M</td></tr>
 <tr class="separator:a5521789c057cc9305aed66d100b9f263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38fcb4c969d5e7ee5a679b050e0e1f84"><td class="memItemLeft" align="right" valign="top">constexpr __time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#a38fcb4c969d5e7ee5a679b050e0e1f84">SERVER_ACCEPT_TIMEOUT_SECONDS</a> = 5</td></tr>
-<tr class="separator:a38fcb4c969d5e7ee5a679b050e0e1f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5cca7e21f7ef2c83627f016e179aba7"><td class="memItemLeft" align="right" valign="top">constexpr __time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="SimpleHTTPServer_8cpp.html#ae5cca7e21f7ef2c83627f016e179aba7">CLIENT_RECV_TIMEOUT_SECONDS</a> = 5</td></tr>
-<tr class="separator:ae5cca7e21f7ef2c83627f016e179aba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a89a7b1b0ea2e73dc31bed4fcd9b857eb"></a>
@@ -136,6 +140,34 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define CLOSE_SOCKET&#160;&#160;&#160;close</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a26769957ec1a2beaf223f33b66ee64ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26769957ec1a2beaf223f33b66ee64ab">&#9670;&nbsp;</a></span>INVALID_SOCKET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INVALID_SOCKET&#160;&#160;&#160;-1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a633b0396ff93d336a088412a190a5072"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a633b0396ff93d336a088412a190a5072">&#9670;&nbsp;</a></span>SOCKET_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SOCKET_ERROR&#160;&#160;&#160;-1</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -158,8 +190,8 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ae5cca7e21f7ef2c83627f016e179aba7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5cca7e21f7ef2c83627f016e179aba7">&#9670;&nbsp;</a></span>CLIENT_RECV_TIMEOUT_SECONDS</h2>
+<a id="a643203cedc1db816b25b9a6e5bb731ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a643203cedc1db816b25b9a6e5bb731ae">&#9670;&nbsp;</a></span>CLIENT_RECV_TIMEOUT_SECONDS</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,7 +200,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 5</td>
+          <td class="memname">constexpr long CLIENT_RECV_TIMEOUT_SECONDS = 5</td>
         </tr>
       </table>
   </td>
@@ -268,8 +300,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a38fcb4c969d5e7ee5a679b050e0e1f84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38fcb4c969d5e7ee5a679b050e0e1f84">&#9670;&nbsp;</a></span>SERVER_ACCEPT_TIMEOUT_SECONDS</h2>
+<a id="a6f0e7d7969f186093eb5194fc054b2f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f0e7d7969f186093eb5194fc054b2f9">&#9670;&nbsp;</a></span>SERVER_ACCEPT_TIMEOUT_SECONDS</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +310,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr __time_t SERVER_ACCEPT_TIMEOUT_SECONDS = 5</td>
+          <td class="memname">constexpr long SERVER_ACCEPT_TIMEOUT_SECONDS = 5</td>
         </tr>
       </table>
   </td>
