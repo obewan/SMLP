@@ -218,8 +218,8 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
         "{\"action\":\"TrainTestMonitored\",\"code\":0,\"data\":\"{"
         "\\\"accuracy_avg\\\":"
         "100.0,\\\"accuracy_high\\\":100.0,\\\"accuracy_low\\\":100.0,"
-        "\\\"convergence\\\":0.0,\\\"convergence_one\\\":0.0,\\\"convergence_"
-        "zero\\\":0.0}\",\"message\":\"Success\"}");
+        "\\\"convergence\\\":null,\\\"convergence_one\\\":null,\\\"convergence_"
+        "zero\\\":null}\",\"message\":\"Success\"}");
 
   MESSAGE("[TEST] Testing unsupported HTTP version");
   const auto &httpRequest6 =
