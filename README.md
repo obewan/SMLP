@@ -294,6 +294,14 @@ You can also explore additional HTTP examples in the [./test/httpTests.sh](./tes
 
 </details>
 
+&nbsp;
+
+# Notes for Developers
+
+If you are using Visual Studio on Windows, please ensure that exceptions are enabled in the `tester` project. This is necessary because some unit tests check for exceptions. You can enable exceptions by navigating to `Properties > C/C++ > Code Generation > Enable C++ Exceptions`.
+
+&nbsp;
+
 ---
 
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/

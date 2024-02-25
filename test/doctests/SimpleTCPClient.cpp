@@ -2,6 +2,7 @@
 
 #ifdef _WIN32
 #include <winsock2.h>
+#include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 #else
 #include <arpa/inet.h>
@@ -17,7 +18,7 @@
 #include <iostream>
 
 constexpr int CLIENT_RECV_BUFFER_SIZE = 4096;
-constexpr __time_t CLIENT_RECV_TIMEOUT_SECONDS = 10;
+constexpr long CLIENT_RECV_TIMEOUT_SECONDS = 10;
 
 using namespace smlp;
 
@@ -43,7 +44,7 @@ void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
   }
 
   // Set the timeout for the socket
-  if (setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, &timeout,
+  if (setsockopt(client_socket, SOL_SOCKET, SO_RCVTIMEO, (const char *)&timeout,
                  sizeof(timeout)) < 0) {
     throw std::runtime_error("Client failed to set timeout");
   }

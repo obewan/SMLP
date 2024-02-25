@@ -1,10 +1,9 @@
-#include "exception/DataParserException.h"
-#include <bits/types/FILE.h>
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Common.h"
 #include "DataFileParser.h"
 #include "Manager.h"
 #include "doctest.h"
+#include "exception/DataParserException.h"
 #include <cmath>
 #include <string>
 

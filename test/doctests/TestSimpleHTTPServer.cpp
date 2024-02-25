@@ -177,9 +177,11 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   const auto &response3 = client.sendAndReceive(httpRequest3);
   CHECK(manager.app_params.mode == EMode::TestOnly);
   CHECK(client.getHttpCode(response3) == 200);
-  CHECK(
-      client.getHttpBody(response3) ==
-      R"({"action":"TestOnly","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
+  CHECK(client.getHttpBody(response3) ==
+        "{\"action\":\"TestOnly\",\"code\":0,\"data\":\"{\\\"accuracy_avg\\\":"
+        "100.0,\\\"accuracy_high\\\":100.0,\\\"accuracy_low\\\":100.0,"
+        "\\\"convergence\\\":0.0,\\\"convergence_one\\\":0.0,\\\"convergence_"
+        "zero\\\":0.0}\",\"message\":\"Success\"}");
 
   MESSAGE("[TEST] Testing POST TrainThenTest");
   const auto &httpRequest4 =
@@ -193,9 +195,12 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   const auto &response4 = client.sendAndReceive(httpRequest4);
   CHECK(manager.app_params.mode == EMode::TrainThenTest);
   CHECK(client.getHttpCode(response4) == 200);
-  CHECK(
-      client.getHttpBody(response4) ==
-      R"({"action":"TrainThenTest","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":0.0,\"convergence_one\":0.0,\"convergence_zero\":0.0}","message":"Success"})");
+  CHECK(client.getHttpBody(response4) ==
+        "{\"action\":\"TrainThenTest\",\"code\":0,\"data\":\"{\\\"accuracy_"
+        "avg\\\":"
+        "100.0,\\\"accuracy_high\\\":100.0,\\\"accuracy_low\\\":100.0,"
+        "\\\"convergence\\\":0.0,\\\"convergence_one\\\":0.0,\\\"convergence_"
+        "zero\\\":0.0}\",\"message\":\"Success\"}");
 
   MESSAGE("[TEST] Testing POST TrainTestMonitored");
   const auto &httpRequest5 =
@@ -209,9 +214,12 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   const auto &response5 = client.sendAndReceive(httpRequest5);
   CHECK(manager.app_params.mode == EMode::TrainTestMonitored);
   CHECK(client.getHttpCode(response5) == 200);
-  CHECK(
-      client.getHttpBody(response5) ==
-      R"({"action":"TrainTestMonitored","code":0,"data":"{\"accuracy_avg\":100.0,\"accuracy_high\":100.0,\"accuracy_low\":100.0,\"convergence\":null,\"convergence_one\":null,\"convergence_zero\":null}","message":"Success"})");
+  CHECK(client.getHttpBody(response5) ==
+        "{\"action\":\"TrainTestMonitored\",\"code\":0,\"data\":\"{"
+        "\\\"accuracy_avg\\\":"
+        "100.0,\\\"accuracy_high\\\":100.0,\\\"accuracy_low\\\":100.0,"
+        "\\\"convergence\\\":0.0,\\\"convergence_one\\\":0.0,\\\"convergence_"
+        "zero\\\":0.0}\",\"message\":\"Success\"}");
 
   MESSAGE("[TEST] Testing unsupported HTTP version");
   const auto &httpRequest6 =
@@ -225,9 +233,10 @@ TEST_CASE("Testing the SimpleTCPServer class - mocked" * doctest::timeout(20)) {
   const auto &response6 = client.sendAndReceive(httpRequest6);
   CHECK(manager.app_params.mode == EMode::TrainTestMonitored);
   CHECK(client.getHttpCode(response6) == 505);
-  CHECK(
-      client.getHttpBody(response6) ==
-      R"({"action":"/traintestmonitored","code":505,"data":"","message":"HTTP Version Not Supported"})");
+  CHECK(client.getHttpBody(response6) ==
+        "{\"action\":\"/"
+        "traintestmonitored\",\"code\":505,\"data\":\"\",\"message\":\"HTTP "
+        "Version Not Supported\"}");
 
   MESSAGE("[TEST] Closing the TCP server and client...");
 

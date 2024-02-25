@@ -66,9 +66,8 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == true);
     CHECK(result.code.value() == 200);
     CHECK(result.message() == "OK");
-    CHECK(
-        result.json() ==
-        R"({"action":"TestOnly","code":200,"data":"{\"test\":\"ok\"}","message":"OK"})");
+    CHECK(result.json() == "{\"action\":\"TestOnly\",\"code\":200,\"data\":\"{"
+                           "\\\"test\\\":\\\"ok\\\"}\",\"message\":\"OK\"}");
 
     result.code = smlp::make_error_code(ErrorCode::Created);
     result.action = smlp::getModeStr(EMode::TestOnly);
@@ -76,9 +75,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == true);
     CHECK(result.message() == "Created");
     CHECK(result.code.value() == 201);
-    CHECK(
-        result.json() ==
-        R"({"action":"TestOnly","code":201,"data":"{\"test\":\"ok\"}","message":"Created"})");
+    CHECK(result.json() ==
+          "{\"action\":\"TestOnly\",\"code\":201,\"data\":\"{\\\"test\\\":"
+          "\\\"ok\\\"}\",\"message\":\"Created\"}");
 
     result.code = smlp::make_error_code(ErrorCode::Accepted);
     result.action = smlp::getModeStr(EMode::TestOnly);
@@ -86,9 +85,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == true);
     CHECK(result.message() == "Accepted");
     CHECK(result.code.value() == 202);
-    CHECK(
-        result.json() ==
-        R"({"action":"TestOnly","code":202,"data":"{\"test\":\"ok\"}","message":"Accepted"})");
+    CHECK(result.json() ==
+          "{\"action\":\"TestOnly\",\"code\":202,\"data\":\"{\\\"test\\\":"
+          "\\\"ok\\\"}\",\"message\":\"Accepted\"}");
 
     result.code = smlp::make_error_code(ErrorCode::BadRequest);
     result.action = "";
@@ -96,9 +95,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Bad Request");
     CHECK(result.code.value() == 400);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":400,"data":"{\"test\":\"badrequest\"}","message":"Bad Request"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":400,\"data\":\"{\\\"test\\\":"
+          "\\\"badrequest\\\"}\",\"message\":\"Bad Request\"}");
 
     result.code = smlp::make_error_code(ErrorCode::Unauthorized);
     result.action = "";
@@ -106,9 +105,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Unauthorized");
     CHECK(result.code.value() == 401);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":401,"data":"{\"test\":\"ok\"}","message":"Unauthorized"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":401,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Unauthorized\"}");
 
     result.code = smlp::make_error_code(ErrorCode::PaymentRequired);
     result.action = "";
@@ -116,9 +115,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Payment Required");
     CHECK(result.code.value() == 402);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":402,"data":"{\"test\":\"ok\"}","message":"Payment Required"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":402,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Payment Required\"}");
 
     result.code = smlp::make_error_code(ErrorCode::Forbidden);
     result.action = "";
@@ -126,9 +125,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Forbidden");
     CHECK(result.code.value() == 403);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":403,"data":"{\"test\":\"ok\"}","message":"Forbidden"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":403,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Forbidden\"}");
 
     result.code = smlp::make_error_code(ErrorCode::NotFound);
     result.action = "";
@@ -136,9 +135,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Not Found");
     CHECK(result.code.value() == 404);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":404,"data":"{\"test\":\"ok\"}","message":"Not Found"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":404,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Not Found\"}");
 
     result.code = smlp::make_error_code(ErrorCode::MethodNotAllowed);
     result.action = "";
@@ -146,9 +145,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Method Not Allowed");
     CHECK(result.code.value() == 405);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":405,"data":"{\"test\":\"ok\"}","message":"Method Not Allowed"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":405,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Method Not Allowed\"}");
 
     result.code = smlp::make_error_code(ErrorCode::NotAcceptable);
     result.action = "";
@@ -156,9 +155,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Not Acceptable");
     CHECK(result.code.value() == 406);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":406,"data":"{\"test\":\"ok\"}","message":"Not Acceptable"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":406,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Not Acceptable\"}");
 
     result.code = smlp::make_error_code(ErrorCode::ProxyAuthenticationRequired);
     result.action = "";
@@ -166,9 +165,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Proxy Authentication Required");
     CHECK(result.code.value() == 407);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":407,"data":"{\"test\":\"ok\"}","message":"Proxy Authentication Required"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":407,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Proxy Authentication Required\"}");
 
     result.code = smlp::make_error_code(ErrorCode::RequestTimeout);
     result.action = "";
@@ -176,9 +175,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Request Timeout");
     CHECK(result.code.value() == 408);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":408,"data":"{\"test\":\"ok\"}","message":"Request Timeout"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":408,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Request Timeout\"}");
 
     result.code = smlp::make_error_code(ErrorCode::Conflict);
     result.action = "";
@@ -186,9 +185,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Conflict");
     CHECK(result.code.value() == 409);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":409,"data":"{\"test\":\"ok\"}","message":"Conflict"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":409,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Conflict\"}");
 
     result.code = smlp::make_error_code(ErrorCode::InternalServerError);
     result.action = "";
@@ -196,9 +195,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Internal Server Error");
     CHECK(result.code.value() == 500);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":500,"data":"{\"test\":\"ISE\"}","message":"Internal Server Error"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":500,\"data\":\"{\\\"test\\\":\\\"ISE\\\"}"
+          "\",\"message\":\"Internal Server Error\"}");
 
     result.code = smlp::make_error_code(ErrorCode::NotImplemented);
     result.action = "";
@@ -206,9 +205,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Not Implemented");
     CHECK(result.code.value() == 501);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":501,"data":"{\"test\":\"ok\"}","message":"Not Implemented"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":501,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Not Implemented\"}");
 
     result.code = smlp::make_error_code(ErrorCode::BadGateway);
     result.action = "";
@@ -216,9 +215,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Bad Gateway");
     CHECK(result.code.value() == 502);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":502,"data":"{\"test\":\"ok\"}","message":"Bad Gateway"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":502,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Bad Gateway\"}");
 
     result.code = smlp::make_error_code(ErrorCode::ServiceUnavailable);
     result.action = "";
@@ -226,9 +225,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Service Unavailable");
     CHECK(result.code.value() == 503);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":503,"data":"{\"test\":\"ok\"}","message":"Service Unavailable"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":503,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Service Unavailable\"}");
 
     result.code = smlp::make_error_code(ErrorCode::GatewayTimeout);
     result.action = "";
@@ -236,9 +235,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Gateway Timeout");
     CHECK(result.code.value() == 504);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":504,"data":"{\"test\":\"ok\"}","message":"Gateway Timeout"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":504,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Gateway Timeout\"}");
 
     result.code = smlp::make_error_code(ErrorCode::HTTPVersionNotSupported);
     result.action = "";
@@ -246,9 +245,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "HTTP Version Not Supported");
     CHECK(result.code.value() == 505);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":505,"data":"{\"test\":\"ok\"}","message":"HTTP Version Not Supported"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":505,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"HTTP Version Not Supported\"}");
 
     result.code =
         smlp::make_error_code(ErrorCode::NetworkAuthenticationRequired);
@@ -257,9 +256,9 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "Network Authentication Required");
     CHECK(result.code.value() == 511);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":511,"data":"{\"test\":\"ok\"}","message":"Network Authentication Required"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":511,\"data\":\"{\\\"test\\\":\\\"ok\\\"}"
+          "\",\"message\":\"Network Authentication Required\"}");
 
     result.code = std::make_error_code(std::errc::file_exists);
     result.action = "";
@@ -267,8 +266,8 @@ TEST_CASE("Testing the Common class") {
     CHECK(result.isSuccess() == false);
     CHECK(result.message() == "File exists");
     CHECK(result.code.value() == 17);
-    CHECK(
-        result.json() ==
-        R"({"action":"","code":17,"data":"{\"test\":\"file exists\"}","message":"File exists"})");
+    CHECK(result.json() ==
+          "{\"action\":\"\",\"code\":17,\"data\":\"{\\\"test\\\":\\\"file "
+          "exists\\\"}\",\"message\":\"File exists\"}");
   }
 }
