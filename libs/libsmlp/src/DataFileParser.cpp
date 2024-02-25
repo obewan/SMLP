@@ -66,7 +66,7 @@ RecordResult DataFileParser::processLine(const std::string &line,
 
   Record record = processColumns(cell_refs);
 
-  return {.isSuccess = true, .record = record};
+  return {.record = record, .isSuccess = true};
 }
 
 bool DataFileParser::getNextLine(std::string &line, bool isTesting) {

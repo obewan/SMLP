@@ -8,7 +8,7 @@
  *
  */
 #pragma once
-#include "../../json/include/json.hpp"
+#include "json.hpp"
 #include <cstdlib>
 #include <optional>
 #include <system_error>
