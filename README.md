@@ -34,10 +34,9 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 Includes a mushroom edibility dataset example.
 
-# Roadmap to first release
+# Roadmap to the first release
 
-- Check cross-platform compilation. `[in progress]`
-- Add a Docker support.
+- Add a Docker support. `[in progress]`
 - Preparing the release (cleaning, refactoring, testing, documentation, packaging).
 
 # Usage
