@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-26 13:29:11</td>
+            <td class="headerValue">2024-02-26 16:15:46</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">12</td>
@@ -88,7 +88,7 @@
 <a name="26"><span class="lineNum">      26 </span>            :  * the sigmoid function itself: if σ(x) is the sigmoid function, then its</a>
 <a name="27"><span class="lineNum">      27 </span>            :  * derivative σ'(x) can be computed as σ(x) * (1 - σ(x)).</a>
 <a name="28"><span class="lineNum">      28 </span>            :  */</a>
-<a name="29"><span class="lineNum">      29 </span><span class="lineCov">        851 : inline auto sigmoid = [](auto x) { return 1.0f / (1.0f + exp(-x)); };</span></a>
+<a name="29"><span class="lineNum">      29 </span><span class="lineCov">        874 : inline auto sigmoid = [](auto x) { return 1.0f / (1.0f + exp(-x)); };</span></a>
 <a name="30"><span class="lineNum">      30 </span><span class="lineCov">        244 : inline auto sigmoidDerivative = [](auto x) {</span></a>
 <a name="31"><span class="lineNum">      31 </span><span class="lineCov">        244 :   float sigmoidValue = sigmoid(x);</span></a>
 <a name="32"><span class="lineNum">      32 </span><span class="lineCov">        244 :   return sigmoidValue * (1 - sigmoidValue);</span></a>
@@ -113,8 +113,8 @@
 <a name="51"><span class="lineNum">      51 </span>            :  * @param Unit</a>
 <a name="52"><span class="lineNum">      52 </span>            :  * @return ReLU</a>
 <a name="53"><span class="lineNum">      53 </span>            :  */</a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">        988 : inline auto relu = [](auto x) { return std::max(0.0f, x); };</span></a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">        460 : inline auto reluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; };</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">       1264 : inline auto relu = [](auto x) { return std::max(0.0f, x); };</span></a>
+<a name="55"><span class="lineNum">      55 </span><span class="lineCov">        712 : inline auto reluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; };</span></a>
 <a name="56"><span class="lineNum">      56 </span>            : </a>
 <a name="57"><span class="lineNum">      57 </span>            : /**</a>
 <a name="58"><span class="lineNum">      58 </span>            :  * @brief Leaky ReLU: This is a variant of ReLU that allows small negative</a>
