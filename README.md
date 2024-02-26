@@ -36,8 +36,7 @@ Includes a mushroom edibility dataset example.
 
 # Roadmap to the first release
 
-- Add a Docker support. `[in progress]`
-- Preparing the release (cleaning, refactoring, testing, documentation, packaging).
+- Preparing the release (cleaning, refactoring, testing, documentation, packaging). First release comming soon... `[in progress]`
 
 # Usage
 
@@ -293,11 +292,74 @@ You can also explore additional HTTP examples in the [./test/httpTests.sh](./tes
 
 </details>
 
+<details>
+<summary>Example 6: using Docker</summary>
+
+Be sure to have installed a `Docker` solution, like `Docker Desktop` (and activate its WSL support if using WSL). Then edit the `Dockerfile` to change the `MODEL_NAME` environment variable to the path of the smlp neural network model you want to use. This model should be located in the same directory as your Dockerfile.
+
+Run the following command to build the Docker image (replace smlp with the name you want to give to your Docker image):
+
+`docker build -t smlp .`
+
+This command tells Docker to build an image using the Dockerfile in the current directory (.) and tag (-t) it with the name smlp.
+
+Then run the Docker image on your local port 8080 (or any other port you prefer):
+
+`docker run -p 8080:8080 smlp`
+
+This command tells Docker to run a new container from the smlp image and map port 8080 of the container to port 8080 of your host machine.
+
+Then you can send some request to the smlp server, like for example using curl:
+
+`curl -s -X POST -H "Content-Type: text/plain" -d '0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00' http://localhost:8080/predict`
+
+You should see a response like this:
+
+`{"action":"Predict","code":0,"data":"1,0.04,0.57,0.8,0.08,1,0.38,0,0.85,0.12,0.05,0,0.73,0.62,0,0,1,0.92,0,1,0","message":"Success"}`
+
+Note: If you have a service running on port 8080, you will need to choose a different port. You can also set additional smlp options in the Dockerfile, at the `ENV CMD` bottom line.
+
+</details>
+
 &nbsp;
 
 # Notes for Developers
 
-If you are using Visual Studio on Windows, please ensure that exceptions are enabled in the `tester` project. This is necessary because some unit tests check for exceptions. You can enable exceptions by navigating to `Properties > C/C++ > Code Generation > Enable C++ Exceptions`.
+## Building from sources
+
+<details>
+<summary>On Linux</summary>
+
+Ensure that `make`, `cmake`, `g++` (v10 or v11), and `lcov` are installed. For example, on Debian, you can use the following commands:  
+`sudo apt-get update`  
+`sudo apt-get install -y make cmake g++-11 lcov`
+
+Next, configure CMake for the Release:  
+`mkdir build`  
+`CC=gcc-11 CXX=g++-11 cmake -B build -DCMAKE_BUILD_TYPE=Release`
+
+Finally, build the project, you should find the `smlp` program under the `build` folder (don't forget to copy the `i18n` directory with it):  
+`cmake --build build --config Release -- -j 2`
+
+</details>
+
+<details>
+<summary>On Windows</summary>
+
+Ensure that `cmake` for Windows and `Visual Studio` (which include a C++ compiler) are installed.
+
+Then generate the build files:  
+`mkdir build`  
+`cd build`
+`cmake -G "Visual Studio 17 2022" -A x64 ..`  
+(Note: "Visual Studio 17 2022" refers to the 2022 community edition)
+
+Make sure that exceptions are enabled in the `tester` project. This is necessary because some unit tests check for exceptions. You can enable exceptions by navigating to `Properties > C/C++ > Code Generation > Enable C++ Exceptions`.
+
+Finally build the project, you should find the `smlp` program under the `build\Release` folder (don't forget to copy the `i18n` directory with it):  
+`cmake --build . --config Release`
+
+</details>
 
 &nbsp;
 
