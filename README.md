@@ -268,7 +268,7 @@ $ cat ../data/mushroom/mushroom_data_to_predict.csv | ./smlp -i mushroom_model.j
 </details>
 
 <details>
-<summary>Example 5: using http</summary>
+<summary>Example 5: using HTTP</summary>
 
 To enable the HTTP service of SMLP, follow these steps:
 
