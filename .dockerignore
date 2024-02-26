@@ -9,6 +9,7 @@
 coverage/
 data/
 build/
+scripts/
 *.sh
 *.yml
 *.yaml

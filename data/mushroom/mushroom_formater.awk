@@ -20,9 +20,10 @@ BEGIN{
         case "e": $1=1; break;
         default: next; break;
     }
+    max[1] = 1;
 
     #cap-diameter (float)
-    max2 = 100;
+    max[2] = 100;
 
     #cap-shape     
     switch($3){
@@ -35,7 +36,7 @@ BEGIN{
         case "o": $3=7; break;
         default: $3=0; break;
     }
-    max3=7;
+    max[3]=7;
 
     #cap-surface
     switch($4){
@@ -51,7 +52,7 @@ BEGIN{
         case "e": $4=10; break;
         default: $4=0; break;
     }
-    max4=10;
+    max[4]=10;
 
     #cap-color
     switch($5){
@@ -69,7 +70,7 @@ BEGIN{
         case "k": $5=12; break;
         default: $5=0; break;
     }
-    max5=12;
+    max[5]=12;
     
     #does-bruise-bleed
     switch($6){
@@ -77,7 +78,7 @@ BEGIN{
         case "f": $6=2; break;
         default: $6=0; break;
     }
-    max6=2;
+    max[6]=2;
     
     #gill-attachment
     switch($7){
@@ -91,7 +92,7 @@ BEGIN{
         case "?": $7=8; break;
         default: $7=0; break;
     }
-    max7=8;
+    max[7]=8;
    
     #gill-spacing
     switch($8){
@@ -100,7 +101,7 @@ BEGIN{
         case "f": $8=3; break;
         default: $8=0; break;
     }
-    max8=3;
+    max[8]=3;
 
     #gill-color
     switch($9){
@@ -119,13 +120,13 @@ BEGIN{
         case "f": $9=13; break;
         default: $9=0; break;
     }
-    max9=13;
+    max[9]=13;
 
     #stem-height (float)
-    max10=50;
+    max[10]=50;
 
     #stem-width (float)
-    max11=150;
+    max[11]=150;
 
     #stem-root
     switch($12){
@@ -138,7 +139,7 @@ BEGIN{
         case "r": $12=7; break;
         default: $12=0; break;
     }
-    max12=7;
+    max[12]=7;
 
     #stem-surface
     switch($13){
@@ -155,7 +156,7 @@ BEGIN{
         case "f": $13=11; break;
         default: $13=0; break;
     }
-    max13=11;
+    max[13]=11;
 
     #stem-color
     switch($14){
@@ -174,7 +175,7 @@ BEGIN{
         case "f": $14=13; break;
         default: $14=0; break;
     }
-    max14=13;
+    max[14]=13;
 
     #veil-type
     switch($15){
@@ -182,7 +183,7 @@ BEGIN{
         case "u": $15=2; break;
         default: $15=0; break;
     }
-    max15=2;
+    max[15]=2;
 
     #veil-color
     switch($16){
@@ -201,7 +202,7 @@ BEGIN{
         case "f": $16=13; break;
         default: $16=0; break;
     }
-    max16=13;
+    max[16]=13;
 
     #has-ring
     switch($17){
@@ -209,7 +210,7 @@ BEGIN{
         case "f": $17=2; break;
         default: $17=0; break;
     }
-    max17=2;
+    max[17]=2;
 
     #ring-type
     switch($18){
@@ -227,7 +228,7 @@ BEGIN{
         case "?": $18=12; break;
         default: $18=0; break;
     }
-    max18=12;
+    max[18]=12;
 
     #spore-print-color
     switch($19){
@@ -245,7 +246,7 @@ BEGIN{
         case "k": $19=12; break;
         default: $19=0; break;
     }
-    max19=12;
+    max[19]=12;
 
     #habitat
     switch($20){
@@ -259,7 +260,7 @@ BEGIN{
         case "d": $20=8; break;
         default: $20=0; break;
     }
-    max20=8;
+    max[20]=8;
 
     #season
     switch($21){
@@ -269,14 +270,13 @@ BEGIN{
         case "w": $21=4; break;
         default: $21=0; break;
     }
-    max21=4;
+    max[21]=4;
 
     gsub(/;/, ",") 
-
-    printf "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n", 
-        $1, n($2,max2), n($3,max3), n($4,max4), n($5,max5),
-        n($6,max6), n($7,max7), n($8,max8), n($9,max9), n($10,max10),
-        n($11,max11),n($12,max12),n($13,max13),n($14,max14),n($15,max15),
-        n($16,max16),n($17,max17),n($18,max18),n($19,max19),n($20,max20),
-        n($21,max21);
+    
+    for(i=1; i<=21; i++){
+        printf "%.2f", n($i, max[i])
+        if(i<21) printf ","
+    }
+    printf "\n"
 }

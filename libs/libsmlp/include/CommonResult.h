@@ -44,59 +44,41 @@ enum class ErrorCode {
   NetworkAuthenticationRequired = 511,
 };
 
+const std::map<ErrorCode, std::string> errorCodeMessages{
+    {ErrorCode::Success, "Success"},
+    {ErrorCode::Failure, "Failure"},
+    {ErrorCode::OK, "OK"},
+    {ErrorCode::Created, "Created"},
+    {ErrorCode::Accepted, "Accepted"},
+    {ErrorCode::BadRequest, "Bad Request"},
+    {ErrorCode::Unauthorized, "Unauthorized"},
+    {ErrorCode::PaymentRequired, "Payment Required"},
+    {ErrorCode::Forbidden, "Forbidden"},
+    {ErrorCode::NotFound, "Not Found"},
+    {ErrorCode::MethodNotAllowed, "Method Not Allowed"},
+    {ErrorCode::NotAcceptable, "Not Acceptable"},
+    {ErrorCode::ProxyAuthenticationRequired, "Proxy Authentication Required"},
+    {ErrorCode::RequestTimeout, "Request Timeout"},
+    {ErrorCode::Conflict, "Conflict"},
+    {ErrorCode::InternalServerError, "Internal Server Error"},
+    {ErrorCode::NotImplemented, "Not Implemented"},
+    {ErrorCode::BadGateway, "Bad Gateway"},
+    {ErrorCode::ServiceUnavailable, "Service Unavailable"},
+    {ErrorCode::GatewayTimeout, "Gateway Timeout"},
+    {ErrorCode::HTTPVersionNotSupported, "HTTP Version Not Supported"},
+    {ErrorCode::NetworkAuthenticationRequired,
+     "Network Authentication Required"}};
+
 class ErrorCategory : public std::error_category {
 public:
   const char *name() const noexcept override { return "server"; }
 
   std::string message(int ev) const override {
-    switch (static_cast<ErrorCode>(ev)) {
-    case ErrorCode::Success:
-      return "Success";
-    case ErrorCode::Failure:
-      return "Failure";
-    case ErrorCode::OK:
-      return "OK";
-    case ErrorCode::Created:
-      return "Created";
-    case ErrorCode::Accepted:
-      return "Accepted";
-    case ErrorCode::BadRequest:
-      return "Bad Request";
-    case ErrorCode::Unauthorized:
-      return "Unauthorized";
-    case ErrorCode::PaymentRequired:
-      return "Payment Required";
-    case ErrorCode::Forbidden:
-      return "Forbidden";
-    case ErrorCode::NotFound:
-      return "Not Found";
-    case ErrorCode::MethodNotAllowed:
-      return "Method Not Allowed";
-    case ErrorCode::NotAcceptable:
-      return "Not Acceptable";
-    case ErrorCode::ProxyAuthenticationRequired:
-      return "Proxy Authentication Required";
-    case ErrorCode::RequestTimeout:
-      return "Request Timeout";
-    case ErrorCode::Conflict:
-      return "Conflict";
-    case ErrorCode::InternalServerError:
-      return "Internal Server Error";
-    case ErrorCode::NotImplemented:
-      return "Not Implemented";
-    case ErrorCode::BadGateway:
-      return "Bad Gateway";
-    case ErrorCode::ServiceUnavailable:
-      return "Service Unavailable";
-    case ErrorCode::GatewayTimeout:
-      return "Gateway Timeout";
-    case ErrorCode::HTTPVersionNotSupported:
-      return "HTTP Version Not Supported";
-    case ErrorCode::NetworkAuthenticationRequired:
-      return "Network Authentication Required";
-    default:
-      return "Unknown Error";
+    auto it = errorCodeMessages.find(static_cast<ErrorCode>(ev));
+    if (it != errorCodeMessages.end()) {
+      return it->second;
     }
+    return "Unknown Error";
   }
 };
 
