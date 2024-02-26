@@ -29,6 +29,7 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 - [Sonarlint](https://www.sonarsource.com/products/sonarlint) code analysis.
 - [CppCheck](https://cppcheck.sourceforge.io/) code analysis.
 - [CCCC](https://sarnold.github.io/cccc/CCCC_User_Guide.html) code metrics.
+- [Lizard](https://github.com/terryyin/lizard) code metrics.
 - [Valgrind](https://valgrind.org/) memory check.
 - [Microsoft Copilot](https://www.microsoft.com/en-us/bing?ep=140&es=31&form=MA13FV), [OpenAI ChatGPT](https://chat.openai.com/) and [Google Gemini](https://gemini.google.com/) code reviews.
 
