@@ -1,0 +1,14 @@
+.vscode
+.cache
+.codeql
+.cppcheck
+.cccc
+.valgrind
+.github
+.git
+coverage/
+data/
+build/
+*.sh
+*.yml
+*.yaml
