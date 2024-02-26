@@ -430,6 +430,8 @@ Variables</h2></td></tr>
 <tr class="separator:a40440a8669fb36563ede865ea5e3b993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a0cc719b2f89ae1c6140a81eaca2dba19">activation_map</a></td></tr>
 <tr class="separator:a0cc719b2f89ae1c6140a81eaca2dba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9486f85451555d4030ac8ef3c2bff44"><td class="memItemLeft" align="right" valign="top">const std::map&lt; <a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">ErrorCode</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#ad9486f85451555d4030ac8ef3c2bff44">errorCodeMessages</a></td></tr>
+<tr class="separator:ad9486f85451555d4030ac8ef3c2bff44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a460f274a49feb5ded7f7283bdb592803"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="namespacesmlp.html#a157e446fdf3733b88ae1f7be215c4e8e">LayerType</a>, std::less&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a460f274a49feb5ded7f7283bdb592803">layer_map</a></td></tr>
 <tr class="separator:a460f274a49feb5ded7f7283bdb592803"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1251,6 +1253,44 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
 <div class="line">  <span class="keywordflow">return</span> x &gt;= 0 ? 1 : alpha * exp(x);</div>
 <div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad9486f85451555d4030ac8ef3c2bff44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9486f85451555d4030ac8ef3c2bff44">&#9670;&nbsp;</a></span>errorCodeMessages</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;<a class="el" href="namespacesmlp.html#ac7332cebc522f07212b0f415b2f4452a">ErrorCode</a>, std::string&gt; smlp::errorCodeMessages</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    {ErrorCode::Success, <span class="stringliteral">&quot;Success&quot;</span>},</div>
+<div class="line">    {ErrorCode::Failure, <span class="stringliteral">&quot;Failure&quot;</span>},</div>
+<div class="line">    {ErrorCode::OK, <span class="stringliteral">&quot;OK&quot;</span>},</div>
+<div class="line">    {ErrorCode::Created, <span class="stringliteral">&quot;Created&quot;</span>},</div>
+<div class="line">    {ErrorCode::Accepted, <span class="stringliteral">&quot;Accepted&quot;</span>},</div>
+<div class="line">    {ErrorCode::BadRequest, <span class="stringliteral">&quot;Bad Request&quot;</span>},</div>
+<div class="line">    {ErrorCode::Unauthorized, <span class="stringliteral">&quot;Unauthorized&quot;</span>},</div>
+<div class="line">    {ErrorCode::PaymentRequired, <span class="stringliteral">&quot;Payment Required&quot;</span>},</div>
+<div class="line">    {ErrorCode::Forbidden, <span class="stringliteral">&quot;Forbidden&quot;</span>},</div>
+<div class="line">    {ErrorCode::NotFound, <span class="stringliteral">&quot;Not Found&quot;</span>},</div>
+<div class="line">    {ErrorCode::MethodNotAllowed, <span class="stringliteral">&quot;Method Not Allowed&quot;</span>},</div>
+<div class="line">    {ErrorCode::NotAcceptable, <span class="stringliteral">&quot;Not Acceptable&quot;</span>},</div>
+<div class="line">    {ErrorCode::ProxyAuthenticationRequired, <span class="stringliteral">&quot;Proxy Authentication Required&quot;</span>},</div>
+<div class="line">    {ErrorCode::RequestTimeout, <span class="stringliteral">&quot;Request Timeout&quot;</span>},</div>
+<div class="line">    {ErrorCode::Conflict, <span class="stringliteral">&quot;Conflict&quot;</span>},</div>
+<div class="line">    {ErrorCode::InternalServerError, <span class="stringliteral">&quot;Internal Server Error&quot;</span>},</div>
+<div class="line">    {ErrorCode::NotImplemented, <span class="stringliteral">&quot;Not Implemented&quot;</span>},</div>
+<div class="line">    {ErrorCode::BadGateway, <span class="stringliteral">&quot;Bad Gateway&quot;</span>},</div>
+<div class="line">    {ErrorCode::ServiceUnavailable, <span class="stringliteral">&quot;Service Unavailable&quot;</span>},</div>
+<div class="line">    {ErrorCode::GatewayTimeout, <span class="stringliteral">&quot;Gateway Timeout&quot;</span>},</div>
+<div class="line">    {ErrorCode::HTTPVersionNotSupported, <span class="stringliteral">&quot;HTTP Version Not Supported&quot;</span>},</div>
+<div class="line">    {ErrorCode::NetworkAuthenticationRequired,</div>
+<div class="line">     <span class="stringliteral">&quot;Network Authentication Required&quot;</span>}}</div>
 </div><!-- fragment -->
 </div>
 </div>
