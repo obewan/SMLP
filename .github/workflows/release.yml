@@ -1,4 +1,4 @@
-name: Build and Release
+name: Release
 
 on:
   push:
@@ -7,49 +7,40 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        config:
-          - {
-              name: "Ubuntu Latest GCC",
-              artifact: "Linux.tar.xz",
-              build_type: "Release",
-              executable: "smlp",
-              cc: "gcc-11",
-              cxx: "g++-11",
-            }
-          - {
-              name: "Windows Latest MSVC",
-              artifact: "Windows-MSVC.tar.xz",
-              build_type: "Release",
-              executable: "Release/smlp.exe",
-              cc: "cl",
-              cxx: "cl",
-              environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-            }
+        include:
+          - os: ubuntu-latest
+            name: "Ubuntu Latest GCC"
+            artifact: "Linux.tar.xz"
+            build_type: "Release"
+            executable: "smlp"
+            cc: "gcc-11"
+            cxx: "g++-11"
+          - os: windows-latest
+            name: "Windows Latest MSVC"
+            artifact: "Windows-MSVC.tar.xz"
+            build_type: "Release"
+            executable: "Release/smlp.exe"
+            cc: "cl"
+            cxx: "cl"
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
 
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debugging information
-        shell: bash
-        run: |
-          echo PATH=$PATH
-          which ${{ matrix.config.cc }}
-          which ${{ matrix.config.cxx }}
-
       - name: Setup MSVC environment
-        if: matrix.config.environment_script
+        if: matrix.environment_script
         shell: cmd
-        run: call "${{ matrix.config.environment_script }}"
+        run: call "${{ matrix.environment_script }}"
 
       - name: Configure CMake
         shell: bash
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_C_COMPILER=${{ matrix.config.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
+          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
 
       - name: Build
         shell: bash
@@ -66,9 +57,9 @@ jobs:
       - name: Package
         shell: bash
         run: |
-          cp ./${{ matrix.config.executable }} ./install/ 
+          cp ./${{ matrix.executable }} ./install/ 
           cp -r ./i18n ./install/
-          tar -czvf ${{ matrix.config.artifact }} -C install
+          tar -czvf ${{ matrix.artifact }} -C install
 
       - name: Create Release
         id: create_release
@@ -88,6 +79,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ matrix.config.artifact }}
-          asset_name: ${{ matrix.config.artifact }}
+          asset_path: ./${{ matrix.artifact }}
+          asset_name: ${{ matrix.artifact }}
           asset_content_type: application/gzip
