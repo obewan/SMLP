@@ -2,8 +2,6 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "*"
 
@@ -35,23 +33,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Check if commit is tagged
-        id: check_tag
-        run: |
-          if git describe --exact-match --tags HEAD >/dev/null 2>&1; then 
-            echo 'tagged=true' >> $GITHUB_ENV
-          else 
-            echo 'tagged=false' >> $GITHUB_ENV
-          fi
-        shell: bash
-
-      - name: Exit if not tagged
-        run: |
-          if [[ "${{ env.tagged }}" == "false" ]]; then 
-            exit 0
-          fi
-        shell: bash
 
       - name: Debugging information
         shell: bash
