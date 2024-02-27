@@ -34,7 +34,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Check if commit is tagged
+        id: check_tag
+        run: echo "::set-output name=tagged::$(if git describe --exact-match --tags HEAD >/dev/null 2>&1; then echo 'true'; else echo 'false'; fi)"
+        shell: bash
+
+      - name: Exit if not tagged
+        if: steps.check_tag.outputs.tagged == 'false'
+        run: exit 0
+        shell: bash
 
       - name: Setup MSVC environment
         if: matrix.config.environment_script
