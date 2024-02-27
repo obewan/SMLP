@@ -35,10 +35,6 @@ Each neurons of a previous layer is connected with each neurons of its next laye
 
 Includes a mushroom edibility dataset example.
 
-# Roadmap to the first release
-
-- Preparing the release (cleaning, refactoring, testing, documentation, packaging). First release comming soon... `[in progress]`
-
 # Usage
 
 1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example with the script [data/mushroom/format.sh](./data/mushroom/format.sh) that use a simple [awk script](./data/mushroom/mushroom_formater.awk) to format and normalize mushroom_data_orig.csv into mushroom_data.csv).
