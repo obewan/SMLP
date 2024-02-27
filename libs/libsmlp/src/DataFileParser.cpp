@@ -38,6 +38,7 @@ void DataFileParser::closeFile() {
   if (file.is_open()) {
     file.close();
   }
+  current_line_number = 0;
 }
 
 void DataFileParser::resetPos() {
@@ -50,12 +51,10 @@ RecordResult DataFileParser::processLine(const std::string &line,
                                          bool isTesting) {
   std::string nextline;
   current_line_number++;
-  if (line.empty()) {
-    if (!getNextLine(nextline, isTesting)) {
-      return {.isSuccess = false, .isEndOfFile = true};
-    }
-  } else {
+  if (!line.empty()) {
     nextline = line;
+  } else if (!getNextLine(nextline, isTesting)) {
+    return {.isSuccess = false, .isEndOfFile = true};
   }
 
   std::vector<std::vector<Csv::CellReference>> cell_refs;

@@ -16,30 +16,37 @@ TEST_CASE("Testing the DataFileParser class") {
   SUBCASE("Test Constructor") { CHECK_NOTHROW(DataFileParser()); }
   DataFileParser parser;
 
-  SUBCASE("Test openFile") {
-    Manager::getInstance().app_params.data_file =
-        "oops"; // This file does not exist
+  SUBCASE("Test open and close file") {
+    auto &app_params = Manager::getInstance().app_params;
+    app_params.data_file = "oops"; // This file does not exist
     CHECK_THROWS_AS(parser.openFile(), DataParserException);
+    CHECK(parser.isFileOpen() == false);
 
-    Manager::getInstance().app_params.data_file = test_file;
+    app_params.data_file = "";
+    CHECK_THROWS_AS(parser.openFile(), DataParserException);
+    CHECK(parser.isFileOpen() == false);
+
+    app_params.data_file = test_file;
     CHECK_NOTHROW(parser.openFile());
-    CHECK(parser.file.is_open() == true);
+    CHECK(parser.isFileOpen() == true);
     parser.closeFile();
-  }
-
-  SUBCASE("Test closeFile") {
-    parser.openFile();
-    parser.closeFile();
-    CHECK(parser.file.is_open() == false);
+    CHECK(parser.isFileOpen() == false);
+    CHECK(parser.current_line_number == 0);
   }
 
   SUBCASE("Test resetPos") {
+    Manager::getInstance().app_params.data_file = test_file;
+    Manager::getInstance().network_params = {.input_size = 20,
+                                             .hidden_size = 12,
+                                             .output_size = 1,
+                                             .hiddens_count = 1};
     parser.openFile();
     CHECK(parser.file.is_open() == true);
-    std::string line;
-    std::getline(parser.file, line);
+    CHECK_NOTHROW(parser.processLine());
+    CHECK(parser.current_line_number > 0);
     CHECK((long)parser.file.tellg() > 0);
     parser.resetPos();
+    CHECK(parser.current_line_number == 0);
     CHECK((long)parser.file.tellg() == 0);
     parser.closeFile();
   }
@@ -54,9 +61,35 @@ TEST_CASE("Testing the DataFileParser class") {
   }
 
   SUBCASE("Test countLine") {
+    Manager::getInstance().app_params.data_file = test_file;
     CHECK(parser.file.is_open() == false);
     auto linesCount = parser.countLine();
     CHECK(linesCount == 10);
+    CHECK(parser.file.is_open() == false);
+  }
+
+  SUBCASE("Test getNextLine") {
+    std::string line;
+    auto &app_params = Manager::getInstance().app_params;
+    app_params.data_file = test_file;
+    CHECK(parser.file.is_open() == false);
+    parser.openFile();
+    CHECK(parser.file.is_open() == true);
+    CHECK(parser.current_line_number == 0);
+
+    app_params.use_training_ratio_line = false;
+    app_params.training_ratio_line = 0;
+    CHECK(parser.getNextLine(line, false) == true);
+    CHECK(parser.current_line_number == 0);
+
+    app_params.use_training_ratio_line = true;
+    parser.training_ratio_line = 5;
+    CHECK(parser.getNextLine(line, true) == true);
+    CHECK(parser.current_line_number == 5);
+
+    app_params.use_training_ratio_line = false;
+    app_params.training_ratio_line = 0;
+    parser.closeFile();
     CHECK(parser.file.is_open() == false);
   }
 

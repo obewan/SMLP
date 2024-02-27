@@ -41,7 +41,7 @@ Includes a mushroom edibility dataset example.
 
 # Usage
 
-1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example with the script [./data/mushroom/format.sh](./data/mushroom/format.sh) that use a simple [awk script](./data/mushroom/mushroom_formater.awk) to format and normalize mushroom_data_orig.csv into mushroom_data.csv).
+1. Prepare a dataset in CSV format with comma separation and with only float numbers ranging from 0 to 1 (example with the script [data/mushroom/format.sh](./data/mushroom/format.sh) that use a simple [awk script](./data/mushroom/mushroom_formater.awk) to format and normalize mushroom_data_orig.csv into mushroom_data.csv).
 2. Build and run smlp (should be located in _build_ directory then).
 3. To get command line help: `smlp -h`
 4. You can specify the running mode with the `mode` option (`-m` parameter):
@@ -289,7 +289,7 @@ echo "$response"
 
 Please note that this is a basic HTTP service designed for development purposes. Exercise caution while using it. It does not include SSL, so if you’re using it on the Internet or require security, ensure it’s used under an SSL layer (for example, using Apache’s SSL module).
 
-You can also explore additional HTTP examples in the [./scripts/httpTests.sh](./scripts/httpTests.sh) script.
+You can also explore additional HTTP examples in the [scripts/httpTests.sh](./scripts/httpTests.sh) script.
 
 </details>
 
