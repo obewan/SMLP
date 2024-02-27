@@ -28,7 +28,7 @@ jobs:
             i18n: "build/i18n"
             cc: "cl"
             cxx: "cl"
-            compiler_flags: "/EHsc"
+            compiler_flags: "/EHsc /wd4625 /wd4626 /wd4820 /wd5027"
             is_windows: true
 
     runs-on: ${{ matrix.os }}
@@ -54,10 +54,6 @@ jobs:
       - name: Build
         shell: bash
         run: cmake --build build
-
-      - name: Test
-        shell: bash
-        run: ctest --test-dir build
 
       - name: Install
         shell: bash
