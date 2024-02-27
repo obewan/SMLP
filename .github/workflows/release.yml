@@ -38,13 +38,27 @@ jobs:
 
       - name: Check if commit is tagged
         id: check_tag
-        run: echo "::set-output name=tagged::$(if git describe --exact-match --tags HEAD >/dev/null 2>&1; then echo 'true'; else echo 'false'; fi)"
+        run: |
+          if git describe --exact-match --tags HEAD >/dev/null 2>&1; then 
+            echo 'tagged=true' >> $GITHUB_ENV
+          else 
+            echo 'tagged=false' >> $GITHUB_ENV
+          fi
         shell: bash
 
       - name: Exit if not tagged
-        if: steps.check_tag.outputs.tagged == 'false'
-        run: exit 0
+        run: |
+          if [[ "${{ env.tagged }}" == "false" ]]; then 
+            exit 0
+          fi
         shell: bash
+
+      - name: Debugging information
+        shell: bash
+        run: |
+          echo PATH=$PATH
+          which ${{ matrix.config.cc }}
+          which ${{ matrix.config.cxx }}
 
       - name: Setup MSVC environment
         if: matrix.config.environment_script
