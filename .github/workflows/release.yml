@@ -49,7 +49,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DCMAKE_C_COMPILER=${{ matrix.cc }} \
           -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
-          -DCMAKE_CXX_FLAGS:STRING="${{ matrix.compiler_flags }}"
+          -DCMAKE_CXX_FLAGS:STRING="'${{ matrix.compiler_flags }}'"
 
       - name: Build
         shell: bash
