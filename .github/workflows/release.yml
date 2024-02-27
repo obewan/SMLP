@@ -19,6 +19,7 @@ jobs:
             i18n: "build/i18n"
             cc: "gcc-11"
             cxx: "g++-11"
+            compiler_flags: ""
           - os: windows-latest
             name: "Windows Latest MSVC"
             artifact: "Windows-MSVC.tar.xz"
@@ -27,6 +28,7 @@ jobs:
             i18n: "build/i18n"
             cc: "cl"
             cxx: "cl"
+            compiler_flags: "/EHsc"
             is_windows: true
 
     runs-on: ${{ matrix.os }}
@@ -43,7 +45,11 @@ jobs:
       - name: Configure CMake
         shell: bash
         run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} -DCMAKE_CXX_FLAGS:STRING=" /EHsc "
+          cmake -B build \
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DCMAKE_C_COMPILER=${{ matrix.cc }} \
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx }} \
+          -DCMAKE_CXX_FLAGS:STRING="${{ matrix.compiler_flags }}"
 
       - name: Build
         shell: bash
