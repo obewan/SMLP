@@ -31,6 +31,14 @@ public:
   void openFile();
 
   /**
+   * @brief Return true if file is open.
+   *
+   * @return true
+   * @return false
+   */
+  bool isFileOpen() { return file && file.is_open(); }
+
+  /**
    * @brief Closes the file.
    */
   void closeFile();

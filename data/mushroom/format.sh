@@ -7,7 +7,7 @@ formater=mushroom_formater.awk
 
 echo "Formatting $src to $dest, please wait..."
 
-# Send the file without its header to the formater and write the dest file
+# Print the file without its header to the formater and write the dest file
 tail -n +2 $src | awk -f $formater > $dest
 
 # Shuffle the lines of the dest file for better training
