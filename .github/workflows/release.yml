@@ -18,6 +18,7 @@ jobs:
               name: "Ubuntu Latest GCC",
               artifact: "Linux.tar.xz",
               build_type: "Release",
+              executable: "smlp",
               cc: "gcc-11",
               cxx: "g++-11",
             }
@@ -25,6 +26,7 @@ jobs:
               name: "Windows Latest MSVC",
               artifact: "Windows-MSVC.tar.xz",
               build_type: "Release",
+              executable: "Release/smlp.exe",
               cc: "cl",
               cxx: "cl",
               environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
@@ -53,7 +55,10 @@ jobs:
 
       - name: Package
         shell: bash
-        run: tar -czvf ${{ matrix.config.artifact }} -C install .
+        run: |
+          cp ./${{ matrix.config.executable }} ./install/ 
+          cp -r ./i18n ./install/
+          tar -czvf ${{ matrix.config.artifact }} -C install
 
       - name: Create Release
         id: create_release
