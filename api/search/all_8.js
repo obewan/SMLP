@@ -33,11 +33,12 @@ var searchData=
   ['iscalculate_201',['isCalculate',['../structsmlp_1_1TestingResult_1_1Stat.html#a3e5afc043975923747ca217b4196d484',1,'smlp::TestingResult::Stat']]],
   ['isendoffile_202',['isEndOfFile',['../structsmlp_1_1RecordResult.html#a874c317fa5e0ac8fc2eaaddf6bdf2be4',1,'smlp::RecordResult']]],
   ['isendoftraininglines_203',['isEndOfTrainingLines',['../structsmlp_1_1RecordResult.html#aafb0038189bc730fab1cb5d65010bbc7',1,'smlp::RecordResult']]],
-  ['islineskipped_204',['isLineSkipped',['../structsmlp_1_1RecordResult.html#a4fe77c65e00393a3bd6def11dea6b787',1,'smlp::RecordResult']]],
-  ['isstarted_205',['isStarted',['../classsmlp_1_1SimpleHTTPServer.html#aae55e98f48ae36d906b004c4ab79a4da',1,'smlp::SimpleHTTPServer']]],
-  ['isstarted_5f_206',['isStarted_',['../classsmlp_1_1SimpleHTTPServer.html#a0408315bfabaab866c3e14f36d1936dd',1,'smlp::SimpleHTTPServer']]],
-  ['issuccess_207',['isSuccess',['../structsmlp_1_1Result.html#a044ce0964ce4a3d07014136ec2ede071',1,'smlp::Result::isSuccess()'],['../structsmlp_1_1RecordResult.html#a2c9579b2748e96c9dbcdcdff88553744',1,'smlp::RecordResult::isSuccess()']]],
-  ['istrainedbutnotexported_5f_208',['isTrainedButNotExported_',['../classsmlp_1_1SimpleHTTPServer.html#a3b04b0cc291fa6e566e29e343e436636',1,'smlp::SimpleHTTPServer']]],
-  ['istrainingratiolineprocessed_209',['isTrainingRatioLineProcessed',['../classsmlp_1_1DataParser.html#a037265fe2b83ca0634966a2e7b571a1b',1,'smlp::DataParser']]],
-  ['isvalidconfig_210',['isValidConfig',['../classsmlp_1_1SimpleConfig.html#a4df496cc23891fc11dbb08a2277fe3b3',1,'smlp::SimpleConfig']]]
+  ['isfileopen_204',['isFileOpen',['../classsmlp_1_1DataFileParser.html#a7bee6fe338afb2c743db6e14e7963ef1',1,'smlp::DataFileParser']]],
+  ['islineskipped_205',['isLineSkipped',['../structsmlp_1_1RecordResult.html#a4fe77c65e00393a3bd6def11dea6b787',1,'smlp::RecordResult']]],
+  ['isstarted_206',['isStarted',['../classsmlp_1_1SimpleHTTPServer.html#aae55e98f48ae36d906b004c4ab79a4da',1,'smlp::SimpleHTTPServer']]],
+  ['isstarted_5f_207',['isStarted_',['../classsmlp_1_1SimpleHTTPServer.html#a0408315bfabaab866c3e14f36d1936dd',1,'smlp::SimpleHTTPServer']]],
+  ['issuccess_208',['isSuccess',['../structsmlp_1_1Result.html#a044ce0964ce4a3d07014136ec2ede071',1,'smlp::Result::isSuccess()'],['../structsmlp_1_1RecordResult.html#a2c9579b2748e96c9dbcdcdff88553744',1,'smlp::RecordResult::isSuccess()']]],
+  ['istrainedbutnotexported_5f_209',['isTrainedButNotExported_',['../classsmlp_1_1SimpleHTTPServer.html#a3b04b0cc291fa6e566e29e343e436636',1,'smlp::SimpleHTTPServer']]],
+  ['istrainingratiolineprocessed_210',['isTrainingRatioLineProcessed',['../classsmlp_1_1DataParser.html#a037265fe2b83ca0634966a2e7b571a1b',1,'smlp::DataParser']]],
+  ['isvalidconfig_211',['isValidConfig',['../classsmlp_1_1SimpleConfig.html#a4df496cc23891fc11dbb08a2277fe3b3',1,'smlp::SimpleConfig']]]
 ];

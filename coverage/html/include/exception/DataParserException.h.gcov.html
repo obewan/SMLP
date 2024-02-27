@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-26 19:54:14</td>
+            <td class="headerValue">2024-02-27 09:00:30</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -72,9 +72,9 @@
 <a name="10"><span class="lineNum">      10 </span>            :  */</a>
 <a name="11"><span class="lineNum">      11 </span>            : class DataParserException : public std::exception {</a>
 <a name="12"><span class="lineNum">      12 </span>            : public:</a>
-<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          5 :   explicit DataParserException(const std::string &amp;message)</span></a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          5 :       : message_(message) {}</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          5 :   const char *what() const noexcept override { return message_.c_str(); }</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          6 :   explicit DataParserException(const std::string &amp;message)</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          6 :       : message_(message) {}</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          6 :   const char *what() const noexcept override { return message_.c_str(); }</span></a>
 <a name="16"><span class="lineNum">      16 </span>            : </a>
 <a name="17"><span class="lineNum">      17 </span>            : private:</a>
 <a name="18"><span class="lineNum">      18 </span>            :   std::string message_;</a>
