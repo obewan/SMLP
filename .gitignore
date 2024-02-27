@@ -50,7 +50,6 @@ CMakeCache.txt
 
 # Others
 data/ai/
-scripts/changelog_refresh.sh
 coverage/
 .codeql
 .cppcheck
