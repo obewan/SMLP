@@ -36,6 +36,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup MSVC environment
+        if: matrix.config.environment_script
+        shell: cmd
+        run: call "${{ matrix.config.environment_script }}"
+
       - name: Configure CMake
         shell: bash
         run: |
