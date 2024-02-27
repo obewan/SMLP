@@ -24,11 +24,11 @@ jobs:
             name: "Windows Latest MSVC"
             artifact: "Windows-MSVC.tar.xz"
             build_type: "Release"
-            executable: "build/Release/smlp.exe"
-            i18n: "build/i18n"
+            executable: "Release/smlp.exe"
+            i18n: "i18n"
             cc: "cl"
             cxx: "cl"
-            compiler_flags: "/EHsc /wd4625 /wd4626 /wd4820 /wd5027"
+            compiler_flags: "/EHsc /wd4514 /wd4625 /wd4626 /wd4820 /wd5027"
             is_windows: true
 
     runs-on: ${{ matrix.os }}
@@ -62,6 +62,7 @@ jobs:
       - name: Package
         shell: bash
         run: |
+          mkdir -p install
           cp ./${{ matrix.executable }} ./install/ 
           cp -r ./${{ matrix.i18n }} ./install/
           tar -czvf ${{ matrix.artifact }} -C install
