@@ -65,7 +65,7 @@ jobs:
 
       - name: Test LS2
         shell: bash
-        run: ls ${{github.workspace}}
+        run: ls ${{github.workspace}}/build
 
       - name: Test LS3
         shell: bash
@@ -73,11 +73,7 @@ jobs:
 
       - name: Package
         shell: bash
-        run: |
-          mkdir -p install
-          cp ./${{ matrix.executable }} ./install/ 
-          cp -r ./${{ matrix.i18n }} ./install/
-          tar -czvf ${{ matrix.artifact }} -C install
+        run: tar -czvf ${{ matrix.artifact }} -C install
 
       - name: Create Release
         id: create_release
