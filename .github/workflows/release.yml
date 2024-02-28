@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         include:
           - os: ubuntu-latest
-            name: "Ubuntu Latest GCC"
+            name: "Linux"
             artifact: "Linux.tar.xz"
             build_type: "Release"
             executable: "build/smlp"
@@ -21,8 +21,8 @@ jobs:
             cxx: "g++-11"
             compiler_flags: ""
           - os: windows-latest
-            name: "Windows Latest MSVC"
-            artifact: "Windows-MSVC.tar.xz"
+            name: "Windows x64"
+            artifact: "Windows-x64.tar.xz"
             build_type: "Release"
             executable: "Release/smlp.exe"
             i18n: "i18n"
@@ -58,6 +58,18 @@ jobs:
       - name: Install
         shell: bash
         run: cmake --install build --prefix install
+
+      - name: Test LS
+        shell: bash
+        run: ls
+
+      - name: Test LS2
+        shell: bash
+        run: ls ${{github.workspace}}
+
+      - name: Test LS3
+        shell: bash
+        run: ls ${{github.workspace}}/install
 
       - name: Package
         shell: bash
