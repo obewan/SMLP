@@ -94,7 +94,7 @@ jobs:
 
       - name: Package
         shell: bash
-        run: tar -czvf ${{ matrix.artifact }} -C install
+        run: tar -czvf ${{ matrix.artifact }} -C install .
 
       - name: Create Release
         id: create_release
