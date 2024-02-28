@@ -15,8 +15,6 @@ jobs:
             name: "Linux"
             artifact: "Linux.tar.xz"
             build_type: "Release"
-            executable: "build/smlp"
-            i18n: "build/i18n"
             cc: "gcc-11"
             cxx: "g++-11"
             compiler_flags: ""
@@ -25,8 +23,6 @@ jobs:
             name: "Windows x64"
             artifact: "Windows-x64.tar.xz"
             build_type: "Release"
-            executable: "Release/smlp.exe"
-            i18n: "i18n"
             cc: "cl"
             cxx: "cl"
             compiler_flags: "/EHsc /wd4514 /wd4625 /wd4626 /wd4820 /wd5027"
@@ -61,41 +57,9 @@ jobs:
         shell: bash
         run: cmake --build build --config ${{ matrix.build_type }}
 
-      - name: List directory contents Linux
-        if: matrix.is_linux
-        shell: bash
-        run: ls "/home/runner/work/SMLP/"
-
-      - name: List directory contents Linux 2
-        if: matrix.is_linux
-        shell: bash
-        run: ls "/home/runner/work/SMLP/SMLP/"
-
-      - name: List directory contents Windows
-        if: matrix.is_windows
-        shell: bash
-        run: ls "D:/a/SMLP/SMLP/build/"
-
-      - name: List directory contents Windows 2
-        if: matrix.is_windows
-        shell: bash
-        run: ls "D:/a/SMLP/SMLP/build/Release/"
-
       - name: Install
         shell: bash
         run: cmake --install build --prefix install --config ${{ matrix.build_type }}
-
-      - name: Test LS
-        shell: bash
-        run: ls
-
-      - name: Test LS2
-        shell: bash
-        run: ls ${{github.workspace}}/build
-
-      - name: Test LS3
-        shell: bash
-        run: ls ${{github.workspace}}/install
 
       - name: Package
         shell: bash
