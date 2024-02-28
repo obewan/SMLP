@@ -54,7 +54,7 @@ jobs:
 
       - name: Build
         shell: bash
-        run: cmake --build build
+        run: cmake --build build --config ${{ matrix.build_type }}
 
       - name: List directory contents Linux
         if: matrix.is_linux
@@ -78,7 +78,7 @@ jobs:
 
       - name: Install
         shell: bash
-        run: cmake --install build --prefix install
+        run: cmake --install build --prefix install --config ${{ matrix.build_type }}
 
       - name: Test LS
         shell: bash
