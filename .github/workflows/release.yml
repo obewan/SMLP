@@ -64,7 +64,7 @@ jobs:
       - name: List directory contents Linux 2
         if: matrix.is_linux
         shell: bash
-        run: ls "/home/runner/work/SMLP/SMLP/
+        run: ls "/home/runner/work/SMLP/SMLP/"
 
       - name: List directory contents Windows
         if: matrix.is_windows
