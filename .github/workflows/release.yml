@@ -20,6 +20,7 @@ jobs:
             cc: "gcc-11"
             cxx: "g++-11"
             compiler_flags: ""
+            is_linux: true
           - os: windows-latest
             name: "Windows x64"
             artifact: "Windows-x64.tar.xz"
@@ -55,12 +56,22 @@ jobs:
         shell: bash
         run: cmake --build build
 
-      - name: List directory contents
+      - name: List directory contents Linux
+        if: matrix.is_linux
+        shell: bash
+        run: ls "/home/runner/work/SMLP/"
+
+      - name: List directory contents Linux 2
+        if: matrix.is_linux
+        shell: bash
+        run: ls "/home/runner/work/SMLP/SMLP/
+
+      - name: List directory contents Windows
         if: matrix.is_windows
         shell: bash
         run: ls "D:/a/SMLP/SMLP/build/"
 
-      - name: List directory contents 2
+      - name: List directory contents Windows 2
         if: matrix.is_windows
         shell: bash
         run: ls "D:/a/SMLP/SMLP/build/Release/"
