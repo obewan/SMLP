@@ -55,6 +55,16 @@ jobs:
         shell: bash
         run: cmake --build build
 
+      - name: List directory contents
+        if: matrix.is_windows
+        shell: bash
+        run: ls "D:/a/SMLP/SMLP/build/"
+
+      - name: List directory contents 2
+        if: matrix.is_windows
+        shell: bash
+        run: ls "D:/a/SMLP/SMLP/build/Release/"
+
       - name: Install
         shell: bash
         run: cmake --install build --prefix install
