@@ -362,7 +362,7 @@ Finally build the project, you should find the `smlp` program under the `build\R
 
 # Changelog
 
-[Click here to see the changelog](./CHANGELOG.md).
+[Click here to see the changelog.](./CHANGELOG.md)
 
 &nbsp;
 

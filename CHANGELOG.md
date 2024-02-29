@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning].
 ### Changed
 
 - json model metadata has been refactored. Null vectors of neurons replaced by neurons count.  
-  Before: { "neurons": [ null, null, null] }  
+  Before: { "neurons": [ null, null, null ] }  
   After: { "neurons": 3 }  
   Be sure to change your json network model if using the v1.0.0 with the v1.1.0.
 
