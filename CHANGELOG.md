@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [1.1.0] - 2024-02-29
+
+### Changed
+
+- json model metadata has been refactored. Null vectors of neurons replaced by neurons count.  
+  Before: { "neurons": [ null, null, null] }  
+  After: { "neurons": 3 }  
+  Be sure to change your json network model if using the v1.0.0 with the v1.1.0.
+
 ## [1.0.0] - 2024-02-27
 
 - initial release
@@ -16,5 +25,6 @@ and this project adheres to [Semantic Versioning].
 
 <!-- Versions -->
 
-[unreleased]: https://github.com/obewan/SMLP/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/obewan/SMLP/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/obewan/SMLP/compare/v1.0.0..v1.1.0
 [1.0.0]: https://github.com/obewan/SMLP/releases/tag/v1.0.0
