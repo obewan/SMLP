@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">11</td>
-            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">12</td>
+            <td class="headerCovTableEntry">12</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-28 12:23:37</td>
+            <td class="headerValue">2024-02-29 12:10:31</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -69,21 +69,21 @@
 <a name="7"><span class="lineNum">       7 </span><span class="lineCov">          3 : smlp::Result TrainingSocket::train(const std::string &amp;line) {</span></a>
 <a name="8"><span class="lineNum">       8 </span><span class="lineCov">          3 :   const auto &amp;manager = Manager::getInstance();</span></a>
 <a name="9"><span class="lineNum">       9 </span>            : </a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          6 :   const auto &amp;processResult = processInputLine(line);</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          3 :   const auto &amp;processResult = processInputLine(line);</span></a>
 <a name="11"><span class="lineNum">      11 </span>            : </a>
 <a name="12"><span class="lineNum">      12 </span><span class="lineCov">          3 :   if (manager.app_params.mode == EMode::TrainTestMonitored) {</span></a>
-<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          2 :     const auto &amp;testing = manager.getTesting();</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineCov">          1 :     const auto &amp;testing = manager.getTesting();</span></a>
 <a name="14"><span class="lineNum">      14 </span><span class="lineCov">          1 :     const auto &amp;testingResult = testing-&gt;test(line);</span></a>
 <a name="15"><span class="lineNum">      15 </span>            :     return {.code = testingResult.code,</a>
 <a name="16"><span class="lineNum">      16 </span><span class="lineCov">          1 :             .action = smlp::getModeStr(EMode::TrainTestMonitored),</span></a>
 <a name="17"><span class="lineNum">      17 </span><span class="lineCov">          1 :             .data = testingResult.data};</span></a>
-<a name="18"><span class="lineNum">      18 </span>            :   } else {</a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          1 :   } else {</span></a>
 <a name="19"><span class="lineNum">      19 </span><span class="lineCov">          2 :     return {.code = smlp::make_error_code(processResult.isSuccess</span></a>
 <a name="20"><span class="lineNum">      20 </span>            :                                               ? smlp::ErrorCode::Success</a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          2 :                                               : smlp::ErrorCode::Failure),</span></a>
+<a name="21"><span class="lineNum">      21 </span>            :                                               : smlp::ErrorCode::Failure),</a>
 <a name="22"><span class="lineNum">      22 </span><span class="lineCov">          2 :             .action = smlp::getModeStr(manager.app_params.mode)};</span></a>
 <a name="23"><span class="lineNum">      23 </span>            :   }</a>
-<a name="24"><span class="lineNum">      24 </span>            : }</a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          3 : }</span></a>
 </pre>
       </td>
     </tr>

@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">35</td>
-            <td class="headerCovTableEntry">43</td>
-            <td class="headerCovTableEntryMed">81.4 %</td>
+            <td class="headerCovTableEntry">36</td>
+            <td class="headerCovTableEntry">44</td>
+            <td class="headerCovTableEntryMed">81.8 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-28 12:23:37</td>
+            <td class="headerValue">2024-02-29 12:10:31</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -80,7 +80,7 @@
 <a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 :         SimpleLang::Error(Error::DataFileParserInstanceError));</span></a>
 <a name="19"><span class="lineNum">      19 </span>            :   }</a>
 <a name="20"><span class="lineNum">      20 </span>            :   std::shared_ptr&lt;DataFileParser&gt; dataFileParser =</a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">         26 :       std::dynamic_pointer_cast&lt;DataFileParser&gt;(dataParser_);</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">         13 :       std::dynamic_pointer_cast&lt;DataFileParser&gt;(dataParser_);</span></a>
 <a name="22"><span class="lineNum">      22 </span><span class="lineCov">         13 :   if (dataFileParser == nullptr) {</span></a>
 <a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 :     throw TrainingFileException(</span></a>
 <a name="24"><span class="lineNum">      24 </span><span class="lineNoCov">          0 :         SimpleLang::Error(Error::DataFileParserDowncastError));</span></a>
@@ -104,7 +104,7 @@
 <a name="42"><span class="lineNum">      42 </span><span class="lineCov">         11 :   dataFileParser-&gt;openFile();</span></a>
 <a name="43"><span class="lineNum">      43 </span>            : </a>
 <a name="44"><span class="lineNum">      44 </span>            :   // Get the testing instance from the singleton instance of Manager</a>
-<a name="45"><span class="lineNum">      45 </span><span class="lineCov">         22 :   const auto &amp;testing = Manager::getInstance().getTesting();</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">         11 :   const auto &amp;testing = Manager::getInstance().getTesting();</span></a>
 <a name="46"><span class="lineNum">      46 </span>            : </a>
 <a name="47"><span class="lineNum">      47 </span>            :   // Get the logger instance</a>
 <a name="48"><span class="lineNum">      48 </span><span class="lineCov">         11 :   const auto &amp;logger = SimpleLogger::getInstance();</span></a>
@@ -159,7 +159,7 @@
 <a name="97"><span class="lineNum">      97 </span>            : </a>
 <a name="98"><span class="lineNum">      98 </span>            :   // Return success</a>
 <a name="99"><span class="lineNum">      99 </span><span class="lineCov">         22 :   return {.code = smlp::make_error_code(smlp::ErrorCode::Success)};</span></a>
-<a name="100"><span class="lineNum">     100 </span>            : }</a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         13 : }</span></a>
 </pre>
       </td>
     </tr>

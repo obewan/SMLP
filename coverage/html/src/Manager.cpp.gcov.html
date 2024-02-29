@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">171</td>
-            <td class="headerCovTableEntry">206</td>
-            <td class="headerCovTableEntryMed">83.0 %</td>
+            <td class="headerCovTableEntry">207</td>
+            <td class="headerCovTableEntryMed">82.6 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-02-28 12:23:37</td>
+            <td class="headerValue">2024-02-29 12:10:31</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">17</td>
@@ -86,7 +86,7 @@
 <a name="24"><span class="lineNum">      24 </span><span class="lineCov">          2 :     logger.info(&quot;Training, using command pipe input...&quot;);</span></a>
 <a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :     if (app_params.training_ratio_line == 0 || app_params.num_epochs &gt; 1) {</span></a>
 <a name="26"><span class="lineNum">      26 </span><span class="lineCov">          2 :       logger.warn(&quot;Epochs and training ratio are disabled using command &quot;</span></a>
-<a name="27"><span class="lineNum">      27 </span><span class="lineCov">          2 :                   &quot;pipe input. Use training_ratio_line parameter instead.&quot;);</span></a>
+<a name="27"><span class="lineNum">      27 </span>            :                   &quot;pipe input. Use training_ratio_line parameter instead.&quot;);</a>
 <a name="28"><span class="lineNum">      28 </span>            :     }</a>
 <a name="29"><span class="lineNum">      29 </span><span class="lineCov">          2 :     logger.info(getInlineHeader());</span></a>
 <a name="30"><span class="lineNum">      30 </span><span class="lineCov">          2 :   };</span></a>
@@ -169,13 +169,13 @@
 <a name="107"><span class="lineNum">     107 </span><span class="lineCov">          3 :     switch (app_params.input) {</span></a>
 <a name="108"><span class="lineNum">     108 </span><span class="lineCov">          1 :     case EInput::File:</span></a>
 <a name="109"><span class="lineNum">     109 </span><span class="lineCov">          1 :       logger.debug(&quot;Train and testing, using file &quot;, app_params.data_file);</span></a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          2 :       logger.debug(&quot;OutputIndexToMonitor:&quot;, app_params.output_index_to_monitor,</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          1 :                    &quot; &quot;, getInlineHeader());</span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          1 :       logger.debug(&quot;OutputIndexToMonitor:&quot;, app_params.output_index_to_monitor,</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          2 :                    &quot; &quot;, getInlineHeader());</span></a>
 <a name="112"><span class="lineNum">     112 </span><span class="lineCov">          1 :       break;</span></a>
 <a name="113"><span class="lineNum">     113 </span><span class="lineCov">          1 :     case EInput::Stdin:</span></a>
 <a name="114"><span class="lineNum">     114 </span><span class="lineCov">          1 :       logger.debug(&quot;Train and testing, using command pipe input...&quot;);</span></a>
-<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          2 :       logger.debug(&quot;OutputIndexToMonitor:&quot;, app_params.output_index_to_monitor,</span></a>
-<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          1 :                    &quot; &quot;, getInlineHeader());</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          1 :       logger.debug(&quot;OutputIndexToMonitor:&quot;, app_params.output_index_to_monitor,</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          2 :                    &quot; &quot;, getInlineHeader());</span></a>
 <a name="117"><span class="lineNum">     117 </span><span class="lineCov">          1 :       break;</span></a>
 <a name="118"><span class="lineNum">     118 </span><span class="lineCov">          1 :     case EInput::Socket:</span></a>
 <a name="119"><span class="lineNum">     119 </span><span class="lineCov">          1 :       logger.debug(&quot;Train and testing using TCP socket...&quot;);</span></a>
@@ -195,14 +195,14 @@
 <a name="133"><span class="lineNum">     133 </span><span class="lineNoCov">          0 :   std::stringstream sst;</span></a>
 <a name="134"><span class="lineNum">     134 </span><span class="lineNoCov">          0 :   sst &lt;&lt; app_params.title &lt;&lt; &quot; v&quot; &lt;&lt; app_params.version;</span></a>
 <a name="135"><span class="lineNum">     135 </span><span class="lineNoCov">          0 :   return sst.str();</span></a>
-<a name="136"><span class="lineNum">     136 </span>            : }</a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineNoCov">          0 : }</span></a>
 <a name="137"><span class="lineNum">     137 </span>            : </a>
 <a name="138"><span class="lineNum">     138 </span><span class="lineCov">          7 : std::string Manager::getInlineHeader() const {</span></a>
 <a name="139"><span class="lineNum">     139 </span>            :   // lambda helper</a>
 <a name="140"><span class="lineNum">     140 </span><span class="lineCov">         14 :   auto getActivationParams = [](const std::string &amp;prefix,</span></a>
 <a name="141"><span class="lineNum">     141 </span>            :                                 EActivationFunction activation_function,</a>
 <a name="142"><span class="lineNum">     142 </span>            :                                 double activation_alpha) {</a>
-<a name="143"><span class="lineNum">     143 </span><span class="lineCov">         28 :     std::stringstream sst;</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">         14 :     std::stringstream sst;</span></a>
 <a name="144"><span class="lineNum">     144 </span>            :     sst &lt;&lt; &quot; &quot; &lt;&lt; prefix</a>
 <a name="145"><span class="lineNum">     145 </span><span class="lineCov">         14 :         &lt;&lt; &quot;ActivationFunction:&quot; &lt;&lt; smlp::getActivationStr(activation_function);</span></a>
 <a name="146"><span class="lineNum">     146 </span><span class="lineCov">         14 :     if (activation_function == EActivationFunction::ELU ||</span></a>
@@ -210,10 +210,10 @@
 <a name="148"><span class="lineNum">     148 </span><span class="lineNoCov">          0 :       sst &lt;&lt; &quot; &quot; &lt;&lt; prefix &lt;&lt; &quot;ActivationAlpha:&quot; &lt;&lt; activation_alpha;</span></a>
 <a name="149"><span class="lineNum">     149 </span>            :     }</a>
 <a name="150"><span class="lineNum">     150 </span><span class="lineCov">         28 :     return sst.str();</span></a>
-<a name="151"><span class="lineNum">     151 </span>            :   };</a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">         14 :   };</span></a>
 <a name="152"><span class="lineNum">     152 </span>            :   // lambda helper</a>
 <a name="153"><span class="lineNum">     153 </span><span class="lineCov">          7 :   auto getTrainingParams = [](const AppParameters &amp;app_parameters) {</span></a>
-<a name="154"><span class="lineNum">     154 </span><span class="lineCov">         14 :     std::stringstream sst;</span></a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">          7 :     std::stringstream sst;</span></a>
 <a name="155"><span class="lineNum">     155 </span><span class="lineCov">          7 :     if (app_parameters.input != EInput::Stdin) {</span></a>
 <a name="156"><span class="lineNum">     156 </span><span class="lineCov">          4 :       sst &lt;&lt; &quot; Epochs:&quot; &lt;&lt; app_parameters.num_epochs;</span></a>
 <a name="157"><span class="lineNum">     157 </span><span class="lineCov">          4 :       if (app_parameters.training_ratio_line &gt; 0) {</span></a>
@@ -225,9 +225,9 @@
 <a name="163"><span class="lineNum">     163 </span><span class="lineCov">          3 :       sst &lt;&lt; &quot; TrainingRatioLine:&quot; &lt;&lt; app_parameters.training_ratio_line;</span></a>
 <a name="164"><span class="lineNum">     164 </span>            :     }</a>
 <a name="165"><span class="lineNum">     165 </span><span class="lineCov">         14 :     return sst.str();</span></a>
-<a name="166"><span class="lineNum">     166 </span>            :   };</a>
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">          7 :   };</span></a>
 <a name="167"><span class="lineNum">     167 </span>            : </a>
-<a name="168"><span class="lineNum">     168 </span><span class="lineCov">         14 :   std::stringstream sst;</span></a>
+<a name="168"><span class="lineNum">     168 </span><span class="lineCov">          7 :   std::stringstream sst;</span></a>
 <a name="169"><span class="lineNum">     169 </span><span class="lineCov">          7 :   sst &lt;&lt; &quot;InputSize:&quot; &lt;&lt; network_params.input_size</span></a>
 <a name="170"><span class="lineNum">     170 </span><span class="lineCov">          7 :       &lt;&lt; &quot; OutputSize:&quot; &lt;&lt; network_params.output_size</span></a>
 <a name="171"><span class="lineNum">     171 </span><span class="lineCov">          7 :       &lt;&lt; &quot; HiddenSize:&quot; &lt;&lt; network_params.hidden_size</span></a>
@@ -243,7 +243,7 @@
 <a name="181"><span class="lineNum">     181 </span><span class="lineCov">          7 :       &lt;&lt; &quot; Mode:&quot; &lt;&lt; smlp::getModeStr(app_params.mode)</span></a>
 <a name="182"><span class="lineNum">     182 </span><span class="lineCov">         14 :       &lt;&lt; &quot; Verbose:&quot; &lt;&lt; app_params.verbose;</span></a>
 <a name="183"><span class="lineNum">     183 </span><span class="lineCov">         14 :   return sst.str();</span></a>
-<a name="184"><span class="lineNum">     184 </span>            : }</a>
+<a name="184"><span class="lineNum">     184 </span><span class="lineCov">          7 : }</span></a>
 <a name="185"><span class="lineNum">     185 </span>            : </a>
 <a name="186"><span class="lineNum">     186 </span><span class="lineCov">         10 : void Manager::runMode() {</span></a>
 <a name="187"><span class="lineNum">     187 </span>            :   // HTTP service mode</a>
@@ -287,14 +287,14 @@
 <a name="225"><span class="lineNum">     225 </span><span class="lineCov">          8 :   auto logNetworkImport = [this]() {</span></a>
 <a name="226"><span class="lineNum">     226 </span><span class="lineCov">          5 :     if (app_params.mode != EMode::Predict) {</span></a>
 <a name="227"><span class="lineNum">     227 </span><span class="lineCov">          3 :       logger.info(&quot;Importing network model from &quot;, app_params.network_to_import,</span></a>
-<a name="228"><span class="lineNum">     228 </span><span class="lineCov">          3 :                   &quot;...&quot;);</span></a>
+<a name="228"><span class="lineNum">     228 </span>            :                   &quot;...&quot;);</a>
 <a name="229"><span class="lineNum">     229 </span>            :     }</a>
 <a name="230"><span class="lineNum">     230 </span><span class="lineCov">         10 :   };</span></a>
 <a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :   auto logNetworkCreation = [this]() {</span></a>
 <a name="232"><span class="lineNum">     232 </span><span class="lineNoCov">          0 :     if (!app_params.network_to_import.empty() &amp;&amp;</span></a>
 <a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :         app_params.mode != EMode::Predict) {</span></a>
 <a name="234"><span class="lineNum">     234 </span><span class="lineNoCov">          0 :       logger.info(&quot;Network model &quot;, app_params.network_to_import,</span></a>
-<a name="235"><span class="lineNum">     235 </span><span class="lineNoCov">          0 :                   &quot; not found, creating a new one...&quot;);</span></a>
+<a name="235"><span class="lineNum">     235 </span>            :                   &quot; not found, creating a new one...&quot;);</a>
 <a name="236"><span class="lineNum">     236 </span>            :     }</a>
 <a name="237"><span class="lineNum">     237 </span><span class="lineCov">          5 :   };</span></a>
 <a name="238"><span class="lineNum">     238 </span>            : </a>
@@ -321,7 +321,7 @@
 <a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :     throw ManagerException(SimpleLang::Error(Error::MissingExportFileParam));</span></a>
 <a name="260"><span class="lineNum">     260 </span>            :   }</a>
 <a name="261"><span class="lineNum">     261 </span><span class="lineCov">          1 :   logger.info(&quot;Exporting network model to &quot;, app_params.network_to_export,</span></a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineCov">          1 :               &quot;...&quot;);</span></a>
+<a name="262"><span class="lineNum">     262 </span>            :               &quot;...&quot;);</a>
 <a name="263"><span class="lineNum">     263 </span><span class="lineCov">          1 :   importExport.exportModel(network.get(), app_params);</span></a>
 <a name="264"><span class="lineNum">     264 </span><span class="lineCov">          1 : }</span></a>
 <a name="265"><span class="lineNum">     265 </span>            : </a>
@@ -352,7 +352,7 @@
 <a name="290"><span class="lineNum">     290 </span>            :   }</a>
 <a name="291"><span class="lineNum">     291 </span><span class="lineCov">          5 :   result.action = smlp::getModeStr(app_params.mode);</span></a>
 <a name="292"><span class="lineNum">     292 </span><span class="lineCov">          5 :   return result;</span></a>
-<a name="293"><span class="lineNum">     293 </span>            : }</a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineNoCov">          0 : }</span></a>
 </pre>
       </td>
     </tr>
