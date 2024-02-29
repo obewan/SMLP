@@ -360,6 +360,12 @@ Finally build the project, you should find the `smlp` program under the `build\R
 
 &nbsp;
 
+# Changelog
+
+[Click here to see the changelog](./CHANGELOG.md).
+
+&nbsp;
+
 ---
 
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/

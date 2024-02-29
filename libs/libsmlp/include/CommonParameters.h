@@ -19,7 +19,7 @@ namespace smlp {
  */
 struct AppParameters {
   std::string title = "SMLP - Simple Multilayer Perceptron";
-  std::string version = "1.0.0";
+  std::string version = "1.1.0";
   std::string network_to_import = "";
   std::string network_to_export = "";
   std::string data_file = "";

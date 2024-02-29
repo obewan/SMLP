@@ -79,9 +79,7 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
       }
 
       // Add neurons without their weights
-      std::ranges::for_each(json_layer["neurons"], [&layer](const auto &) {
-        layer->neurons.emplace_back();
-      });
+      layer->neurons = std::vector<Neuron>((size_t)json_layer["neurons"]);
 
       // Set activation functions
       switch (layer->layerType) {
@@ -135,12 +133,7 @@ void NetworkImportExportJSON::exportModel(
   // Serialize the layers to JSON.
   for (auto layer : network->layers) {
     json json_layer = {{"type", layer->layerTypeStr()},
-                       {"neurons", json::array()}};
-
-    std::ranges::for_each(layer->neurons, [&json_layer](const auto &) {
-      json_layer["neurons"].emplace_back();
-    });
-
+                       {"neurons", layer->neurons.size()}};
     json_network["layers"].push_back(json_layer);
   }
 
