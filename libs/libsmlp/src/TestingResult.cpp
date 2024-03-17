@@ -19,11 +19,13 @@ std::string TestingResult::getResultsLine() {
   std::stringstream sstr;
   const auto &app_params = Manager::getInstance().app_params;
 
-  sstr << std::setprecision(2) << "acc(lah)[" << stats.accuracy_low << " "
-       << stats.accuracy_avg << " " << stats.accuracy_high << "]";
+  sstr << std::setprecision(2) << std::fixed << "acc(lah)["
+       << stats.accuracy_low << " " << stats.accuracy_avg << " "
+       << stats.accuracy_high << "]";
   if (app_params.mode == EMode::TrainTestMonitored) {
-    sstr << std::setprecision(2) << " conv(01t)[" << stats.convergence_zero
-         << " " << stats.convergence_one << " " << stats.convergence << "]";
+    sstr << std::setprecision(2) << std::fixed << " conv(01t)["
+         << stats.convergence_zero << " " << stats.convergence_one << " "
+         << stats.convergence << "]";
   }
 
   return sstr.str();
@@ -59,7 +61,7 @@ std::string TestingResult::getResultsDetailled() {
 
 std::string TestingResult::showAccuracyResults() const {
   std::stringstream sstr;
-  sstr << std::setprecision(3)
+  sstr << std::setprecision(3) << std::fixed
        << "Low accuracy (correct at 70%): " << stats.accuracy_low << "%"
        << std::endl
        << "Avg accuracy (correct at 80%): " << stats.accuracy_avg << "%"
@@ -71,7 +73,7 @@ std::string TestingResult::showAccuracyResults() const {
 
 std::string TestingResult::showConvergenceResults() const {
   std::stringstream sstr;
-  sstr << std::setprecision(3)
+  sstr << std::setprecision(3) << std::fixed
        << "Convergence toward zero: " << stats.convergence_zero << "% ("
        << stats.good_convergence_zero << "/" << stats.total_expected_zero << ")"
        << std::endl
