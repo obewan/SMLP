@@ -1,5 +1,5 @@
 #include "NetworkImportExportCSV.h"
-#include "../../csv-parser/include/csv_parser.h"
+#include "csv_parser.h"
 #include "exception/EmptyCellException.h"
 #include "exception/ImportExportException.h"
 #include <algorithm> // for std::transform
