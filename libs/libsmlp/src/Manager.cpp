@@ -3,131 +3,16 @@
 #include "CommonModes.h"
 #include "CommonParameters.h"
 #include "CommonResult.h"
+#include "RunnerSocketVisitor.h"
+#include "RunnerStdinVisitor.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/ManagerException.h"
 #include <exception>
+#include <memory>
 #include <system_error>
 
 using namespace smlp;
-
-smlp::Result Manager::predict(const std::string &line) {
-  // no log here as the output is the result
-  if (!predict_) {
-    predict_ = std::make_unique<Predict>();
-  }
-  return predict_->predict(line);
-}
-
-smlp::Result Manager::train(const std::string &line) {
-  auto handleStdinTraining = [this]() {
-    logger.info("Training, using command pipe input...");
-    if (app_params.training_ratio_line == 0 || app_params.num_epochs > 1) {
-      logger.warn("Epochs and training ratio are disabled using command "
-                  "pipe input. Use training_ratio_line parameter instead.");
-    }
-    logger.info(getInlineHeader());
-  };
-
-  auto handleFileTraining = [this]() {
-    logger.info("Training, using file ", app_params.data_file);
-    logger.info(getInlineHeader());
-  };
-
-  if (!training_) {
-    createTraining();
-  }
-
-  switch (app_params.input) {
-  case EInput::File:
-    handleFileTraining();
-    break;
-  case EInput::Stdin:
-    handleStdinTraining();
-    break;
-  case EInput::Socket:
-    if (app_params.verbose) {
-      logger.debug("Training using TCP socket...");
-    }
-    break;
-  default:
-    break;
-  }
-
-  return training_->train(line);
-}
-
-smlp::Result Manager::test(const std::string &line) {
-  auto handleStdinTesting = [this]() {
-    logger.info("Testing, using command pipe input... ", app_params.data_file);
-  };
-
-  auto handleFileTesting = [this]() {
-    logger.info("Testing, using file ", app_params.data_file);
-  };
-
-  if (!testing_) {
-    createTesting();
-  }
-
-  switch (app_params.input) {
-  case EInput::File:
-    handleFileTesting();
-    break;
-  case EInput::Stdin:
-    handleStdinTesting();
-    break;
-  case EInput::Socket:
-    if (app_params.verbose) {
-      logger.debug("Testing using TCP socket...");
-    }
-    break;
-  default:
-    break;
-  }
-
-  const auto &results = testing_->test(line);
-  if (app_params.input == EInput::Socket && app_params.verbose) {
-    logger.debug(testing_->getTestingResults()->getResultsLine());
-  } else {
-    logger.out(testing_->getTestingResults()->getResultsDetailled());
-  }
-  return results;
-}
-
-smlp::Result Manager::trainTestMonitored(const std::string &line) {
-  if (app_params.output_index_to_monitor > network_params.output_size) {
-    logger.error("output_index_to_monitor > output_size: ",
-                 app_params.output_index_to_monitor, ">",
-                 network_params.output_size);
-    return {.code = std::make_error_code(std::errc::result_out_of_range)};
-  }
-
-  if (app_params.verbose) {
-    switch (app_params.input) {
-    case EInput::File:
-      logger.debug("Train and testing, using file ", app_params.data_file);
-      logger.debug("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-                   " ", getInlineHeader());
-      break;
-    case EInput::Stdin:
-      logger.debug("Train and testing, using command pipe input...");
-      logger.debug("OutputIndexToMonitor:", app_params.output_index_to_monitor,
-                   " ", getInlineHeader());
-      break;
-    case EInput::Socket:
-      logger.debug("Train and testing using TCP socket...");
-      break;
-    default:
-      break;
-    }
-  }
-
-  if (!training_) {
-    createTraining();
-  }
-  return training_->train(line);
-}
 
 std::string Manager::getVersionHeader() const {
   std::stringstream sst;
@@ -184,39 +69,40 @@ std::string Manager::getInlineHeader() const {
 }
 
 void Manager::runMode() {
-  // HTTP service mode
-  if (app_params.enable_http) {
-    createHttpServer();
-    if (!getHttpServer()) {
-      throw ManagerException(SimpleLang::Error(Error::InternalError));
+  switch (app_params.input) {
+  case EInput::File:
+    if (!runnerFileVisitor_) {
+      runnerFileVisitor_ = std::make_unique<RunnerFileVisitor>();
     }
-    getHttpServer()->start();
-  } else {
-    // Terminal modes
-    switch (app_params.mode) {
-    case EMode::Predict:
-      predict();
-      break;
-    case EMode::TrainOnly:
-      train();
-      break;
-    case EMode::TestOnly:
-      test();
-      break;
-    case EMode::TrainTestMonitored:
-      trainTestMonitored();
-      break;
-    case EMode::TrainThenTest:
-      train();
-      test();
-      break;
-    default:
-      throw ManagerException("Unimplemented mode.");
+    runWithVisitor(*runnerFileVisitor_);
+    break;
+  case EInput::Stdin:
+    if (!runnerStdinVisitor_) {
+      runnerStdinVisitor_ = std::make_unique<RunnerStdinVisitor>();
     }
-    if (shouldExportNetwork()) {
-      exportNetwork();
+    runWithVisitor(*runnerStdinVisitor_);
+    break;
+  case EInput::Socket:
+    if (app_params.enable_http) {
+      createHttpServer();
+      if (!http_server) {
+        throw ManagerException(SimpleLang::Error(Error::InternalError));
+      }
+      http_server->start();
     }
+    break;
+  default:
+    break;
   }
+}
+
+Result Manager::runWithVisitor(const RunnerVisitor &visitor) const {
+  return visitor.visit();
+}
+
+Result Manager::runWithLineVisitor(const RunnerVisitor &visitor,
+                                   const std::string &line) const {
+  return visitor.visit(line);
 }
 
 void Manager::importOrBuildNetwork() {
@@ -224,26 +110,26 @@ void Manager::importOrBuildNetwork() {
   // pipes
   auto logNetworkImport = [this]() {
     if (app_params.mode != EMode::Predict) {
-      logger.info("Importing network model from ", app_params.network_to_import,
-                  "...");
+      SimpleLogger::LOG_INFO("Importing network model from ",
+                             app_params.network_to_import, "...");
     }
   };
   auto logNetworkCreation = [this]() {
     if (!app_params.network_to_import.empty() &&
         app_params.mode != EMode::Predict) {
-      logger.info("Network model ", app_params.network_to_import,
-                  " not found, creating a new one...");
+      SimpleLogger::LOG_INFO("Network model ", app_params.network_to_import,
+                             " not found, creating a new one...");
     }
   };
 
   if (!app_params.network_to_import.empty() &&
       std::filesystem::exists(app_params.network_to_import)) {
     logNetworkImport();
-    network = std::shared_ptr<Network>(importExport.importModel(app_params));
-    network_params = network->params;
+    network = importExport.importModel(app_params);
   } else {
     logNetworkCreation();
-    network = std::make_shared<Network>(network_params);
+    network = std::make_unique<Network>();
+    network->initializeLayers();
   }
 }
 
@@ -254,40 +140,21 @@ bool Manager::shouldExportNetwork() const {
           app_params.mode == EMode::TrainTestMonitored);
 }
 
-void Manager::exportNetwork() {
+void Manager::exportNetwork() const {
   if (app_params.network_to_export.empty()) {
     throw ManagerException(SimpleLang::Error(Error::MissingExportFileParam));
   }
-  logger.info("Exporting network model to ", app_params.network_to_export,
-              "...");
-  importExport.exportModel(network.get(), app_params);
+  SimpleLogger::LOG_INFO("Exporting network model to ",
+                         app_params.network_to_export, "...");
+  importExport.exportModel(network, app_params);
 }
 
-smlp::Result Manager::processTCPClient(const std::string &line) {
+smlp::Result Manager::processTCPClient(const std::string &line) const {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
-  smlp::Result result;
-  switch (app_params.mode) {
-  case EMode::Predict:
-    result = predict(line);
-    break;
-  case EMode::TrainOnly:
-    result = train(line);
-    break;
-  case EMode::TestOnly:
-    result = test(line);
-    break;
-  case EMode::TrainTestMonitored:
-    result = trainTestMonitored(line);
-    break;
-  case EMode::TrainThenTest:
-    train(line);
-    result = test(line);
-    break;
-  default:
-    throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
+  if (!runnerSocketVisitor_) {
+    runnerSocketVisitor_ = std::make_unique<RunnerSocketVisitor>();
   }
-  result.action = smlp::getModeStr(app_params.mode);
-  return result;
+  return runWithLineVisitor(*runnerSocketVisitor_, line);
 }

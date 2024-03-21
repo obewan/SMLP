@@ -10,6 +10,7 @@
 #pragma once
 #include "CommonResult.h"
 #include "SimpleLogger.h"
+#include "TestingSocket.h"
 #include "Training.h"
 
 namespace smlp {
@@ -18,5 +19,8 @@ public:
   TrainingSocket() : Training(TrainingType::TrainingSocket) {}
 
   smlp::Result train(const std::string &line = "") override;
+
+  smlp::Result trainTestMonitored(std::unique_ptr<TestingSocket> &testing,
+                                  const std::string &line = "");
 };
 } // namespace smlp

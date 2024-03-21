@@ -1,8 +1,6 @@
 name: Coverage and Doxygen
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -16,14 +14,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen g++-11 lcov gawk
-          echo "CC=gcc-11" >> $GITHUB_ENV
-          echo "CXX=g++-11" >> $GITHUB_ENV
+          sudo apt-get install -y doxygen g++-12 lcov gawk
+          echo "CC=gcc-12" >> $GITHUB_ENV
+          echo "CXX=g++-12" >> $GITHUB_ENV
 
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Debug
@@ -39,8 +37,8 @@ jobs:
         run: |
           mkdir -p ${{github.workspace}}/coverage
           mkdir -p ${{github.workspace}}/coverage/html
-          lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info \
+          lcov --gcov-tool /usr/bin/gcov-12 --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
+          lcov --gcov-tool /usr/bin/gcov-12 --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info \
           '/usr/include/*' '/usr/lib/*' \
           '${{github.workspace}}/libs/libsmlp/src/SimpleHTTPServer.cpp' \
           '${{github.workspace}}/libs/csv-parser/*' \
@@ -48,12 +46,12 @@ jobs:
           '${{github.workspace}}/test/*' \
           '${{github.workspace}}/libs/json/*' \
           '${{github.workspace}}/src/*'
-          lcov --summary ${{github.workspace}}/coverage/lcov.info
+          lcov --gcov-tool /usr/bin/gcov-12 --summary ${{github.workspace}}/coverage/lcov.info
           genhtml ${{github.workspace}}/coverage/lcov.info --output-directory ${{github.workspace}}/coverage/html
 
       - name: Create JSON file for badge
         run: |
-          coverage=$(lcov --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
+          coverage=$(lcov --gcov-tool /usr/bin/gcov-12 --summary ${{github.workspace}}/coverage/lcov.info 2>&1 | grep 'lines......:' | awk -F ' ' '{print $2}' | sed 's/%//')
           echo -e "{\"coverage\": \"$coverage\"}" > coverage/coverage.json
 
       - name: Generate Documentation

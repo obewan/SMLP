@@ -10,10 +10,6 @@
 #pragma once
 #include "Common.h"
 #include "CommonResult.h"
-#include "DataFileParser.h"
-#include "Network.h"
-#include "exception/PredictException.h"
-#include <memory>
 
 namespace smlp {
 /**
@@ -21,12 +17,9 @@ namespace smlp {
  */
 class Predict {
 public:
-  explicit Predict(std::shared_ptr<DataFileParser> fileparser)
-      : fileParser_(fileparser) {}
+  virtual ~Predict() = default;
 
-  Predict() : fileParser_(std::make_shared<DataFileParser>()) {}
-
-  smlp::Result predict(const std::string &line = "") const;
+  virtual Result predictData(const std::string &line = "") = 0;
 
   std::string formatValues(const std::vector<float> &values,
                            bool roundValues) const;
@@ -35,24 +28,11 @@ public:
                            const std::vector<float> &predicteds) const;
 
   /**
-   * @brief Sets the file parser for testing data.
+   * @brief Process Result, calling forward propagation and formatting output
    *
-   * @param fileparser Pointer to the file parser.
+   * @param result
+   * @return std::string
    */
-  void setFileParser(std::shared_ptr<DataFileParser> fileparser) {
-    fileParser_ = fileparser;
-  }
-
-  /**
-   * @brief Gets the file parser used for testing data.
-   *
-   * @return Pointer to the file parser.
-   */
-  std::shared_ptr<DataFileParser> getFileParser() const { return fileParser_; }
-
-private:
-  smlp::Result processInput(EInput input, const std::string &line) const;
   std::string processResult(const smlp::RecordResult &result) const;
-  std::shared_ptr<DataFileParser> fileParser_ = nullptr;
 };
 } // namespace smlp

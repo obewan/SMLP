@@ -36,11 +36,12 @@ TEST_CASE("Testing the Testing class") {
     std::stringstream inputDataStream(inputData);
 
     auto &manager = Manager::getInstance();
-    manager.network =
-        std::make_shared<Network>(NetworkParameters{.input_size = 20,
-                                                    .hidden_size = 12,
-                                                    .output_size = 1,
-                                                    .hiddens_count = 1});
+    manager.network = std::make_unique<Network>();
+    manager.network_params = {.input_size = 20,
+                              .hidden_size = 12,
+                              .output_size = 1,
+                              .hiddens_count = 1};
+    manager.network->initializeLayers();
     auto fileparser = std::make_shared<DataFileParser>();
 
     manager.app_params = {.training_ratio_line = 0,

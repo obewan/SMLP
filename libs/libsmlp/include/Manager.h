@@ -14,6 +14,10 @@
 #include "CommonResult.h"
 #include "NetworkImportExport.h"
 #include "Predict.h"
+#include "RunnerFileVisitor.h"
+#include "RunnerSocketVisitor.h"
+#include "RunnerStdinVisitor.h"
+#include "RunnerVisitor.h"
 #include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -38,43 +42,34 @@ public:
   void operator=(Manager const &) = delete;
 
   /**
-   * @brief This method apply the model on inputs to predict the outputs
-   * @param line Optional line to use.
-   */
-  smlp::Result predict(const std::string &line = "");
-
-  /**
-   * @brief This method trains the model.
-   * @param line Optional line to use.
-   */
-  smlp::Result train(const std::string &line = "");
-
-  /**
-   * @brief This method tests the model.
-   * @param line Optional line to use.
-   */
-  smlp::Result test(const std::string &line = "");
-
-  /**
-   * @brief This method trains the model, testing at each epoch and monitoring
-   * the progress of an output neuron. Be aware that this mode consumes more
-   * memory with each epoch to save the monitoring progress. Therefore, it is
-   * recommended for use with smaller datasets and a lower number of epochs.
-   * @param line Optional line to use.
-   */
-  smlp::Result trainTestMonitored(const std::string &line = "");
-
-  /**
    * @brief Process line from TCP Client socket.
    *
    * @param line
    */
-  smlp::Result processTCPClient(const std::string &line);
+  smlp::Result processTCPClient(const std::string &line) const;
 
   /**
    * @brief run the selected mode.
    */
   void runMode();
+
+  /**
+   * @brief run a RunnerVisitor
+   *
+   * @param visitor
+   * @return Result
+   */
+  Result runWithVisitor(const RunnerVisitor &visitor) const;
+
+  /**
+   * @brief run a RunnerVisitor for single line only
+   *
+   * @param visitor
+   * @param line
+   * @return Result
+   */
+  Result runWithLineVisitor(const RunnerVisitor &visitor,
+                            const std::string &line) const;
 
   /**
    * @brief check if the network should export its model.
@@ -85,7 +80,7 @@ public:
   /**
    * @brief export the network model.
    */
-  void exportNetwork();
+  void exportNetwork() const;
 
   /**
    * @brief Network builder.
@@ -105,69 +100,18 @@ public:
   /**
    * @brief The neural network
    */
-  std::shared_ptr<Network> network = nullptr;
+  std::unique_ptr<Network> network = nullptr;
+
+  /**
+   * @brief Http server
+   *
+   */
+  std::unique_ptr<SimpleHTTPServer> http_server = nullptr;
 
   /**
    * @brief ImportExport tool.
    */
   NetworkImportExport importExport;
-
-  /**
-   * @brief Create a Training object
-   *
-   */
-  void createTraining() {
-    if (training_) {
-      return;
-    }
-    switch (app_params.input) {
-    case EInput::File:
-      training_ = std::make_shared<TrainingFile>();
-      break;
-    case EInput::Stdin:
-      training_ = std::make_shared<TrainingStdin>();
-      break;
-    case EInput::Socket:
-      training_ = std::make_shared<TrainingSocket>();
-      break;
-    default:
-      throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
-    }
-
-    training_->createDataParser();
-    if (app_params.mode == EMode::TrainTestMonitored) {
-      createTesting();
-      testing_->setDataParser(training_->getDataParser());
-    }
-  }
-
-  /**
-   * @brief Create a Testing object
-   *
-   */
-  void createTesting() {
-    if (testing_) {
-      return;
-    }
-    switch (app_params.input) {
-    case EInput::File:
-      testing_ = std::make_shared<TestingFile>();
-      break;
-    case EInput::Stdin:
-      testing_ = std::make_shared<TestingStdin>();
-      break;
-    case EInput::Socket:
-      testing_ = std::make_shared<TestingSocket>();
-      break;
-    default:
-      throw ManagerException(SimpleLang::Error(Error::UnimplementedMode));
-    }
-
-    if (app_params.mode != EMode::TrainTestMonitored) {
-      // TrainTestMonitored use the file parser of training_ instead.
-      testing_->createFileParser();
-    }
-  }
 
   /**
    * @brief Create a Http Server object
@@ -177,32 +121,8 @@ public:
     if (!app_params.enable_http && app_params.input != EInput::Socket) {
       throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
     }
-    http_server_ = std::make_shared<SimpleHTTPServer>();
-    http_server_->setServerPort(app_params.http_port);
-  }
-
-  /**
-   * @brief This will delete the managed object if this is the last shared_ptr
-   * owning it.
-   *
-   */
-  void resetTraining() {
-    if (training_ == nullptr) {
-      return;
-    }
-    training_.reset();
-  }
-
-  /**
-   * @brief This will delete the managed object if this is the last shared_ptr
-   * owning it.
-   *
-   */
-  void resetTesting() {
-    if (testing_ == nullptr) {
-      return;
-    }
-    testing_.reset();
+    http_server = std::make_unique<SimpleHTTPServer>();
+    http_server->setServerPort(app_params.http_port);
   }
 
   /**
@@ -211,39 +131,10 @@ public:
    *
    */
   void resetHttpServer() {
-    if (http_server_ == nullptr) {
+    if (http_server == nullptr) {
       return;
     }
-    http_server_.reset();
-  }
-
-  /**
-   * @brief Logger
-   *
-   */
-  const SimpleLogger &logger = SimpleLogger::getInstance();
-
-  /**
-   * @brief Get the Training object
-   *
-   * @return std::shared_ptr<Training>
-   */
-  std::shared_ptr<Training> getTraining() const { return training_; }
-
-  /**
-   * @brief Get the Testing object
-   *
-   * @return std::shared_ptr<Testing>
-   */
-  std::shared_ptr<Testing> getTesting() const { return testing_; }
-
-  /**
-   * @brief Get the Http Server object
-   *
-   * @return std::shared_ptr<SimpleHTTPServer>
-   */
-  std::shared_ptr<SimpleHTTPServer> getHttpServer() const {
-    return http_server_;
+    http_server.reset();
   }
 
   /**
@@ -262,9 +153,8 @@ public:
 
 private:
   Manager() = default;
-  std::shared_ptr<Predict> predict_ = nullptr;
-  std::shared_ptr<Training> training_ = nullptr;
-  std::shared_ptr<Testing> testing_ = nullptr;
-  std::shared_ptr<SimpleHTTPServer> http_server_ = nullptr;
+  mutable std::unique_ptr<RunnerFileVisitor> runnerFileVisitor_ = nullptr;
+  mutable std::unique_ptr<RunnerSocketVisitor> runnerSocketVisitor_ = nullptr;
+  mutable std::unique_ptr<RunnerStdinVisitor> runnerStdinVisitor_ = nullptr;
 };
 } // namespace smlp

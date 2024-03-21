@@ -11,6 +11,7 @@
 #include "CommonErrors.h"
 #include "CommonParameters.h"
 #include "CommonResult.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "Testing.h"
 #include "exception/TestingException.h"

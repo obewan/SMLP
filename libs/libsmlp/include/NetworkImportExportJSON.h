@@ -10,16 +10,7 @@
  */
 #pragma once
 #include "Common.h"
-#include "Layer.h"
 #include "Network.h"
-#include "OutputLayer.h"
-#include "SimpleLang.h"
-#include "SimpleLogger.h"
-#include "exception/ImportExportException.h"
-#include "json.hpp"
-#include <filesystem>
-#include <fstream>
-#include <iostream>
 
 namespace smlp {
 /**
@@ -35,7 +26,7 @@ public:
    * @param app_params the application parameters, including the file path/
    * @return Network*
    */
-  Network *importModel(const AppParameters &app_params);
+  std::unique_ptr<Network> importModel(const AppParameters &app_params);
 
   /**
    * @brief export a Network model into a json file.
@@ -43,7 +34,7 @@ public:
    * @param network the network to export.
    * @param app_params the application parameters.
    */
-  void exportModel(const Network *network,
+  void exportModel(const std::unique_ptr<Network> &network,
                    const AppParameters &app_params) const;
 };
 } // namespace smlp
