@@ -45,7 +45,7 @@ jobs:
             build_type: "Release"
             cc: "cl"
             cxx: "cl"
-            compiler_flags: "/EHsc /wd4514 /wd4625 /wd4626 /wd4820 /wd5027"
+            compiler_flags: "/EHsc /wd4514 /wd4625 /wd4626 /wd4710 /wd4711 /wd4820 /wd5027"
             is_windows: true
 
     runs-on: ${{ matrix.os }}
