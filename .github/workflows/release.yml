@@ -35,8 +35,8 @@ jobs:
             name: "Linux"
             artifact: "Linux.tar.xz"
             build_type: "Release"
-            cc: "gcc-11"
-            cxx: "g++-11"
+            cc: "gcc-12"
+            cxx: "g++-12"
             compiler_flags: ""
             is_linux: true
           - os: windows-latest
