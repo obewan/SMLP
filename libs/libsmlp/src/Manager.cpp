@@ -204,10 +204,10 @@ void Manager::runMode() {
   //  HTTP service mode
   if (app_params.enable_http) {
     createHttpServer();
-    if (!getHttpServer()) {
+    if (!http_server) {
       throw ManagerException(SimpleLang::Error(Error::InternalError));
     }
-    getHttpServer()->start();
+    http_server->start();
   } else {
     // Terminal modes
     switch (app_params.mode) {
@@ -258,10 +258,10 @@ void Manager::importOrBuildNetwork() {
   if (!app_params.network_to_import.empty() &&
       std::filesystem::exists(app_params.network_to_import)) {
     logNetworkImport();
-    network = std::shared_ptr<Network>(importExport.importModel(app_params));
+    network = importExport.importModel(app_params);
   } else {
     logNetworkCreation();
-    network = std::make_shared<Network>();
+    network = std::make_unique<Network>();
     network->initializeLayers();
   }
 }
@@ -279,7 +279,7 @@ void Manager::exportNetwork() {
   }
   logger.info("Exporting network model to ", app_params.network_to_export,
               "...");
-  importExport.exportModel(network.get(), app_params);
+  importExport.exportModel(network, app_params);
 }
 
 smlp::Result Manager::processTCPClient(const std::string &line) {

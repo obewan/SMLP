@@ -28,7 +28,7 @@ TEST_CASE("Testing the Training class") {
   manager.app_params = {.data_file = test_file};
   manager.resetTraining();
   manager.resetTesting();
-  manager.network = std::make_shared<Network>();
+  manager.network = std::make_unique<Network>();
   manager.network->initializeLayers();
 
   auto &network_params = manager.network_params;

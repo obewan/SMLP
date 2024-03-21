@@ -13,7 +13,7 @@
 using namespace smlp;
 
 void NetworkImportExportCSV::importNeuronsWeights(
-    const Network *network, const AppParameters &app_params) const {
+    std::unique_ptr<Network> &network, const AppParameters &app_params) const {
   // lambda function to convert to float
   auto getFloatValue = [](const std::vector<Csv::CellReference> &cells) {
     auto val = cells[0].getDouble();
@@ -99,7 +99,8 @@ void NetworkImportExportCSV::importNeuronsWeights(
 }
 
 void NetworkImportExportCSV::exportNeuronsWeights(
-    const Network *network, const AppParameters &app_params) const {
+    const std::unique_ptr<Network> &network,
+    const AppParameters &app_params) const {
   // get the csv filename
   std::string filename = app_params.network_to_export;
   filename = std::regex_replace(

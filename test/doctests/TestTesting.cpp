@@ -36,7 +36,7 @@ TEST_CASE("Testing the Testing class") {
     std::stringstream inputDataStream(inputData);
 
     auto &manager = Manager::getInstance();
-    manager.network = std::make_shared<Network>();
+    manager.network = std::make_unique<Network>();
     manager.network_params = {.input_size = 20,
                               .hidden_size = 12,
                               .output_size = 1,

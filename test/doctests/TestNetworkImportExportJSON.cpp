@@ -40,7 +40,7 @@ TEST_CASE("Testing the ImportExport") {
     app_params.network_to_export = modelJsonFile;
 
     NetworkImportExport importExport;
-    auto network = new Network();
+    auto network = std::make_unique<Network>();
     network->initializeLayers();
     CHECK_NOTHROW(importExport.exportModel(network, app_params));
 
@@ -54,7 +54,7 @@ TEST_CASE("Testing the ImportExport") {
 
     NetworkImportExport importExport;
     app_params.network_to_import = modelJsonFile;
-    Network *network = nullptr;
+    std::unique_ptr<Network> network = nullptr;
     CHECK_NOTHROW(network = importExport.importModel(app_params));
     CHECK(network != nullptr);
     CHECK(network->layers.front()->layerType == LayerType::InputLayer);

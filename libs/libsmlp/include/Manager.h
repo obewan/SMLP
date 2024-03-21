@@ -113,7 +113,13 @@ public:
   /**
    * @brief The neural network
    */
-  std::shared_ptr<Network> network = nullptr;
+  std::unique_ptr<Network> network = nullptr;
+
+  /**
+   * @brief Http server
+   *
+   */
+  std::unique_ptr<SimpleHTTPServer> http_server = nullptr;
 
   /**
    * @brief ImportExport tool.
@@ -185,8 +191,8 @@ public:
     if (!app_params.enable_http && app_params.input != EInput::Socket) {
       throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
     }
-    http_server_ = std::make_shared<SimpleHTTPServer>();
-    http_server_->setServerPort(app_params.http_port);
+    http_server = std::make_unique<SimpleHTTPServer>();
+    http_server->setServerPort(app_params.http_port);
   }
 
   /**
@@ -219,10 +225,10 @@ public:
    *
    */
   void resetHttpServer() {
-    if (http_server_ == nullptr) {
+    if (http_server == nullptr) {
       return;
     }
-    http_server_.reset();
+    http_server.reset();
   }
 
   /**
@@ -246,15 +252,6 @@ public:
   std::shared_ptr<Testing> getTesting() const { return testing_; }
 
   /**
-   * @brief Get the Http Server object
-   *
-   * @return std::shared_ptr<SimpleHTTPServer>
-   */
-  std::shared_ptr<SimpleHTTPServer> getHttpServer() const {
-    return http_server_;
-  }
-
-  /**
    * @brief Get a title line with the version
    *
    * @return std::string
@@ -273,6 +270,5 @@ private:
   std::shared_ptr<Predict> predict_ = nullptr;
   std::shared_ptr<Training> training_ = nullptr;
   std::shared_ptr<Testing> testing_ = nullptr;
-  std::shared_ptr<SimpleHTTPServer> http_server_ = nullptr;
 };
 } // namespace smlp

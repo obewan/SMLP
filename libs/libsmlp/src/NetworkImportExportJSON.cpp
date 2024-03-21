@@ -1,9 +1,14 @@
 #include "NetworkImportExportJSON.h"
+#include "HiddenLayer.h"
+#include "InputLayer.h"
 #include "Manager.h"
+#include "OutputLayer.h"
+#include "exception/ImportExportException.h"
 
 using namespace smlp;
 
-Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
+std::unique_ptr<Network>
+NetworkImportExportJSON::importModel(const AppParameters &app_params) {
   using json = nlohmann::json;
   const auto &logger = SimpleLogger::getInstance();
   const auto &lang = SimpleLang::getInstance();
@@ -44,7 +49,7 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
     }
 
     // Create a new Network object and deserialize the JSON data into it.
-    auto model = new Network();
+    auto model = std::make_unique<Network>();
     params.input_size = json_model["parameters"]["input_size"];
     params.hidden_size = json_model["parameters"]["hidden_size"];
     params.output_size = json_model["parameters"]["output_size"];
@@ -125,7 +130,8 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
 }
 
 void NetworkImportExportJSON::exportModel(
-    const Network *network, const AppParameters &app_params) const {
+    const std::unique_ptr<Network> &network,
+    const AppParameters &app_params) const {
   using json = nlohmann::json;
   json json_network;
   json_network["version"] = app_params.version;

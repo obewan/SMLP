@@ -29,8 +29,7 @@ TEST_CASE("Testing the Predict class") {
 
     const auto &app_params = Manager::getInstance().app_params;
     CHECK_NOTHROW({
-      Manager::getInstance().network =
-          std::shared_ptr<Network>(importExport.importModel(app_params));
+      Manager::getInstance().network = importExport.importModel(app_params);
       Predict predict;
       predict.predict();
     });

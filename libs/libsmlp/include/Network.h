@@ -11,11 +11,7 @@
 #pragma once
 #include "ActivationFunctions.h"
 #include "Common.h"
-#include "HiddenLayer.h"
-#include "InputLayer.h"
-#include "OutputLayer.h"
-#include "SimpleLang.h"
-#include "exception/NetworkException.h"
+#include "Layer.h"
 
 namespace smlp {
 /**
@@ -43,6 +39,10 @@ public:
    */
   Network() = default;
 
+  /**
+   * @brief Layers of neurons.
+   *
+   */
   std::vector<Layer *> layers;
 
   /**
