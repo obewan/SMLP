@@ -6,24 +6,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pages: write
-
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup cmake
-        uses: jwlawson/actions-setup-cmake@v1.14
-        with:
-          cmake-version: "3.18.4"
 
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++-11 lcov
-          echo "CC=gcc-11" >> $GITHUB_ENV
-          echo "CXX=g++-11" >> $GITHUB_ENV
+          sudo apt-get install -y g++-12 lcov cmake
+          echo "CC=gcc-12" >> $GITHUB_ENV
+          echo "CXX=g++-12" >> $GITHUB_ENV
 
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Debug
@@ -38,8 +29,8 @@ jobs:
       - name: Run code coverage
         run: |
           mkdir -p ${{github.workspace}}/coverage
-          lcov --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
-          lcov --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info \
+          lcov --gcov-tool /usr/bin/gcov-12 --directory . --capture --output-file ${{github.workspace}}/coverage/lcov.info
+          lcov --gcov-tool /usr/bin/gcov-12 --remove ${{github.workspace}}/coverage/lcov.info --output-file ${{github.workspace}}/coverage/lcov.info \
           '/usr/include/*' '/usr/lib/*' \
           '${{github.workspace}}/libs/libsmlp/src/SimpleHTTPServer.cpp' \
           '${{github.workspace}}/libs/csv-parser/*' \
@@ -47,7 +38,7 @@ jobs:
           '${{github.workspace}}/test/*' \
           '${{github.workspace}}/libs/json/*' \
           '${{github.workspace}}/src/*'
-          lcov --summary ${{github.workspace}}/coverage/lcov.info
+          lcov --gcov-tool /usr/bin/gcov-12 --summary ${{github.workspace}}/coverage/lcov.info
 
       - name: Very Good Coverage
         uses: VeryGoodOpenSource/very_good_coverage@v2
