@@ -259,10 +259,10 @@ void Manager::importOrBuildNetwork() {
       std::filesystem::exists(app_params.network_to_import)) {
     logNetworkImport();
     network = std::shared_ptr<Network>(importExport.importModel(app_params));
-    network_params = network->params;
   } else {
     logNetworkCreation();
-    network = std::make_shared<Network>(network_params);
+    network = std::make_shared<Network>();
+    network->initializeLayers();
   }
 }
 
