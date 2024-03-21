@@ -63,6 +63,8 @@ using namespace smlp;
 int SimpleMLP::init(int argc, char **argv) {
   const auto &logger = SimpleLogger::getInstance();
   try {
+    auto &app_params = Manager::getInstance().app_params;
+
     checkStdin(); // check in case using defaults options
 
     if (argc == 1 && app_params.input != EInput::Stdin) {
@@ -115,8 +117,42 @@ int SimpleMLP::init(int argc, char **argv) {
 }
 
 int SimpleMLP::parseArgs(int argc, char **argv) {
+  auto &app_params = Manager::getInstance().app_params;
+  auto &network_params = Manager::getInstance().network_params;
   CLI::App app{app_params.title};
   bool version = false;
+
+  // Parsing
+  try {
+    addOptions(app, version, app_params, network_params);
+    app.parse(argc, argv);
+  } catch (const CLI::CallForHelp &e) {
+    // This is returned when -h or --help is called
+    app.exit(e);
+    return EXIT_HELP;
+  } catch (const CLI::ParseError &e) {
+    return app.exit(e);
+  }
+
+  // Version special exit
+  if (version) {
+    const auto &logger = SimpleLogger::getInstance();
+    logger.out(app_params.title, " v", app_params.version);
+    logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
+    return EXIT_VERSION;
+  }
+
+  // HTTP Service input mode
+  if (app_params.enable_http) {
+    app_params.input = EInput::Socket;
+  }
+
+  return EXIT_SUCCESS;
+}
+
+void SimpleMLP::addOptions(CLI::App &app, bool &version,
+                           smlp::AppParameters &app_params,
+                           smlp::NetworkParameters &network_params) {
   const auto &lang = SimpleLang::getInstance();
 
   // valid a parent path, if there is a path, that include a futur filename (not
@@ -191,36 +227,11 @@ int SimpleMLP::parseArgs(int argc, char **argv) {
   addFlag("-x,--disable_stdin", app_params.disable_stdin);
   addFlag("-v,--version", version);
   addFlag("-V,--verbose", app_params.verbose);
-
-  // Parsing
-  try {
-    app.parse(argc, argv);
-  } catch (const CLI::CallForHelp &e) {
-    // This is returned when -h or --help is called
-    app.exit(e);
-    return EXIT_HELP;
-  } catch (const CLI::ParseError &e) {
-    return app.exit(e);
-  }
-
-  // Version special exit
-  if (version) {
-    const auto &logger = SimpleLogger::getInstance();
-    logger.out(app_params.title, " v", app_params.version);
-    logger.out("Copyright Damien Balima (https://dams-labs.net) 2023");
-    return EXIT_VERSION;
-  }
-
-  // HTTP Service input mode
-  if (app_params.enable_http) {
-    app_params.input = EInput::Socket;
-  }
-
-  return EXIT_SUCCESS;
 }
 
 void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
   const auto &logger = SimpleLogger::getInstance();
+  auto &app_params = Manager::getInstance().app_params;
   if (app_params.mode != EMode::Predict) {
     if (config.isValidConfig) {
       logger.info(SimpleLang::Message(Message::UsingConfigFile,
@@ -243,6 +254,7 @@ void SimpleMLP::ConfigSettings(const SimpleConfig &config) {
 }
 
 void SimpleMLP::checkStdin() {
+  auto &app_params = Manager::getInstance().app_params;
   if (app_params.input == EInput::Socket) {
     return;
   }
