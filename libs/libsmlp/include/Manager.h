@@ -14,6 +14,7 @@
 #include "CommonResult.h"
 #include "NetworkImportExport.h"
 #include "Predict.h"
+#include "RunnerVisitor.h"
 #include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -75,6 +76,13 @@ public:
    * @brief run the selected mode.
    */
   void runMode();
+
+  /**
+   * @brief run a RunnerVisitor
+   *
+   * @param visitor
+   */
+  void runWithVisitor(const RunnerVisitor &visitor);
 
   /**
    * @brief check if the network should export its model.

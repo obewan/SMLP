@@ -1,0 +1,21 @@
+/**
+ * @file RunnerVisitor.h
+ * @author Damien Balima (www.dams-labs.net)
+ * @brief RunnerVisitor interface
+ * @date 2024-03-17
+ *
+ * @copyright Damien Balima (c) CC-BY-NC-SA-4.0 2024
+ *
+ */
+
+#pragma once
+
+namespace smlp {
+class RunnerVisitor {
+public:
+  /**
+   * @brief Runner Visitor
+   */
+  virtual void visit() const = 0;
+};
+} // namespace smlp

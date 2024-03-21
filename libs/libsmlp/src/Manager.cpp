@@ -3,6 +3,9 @@
 #include "CommonModes.h"
 #include "CommonParameters.h"
 #include "CommonResult.h"
+#include "RunnerFileVisitor.h"
+#include "RunnerSocketVisitor.h"
+#include "RunnerStdinVisitor.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/ManagerException.h"
@@ -184,7 +187,21 @@ std::string Manager::getInlineHeader() const {
 }
 
 void Manager::runMode() {
-  // HTTP service mode
+  switch (app_params.input) {
+  case EInput::File:
+    runWithVisitor(RunnerFileVisitor{});
+    break;
+  case EInput::Stdin:
+    runWithVisitor(RunnerStdinVisitor{});
+    break;
+  case EInput::Socket:
+    runWithVisitor(RunnerSocketVisitor{});
+    break;
+  default:
+    break;
+  }
+  // TODO: remove code below, replace it with visitors above.
+  //  HTTP service mode
   if (app_params.enable_http) {
     createHttpServer();
     if (!getHttpServer()) {
@@ -218,6 +235,8 @@ void Manager::runMode() {
     }
   }
 }
+
+void Manager::runWithVisitor(const RunnerVisitor &visitor) { visitor.visit(); }
 
 void Manager::importOrBuildNetwork() {
   // avoiding header lines on Predict mode, for commands chaining with
