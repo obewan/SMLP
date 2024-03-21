@@ -20,7 +20,7 @@ public:
    * @param network
    * @param app_params
    */
-  void importNeuronsWeights(const Network *network,
+  void importNeuronsWeights(std::unique_ptr<Network> &network,
                             const AppParameters &app_params) const;
 
   /**
@@ -29,7 +29,7 @@ public:
    * @param network
    * @param app_params
    */
-  void exportNeuronsWeights(const Network *network,
+  void exportNeuronsWeights(const std::unique_ptr<Network> &network,
                             const AppParameters &app_params) const;
 };
 } // namespace smlp

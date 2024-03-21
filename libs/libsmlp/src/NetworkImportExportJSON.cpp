@@ -1,11 +1,18 @@
 #include "NetworkImportExportJSON.h"
+#include "HiddenLayer.h"
+#include "InputLayer.h"
+#include "Manager.h"
+#include "OutputLayer.h"
+#include "exception/ImportExportException.h"
 
 using namespace smlp;
 
-Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
+std::unique_ptr<Network>
+NetworkImportExportJSON::importModel(const AppParameters &app_params) {
   using json = nlohmann::json;
   const auto &logger = SimpleLogger::getInstance();
   const auto &lang = SimpleLang::getInstance();
+  auto &params = Manager::getInstance().network_params;
 
   if (app_params.network_to_import.empty()) {
     throw ImportExportException(lang.get(Error::MissingImportFile));
@@ -42,19 +49,19 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
     }
 
     // Create a new Network object and deserialize the JSON data into it.
-    auto model = new Network();
-    model->params.input_size = json_model["parameters"]["input_size"];
-    model->params.hidden_size = json_model["parameters"]["hidden_size"];
-    model->params.output_size = json_model["parameters"]["output_size"];
-    model->params.hiddens_count = json_model["parameters"]["hiddens_count"];
-    model->params.learning_rate = json_model["parameters"]["learning_rate"];
-    model->params.hidden_activation_alpha =
+    auto model = std::make_unique<Network>();
+    params.input_size = json_model["parameters"]["input_size"];
+    params.hidden_size = json_model["parameters"]["hidden_size"];
+    params.output_size = json_model["parameters"]["output_size"];
+    params.hiddens_count = json_model["parameters"]["hiddens_count"];
+    params.learning_rate = json_model["parameters"]["learning_rate"];
+    params.hidden_activation_alpha =
         json_model["parameters"]["hidden_activation_alpha"];
-    model->params.output_activation_alpha =
+    params.output_activation_alpha =
         json_model["parameters"]["output_activation_alpha"];
-    model->params.hidden_activation_function =
+    params.hidden_activation_function =
         json_model["parameters"]["hidden_activation_function"];
-    model->params.output_activation_function =
+    params.output_activation_function =
         json_model["parameters"]["output_activation_function"];
 
     for (auto json_layer : json_model["layers"]) {
@@ -86,14 +93,12 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
       case LayerType::InputLayer: // no activation function here
         break;
       case LayerType::HiddenLayer:
-        model->SetActivationFunction(layer,
-                                     model->params.hidden_activation_function,
-                                     model->params.hidden_activation_alpha);
+        model->SetActivationFunction(layer, params.hidden_activation_function,
+                                     params.hidden_activation_alpha);
         break;
       case LayerType::OutputLayer:
-        model->SetActivationFunction(layer,
-                                     model->params.output_activation_function,
-                                     model->params.output_activation_alpha);
+        model->SetActivationFunction(layer, params.output_activation_function,
+                                     params.output_activation_alpha);
         break;
       default:
         throw ImportExportException(lang.get(Error::LayerTypeNotRecognized));
@@ -125,10 +130,12 @@ Network *NetworkImportExportJSON::importModel(const AppParameters &app_params) {
 }
 
 void NetworkImportExportJSON::exportModel(
-    const Network *network, const AppParameters &app_params) const {
+    const std::unique_ptr<Network> &network,
+    const AppParameters &app_params) const {
   using json = nlohmann::json;
   json json_network;
   json_network["version"] = app_params.version;
+  const auto &params = Manager::getInstance().network_params;
 
   // Serialize the layers to JSON.
   for (auto layer : network->layers) {
@@ -138,21 +145,19 @@ void NetworkImportExportJSON::exportModel(
   }
 
   // Serialize the parameters to JSON.
-  json_network["parameters"]["input_size"] = json(network->params.input_size);
-  json_network["parameters"]["hidden_size"] = json(network->params.hidden_size);
-  json_network["parameters"]["output_size"] = json(network->params.output_size);
-  json_network["parameters"]["hiddens_count"] =
-      json(network->params.hiddens_count);
-  json_network["parameters"]["learning_rate"] =
-      json(network->params.learning_rate);
+  json_network["parameters"]["input_size"] = json(params.input_size);
+  json_network["parameters"]["hidden_size"] = json(params.hidden_size);
+  json_network["parameters"]["output_size"] = json(params.output_size);
+  json_network["parameters"]["hiddens_count"] = json(params.hiddens_count);
+  json_network["parameters"]["learning_rate"] = json(params.learning_rate);
   json_network["parameters"]["hidden_activation_alpha"] =
-      json(network->params.hidden_activation_alpha);
+      json(params.hidden_activation_alpha);
   json_network["parameters"]["output_activation_alpha"] =
-      json(network->params.output_activation_alpha);
+      json(params.output_activation_alpha);
   json_network["parameters"]["hidden_activation_function"] =
-      json(network->params.hidden_activation_function);
+      json(params.hidden_activation_function);
   json_network["parameters"]["output_activation_function"] =
-      json(network->params.output_activation_function);
+      json(params.output_activation_function);
 
   // Write the JSON object to the file.
   // The 4 argument specifies the indentation level of the resulting string.

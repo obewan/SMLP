@@ -13,64 +13,10 @@
 
 using namespace smlp;
 
-smlp::Result Predict::predict(const std::string &line) const {
-  const auto &app_params = Manager::getInstance().app_params;
-  switch (app_params.input) {
-  case EInput::File:
-  case EInput::Stdin:
-  case EInput::Socket:
-    return processInput(app_params.input, line);
-  default:
-    return {.code = smlp::make_error_code(smlp::ErrorCode::NotImplemented),
-            .action = smlp::getModeStr(EMode::Predict)};
-  }
-}
-
-smlp::Result Predict::processInput(EInput input,
-                                   const std::string &line) const {
-  std::string output;
-  bool isParsing = true;
-  std::string linein;
-  while (isParsing) {
-    RecordResult result;
-    switch (input) {
-    case EInput::File:
-      if (!fileParser_->file.is_open()) {
-        fileParser_->openFile();
-      }
-      result = fileParser_->processLine();
-      isParsing = result.isSuccess && !result.isEndOfFile;
-      break;
-    case EInput::Stdin:
-      isParsing = static_cast<bool>(std::getline(std::cin, linein));
-      if (isParsing) {
-        result = fileParser_->processLine(linein);
-      }
-      break;
-    case EInput::Socket:
-      result = fileParser_->processLine(line);
-      isParsing = false;
-      break;
-    default:
-      break;
-    }
-    if (result.isSuccess) {
-      output = processResult(result);
-    }
-  }
-  if (input == EInput::File) {
-    fileParser_->closeFile();
-  }
-  return {.code = smlp::make_error_code(smlp::ErrorCode::Success),
-          .action = smlp::getModeStr(EMode::Predict),
-          .data = output};
-}
-
 std::string Predict::processResult(const RecordResult &result) const {
   const auto &network = Manager::getInstance().network;
   auto predicteds = network->forwardPropagation(result.record.inputs);
   auto output = formatResult(result.record.inputs, predicteds);
-  SimpleLogger::LOG_INFO(output);
   return output;
 }
 

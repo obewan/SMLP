@@ -10,6 +10,7 @@
 #pragma once
 #include "Common.h"
 #include "DataFileParser.h"
+#include "Testing.h"
 #include <memory>
 #include <string>
 
@@ -58,7 +59,7 @@ public:
   /**
    * @brief Train a network.
    *
-   * @param line optional data line to use for training
+   * @param line optional data line to use for training.
    */
   virtual smlp::Result train(const std::string &line = "") = 0;
 

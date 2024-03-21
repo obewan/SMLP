@@ -165,7 +165,7 @@ TEST_CASE("Testing the DataFileParser class") {
         "1.00,0.04,0.57,0.80,0.08,1.00,0.38,0.00,0.85,0.12,0.05,0.00,"
         "0.73,0.62,0.00,0.00,1.00,0.92,0.00,1.00,0.00";
     std::string_view data(line);
-    parser.csv_parser.parseTo(data, cell_refs);
+    parser.csv_parser.parseTo2DVector(data, cell_refs);
 
     const auto &[inputs1, outputs1] =
         parser.processInputFirst(cell_refs, input_size, output_size);

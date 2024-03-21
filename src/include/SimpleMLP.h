@@ -8,11 +8,11 @@
  *
  */
 #pragma once
+#include "CLI11.hpp"
 #include "CommonParameters.h"
 #include "Manager.h"
 #include "SimpleConfig.h"
 #include <memory>
-
 
 /**
  * @brief Main class to train and test the neural network after parsing the
@@ -46,8 +46,8 @@ public:
 
 private:
   int parseArgs(int argc, char **argv);
+  void addOptions(CLI::App &app, bool &version, smlp::AppParameters &app_params,
+                  smlp::NetworkParameters &network_params);
   void ConfigSettings(const smlp::SimpleConfig &config);
   void checkStdin();
-  smlp::AppParameters &app_params = smlp::Manager::getInstance().app_params;
-  smlp::NetworkParameters &network_params = smlp::Manager::getInstance().network_params;
 };

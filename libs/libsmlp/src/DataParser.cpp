@@ -28,7 +28,7 @@ void DataParser::parseLine(
     std::vector<std::vector<Csv::CellReference>> &cell_refs) const {
   try {
     std::string_view data(line);
-    csv_parser.parseTo(data, cell_refs);
+    csv_parser.parseTo2DVector(data, cell_refs);
   } catch (Csv::ParseError &ex) {
     throw DataParserException(
         SimpleLang::Error(

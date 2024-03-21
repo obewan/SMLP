@@ -1,5 +1,5 @@
 /**************************************************************************
-Copyright: (C) 2021 Alexander Shaduri
+Copyright: (C) 2021 - 2023 Alexander Shaduri
 License: Zlib
 ***************************************************************************/
 
@@ -8,6 +8,8 @@ License: Zlib
 
 #include "csv_cell.h"
 #include "csv_error.h"
+#include "csv_matrix.h"
+#include "csv_util.h"
 
 #include <string>
 #include <string_view>
@@ -55,7 +57,7 @@ namespace Csv {
  * (ignoring the whitespace).
  * - DOS, UNIX, Mac line endings are supported; Excel on Mac uses/used Mac endings for CSV.
  * - Line ending format inside strings is preserved.
- * - getOriginalStringView() methods may return escaped double-quotes; string_views are read-only and we
+ * - getOriginalStringView() methods may return escaped double-quotes; string_views are read-only, and we
  * cannot touch the original CSV data; use getCleanString() methods if you need unescaped data.
  */
 class Parser {
@@ -70,6 +72,7 @@ class Parser {
 
 
 		/// Parse CSV string data and store the results using a callback function.
+		/// The calling order is to always pass the first row, then the second row, etc...
 		/// Callback function signature:
 		/// void func(std::size_t row, std::size_t column, std::string_view cell_data, CellTypeHint hint).
 		/// \throws ParseError
@@ -77,19 +80,72 @@ class Parser {
 		constexpr void parse(std::string_view data, StoreCellFunction storeCellFunc) const;
 
 
-		/// Parse CSV string data into a vector of columns.
-		/// Accepts types like std::vector<std::vector<CellReference>>.
+		/// Parse CSV string data into a vector of columns. The innermost type may be one of Cell* classes
+		// (e.g., CellReference), or a primitive numeric type (e.g., double).
+		/// \param data CSV string data.
+		/// \param[out] values An empty 2D vector to store the data in. Accepts types like std::vector<std::vector<CellReference>>.
 		/// \throws ParseError
 		template<typename Vector2D>
-		constexpr void parseTo(std::string_view data, Vector2D& values) const;
+		constexpr void parseTo2DVector(std::string_view data, Vector2D& values) const;
 
 
-		/// Parse CSV string to std::array<std::array<CellStringReference>>, an array of columns.
-		/// This method conveniently wraps parseTo() to simplify compile-time parsing.
+		/// Parse CSV string to 2D std::array, an array of columns.
+		/// This method conveniently wraps parse() function to simplify compile-time parsing.
+		/// \param data CSV string data.
+		/// \tparam rows Number of rows
+		/// \tparam columns Number of columns
+		/// \tparam Cell Type of cell in array, e.g. CellStringReference
 		/// \return std::array<std::array<Cell, rows>, columns>
 		/// \throws ParseError
-		template<std::size_t columns, std::size_t rows, typename Cell = CellStringReference>
+		template<std::size_t rows, std::size_t columns, typename Cell = CellStringReference>
 		constexpr auto parseTo2DArray(std::string_view data) const;
+
+
+		/// Parse CSV string data into a flat matrix in row-major format (A11, A12, A13, A21, ...).
+		/// The number of rows and columns is determined automatically.
+		/// \param data string data to parse.
+		/// \param[out] values a flat (empty) matrix. This will be resized automatically. Accepts types like std::vector<double>.
+		/// \return matrix information
+		/// \throws ParseError
+		template<typename Vector>
+		constexpr MatrixInformation parseToVectorRowMajor(std::string_view data, Vector& values) const;
+
+
+		/// Parse CSV string data into a flat matrix in row-major format (A11, A12, A13, A21, ...).
+		/// \param data string data to parse.
+		/// \param[out] values a flat (empty) matrix. This will be resized automatically. Accepts types like std::vector<double>.
+		/// \param rows_hint std::nullopt, or the number of rows which will help with optimizing allocations.
+		/// \param columns The number of columns. If std::nullopt, the number of columns is determined automatically.
+		/// \return matrix information
+		/// \throws ParseError
+		template<typename Vector>
+		constexpr MatrixInformation parseToVectorRowMajor(std::string_view data, Vector& values,
+				std::optional<std::size_t> rows_hint, std::optional<std::size_t> columns) const;
+
+
+		/// Parse CSV string data into a flat matrix in column-major format (A11, A21, A31, A12, ...).
+		/// \param data string data to parse.
+		/// \param[out] values a flat (empty) matrix. This will be resized automatically. Accepts types like std::vector<double>.
+		/// \param rows The number of rows, required. It is needed to calculate offsets in output container.
+		/// \param columns_hint std::nullopt, or the number of columns which will help with optimizing allocations.
+		/// \return matrix information
+		/// \throws ParseError
+		template<typename Vector>
+		constexpr MatrixInformation parseToVectorColumnMajor(std::string_view data, Vector& values,
+				std::size_t rows, std::optional<std::size_t> columns_hint) const;
+
+
+		/// Parse CSV string to 1D std::array, stored in row-major or column-major order.
+		/// This method conveniently wraps parse() function to simplify compile-time parsing.
+		/// \param data CSV string data.
+		/// \tparam rows Number of rows
+		/// \tparam columns Number of columns
+		/// \tparam Cell Type of cell in array, e.g. CellStringReference
+		/// \return std::array<Cell, rows*columns>
+		/// \throws ParseError
+		template<std::size_t rows, std::size_t columns, typename Cell = CellStringReference>
+		constexpr auto parseToArray(std::string_view data, MatrixOrder order) const;
+
 
 
 	private:
@@ -312,7 +368,7 @@ constexpr void Parser::parse(std::string_view data, StoreCellFunction storeCellF
 				break;
 			}
 
-			// We encountered non-whitespace characters in a cell and it didn't start with a quote.
+			// We encountered non-whitespace characters in a cell, and it didn't start with a quote.
 			case MachineState::InsideUnquotedValue:
 			{
 				switch(current_char) {
@@ -421,7 +477,7 @@ constexpr void Parser::parse(std::string_view data, StoreCellFunction storeCellF
 
 
 template<typename Vector2D>
-constexpr void Parser::parseTo(std::string_view data, Vector2D& values) const
+constexpr void Parser::parseTo2DVector(std::string_view data, Vector2D& values) const
 {
 	Vector2D parsed_values;
 	parse(data,
@@ -433,7 +489,7 @@ constexpr void Parser::parseTo(std::string_view data, Vector2D& values) const
 			if (parsed_values[column].size() < (row + 1)) {
 				parsed_values[column].resize(row + 1);
 			}
-			parsed_values[column][row] = typename Vector2D::value_type::value_type(cell_data, hint);
+			parsed_values[column][row] = CellTrait<typename Vector2D::value_type::value_type>::create(cell_data, hint);
 		}
 	);
 	std::swap(values, parsed_values);
@@ -441,7 +497,7 @@ constexpr void Parser::parseTo(std::string_view data, Vector2D& values) const
 
 
 
-template<std::size_t columns, std::size_t rows, typename Cell>
+template<std::size_t rows, std::size_t columns, typename Cell>
 constexpr auto Parser::parseTo2DArray(std::string_view data) const
 {
 	std::array<std::array<Cell, rows>, columns> matrix;
@@ -451,13 +507,137 @@ constexpr auto Parser::parseTo2DArray(std::string_view data) const
 				std::string_view cell_data, Csv::CellTypeHint hint)
 				constexpr
 		{
-			matrix[column][row] = Cell(cell_data, hint);
+			matrix[column][row] = CellTrait<Cell>::create(cell_data, hint);
 		}
 	);
 
 	return matrix;
 }
 
+
+
+template<typename Vector>
+constexpr MatrixInformation Parser::parseToVectorRowMajor(std::string_view data, Vector& values) const
+{
+	return parseToVectorRowMajor(data, values, std::nullopt, std::nullopt);
+}
+
+
+
+template<typename Vector>
+constexpr MatrixInformation Parser::parseToVectorRowMajor(std::string_view data, Vector& values,
+		std::optional<std::size_t> rows_hint, std::optional<std::size_t> columns) const
+{
+	Vector parsed_values;
+	if (rows_hint.has_value() && columns.has_value()) {
+		parsed_values.reserve(rows_hint.value() * columns.value());
+	}
+
+	MatrixInformation info;
+	info.setOrder(MatrixOrder::RowMajor);
+
+	bool unknown_columns = !columns.has_value();
+	if (columns.has_value()) {
+		info.setColumns(columns.value());
+	}
+	std::size_t read_columns = 0;
+
+	// The lambda is called in row-major order, so we can exploit that to determine the number of columns.
+	parse(data,
+			[&](std::size_t row, std::size_t column, std::string_view cell_data, [[maybe_unused]] CellTypeHint hint)
+		{
+			if (unknown_columns) {
+				if (row == 0) {
+					read_columns = column + 1;
+					parsed_values.resize(read_columns);
+				} else if (row == 1) {
+					unknown_columns = false;
+					info.setColumns(read_columns);
+					if (rows_hint.has_value()) {
+						parsed_values.reserve(rows_hint.value() * info.getColumns());
+					}
+				}
+			}
+
+			if (!unknown_columns) {
+				if (parsed_values.size() < ((row + 1) * info.getColumns())) {
+					parsed_values.resize((row + 1) * info.getColumns());
+				}
+			}
+			parsed_values[info.matrixIndex(row, column)] =
+					CellTrait<typename Vector::value_type>::create(cell_data, hint);
+		}
+	);
+	std::swap(values, parsed_values);
+
+	if (values.empty()) {
+		MatrixInformation empty_info;
+		empty_info.setOrder(MatrixOrder::RowMajor);
+		return empty_info;
+	}
+
+	info.setRows(info.getColumns() == 0 ? 0 : (values.size() / info.getColumns()));
+
+	return info;
+}
+
+
+
+template<typename Vector>
+constexpr MatrixInformation Parser::parseToVectorColumnMajor(std::string_view data, Vector& values,
+		std::size_t rows, std::optional<std::size_t> columns_hint) const
+{
+	Vector parsed_values;
+	if (columns_hint.has_value()) {
+		parsed_values.reserve(columns_hint.value() * rows);
+	}
+
+	MatrixInformation info;
+	info.setOrder(MatrixOrder::ColumnMajor);
+	info.setRows(rows);
+
+	parse(data,
+			[&](std::size_t row, std::size_t column, std::string_view cell_data, [[maybe_unused]] CellTypeHint hint)
+		{
+			if (parsed_values.size() < ((column + 1) * rows)) {
+				parsed_values.resize((column + 1) * rows);
+			}
+			parsed_values[info.matrixIndex(row, column)] =
+					CellTrait<typename Vector::value_type>::create(cell_data, hint);
+		}
+	);
+	std::swap(values, parsed_values);
+
+	if (values.empty()) {
+		MatrixInformation empty_info;
+		empty_info.setOrder(MatrixOrder::ColumnMajor);
+		return empty_info;
+	}
+
+	info.setColumns(info.getRows() == 0 ? 0 : (values.size() / info.getRows()));
+
+	return info;
+}
+
+
+
+template<std::size_t rows, std::size_t columns, typename Cell>
+constexpr auto Parser::parseToArray(std::string_view data, MatrixOrder order) const
+{
+	std::array<Cell, rows * columns> matrix;
+
+	parse(data,
+		[&matrix, order](std::size_t row, std::size_t column,
+				std::string_view cell_data, Csv::CellTypeHint hint)
+				constexpr
+		{
+			matrix[MatrixInformation::matrixIndex(row, column, rows, columns, order)] =
+					CellTrait<Cell>::create(cell_data, hint);
+		}
+	);
+
+	return matrix;
+}
 
 
 
