@@ -49,7 +49,7 @@ public:
    * @brief Create a File Parser object
    *
    */
-  void createFileParser() {
+  void createDataParser() {
     if (!dataParser_) {
       if (testingType == TestingType::TestingFile) {
         dataParser_ = std::make_shared<DataFileParser>();

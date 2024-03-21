@@ -8,6 +8,7 @@
  *
  */
 #pragma once
+#include "TestingFile.h"
 #include "Training.h"
 
 namespace smlp {
@@ -16,5 +17,8 @@ public:
   TrainingFile() : Training(TrainingType::TrainingFile) {}
 
   smlp::Result train(const std::string &line = "") override;
+
+  smlp::Result trainTestMonitored(std::unique_ptr<TestingFile> &testing,
+                                  const std::string &line = "");
 };
 } // namespace smlp

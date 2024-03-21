@@ -1,6 +1,9 @@
 #include "CommonErrors.h"
 #include "CommonModes.h"
 #include "Manager.h"
+#include "RunnerFileVisitor.h"
+#include "RunnerSocketVisitor.h"
+#include "RunnerStdinVisitor.h"
 #include "SimpleLang.h"
 #include "Testing.h"
 #include "Training.h"
@@ -12,49 +15,9 @@
 using namespace smlp;
 
 TEST_CASE("Testing the Manager class") {
-  SUBCASE("Test constructor") {
-    CHECK_NOTHROW({
-      auto &manager = Manager::getInstance();
-      auto &logger = manager.logger;
-      logger.info("Test ok");
-    });
-  }
+  SUBCASE("Test constructor") { CHECK_NOTHROW(Manager::getInstance()); }
 
   auto &manager = Manager::getInstance();
-
-  SUBCASE("Test createTraining") {
-    manager.app_params.input = EInput::Socket;
-    CHECK_NOTHROW(manager.createTraining());
-    CHECK(manager.getTraining()->trainingType == TrainingType::TrainingSocket);
-    manager.resetTraining();
-
-    manager.app_params.input = EInput::Stdin;
-    CHECK_NOTHROW(manager.createTraining());
-    CHECK(manager.getTraining()->trainingType == TrainingType::TrainingStdin);
-    manager.resetTraining();
-
-    manager.app_params.input = EInput::File;
-    CHECK_NOTHROW(manager.createTraining());
-    CHECK(manager.getTraining()->trainingType == TrainingType::TrainingFile);
-    manager.resetTraining();
-  }
-
-  SUBCASE("Test createTesting") {
-    manager.app_params.input = EInput::Socket;
-    CHECK_NOTHROW(manager.createTesting());
-    CHECK(manager.getTesting()->testingType == TestingType::TestingSocket);
-    manager.resetTesting();
-
-    manager.app_params.input = EInput::Stdin;
-    CHECK_NOTHROW(manager.createTesting());
-    CHECK(manager.getTesting()->testingType == TestingType::TestingStdin);
-    manager.resetTesting();
-
-    manager.app_params.input = EInput::File;
-    CHECK_NOTHROW(manager.createTesting());
-    CHECK(manager.getTesting()->testingType == TestingType::TestingFile);
-    manager.resetTesting();
-  }
 
   SUBCASE("Test file predict") {
     manager.app_params.input = EInput::File;
@@ -62,8 +25,8 @@ TEST_CASE("Testing the Manager class") {
     manager.app_params.mode = EMode::Predict;
 
     // Test predict file but without a valid file path.
-    CHECK_THROWS_WITH_AS(manager.predict(),
-                         SimpleLang::Error(Error::FailedToOpenFile).c_str(),
+    CHECK_THROWS_WITH_AS(manager.runWithVisitor(RunnerFileVisitor{});
+                         , SimpleLang::Error(Error::FailedToOpenFile).c_str(),
                          DataParserException);
 
     // Test predict file with a valid file path and network.
@@ -73,15 +36,20 @@ TEST_CASE("Testing the Manager class") {
     CHECK(std::filesystem::exists(manager.app_params.data_file));
     CHECK_NOTHROW(manager.importOrBuildNetwork());
     CHECK(manager.network != nullptr);
-    CHECK_NOTHROW(manager.predict());
+    CHECK_NOTHROW(manager.runWithVisitor(RunnerFileVisitor{}););
   }
 
   SUBCASE("Test file training") {
-    CHECK_NOTHROW(manager.train());
-    CHECK_NOTHROW(manager.trainTestMonitored());
+    manager.app_params.mode = EMode::TrainOnly;
+    CHECK_NOTHROW(manager.runWithVisitor(RunnerFileVisitor{}));
+    manager.app_params.mode = EMode::TrainTestMonitored;
+    CHECK_NOTHROW(manager.runWithVisitor(RunnerFileVisitor{}));
   }
 
-  SUBCASE("Test file testing") { CHECK_NOTHROW(manager.test()); }
+  SUBCASE("Test file testing") {
+    manager.app_params.mode = EMode::TestOnly;
+    CHECK_NOTHROW(manager.runWithVisitor(RunnerFileVisitor{}));
+  }
 
   SUBCASE("Test run mode (FILE)") {
     manager.app_params.network_to_import = "../data/testModel.json";

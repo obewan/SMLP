@@ -1,6 +1,7 @@
 #include "Common.h"
 #include "CommonModes.h"
 #include "Manager.h"
+#include "RunnerFileVisitor.h"
 #include "TestingFile.h"
 #include "Training.h"
 #include "TrainingFile.h"
@@ -26,8 +27,6 @@ TEST_CASE("Testing the Training class") {
   auto &manager = Manager::getInstance();
   manager.network_params = {.input_size = 20, .output_size = 1};
   manager.app_params = {.data_file = test_file};
-  manager.resetTraining();
-  manager.resetTesting();
   manager.network = std::make_unique<Network>();
   manager.network->initializeLayers();
 
@@ -99,12 +98,12 @@ TEST_CASE("Testing the Training class") {
       app_params.training_ratio = 0.6f;
       app_params.num_epochs = 2;
       app_params.mode = EMode::TrainTestMonitored;
+      app_params.input = EInput::File;
 
-      manager.createTesting();
-      const auto &testing = manager.getTesting();
+      auto testing = std::make_unique<TestingFile>();
       CHECK(testing != nullptr);
       testing->setDataParser(training.getDataParser());
-      CHECK_NOTHROW(training.train());
+      CHECK_NOTHROW(training.trainTestMonitored(testing));
 
       auto testProgress = testing->getTestingResults()->getProgress();
       CHECK(testProgress.empty() == false);

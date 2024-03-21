@@ -9,11 +9,26 @@
  */
 
 #pragma once
+#include "PredictFile.h"
 #include "RunnerVisitor.h"
+#include "TestingFile.h"
+#include "TrainingFile.h"
+#include <memory>
 
 namespace smlp {
 class RunnerFileVisitor : public RunnerVisitor {
 public:
-  void visit() const override;
+  Result visit(const std::string &line = "") const override;
+
+private:
+  void predict() const;
+  void trainOnly() const;
+  void testOnly() const;
+  void trainTestMonitored() const;
+  void trainThenTest() const;
+
+  mutable std::unique_ptr<PredictFile> predictFile_ = nullptr;
+  mutable std::unique_ptr<TrainingFile> trainingFile_ = nullptr;
+  mutable std::unique_ptr<TestingFile> testingFile_ = nullptr;
 };
 } // namespace smlp

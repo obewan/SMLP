@@ -2,6 +2,7 @@
 #include "Manager.h"
 #include "NetworkImportExport.h"
 #include "Predict.h"
+#include "PredictFile.h"
 #include "doctest.h"
 #include "exception/PredictException.h"
 #include <cstddef>
@@ -11,7 +12,7 @@
 using namespace smlp;
 
 TEST_CASE("Testing the Predict class") {
-  SUBCASE("Test constructor") { CHECK_NOTHROW(Predict()); }
+  SUBCASE("Test constructor") { CHECK_NOTHROW(PredictFile()); }
 
   SUBCASE("Test predict") {
     std::string modelJsonFile = "testModel.json";
@@ -30,16 +31,16 @@ TEST_CASE("Testing the Predict class") {
     const auto &app_params = Manager::getInstance().app_params;
     CHECK_NOTHROW({
       Manager::getInstance().network = importExport.importModel(app_params);
-      Predict predict;
-      predict.predict();
+      PredictFile predict;
+      predict.predictData();
     });
 
     CHECK_THROWS_WITH_AS(
         {
           auto invalidEnum = static_cast<EPredictMode>(900);
           Manager::getInstance().app_params.predict_mode = invalidEnum;
-          Predict predict;
-          predict.predict();
+          PredictFile predict;
+          predict.predictData();
         },
         SimpleLang::Error(Error::UnimplementedPredictMode).c_str(),
         PredictException);

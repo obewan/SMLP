@@ -1,6 +1,6 @@
 #include "Common.h"
 #include "Manager.h"
-#include "Predict.h"
+#include "PredictFile.h"
 #include "SimpleLogger.h"
 #include "doctest.h"
 #include <math.h>
@@ -28,7 +28,7 @@ TEST_CASE("Testing the SimpleLogger class") {
 
   // CHECK THE LOG OUTPUT
   SUBCASE("Test predict precision") {
-    Predict predict;
+    PredictFile predict;
     std::string result;
     auto &app_params = Manager::getInstance().app_params;
     app_params = {.predict_mode = EPredictMode::CSV, .output_at_end = true};

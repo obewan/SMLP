@@ -9,6 +9,8 @@
  */
 
 #pragma once
+#include "CommonResult.h"
+#include <string>
 
 namespace smlp {
 class RunnerVisitor {
@@ -16,6 +18,6 @@ public:
   /**
    * @brief Runner Visitor
    */
-  virtual void visit() const = 0;
+  virtual Result visit(const std::string &line = "") const = 0;
 };
 } // namespace smlp
