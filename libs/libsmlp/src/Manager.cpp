@@ -3,13 +3,13 @@
 #include "CommonModes.h"
 #include "CommonParameters.h"
 #include "CommonResult.h"
-#include "RunnerFileVisitor.h"
 #include "RunnerSocketVisitor.h"
 #include "RunnerStdinVisitor.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
 #include "exception/ManagerException.h"
 #include <exception>
+#include <memory>
 #include <system_error>
 
 using namespace smlp;
@@ -71,10 +71,16 @@ std::string Manager::getInlineHeader() const {
 void Manager::runMode() {
   switch (app_params.input) {
   case EInput::File:
-    runWithVisitor(RunnerFileVisitor{});
+    if (!runnerFileVisitor_) {
+      runnerFileVisitor_ = std::make_unique<RunnerFileVisitor>();
+    }
+    runWithVisitor(*runnerFileVisitor_);
     break;
   case EInput::Stdin:
-    runWithVisitor(RunnerStdinVisitor{});
+    if (!runnerStdinVisitor_) {
+      runnerStdinVisitor_ = std::make_unique<RunnerStdinVisitor>();
+    }
+    runWithVisitor(*runnerStdinVisitor_);
     break;
   case EInput::Socket:
     if (app_params.enable_http) {
@@ -90,10 +96,12 @@ void Manager::runMode() {
   }
 }
 
-void Manager::runWithVisitor(const RunnerVisitor &visitor) { visitor.visit(); }
+Result Manager::runWithVisitor(const RunnerVisitor &visitor) const {
+  return visitor.visit();
+}
 
 Result Manager::runWithLineVisitor(const RunnerVisitor &visitor,
-                                   const std::string &line) {
+                                   const std::string &line) const {
   return visitor.visit(line);
 }
 
@@ -141,9 +149,12 @@ void Manager::exportNetwork() const {
   importExport.exportModel(network, app_params);
 }
 
-smlp::Result Manager::processTCPClient(const std::string &line) {
+smlp::Result Manager::processTCPClient(const std::string &line) const {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
-  return runWithLineVisitor(RunnerSocketVisitor{}, line);
+  if (!runnerSocketVisitor_) {
+    runnerSocketVisitor_ = std::make_unique<RunnerSocketVisitor>();
+  }
+  return runWithLineVisitor(*runnerSocketVisitor_, line);
 }

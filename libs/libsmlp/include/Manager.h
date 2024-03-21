@@ -14,6 +14,9 @@
 #include "CommonResult.h"
 #include "NetworkImportExport.h"
 #include "Predict.h"
+#include "RunnerFileVisitor.h"
+#include "RunnerSocketVisitor.h"
+#include "RunnerStdinVisitor.h"
 #include "RunnerVisitor.h"
 #include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
@@ -43,7 +46,7 @@ public:
    *
    * @param line
    */
-  smlp::Result processTCPClient(const std::string &line);
+  smlp::Result processTCPClient(const std::string &line) const;
 
   /**
    * @brief run the selected mode.
@@ -54,8 +57,9 @@ public:
    * @brief run a RunnerVisitor
    *
    * @param visitor
+   * @return Result
    */
-  void runWithVisitor(const RunnerVisitor &visitor);
+  Result runWithVisitor(const RunnerVisitor &visitor) const;
 
   /**
    * @brief run a RunnerVisitor for single line only
@@ -65,7 +69,7 @@ public:
    * @return Result
    */
   Result runWithLineVisitor(const RunnerVisitor &visitor,
-                            const std::string &line);
+                            const std::string &line) const;
 
   /**
    * @brief check if the network should export its model.
@@ -149,5 +153,8 @@ public:
 
 private:
   Manager() = default;
+  mutable std::unique_ptr<RunnerFileVisitor> runnerFileVisitor_ = nullptr;
+  mutable std::unique_ptr<RunnerSocketVisitor> runnerSocketVisitor_ = nullptr;
+  mutable std::unique_ptr<RunnerStdinVisitor> runnerStdinVisitor_ = nullptr;
 };
 } // namespace smlp

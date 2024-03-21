@@ -15,6 +15,7 @@
 namespace smlp {
 class RunnerVisitor {
 public:
+  virtual ~RunnerVisitor() = default;
   /**
    * @brief Runner Visitor
    */
