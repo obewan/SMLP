@@ -67,7 +67,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classsmlp_1_1NetworkImportExport-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">smlp::NetworkImportExport Class Reference</div>  </div>
@@ -80,19 +79,12 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ec59393117832ec1800e76795e30590"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#a7ec59393117832ec1800e76795e30590">~NetworkImportExport</a> ()=default</td></tr>
 <tr class="separator:a7ec59393117832ec1800e76795e30590"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a266e0e4e4d06d805ebb97adca39df4de"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classsmlp_1_1Network.html">Network</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#a266e0e4e4d06d805ebb97adca39df4de">importModel</a> (const <a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a> &amp;app_params)</td></tr>
-<tr class="memdesc:a266e0e4e4d06d805ebb97adca39df4de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import a network model files (JSON meta data and CSV neurons data)  <a href="classsmlp_1_1NetworkImportExport.html#a266e0e4e4d06d805ebb97adca39df4de">More...</a><br /></td></tr>
-<tr class="separator:a266e0e4e4d06d805ebb97adca39df4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43e1b080ae9825f3f5c48f3ba646946e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#a43e1b080ae9825f3f5c48f3ba646946e">exportModel</a> (const <a class="el" href="classsmlp_1_1Network.html">Network</a> *network, const <a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a> &amp;app_params) const</td></tr>
-<tr class="memdesc:a43e1b080ae9825f3f5c48f3ba646946e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export a network model files (JSON meta data and CSV neurons data)  <a href="classsmlp_1_1NetworkImportExport.html#a43e1b080ae9825f3f5c48f3ba646946e">More...</a><br /></td></tr>
-<tr class="separator:a43e1b080ae9825f3f5c48f3ba646946e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a89b079672fc3e81cb2ea628602231478"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsmlp_1_1NetworkImportExportCSV.html">NetworkImportExportCSV</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#a89b079672fc3e81cb2ea628602231478">NIE_CSV</a></td></tr>
-<tr class="separator:a89b079672fc3e81cb2ea628602231478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d406f1331e76e778bf06178d655efd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsmlp_1_1NetworkImportExportJSON.html">NetworkImportExportJSON</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#a9d406f1331e76e778bf06178d655efd4">NIE_JSON</a></td></tr>
-<tr class="separator:a9d406f1331e76e778bf06178d655efd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1cb2848ab9b927c4508fb081ba05d5e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#ab1cb2848ab9b927c4508fb081ba05d5e">importModel</a> (const <a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a> &amp;app_params)</td></tr>
+<tr class="memdesc:ab1cb2848ab9b927c4508fb081ba05d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Import a network model files (JSON meta data and CSV neurons data)  <a href="classsmlp_1_1NetworkImportExport.html#ab1cb2848ab9b927c4508fb081ba05d5e">More...</a><br /></td></tr>
+<tr class="separator:ab1cb2848ab9b927c4508fb081ba05d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac90b8d60c1f123c2e079038fc6ac4bf2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1NetworkImportExport.html#ac90b8d60c1f123c2e079038fc6ac4bf2">exportModel</a> (const std::unique_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt; &amp;network, const <a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a> &amp;app_params) const</td></tr>
+<tr class="memdesc:ac90b8d60c1f123c2e079038fc6ac4bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export a network model files (JSON meta data and CSV neurons data)  <a href="classsmlp_1_1NetworkImportExport.html#ac90b8d60c1f123c2e079038fc6ac4bf2">More...</a><br /></td></tr>
+<tr class="separator:ac90b8d60c1f123c2e079038fc6ac4bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7ec59393117832ec1800e76795e30590"></a>
@@ -121,8 +113,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a43e1b080ae9825f3f5c48f3ba646946e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43e1b080ae9825f3f5c48f3ba646946e">&#9670;&nbsp;</a></span>exportModel()</h2>
+<a id="ac90b8d60c1f123c2e079038fc6ac4bf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac90b8d60c1f123c2e079038fc6ac4bf2">&#9670;&nbsp;</a></span>exportModel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +125,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void NetworkImportExport::exportModel </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classsmlp_1_1Network.html">Network</a> *&#160;</td>
+          <td class="paramtype">const std::unique_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>network</em>, </td>
         </tr>
         <tr>
@@ -166,8 +158,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a266e0e4e4d06d805ebb97adca39df4de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a266e0e4e4d06d805ebb97adca39df4de">&#9670;&nbsp;</a></span>importModel()</h2>
+<a id="ab1cb2848ab9b927c4508fb081ba05d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1cb2848ab9b927c4508fb081ba05d5e">&#9670;&nbsp;</a></span>importModel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,7 +168,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classsmlp_1_1Network.html">Network</a> * NetworkImportExport::importModel </td>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt; NetworkImportExport::importModel </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structsmlp_1_1AppParameters.html">AppParameters</a> &amp;&#160;</td>
           <td class="paramname"><em>app_params</em></td><td>)</td>
@@ -198,51 +190,6 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Network* </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a89b079672fc3e81cb2ea628602231478"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89b079672fc3e81cb2ea628602231478">&#9670;&nbsp;</a></span>NIE_CSV</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classsmlp_1_1NetworkImportExportCSV.html">NetworkImportExportCSV</a> smlp::NetworkImportExport::NIE_CSV</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9d406f1331e76e778bf06178d655efd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d406f1331e76e778bf06178d655efd4">&#9670;&nbsp;</a></span>NIE_JSON</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classsmlp_1_1NetworkImportExportJSON.html">NetworkImportExportJSON</a> smlp::NetworkImportExport::NIE_JSON</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>

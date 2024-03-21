@@ -94,39 +94,39 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0814b67670bd99977e3a4f9d99e20470"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a0814b67670bd99977e3a4f9d99e20470">Network</a> ()=default</td></tr>
 <tr class="memdesc:a0814b67670bd99977e3a4f9d99e20470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> object Default constructor used for deserialization.  <a href="classsmlp_1_1Network.html#a0814b67670bd99977e3a4f9d99e20470">More...</a><br /></td></tr>
 <tr class="separator:a0814b67670bd99977e3a4f9d99e20470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae87bef1e585047fca1f8f8727ef994c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ae87bef1e585047fca1f8f8727ef994c6">Network</a> (const <a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a> &amp;<a class="el" href="classsmlp_1_1Network.html#ab2fee71b948cd4f9774b2e19bc793559">params</a>)</td></tr>
-<tr class="memdesc:ae87bef1e585047fca1f8f8727ef994c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a Parameters object as an argument. It initializes the layers and neurons in the network.  <a href="classsmlp_1_1Network.html#ae87bef1e585047fca1f8f8727ef994c6">More...</a><br /></td></tr>
-<tr class="separator:ae87bef1e585047fca1f8f8727ef994c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95a749010b8370ef7438bd81c9d81232"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a95a749010b8370ef7438bd81c9d81232">forwardPropagation</a> (const std::vector&lt; float &gt; &amp;inputValues)</td></tr>
-<tr class="memdesc:a95a749010b8370ef7438bd81c9d81232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs forward propagation on the network using the given input values.  <a href="classsmlp_1_1Network.html#a95a749010b8370ef7438bd81c9d81232">More...</a><br /></td></tr>
-<tr class="separator:a95a749010b8370ef7438bd81c9d81232"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8490d88c63e5b5d6dd12b610d9d6933d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a8490d88c63e5b5d6dd12b610d9d6933d">backwardPropagation</a> (const std::vector&lt; float &gt; &amp;expectedValues)</td></tr>
-<tr class="memdesc:a8490d88c63e5b5d6dd12b610d9d6933d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs backward propagation on the network using the given expected values.  <a href="classsmlp_1_1Network.html#a8490d88c63e5b5d6dd12b610d9d6933d">More...</a><br /></td></tr>
-<tr class="separator:a8490d88c63e5b5d6dd12b610d9d6933d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac780322b5f370bb72dbdf0c33f59a8f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ac780322b5f370bb72dbdf0c33f59a8f6">updateWeights</a> () const</td></tr>
-<tr class="memdesc:ac780322b5f370bb72dbdf0c33f59a8f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the weights of the neurons in the network using the learning rate.  <a href="classsmlp_1_1Network.html#ac780322b5f370bb72dbdf0c33f59a8f6">More...</a><br /></td></tr>
-<tr class="separator:ac780322b5f370bb72dbdf0c33f59a8f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac713d71e8c7a5438dad7ec10cad8de5d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ac713d71e8c7a5438dad7ec10cad8de5d">bindLayers</a> ()</td></tr>
-<tr class="separator:ac713d71e8c7a5438dad7ec10cad8de5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab74776df3b26a80a877b9af63c9849d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#aab74776df3b26a80a877b9af63c9849d">initializeWeights</a> () const</td></tr>
-<tr class="separator:aab74776df3b26a80a877b9af63c9849d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71af5c72e7c9dd5e727549c00fd370fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a71af5c72e7c9dd5e727549c00fd370fc">initializeLayers</a> ()</td></tr>
-<tr class="separator:a71af5c72e7c9dd5e727549c00fd370fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ced97c5537df2a2987184ee4aa3f213"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a8ced97c5537df2a2987184ee4aa3f213">SetActivationFunction</a> (<a class="el" href="classsmlp_1_1Layer.html">Layer</a> *layer, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a> activation_function, float activation_alpha) const</td></tr>
-<tr class="separator:a8ced97c5537df2a2987184ee4aa3f213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a2d66b793002e64f69e32943636b7a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a09a2d66b793002e64f69e32943636b7a">forwardPropagation</a> (const std::vector&lt; float &gt; &amp;inputValues)</td></tr>
+<tr class="memdesc:a09a2d66b793002e64f69e32943636b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs forward propagation on the network using the given input values.  <a href="classsmlp_1_1Network.html#a09a2d66b793002e64f69e32943636b7a">More...</a><br /></td></tr>
+<tr class="separator:a09a2d66b793002e64f69e32943636b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab278fb625018d604b505a155ede89cf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ab278fb625018d604b505a155ede89cf2">backwardPropagation</a> (const std::vector&lt; float &gt; &amp;expectedValues)</td></tr>
+<tr class="memdesc:ab278fb625018d604b505a155ede89cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs backward propagation on the network using the given expected values.  <a href="classsmlp_1_1Network.html#ab278fb625018d604b505a155ede89cf2">More...</a><br /></td></tr>
+<tr class="separator:ab278fb625018d604b505a155ede89cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74f5d430694883ebecb2d5443740476"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#aa74f5d430694883ebecb2d5443740476">updateWeights</a> () const</td></tr>
+<tr class="memdesc:aa74f5d430694883ebecb2d5443740476"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the weights of the neurons in the network using the learning rate.  <a href="classsmlp_1_1Network.html#aa74f5d430694883ebecb2d5443740476">More...</a><br /></td></tr>
+<tr class="separator:aa74f5d430694883ebecb2d5443740476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47dafe37dd1868597992e10e6661951b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a47dafe37dd1868597992e10e6661951b">bindLayers</a> ()</td></tr>
+<tr class="memdesc:a47dafe37dd1868597992e10e6661951b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bind layers together.  <a href="classsmlp_1_1Network.html#a47dafe37dd1868597992e10e6661951b">More...</a><br /></td></tr>
+<tr class="separator:a47dafe37dd1868597992e10e6661951b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729bce60a77bfa0b6f2fcf79442e6c7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a729bce60a77bfa0b6f2fcf79442e6c7d">initializeLayers</a> ()</td></tr>
+<tr class="memdesc:a729bce60a77bfa0b6f2fcf79442e6c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize layers.  <a href="classsmlp_1_1Network.html#a729bce60a77bfa0b6f2fcf79442e6c7d">More...</a><br /></td></tr>
+<tr class="separator:a729bce60a77bfa0b6f2fcf79442e6c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f907fe45d006591dd05cd2b21eb693c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a9f907fe45d006591dd05cd2b21eb693c">initializeWeights</a> () const</td></tr>
+<tr class="memdesc:a9f907fe45d006591dd05cd2b21eb693c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize weights.  <a href="classsmlp_1_1Network.html#a9f907fe45d006591dd05cd2b21eb693c">More...</a><br /></td></tr>
+<tr class="separator:a9f907fe45d006591dd05cd2b21eb693c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a635c44fb7a2987f06300158742c0cf4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#a635c44fb7a2987f06300158742c0cf4f">SetActivationFunction</a> (<a class="el" href="classsmlp_1_1Layer.html">Layer</a> *layer, <a class="el" href="namespacesmlp.html#a617d1df3ad765255a44cfbe9ff033fd7">EActivationFunction</a> activation_function, float activation_alpha) const</td></tr>
+<tr class="memdesc:a635c44fb7a2987f06300158742c0cf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Activation Function on a layer.  <a href="classsmlp_1_1Network.html#a635c44fb7a2987f06300158742c0cf4f">More...</a><br /></td></tr>
+<tr class="separator:a635c44fb7a2987f06300158742c0cf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae939ee8b07f1a15bc0fb9103d0e66334"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classsmlp_1_1Layer.html">Layer</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ae939ee8b07f1a15bc0fb9103d0e66334">layers</a></td></tr>
+<tr class="memdesc:ae939ee8b07f1a15bc0fb9103d0e66334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Layers of neurons.  <a href="classsmlp_1_1Network.html#ae939ee8b07f1a15bc0fb9103d0e66334">More...</a><br /></td></tr>
 <tr class="separator:ae939ee8b07f1a15bc0fb9103d0e66334"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2fee71b948cd4f9774b2e19bc793559"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Network.html#ab2fee71b948cd4f9774b2e19bc793559">params</a></td></tr>
-<tr class="separator:ab2fee71b948cd4f9774b2e19bc793559"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> class represents a neural network model. It contains an input layer, an output layer, and a vector of hidden layers. It also has a learning rate and methods for forward propagation, backward propagation, and updating weights. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa04c77703298e41738aabba55e3d6d45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa04c77703298e41738aabba55e3d6d45">&#9670;&nbsp;</a></span>Network() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa04c77703298e41738aabba55e3d6d45">&#9670;&nbsp;</a></span>Network() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -152,7 +152,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a35f22864fd70ac13611108f3b7ad301c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35f22864fd70ac13611108f3b7ad301c">&#9670;&nbsp;</a></span>Network() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f22864fd70ac13611108f3b7ad301c">&#9670;&nbsp;</a></span>Network() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a0814b67670bd99977e3a4f9d99e20470"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0814b67670bd99977e3a4f9d99e20470">&#9670;&nbsp;</a></span>Network() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0814b67670bd99977e3a4f9d99e20470">&#9670;&nbsp;</a></span>Network() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,63 +229,21 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae87bef1e585047fca1f8f8727ef994c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae87bef1e585047fca1f8f8727ef994c6">&#9670;&nbsp;</a></span>Network() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">smlp::Network::Network </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a> &amp;&#160;</td>
-          <td class="paramname"><em>params</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor that takes a Parameters object as an argument. It initializes the layers and neurons in the network. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">params</td><td>The parameters for initializing the network. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8490d88c63e5b5d6dd12b610d9d6933d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8490d88c63e5b5d6dd12b610d9d6933d">&#9670;&nbsp;</a></span>backwardPropagation()</h2>
+<a id="ab278fb625018d604b505a155ede89cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab278fb625018d604b505a155ede89cf2">&#9670;&nbsp;</a></span>backwardPropagation()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::backwardPropagation </td>
+          <td class="memname">void Network::backwardPropagation </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; float &gt; &amp;&#160;</td>
           <td class="paramname"><em>expectedValues</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Performs backward propagation on the network using the given expected values. </p>
@@ -298,53 +256,39 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac713d71e8c7a5438dad7ec10cad8de5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac713d71e8c7a5438dad7ec10cad8de5d">&#9670;&nbsp;</a></span>bindLayers()</h2>
+<a id="a47dafe37dd1868597992e10e6661951b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47dafe37dd1868597992e10e6661951b">&#9670;&nbsp;</a></span>bindLayers()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::bindLayers </td>
+          <td class="memname">void Network::bindLayers </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Bind layers together. </p>
 
 </div>
 </div>
-<a id="a95a749010b8370ef7438bd81c9d81232"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95a749010b8370ef7438bd81c9d81232">&#9670;&nbsp;</a></span>forwardPropagation()</h2>
+<a id="a09a2d66b793002e64f69e32943636b7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09a2d66b793002e64f69e32943636b7a">&#9670;&nbsp;</a></span>forwardPropagation()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;float&gt; smlp::Network::forwardPropagation </td>
+          <td class="memname">std::vector&lt; float &gt; Network::forwardPropagation </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; float &gt; &amp;&#160;</td>
           <td class="paramname"><em>inputValues</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Performs forward propagation on the network using the given input values. </p>
@@ -358,53 +302,41 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a71af5c72e7c9dd5e727549c00fd370fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71af5c72e7c9dd5e727549c00fd370fc">&#9670;&nbsp;</a></span>initializeLayers()</h2>
+<a id="a729bce60a77bfa0b6f2fcf79442e6c7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a729bce60a77bfa0b6f2fcf79442e6c7d">&#9670;&nbsp;</a></span>initializeLayers()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::initializeLayers </td>
+          <td class="memname">void Network::initializeLayers </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Initialize layers. </p>
 
 </div>
 </div>
-<a id="aab74776df3b26a80a877b9af63c9849d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab74776df3b26a80a877b9af63c9849d">&#9670;&nbsp;</a></span>initializeWeights()</h2>
+<a id="a9f907fe45d006591dd05cd2b21eb693c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f907fe45d006591dd05cd2b21eb693c">&#9670;&nbsp;</a></span>initializeWeights()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::initializeWeights </td>
+          <td class="memname">void Network::initializeWeights </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Initialize weights. </p>
 
 </div>
 </div>
@@ -460,17 +392,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ced97c5537df2a2987184ee4aa3f213"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ced97c5537df2a2987184ee4aa3f213">&#9670;&nbsp;</a></span>SetActivationFunction()</h2>
+<a id="a635c44fb7a2987f06300158742c0cf4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a635c44fb7a2987f06300158742c0cf4f">&#9670;&nbsp;</a></span>SetActivationFunction()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::SetActivationFunction </td>
+          <td class="memname">void Network::SetActivationFunction </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classsmlp_1_1Layer.html">Layer</a> *&#160;</td>
           <td class="paramname"><em>layer</em>, </td>
@@ -493,36 +422,33 @@ Public Attributes</h2></td></tr>
           <td></td><td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Set the Activation Function on a layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">layer</td><td></td></tr>
+    <tr><td class="paramname">activation_function</td><td></td></tr>
+    <tr><td class="paramname">activation_alpha</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ac780322b5f370bb72dbdf0c33f59a8f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac780322b5f370bb72dbdf0c33f59a8f6">&#9670;&nbsp;</a></span>updateWeights()</h2>
+<a id="aa74f5d430694883ebecb2d5443740476"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa74f5d430694883ebecb2d5443740476">&#9670;&nbsp;</a></span>updateWeights()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void smlp::Network::updateWeights </td>
+          <td class="memname">void Network::updateWeights </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Updates the weights of the neurons in the network using the learning rate. </p>
@@ -542,24 +468,13 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="ab2fee71b948cd4f9774b2e19bc793559"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2fee71b948cd4f9774b2e19bc793559">&#9670;&nbsp;</a></span>params</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a> smlp::Network::params</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Layers of neurons. </p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/runner/work/SMLP/SMLP/libs/libsmlp/include/<a class="el" href="Network_8h_source.html">Network.h</a></li>
+<li>/home/runner/work/SMLP/SMLP/libs/libsmlp/src/<a class="el" href="Network_8cpp.html">Network.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

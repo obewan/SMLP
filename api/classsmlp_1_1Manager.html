@@ -83,60 +83,33 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a44a2ef27250c209995284cc8a442511d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad4ef99e399c54611c87eba47d90496d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#aad4ef99e399c54611c87eba47d90496d">operator=</a> (<a class="el" href="classsmlp_1_1Manager.html">Manager</a> const &amp;)=delete</td></tr>
 <tr class="separator:aad4ef99e399c54611c87eba47d90496d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26478dc2e64b8c5eb01932767ae5a592"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a26478dc2e64b8c5eb01932767ae5a592">predict</a> (const std::string &amp;line=&quot;&quot;)</td></tr>
-<tr class="memdesc:a26478dc2e64b8c5eb01932767ae5a592"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method apply the model on inputs to predict the outputs.  <a href="classsmlp_1_1Manager.html#a26478dc2e64b8c5eb01932767ae5a592">More...</a><br /></td></tr>
-<tr class="separator:a26478dc2e64b8c5eb01932767ae5a592"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79fcbc6a77715bada085a8da8ae6ab71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a79fcbc6a77715bada085a8da8ae6ab71">train</a> (const std::string &amp;line=&quot;&quot;)</td></tr>
-<tr class="memdesc:a79fcbc6a77715bada085a8da8ae6ab71"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method trains the model.  <a href="classsmlp_1_1Manager.html#a79fcbc6a77715bada085a8da8ae6ab71">More...</a><br /></td></tr>
-<tr class="separator:a79fcbc6a77715bada085a8da8ae6ab71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13de89312eca3daa14f18557e112be15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a13de89312eca3daa14f18557e112be15">test</a> (const std::string &amp;line=&quot;&quot;)</td></tr>
-<tr class="memdesc:a13de89312eca3daa14f18557e112be15"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method tests the model.  <a href="classsmlp_1_1Manager.html#a13de89312eca3daa14f18557e112be15">More...</a><br /></td></tr>
-<tr class="separator:a13de89312eca3daa14f18557e112be15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a731b2fe18e0072d2555c6cad22623a40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a731b2fe18e0072d2555c6cad22623a40">trainTestMonitored</a> (const std::string &amp;line=&quot;&quot;)</td></tr>
-<tr class="memdesc:a731b2fe18e0072d2555c6cad22623a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method trains the model, testing at each epoch and monitoring the progress of an output neuron. Be aware that this mode consumes more memory with each epoch to save the monitoring progress. Therefore, it is recommended for use with smaller datasets and a lower number of epochs.  <a href="classsmlp_1_1Manager.html#a731b2fe18e0072d2555c6cad22623a40">More...</a><br /></td></tr>
-<tr class="separator:a731b2fe18e0072d2555c6cad22623a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7709781a8abab0c2b1af8e4ff96288bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a7709781a8abab0c2b1af8e4ff96288bf">processTCPClient</a> (const std::string &amp;line)</td></tr>
-<tr class="memdesc:a7709781a8abab0c2b1af8e4ff96288bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process line from TCP Client socket.  <a href="classsmlp_1_1Manager.html#a7709781a8abab0c2b1af8e4ff96288bf">More...</a><br /></td></tr>
-<tr class="separator:a7709781a8abab0c2b1af8e4ff96288bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbeb175eeaf774524ed93f172fdebabe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#abbeb175eeaf774524ed93f172fdebabe">processTCPClient</a> (const std::string &amp;line) const</td></tr>
+<tr class="memdesc:abbeb175eeaf774524ed93f172fdebabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process line from TCP Client socket.  <a href="classsmlp_1_1Manager.html#abbeb175eeaf774524ed93f172fdebabe">More...</a><br /></td></tr>
+<tr class="separator:abbeb175eeaf774524ed93f172fdebabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9972e5e6a310b8a582def0a3aecf5b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#ae9972e5e6a310b8a582def0a3aecf5b4">runMode</a> ()</td></tr>
 <tr class="memdesc:ae9972e5e6a310b8a582def0a3aecf5b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">run the selected mode.  <a href="classsmlp_1_1Manager.html#ae9972e5e6a310b8a582def0a3aecf5b4">More...</a><br /></td></tr>
 <tr class="separator:ae9972e5e6a310b8a582def0a3aecf5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4020971a8cb5fd581b0995a5d20edae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#aa4020971a8cb5fd581b0995a5d20edae">runWithVisitor</a> (const <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> &amp;visitor) const</td></tr>
+<tr class="memdesc:aa4020971a8cb5fd581b0995a5d20edae"><td class="mdescLeft">&#160;</td><td class="mdescRight">run a <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a>  <a href="classsmlp_1_1Manager.html#aa4020971a8cb5fd581b0995a5d20edae">More...</a><br /></td></tr>
+<tr class="separator:aa4020971a8cb5fd581b0995a5d20edae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608d4268d80205f3d8ce3a0961f19a28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a608d4268d80205f3d8ce3a0961f19a28">runWithLineVisitor</a> (const <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> &amp;visitor, const std::string &amp;line) const</td></tr>
+<tr class="memdesc:a608d4268d80205f3d8ce3a0961f19a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">run a <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> for single line only  <a href="classsmlp_1_1Manager.html#a608d4268d80205f3d8ce3a0961f19a28">More...</a><br /></td></tr>
+<tr class="separator:a608d4268d80205f3d8ce3a0961f19a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a393f30a3955c0e76ac09a56af03f71fe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a393f30a3955c0e76ac09a56af03f71fe">shouldExportNetwork</a> () const</td></tr>
 <tr class="memdesc:a393f30a3955c0e76ac09a56af03f71fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if the network should export its model.  <a href="classsmlp_1_1Manager.html#a393f30a3955c0e76ac09a56af03f71fe">More...</a><br /></td></tr>
 <tr class="separator:a393f30a3955c0e76ac09a56af03f71fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba29378e09dc2e3781b40d38e8d4314e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#aba29378e09dc2e3781b40d38e8d4314e">exportNetwork</a> ()</td></tr>
-<tr class="memdesc:aba29378e09dc2e3781b40d38e8d4314e"><td class="mdescLeft">&#160;</td><td class="mdescRight">export the network model.  <a href="classsmlp_1_1Manager.html#aba29378e09dc2e3781b40d38e8d4314e">More...</a><br /></td></tr>
-<tr class="separator:aba29378e09dc2e3781b40d38e8d4314e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af14e95edfbdb2bbcbf5d5b4335178a95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#af14e95edfbdb2bbcbf5d5b4335178a95">exportNetwork</a> () const</td></tr>
+<tr class="memdesc:af14e95edfbdb2bbcbf5d5b4335178a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">export the network model.  <a href="classsmlp_1_1Manager.html#af14e95edfbdb2bbcbf5d5b4335178a95">More...</a><br /></td></tr>
+<tr class="separator:af14e95edfbdb2bbcbf5d5b4335178a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a936616b7371d1334a07d7d3c1afb5724"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a936616b7371d1334a07d7d3c1afb5724">importOrBuildNetwork</a> ()</td></tr>
 <tr class="memdesc:a936616b7371d1334a07d7d3c1afb5724"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> builder.  <a href="classsmlp_1_1Manager.html#a936616b7371d1334a07d7d3c1afb5724">More...</a><br /></td></tr>
 <tr class="separator:a936616b7371d1334a07d7d3c1afb5724"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f28ef1ec24bf9f963731559a3eacc85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a6f28ef1ec24bf9f963731559a3eacc85">createTraining</a> ()</td></tr>
-<tr class="memdesc:a6f28ef1ec24bf9f963731559a3eacc85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classsmlp_1_1Training.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> object.  <a href="classsmlp_1_1Manager.html#a6f28ef1ec24bf9f963731559a3eacc85">More...</a><br /></td></tr>
-<tr class="separator:a6f28ef1ec24bf9f963731559a3eacc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49c250fcc285bac959a6a926bcb18125"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a49c250fcc285bac959a6a926bcb18125">createTesting</a> ()</td></tr>
-<tr class="memdesc:a49c250fcc285bac959a6a926bcb18125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classsmlp_1_1Testing.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object.  <a href="classsmlp_1_1Manager.html#a49c250fcc285bac959a6a926bcb18125">More...</a><br /></td></tr>
-<tr class="separator:a49c250fcc285bac959a6a926bcb18125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a550267da53ca3d12e7b474656c246ac2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a550267da53ca3d12e7b474656c246ac2">createHttpServer</a> ()</td></tr>
 <tr class="memdesc:a550267da53ca3d12e7b474656c246ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a Http Server object.  <a href="classsmlp_1_1Manager.html#a550267da53ca3d12e7b474656c246ac2">More...</a><br /></td></tr>
 <tr class="separator:a550267da53ca3d12e7b474656c246ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92d8a1fe09868ef5a499eff758610bc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a92d8a1fe09868ef5a499eff758610bc8">resetTraining</a> ()</td></tr>
-<tr class="memdesc:a92d8a1fe09868ef5a499eff758610bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will delete the managed object if this is the last shared_ptr owning it.  <a href="classsmlp_1_1Manager.html#a92d8a1fe09868ef5a499eff758610bc8">More...</a><br /></td></tr>
-<tr class="separator:a92d8a1fe09868ef5a499eff758610bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab994ecd8621e762417f623b2ac57e1cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#ab994ecd8621e762417f623b2ac57e1cf">resetTesting</a> ()</td></tr>
-<tr class="memdesc:ab994ecd8621e762417f623b2ac57e1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will delete the managed object if this is the last shared_ptr owning it.  <a href="classsmlp_1_1Manager.html#ab994ecd8621e762417f623b2ac57e1cf">More...</a><br /></td></tr>
-<tr class="separator:ab994ecd8621e762417f623b2ac57e1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a642b925b79f4f95014be186dbcb86fe8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a642b925b79f4f95014be186dbcb86fe8">resetHttpServer</a> ()</td></tr>
 <tr class="memdesc:a642b925b79f4f95014be186dbcb86fe8"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will delete the managed object if this is the last shared_ptr owning it.  <a href="classsmlp_1_1Manager.html#a642b925b79f4f95014be186dbcb86fe8">More...</a><br /></td></tr>
 <tr class="separator:a642b925b79f4f95014be186dbcb86fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3282eeb036fa4ce412ad2e6423b7cdd3"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1Training.html">Training</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a3282eeb036fa4ce412ad2e6423b7cdd3">getTraining</a> () const</td></tr>
-<tr class="memdesc:a3282eeb036fa4ce412ad2e6423b7cdd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classsmlp_1_1Training.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> object.  <a href="classsmlp_1_1Manager.html#a3282eeb036fa4ce412ad2e6423b7cdd3">More...</a><br /></td></tr>
-<tr class="separator:a3282eeb036fa4ce412ad2e6423b7cdd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1952d31d4aebd193581afde2c9d6d16a"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1Testing.html">Testing</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a1952d31d4aebd193581afde2c9d6d16a">getTesting</a> () const</td></tr>
-<tr class="memdesc:a1952d31d4aebd193581afde2c9d6d16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classsmlp_1_1Testing.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object.  <a href="classsmlp_1_1Manager.html#a1952d31d4aebd193581afde2c9d6d16a">More...</a><br /></td></tr>
-<tr class="separator:a1952d31d4aebd193581afde2c9d6d16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b6b2c7903ea745186caef5a6cb5759e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a7b6b2c7903ea745186caef5a6cb5759e">getHttpServer</a> () const</td></tr>
-<tr class="memdesc:a7b6b2c7903ea745186caef5a6cb5759e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Http Server object.  <a href="classsmlp_1_1Manager.html#a7b6b2c7903ea745186caef5a6cb5759e">More...</a><br /></td></tr>
-<tr class="separator:a7b6b2c7903ea745186caef5a6cb5759e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f0a586cb868c5acada30669428cd5c5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a8f0a586cb868c5acada30669428cd5c5">getVersionHeader</a> () const</td></tr>
 <tr class="memdesc:a8f0a586cb868c5acada30669428cd5c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a title line with the version.  <a href="classsmlp_1_1Manager.html#a8f0a586cb868c5acada30669428cd5c5">More...</a><br /></td></tr>
 <tr class="separator:a8f0a586cb868c5acada30669428cd5c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,15 +130,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a55df22a5a8f1c563a327192531f0d8af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1NetworkParameters.html">NetworkParameters</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a55df22a5a8f1c563a327192531f0d8af">network_params</a></td></tr>
 <tr class="memdesc:a55df22a5a8f1c563a327192531f0d8af"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classsmlp_1_1Network.html" title="The Network class represents a neural network model. It contains an input layer, an output layer,...">Network</a> parameters.  <a href="classsmlp_1_1Manager.html#a55df22a5a8f1c563a327192531f0d8af">More...</a><br /></td></tr>
 <tr class="separator:a55df22a5a8f1c563a327192531f0d8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acda5ae3aa4630e8cb0f45fef75b1e4ce"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#acda5ae3aa4630e8cb0f45fef75b1e4ce">network</a> = nullptr</td></tr>
-<tr class="memdesc:acda5ae3aa4630e8cb0f45fef75b1e4ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The neural network.  <a href="classsmlp_1_1Manager.html#acda5ae3aa4630e8cb0f45fef75b1e4ce">More...</a><br /></td></tr>
-<tr class="separator:acda5ae3aa4630e8cb0f45fef75b1e4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad2406d919a726402bc0180b173beb2"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classsmlp_1_1Network.html">Network</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a4ad2406d919a726402bc0180b173beb2">network</a> = nullptr</td></tr>
+<tr class="memdesc:a4ad2406d919a726402bc0180b173beb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The neural network.  <a href="classsmlp_1_1Manager.html#a4ad2406d919a726402bc0180b173beb2">More...</a><br /></td></tr>
+<tr class="separator:a4ad2406d919a726402bc0180b173beb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b9f771b4f085ba5fe5b561eba3bf599"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a9b9f771b4f085ba5fe5b561eba3bf599">http_server</a> = nullptr</td></tr>
+<tr class="memdesc:a9b9f771b4f085ba5fe5b561eba3bf599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Http server.  <a href="classsmlp_1_1Manager.html#a9b9f771b4f085ba5fe5b561eba3bf599">More...</a><br /></td></tr>
+<tr class="separator:a9b9f771b4f085ba5fe5b561eba3bf599"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00404962930877b01ee055979625297b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsmlp_1_1NetworkImportExport.html">NetworkImportExport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a00404962930877b01ee055979625297b">importExport</a></td></tr>
 <tr class="memdesc:a00404962930877b01ee055979625297b"><td class="mdescLeft">&#160;</td><td class="mdescRight">ImportExport tool.  <a href="classsmlp_1_1Manager.html#a00404962930877b01ee055979625297b">More...</a><br /></td></tr>
 <tr class="separator:a00404962930877b01ee055979625297b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50b12a7838611594c5c3a16b085f84df"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classsmlp_1_1SimpleLogger.html">SimpleLogger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Manager.html#a50b12a7838611594c5c3a16b085f84df">logger</a> = <a class="el" href="classsmlp_1_1SimpleLogger.html#a883acc09b8262bd7ecd294e6ff5ce0e8">SimpleLogger::getInstance</a>()</td></tr>
-<tr class="memdesc:a50b12a7838611594c5c3a16b085f84df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger.  <a href="classsmlp_1_1Manager.html#a50b12a7838611594c5c3a16b085f84df">More...</a><br /></td></tr>
-<tr class="separator:a50b12a7838611594c5c3a16b085f84df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a44a2ef27250c209995284cc8a442511d"></a>
@@ -222,62 +195,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a49c250fcc285bac959a6a926bcb18125"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49c250fcc285bac959a6a926bcb18125">&#9670;&nbsp;</a></span>createTesting()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::Manager::createTesting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Create a <a class="el" href="classsmlp_1_1Testing.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object. </p>
-
-</div>
-</div>
-<a id="a6f28ef1ec24bf9f963731559a3eacc85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f28ef1ec24bf9f963731559a3eacc85">&#9670;&nbsp;</a></span>createTraining()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::Manager::createTraining </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Create a <a class="el" href="classsmlp_1_1Training.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> object. </p>
-
-</div>
-</div>
-<a id="aba29378e09dc2e3781b40d38e8d4314e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba29378e09dc2e3781b40d38e8d4314e">&#9670;&nbsp;</a></span>exportNetwork()</h2>
+<a id="af14e95edfbdb2bbcbf5d5b4335178a95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af14e95edfbdb2bbcbf5d5b4335178a95">&#9670;&nbsp;</a></span>exportNetwork()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,40 +205,12 @@ Public Attributes</h2></td></tr>
           <td class="memname">void Manager::exportNetwork </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>export the network model. </p>
-
-</div>
-</div>
-<a id="a7b6b2c7903ea745186caef5a6cb5759e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b6b2c7903ea745186caef5a6cb5759e">&#9670;&nbsp;</a></span>getHttpServer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a>&gt; smlp::Manager::getHttpServer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the Http Server object. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;SimpleHTTPServer&gt; </dd></dl>
 
 </div>
 </div>
@@ -365,62 +256,6 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1952d31d4aebd193581afde2c9d6d16a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1952d31d4aebd193581afde2c9d6d16a">&#9670;&nbsp;</a></span>getTesting()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1Testing.html">Testing</a>&gt; smlp::Manager::getTesting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the <a class="el" href="classsmlp_1_1Testing.html" title="The Testing class is responsible for testing the neural network model. It contains methods for proces...">Testing</a> object. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Testing&gt; </dd></dl>
-
-</div>
-</div>
-<a id="a3282eeb036fa4ce412ad2e6423b7cdd3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3282eeb036fa4ce412ad2e6423b7cdd3">&#9670;&nbsp;</a></span>getTraining()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1Training.html">Training</a>&gt; smlp::Manager::getTraining </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get the <a class="el" href="classsmlp_1_1Training.html" title="The Training class is responsible for training the neural network model. It contains methods for proc...">Training</a> object. </p>
-<dl class="section return"><dt>Returns</dt><dd>std::shared_ptr&lt;Training&gt; </dd></dl>
 
 </div>
 </div>
@@ -489,34 +324,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a26478dc2e64b8c5eb01932767ae5a592"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26478dc2e64b8c5eb01932767ae5a592">&#9670;&nbsp;</a></span>predict()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Manager::predict </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This method apply the model on inputs to predict the outputs. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>Optional line to use. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7709781a8abab0c2b1af8e4ff96288bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7709781a8abab0c2b1af8e4ff96288bf">&#9670;&nbsp;</a></span>processTCPClient()</h2>
+<a id="abbeb175eeaf774524ed93f172fdebabe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbeb175eeaf774524ed93f172fdebabe">&#9670;&nbsp;</a></span>processTCPClient()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -526,7 +335,7 @@ Public Attributes</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>line</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -568,60 +377,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab994ecd8621e762417f623b2ac57e1cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab994ecd8621e762417f623b2ac57e1cf">&#9670;&nbsp;</a></span>resetTesting()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::Manager::resetTesting </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This will delete the managed object if this is the last shared_ptr owning it. </p>
-
-</div>
-</div>
-<a id="a92d8a1fe09868ef5a499eff758610bc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92d8a1fe09868ef5a499eff758610bc8">&#9670;&nbsp;</a></span>resetTraining()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::Manager::resetTraining </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This will delete the managed object if this is the last shared_ptr owning it. </p>
-
-</div>
-</div>
 <a id="ae9972e5e6a310b8a582def0a3aecf5b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae9972e5e6a310b8a582def0a3aecf5b4">&#9670;&nbsp;</a></span>runMode()</h2>
 
@@ -638,6 +393,71 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>run the selected mode. </p>
+
+</div>
+</div>
+<a id="a608d4268d80205f3d8ce3a0961f19a28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a608d4268d80205f3d8ce3a0961f19a28">&#9670;&nbsp;</a></span>runWithLineVisitor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">Result</a> Manager::runWithLineVisitor </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> &amp;&#160;</td>
+          <td class="paramname"><em>visitor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>line</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>run a <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> for single line only </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">visitor</td><td></td></tr>
+    <tr><td class="paramname">line</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structsmlp_1_1Result.html" title="Common results Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and std::errc https://...">Result</a> </dd></dl>
+
+</div>
+</div>
+<a id="aa4020971a8cb5fd581b0995a5d20edae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4020971a8cb5fd581b0995a5d20edae">&#9670;&nbsp;</a></span>runWithVisitor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">Result</a> Manager::runWithVisitor </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> &amp;&#160;</td>
+          <td class="paramname"><em>visitor</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>run a <a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">visitor</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structsmlp_1_1Result.html" title="Common results Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and std::errc https://...">Result</a> </dd></dl>
 
 </div>
 </div>
@@ -660,84 +480,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a13de89312eca3daa14f18557e112be15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13de89312eca3daa14f18557e112be15">&#9670;&nbsp;</a></span>test()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Manager::test </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This method tests the model. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>Optional line to use. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a79fcbc6a77715bada085a8da8ae6ab71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79fcbc6a77715bada085a8da8ae6ab71">&#9670;&nbsp;</a></span>train()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Manager::train </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This method trains the model. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>Optional line to use. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a731b2fe18e0072d2555c6cad22623a40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a731b2fe18e0072d2555c6cad22623a40">&#9670;&nbsp;</a></span>trainTestMonitored()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Manager::trainTestMonitored </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This method trains the model, testing at each epoch and monitoring the progress of an output neuron. Be aware that this mode consumes more memory with each epoch to save the monitoring progress. Therefore, it is recommended for use with smaller datasets and a lower number of epochs. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">line</td><td>Optional line to use. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a0071cf9a5b09271eb56f666cde61e8bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0071cf9a5b09271eb56f666cde61e8bb">&#9670;&nbsp;</a></span>app_params</h2>
@@ -752,6 +494,22 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Application parameters. </p>
+
+</div>
+</div>
+<a id="a9b9f771b4f085ba5fe5b561eba3bf599"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b9f771b4f085ba5fe5b561eba3bf599">&#9670;&nbsp;</a></span>http_server</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a>&gt; smlp::Manager::http_server = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Http server. </p>
 
 </div>
 </div>
@@ -771,30 +529,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a50b12a7838611594c5c3a16b085f84df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50b12a7838611594c5c3a16b085f84df">&#9670;&nbsp;</a></span>logger</h2>
+<a id="a4ad2406d919a726402bc0180b173beb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ad2406d919a726402bc0180b173beb2">&#9670;&nbsp;</a></span>network</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classsmlp_1_1SimpleLogger.html">SimpleLogger</a>&amp; smlp::Manager::logger = <a class="el" href="classsmlp_1_1SimpleLogger.html#a883acc09b8262bd7ecd294e6ff5ce0e8">SimpleLogger::getInstance</a>()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Logger. </p>
-
-</div>
-</div>
-<a id="acda5ae3aa4630e8cb0f45fef75b1e4ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acda5ae3aa4630e8cb0f45fef75b1e4ce">&#9670;&nbsp;</a></span>network</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1Network.html">Network</a>&gt; smlp::Manager::network = nullptr</td>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classsmlp_1_1Network.html">Network</a>&gt; smlp::Manager::network = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">

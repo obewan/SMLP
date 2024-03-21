@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -66,16 +66,16 @@
 <a name="4"><span class="lineNum">       4 </span>            : using namespace smlp;</a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
 <a name="6"><span class="lineNum">       6 </span>            : TestingResult::TestResults</a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineCov">         33 : Testing::testLine(const smlp::RecordResult &amp;record_result,</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">         49 : Testing::testLine(const smlp::RecordResult &amp;record_result,</span></a>
 <a name="8"><span class="lineNum">       8 </span>            :                   const size_t line_number, const size_t epoch) const {</a>
 <a name="9"><span class="lineNum">       9 </span>            : </a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         33 :   auto predicteds = Manager::getInstance().network-&gt;forwardPropagation(</span></a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         33 :       record_result.record.inputs);</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">         49 :   auto predicteds = Manager::getInstance().network-&gt;forwardPropagation(</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         49 :       record_result.record.inputs);</span></a>
 <a name="12"><span class="lineNum">      12 </span>            :   return {.epoch = epoch,</a>
 <a name="13"><span class="lineNum">      13 </span>            :           .lineNumber = line_number,</a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         33 :           .expecteds = record_result.record.outputs,</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineCov">         66 :           .outputs = predicteds};</span></a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         33 : }</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">         49 :           .expecteds = record_result.record.outputs,</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">         49 :           .outputs = predicteds};</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         49 : }</span></a>
 </pre>
       </td>
     </tr>

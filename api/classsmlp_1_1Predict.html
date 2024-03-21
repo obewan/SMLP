@@ -69,7 +69,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classsmlp_1_1Predict-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">smlp::Predict Class Reference</div>  </div>
+<div class="title">smlp::Predict Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -77,31 +77,37 @@ $(function() {
  <a href="classsmlp_1_1Predict.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Predict_8h_source.html">Predict.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for smlp::Predict:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classsmlp_1_1Predict.png" usemap="#smlp::Predict_map" alt=""/>
+  <map id="smlp::Predict_map" name="smlp::Predict_map">
+<area href="classsmlp_1_1PredictFile.html" alt="smlp::PredictFile" shape="rect" coords="0,56,121,80"/>
+<area href="classsmlp_1_1PredictSocket.html" alt="smlp::PredictSocket" shape="rect" coords="131,56,252,80"/>
+<area href="classsmlp_1_1PredictStdin.html" alt="smlp::PredictStdin" shape="rect" coords="262,56,383,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adefe9ae221f5b029ad9334b987780bfd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#adefe9ae221f5b029ad9334b987780bfd">Predict</a> (std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt; fileparser)</td></tr>
-<tr class="separator:adefe9ae221f5b029ad9334b987780bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac48145a68d7ba5f956ac9f5800b0f793"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#ac48145a68d7ba5f956ac9f5800b0f793">Predict</a> ()</td></tr>
-<tr class="separator:ac48145a68d7ba5f956ac9f5800b0f793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d1a97e1492fd3653cc386b4bff063df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#a1d1a97e1492fd3653cc386b4bff063df">predict</a> (const std::string &amp;line=&quot;&quot;) const</td></tr>
-<tr class="separator:a1d1a97e1492fd3653cc386b4bff063df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5c28b0e633a61e68177c7075b8c910"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#aba5c28b0e633a61e68177c7075b8c910">~Predict</a> ()=default</td></tr>
+<tr class="separator:aba5c28b0e633a61e68177c7075b8c910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f4dabf57acfd9fc9732508da2853b4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structsmlp_1_1Result.html">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#ab7f4dabf57acfd9fc9732508da2853b4">predictData</a> (const std::string &amp;line=&quot;&quot;)=0</td></tr>
+<tr class="separator:ab7f4dabf57acfd9fc9732508da2853b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2750f8081f814dbb75f4c374dfa4422b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#a2750f8081f814dbb75f4c374dfa4422b">formatValues</a> (const std::vector&lt; float &gt; &amp;values, bool roundValues) const</td></tr>
 <tr class="separator:a2750f8081f814dbb75f4c374dfa4422b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa13bb322545b178a43b199e477c057b5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#aa13bb322545b178a43b199e477c057b5">formatResult</a> (const std::vector&lt; float &gt; &amp;inputs, const std::vector&lt; float &gt; &amp;predicteds) const</td></tr>
 <tr class="separator:aa13bb322545b178a43b199e477c057b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0011493fecfee39f209ebbacaa1ac126"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#a0011493fecfee39f209ebbacaa1ac126">setFileParser</a> (std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt; fileparser)</td></tr>
-<tr class="memdesc:a0011493fecfee39f209ebbacaa1ac126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the file parser for testing data.  <a href="classsmlp_1_1Predict.html#a0011493fecfee39f209ebbacaa1ac126">More...</a><br /></td></tr>
-<tr class="separator:a0011493fecfee39f209ebbacaa1ac126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29c42547ebe7b94007e1cf198765eccd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#a29c42547ebe7b94007e1cf198765eccd">getFileParser</a> () const</td></tr>
-<tr class="memdesc:a29c42547ebe7b94007e1cf198765eccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the file parser used for testing data.  <a href="classsmlp_1_1Predict.html#a29c42547ebe7b94007e1cf198765eccd">More...</a><br /></td></tr>
-<tr class="separator:a29c42547ebe7b94007e1cf198765eccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a856ebb877747b48b5673ddcb616a05b2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1Predict.html#a856ebb877747b48b5673ddcb616a05b2">processResult</a> (const <a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a> &amp;result) const</td></tr>
+<tr class="memdesc:a856ebb877747b48b5673ddcb616a05b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process <a class="el" href="structsmlp_1_1Result.html" title="Common results Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and std::errc https://...">Result</a>, calling forward propagation and formatting output.  <a href="classsmlp_1_1Predict.html#a856ebb877747b48b5673ddcb616a05b2">More...</a><br /></td></tr>
+<tr class="separator:a856ebb877747b48b5673ddcb616a05b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classsmlp_1_1Predict.html" title="Predict class for predictive operations.">Predict</a> class for predictive operations. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adefe9ae221f5b029ad9334b987780bfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adefe9ae221f5b029ad9334b987780bfd">&#9670;&nbsp;</a></span>Predict() <span class="overload">[1/2]</span></h2>
+<a id="aba5c28b0e633a61e68177c7075b8c910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba5c28b0e633a61e68177c7075b8c910">&#9670;&nbsp;</a></span>~Predict()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,33 +116,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">smlp::Predict::Predict </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td>
-          <td class="paramname"><em>fileparser</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac48145a68d7ba5f956ac9f5800b0f793"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac48145a68d7ba5f956ac9f5800b0f793">&#9670;&nbsp;</a></span>Predict() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">smlp::Predict::Predict </td>
+          <td class="memname">virtual smlp::Predict::~Predict </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -144,7 +124,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -208,8 +188,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29c42547ebe7b94007e1cf198765eccd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29c42547ebe7b94007e1cf198765eccd">&#9670;&nbsp;</a></span>getFileParser()</h2>
+<a id="ab7f4dabf57acfd9fc9732508da2853b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f4dabf57acfd9fc9732508da2853b4">&#9670;&nbsp;</a></span>predictData()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,73 +198,48 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a>&gt; smlp::Predict::getFileParser </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the file parser used for testing data. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the file parser. </dd></dl>
-
-</div>
-</div>
-<a id="a1d1a97e1492fd3653cc386b4bff063df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d1a97e1492fd3653cc386b4bff063df">&#9670;&nbsp;</a></span>predict()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structsmlp_1_1Result.html">smlp::Result</a> Predict::predict </td>
+          <td class="memname">virtual <a class="el" href="structsmlp_1_1Result.html">Result</a> smlp::Predict::predictData </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>line</em> = <code>&quot;&quot;</code></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0011493fecfee39f209ebbacaa1ac126"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0011493fecfee39f209ebbacaa1ac126">&#9670;&nbsp;</a></span>setFileParser()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void smlp::Predict::setFileParser </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsmlp_1_1DataFileParser.html">DataFileParser</a> &gt;&#160;</td>
-          <td class="paramname"><em>fileparser</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Sets the file parser for testing data. </p>
+<p>Implemented in <a class="el" href="classsmlp_1_1PredictStdin.html#a533640fcaf7123e4f8ab6b2d02b032a4">smlp::PredictStdin</a>, <a class="el" href="classsmlp_1_1PredictSocket.html#a72824369e991eef0fbcba6f32c1b4515">smlp::PredictSocket</a>, and <a class="el" href="classsmlp_1_1PredictFile.html#a08443d347a48a628a38fc3118335820e">smlp::PredictFile</a>.</p>
+
+</div>
+</div>
+<a id="a856ebb877747b48b5673ddcb616a05b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a856ebb877747b48b5673ddcb616a05b2">&#9670;&nbsp;</a></span>processResult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Predict::processResult </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structsmlp_1_1RecordResult.html">smlp::RecordResult</a> &amp;&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Process <a class="el" href="structsmlp_1_1Result.html" title="Common results Can be use with smlp::ErrorCode, std::io_errc, std::future_errc and std::errc https://...">Result</a>, calling forward propagation and formatting output. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">fileparser</td><td>Pointer to the file parser. </td></tr>
+    <tr><td class="paramname">result</td><td></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>std::string </dd></dl>
 
 </div>
 </div>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">13</td>
@@ -113,10 +113,10 @@
 <a name="51"><span class="lineNum">      51 </span>            :   bool isEndOfTrainingLines = false;</a>
 <a name="52"><span class="lineNum">      52 </span>            : };</a>
 <a name="53"><span class="lineNum">      53 </span>            : </a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">         29 : inline std::string getModeStr(EMode mode) {</span></a>
-<a name="55"><span class="lineNum">      55 </span><span class="lineCov">         79 :   for (const auto &amp;[key, value] : mode_map) {</span></a>
-<a name="56"><span class="lineNum">      56 </span><span class="lineCov">         79 :     if (value == mode) {</span></a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">         29 :       return key;</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">         42 : inline std::string getModeStr(EMode mode) {</span></a>
+<a name="55"><span class="lineNum">      55 </span><span class="lineCov">        117 :   for (const auto &amp;[key, value] : mode_map) {</span></a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">        117 :     if (value == mode) {</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">         42 :       return key;</span></a>
 <a name="58"><span class="lineNum">      58 </span>            :     }</a>
 <a name="59"><span class="lineNum">      59 </span>            :   }</a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineNoCov">          0 :   return &quot;&quot;;</span></a>
@@ -131,10 +131,10 @@
 <a name="69"><span class="lineNum">      69 </span><span class="lineNoCov">          0 :   return &quot;&quot;;</span></a>
 <a name="70"><span class="lineNum">      70 </span>            : }</a>
 <a name="71"><span class="lineNum">      71 </span>            : </a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">         20 : inline std::string getActivationStr(EActivationFunction activation) {</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">         84 :   for (const auto &amp;[key, value] : activation_map) {</span></a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">         84 :     if (value == activation) {</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         20 :       return key;</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineCov">         18 : inline std::string getActivationStr(EActivationFunction activation) {</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">         75 :   for (const auto &amp;[key, value] : activation_map) {</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">         75 :     if (value == activation) {</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         18 :       return key;</span></a>
 <a name="76"><span class="lineNum">      76 </span>            :     }</a>
 <a name="77"><span class="lineNum">      77 </span>            :   }</a>
 <a name="78"><span class="lineNum">      78 </span><span class="lineNoCov">          0 :   return &quot;&quot;;</span></a>

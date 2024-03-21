@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">3</td>
@@ -83,9 +83,9 @@
 <a name="21"><span class="lineNum">      21 </span>            : </a>
 <a name="22"><span class="lineNum">      22 </span>            : class DataParser {</a>
 <a name="23"><span class="lineNum">      23 </span>            : public:</a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineCov">         36 :   explicit DataParser(DataParserType data_type = DataParserType::DataParser)</span></a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineCov">         36 :       : dataType(data_type) {}</span></a>
-<a name="26"><span class="lineNum">      26 </span><span class="lineCov">         35 :   virtual ~DataParser() = default;</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">         44 :   explicit DataParser(DataParserType data_type = DataParserType::DataParser)</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">         44 :       : dataType(data_type) {}</span></a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineCov">         43 :   virtual ~DataParser() = default;</span></a>
 <a name="27"><span class="lineNum">      27 </span>            : </a>
 <a name="28"><span class="lineNum">      28 </span>            :   const DataParserType dataType;</a>
 <a name="29"><span class="lineNum">      29 </span>            : </a>
@@ -157,8 +157,8 @@
 <a name="95"><span class="lineNum">      95 </span>            : </a>
 <a name="96"><span class="lineNum">      96 </span>            :   // lambda function to convert to float (this will throw if no value)</a>
 <a name="97"><span class="lineNum">      97 </span>            :   std::function&lt;float(const std::vector&lt;Csv::CellReference&gt; &amp;)&gt; getFloatValue =</a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineCov">       3316 :       [](const std::vector&lt;Csv::CellReference&gt; &amp;cells) {</span></a>
-<a name="99"><span class="lineNum">      99 </span><span class="lineCov">       3316 :         return static_cast&lt;float&gt;(cells[0].getDouble().value());</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">       3211 :       [](const std::vector&lt;Csv::CellReference&gt; &amp;cells) {</span></a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineCov">       3211 :         return static_cast&lt;float&gt;(cells[0].getDouble().value());</span></a>
 <a name="100"><span class="lineNum">     100 </span>            :       };</a>
 <a name="101"><span class="lineNum">     101 </span>            : };</a>
 <a name="102"><span class="lineNum">     102 </span>            : </a>

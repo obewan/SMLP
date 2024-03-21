@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -66,21 +66,21 @@
 <a name="4"><span class="lineNum">       4 </span>            : </a>
 <a name="5"><span class="lineNum">       5 </span>            : using namespace smlp;</a>
 <a name="6"><span class="lineNum">       6 </span>            : </a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          1 : smlp::Result TestingStdin::test(const std::string &amp;line, size_t epoch,</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          4 : smlp::Result TestingStdin::test(const std::string &amp;line, size_t epoch,</span></a>
 <a name="8"><span class="lineNum">       8 </span>            :                                 size_t current_line_number) {</a>
 <a name="9"><span class="lineNum">       9 </span>            :   // Get application parameters from the singleton instance of Manager</a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          1 :   const auto &amp;app_params = Manager::getInstance().app_params;</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          4 :   const auto &amp;app_params = Manager::getInstance().app_params;</span></a>
 <a name="11"><span class="lineNum">      11 </span>            : </a>
 <a name="12"><span class="lineNum">      12 </span>            :   // If mode is TrainThenTest or use_training_ratio_line is true, set</a>
 <a name="13"><span class="lineNum">      13 </span>            :   // current_line_number to training_ratio_line</a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          1 :   if (app_params.mode == EMode::TrainThenTest ||</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          1 :       app_params.use_training_ratio_line) {</span></a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          1 :     current_line_number = app_params.training_ratio_line;</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          4 :   if (app_params.mode == EMode::TrainThenTest ||</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          3 :       app_params.use_training_ratio_line) {</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          2 :     current_line_number = app_params.training_ratio_line;</span></a>
 <a name="17"><span class="lineNum">      17 </span>            :   }</a>
 <a name="18"><span class="lineNum">      18 </span>            : </a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          1 :   std::string current_line;</span></a>
+<a name="19"><span class="lineNum">      19 </span><span class="lineCov">          4 :   std::string current_line;</span></a>
 <a name="20"><span class="lineNum">      20 </span>            :   // Process lines from standard input until there are no more lines</a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          3 :   while (std::getline(std::cin, current_line)) {</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          6 :   while (std::getline(std::cin, current_line)) {</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :     // Set the current line number in dataParser_</a>
 <a name="23"><span class="lineNum">      23 </span><span class="lineCov">          2 :     dataParser_-&gt;current_line_number = current_line_number - 1;</span></a>
 <a name="24"><span class="lineNum">      24 </span>            : </a>
@@ -101,12 +101,12 @@
 <a name="39"><span class="lineNum">      39 </span><span class="lineCov">          2 :   }</span></a>
 <a name="40"><span class="lineNum">      40 </span>            : </a>
 <a name="41"><span class="lineNum">      41 </span>            :   // Get the final testing results</a>
-<a name="42"><span class="lineNum">      42 </span><span class="lineCov">          1 :   const auto &amp;finalResult = getTestingResults();</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">          4 :   const auto &amp;finalResult = getTestingResults();</span></a>
 <a name="43"><span class="lineNum">      43 </span>            : </a>
 <a name="44"><span class="lineNum">      44 </span>            :   // Return the final results</a>
-<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          1 :   return {.code = smlp::make_error_code(smlp::ErrorCode::Success),</span></a>
-<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          2 :           .data = finalResult-&gt;getResultsJson()};</span></a>
-<a name="47"><span class="lineNum">      47 </span><span class="lineCov">          1 : }</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          4 :   return {.code = smlp::make_error_code(smlp::ErrorCode::Success),</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">         12 :           .data = finalResult-&gt;getResultsJson()};</span></a>
+<a name="47"><span class="lineNum">      47 </span><span class="lineCov">         12 : }</span></a>
 </pre>
       </td>
     </tr>

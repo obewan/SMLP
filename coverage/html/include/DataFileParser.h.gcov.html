@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">4</td>
@@ -81,7 +81,7 @@
 <a name="19"><span class="lineNum">      19 </span>            :  */</a>
 <a name="20"><span class="lineNum">      20 </span>            : class DataFileParser : public DataParser {</a>
 <a name="21"><span class="lineNum">      21 </span>            : public:</a>
-<a name="22"><span class="lineNum">      22 </span><span class="lineCov">         29 :   explicit DataFileParser() : DataParser(DataParserType::DataFileParser) {}</span></a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineCov">         37 :   explicit DataFileParser() : DataParser(DataParserType::DataFileParser) {}</span></a>
 <a name="23"><span class="lineNum">      23 </span>            :   ~DataFileParser() override;</a>
 <a name="24"><span class="lineNum">      24 </span>            : </a>
 <a name="25"><span class="lineNum">      25 </span>            :   RecordResult processLine(const std::string &amp;line = &quot;&quot;,</a>
@@ -116,30 +116,30 @@
 <a name="54"><span class="lineNum">      54 </span>            :    *</a>
 <a name="55"><span class="lineNum">      55 </span>            :    * @param app_params The application parameters.</a>
 <a name="56"><span class="lineNum">      56 </span>            :    */</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          9 :   void calcTrainingRatioLine(const AppParameters &amp;app_params) {</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          9 :     if (app_params.input != EInput::File ||</span></a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          8 :         app_params.training_ratio_line &gt; 0) {</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">         10 :   void calcTrainingRatioLine(const AppParameters &amp;app_params) {</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">         10 :     if (app_params.input != EInput::File ||</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          9 :         app_params.training_ratio_line &gt; 0) {</span></a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          1 :       training_ratio_line = app_params.training_ratio_line;</span></a>
 <a name="61"><span class="lineNum">      61 </span>            :     } else {</a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          8 :       total_lines = countLine();</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          8 :       training_ratio_line =</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          8 :           (size_t)((float)total_lines * app_params.training_ratio);</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          9 :       total_lines = countLine();</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          9 :       training_ratio_line =</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          9 :           (size_t)((float)total_lines * app_params.training_ratio);</span></a>
 <a name="65"><span class="lineNum">      65 </span>            :     }</a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          9 :     isTrainingRatioLineProcessed = true;</span></a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          9 :   }</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">         10 :     isTrainingRatioLineProcessed = true;</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">         10 :   }</span></a>
 <a name="68"><span class="lineNum">      68 </span>            : </a>
 <a name="69"><span class="lineNum">      69 </span>            :   /**</a>
 <a name="70"><span class="lineNum">      70 </span>            :    * @brief Counts the total number of lines in the file.</a>
 <a name="71"><span class="lineNum">      71 </span>            :    *</a>
 <a name="72"><span class="lineNum">      72 </span>            :    * @return The total number of lines in the file.</a>
 <a name="73"><span class="lineNum">      73 </span>            :    */</a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          9 :   std::size_t countLine() {</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineCov">          9 :     openFile();</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineCov">          9 :     total_lines =</span></a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineCov">          9 :         std::count(std::istreambuf_iterator&lt;char&gt;((std::istream &amp;)file),</span></a>
-<a name="78"><span class="lineNum">      78 </span><span class="lineCov">          9 :                    std::istreambuf_iterator&lt;char&gt;(), '\n');</span></a>
-<a name="79"><span class="lineNum">      79 </span><span class="lineCov">          9 :     closeFile();</span></a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">          9 :     return total_lines;</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">         10 :   std::size_t countLine() {</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">         10 :     openFile();</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">         10 :     total_lines =</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">         10 :         std::count(std::istreambuf_iterator&lt;char&gt;((std::istream &amp;)file),</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">         10 :                    std::istreambuf_iterator&lt;char&gt;(), '\n');</span></a>
+<a name="79"><span class="lineNum">      79 </span><span class="lineCov">         10 :     closeFile();</span></a>
+<a name="80"><span class="lineNum">      80 </span><span class="lineCov">         10 :     return total_lines;</span></a>
 <a name="81"><span class="lineNum">      81 </span>            :   }</a>
 <a name="82"><span class="lineNum">      82 </span>            : </a>
 <a name="83"><span class="lineNum">      83 </span>            :   bool getNextLine(std::string &amp;line, bool isTesting);</a>

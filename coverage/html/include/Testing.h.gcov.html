@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-18 06:52:39</td>
+            <td class="headerValue">2024-03-21 20:57:51</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">5</td>
@@ -111,12 +111,12 @@
 <a name="49"><span class="lineNum">      49 </span>            :    * @brief Create a File Parser object</a>
 <a name="50"><span class="lineNum">      50 </span>            :    *</a>
 <a name="51"><span class="lineNum">      51 </span>            :    */</a>
-<a name="52"><span class="lineNum">      52 </span><span class="lineCov">          5 :   void createFileParser() {</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">          5 :   void createDataParser() {</span></a>
 <a name="53"><span class="lineNum">      53 </span><span class="lineCov">          5 :     if (!dataParser_) {</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          5 :       if (testingType == TestingType::TestingFile) {</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          4 :       if (testingType == TestingType::TestingFile) {</span></a>
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">          2 :         dataParser_ = std::make_shared&lt;DataFileParser&gt;();</span></a>
 <a name="56"><span class="lineNum">      56 </span>            :       } else {</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          3 :         dataParser_ = std::make_shared&lt;DataParser&gt;();</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :         dataParser_ = std::make_shared&lt;DataParser&gt;();</span></a>
 <a name="58"><span class="lineNum">      58 </span>            :       }</a>
 <a name="59"><span class="lineNum">      59 </span>            :     }</a>
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          5 :   }</span></a>
@@ -126,9 +126,9 @@
 <a name="64"><span class="lineNum">      64 </span>            :    *</a>
 <a name="65"><span class="lineNum">      65 </span>            :    * @param dataparser Pointer to the data parser.</a>
 <a name="66"><span class="lineNum">      66 </span>            :    */</a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          4 :   void setDataParser(std::shared_ptr&lt;DataParser&gt; dataparser) {</span></a>
-<a name="68"><span class="lineNum">      68 </span><span class="lineCov">          4 :     dataParser_ = dataparser;</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          4 :   }</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          6 :   void setDataParser(std::shared_ptr&lt;DataParser&gt; dataparser) {</span></a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineCov">          6 :     dataParser_ = dataparser;</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          6 :   }</span></a>
 <a name="70"><span class="lineNum">      70 </span>            : </a>
 <a name="71"><span class="lineNum">      71 </span>            :   /**</a>
 <a name="72"><span class="lineNum">      72 </span>            :    * @brief Gets the data parser used for testing data.</a>
