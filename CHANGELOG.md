@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [1.2.0] - 2024-03-21
+
+### Changed
+
+- big code refactoring. Neural network parameters untouched.
+
 ## [1.1.0] - 2024-02-29
 
 ### Changed
@@ -25,6 +31,7 @@ and this project adheres to [Semantic Versioning].
 
 <!-- Versions -->
 
-[unreleased]: https://github.com/obewan/SMLP/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/obewan/SMLP/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/obewan/SMLP/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/obewan/SMLP/compare/v1.0.0..v1.1.0
 [1.0.0]: https://github.com/obewan/SMLP/releases/tag/v1.0.0

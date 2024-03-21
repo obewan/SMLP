@@ -1,8 +1,9 @@
 #!/bin/sh
 
-# valgrind is required (apt-get install valgrind)
-# this test will take around 10 minutes (as it is slower under valdrind)
-# check the memory report then at .valgrind/valgrind-out.txt
+
+echo "warning: valgrind is required (apt-get install valgrind)"
+echo "this test will take around 10 minutes as it is slower under valdrind"
+echo "check the memory report then at .valgrind/valgrind-out.txt\n"
 
 cd ../build
 valgrind --leak-check=full \
