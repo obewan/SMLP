@@ -1,0 +1,35 @@
+#include "winver.h"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     1,2,1,0
+PRODUCTVERSION  1,2,1,0
+FILEFLAGSMASK   VS_FF_DEBUG
+#ifdef _DEBUG
+FILEFLAGS       VS_FF_DEBUG
+#else
+FILEFLAGS       0x0L
+#endif
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "Dams Labs\0"
+            VALUE "FileDescription", "SMLP\0"
+            VALUE "FileVersion", "1.2.1.0\0"
+            VALUE "InternalName", "SMLP\0"
+            VALUE "LegalCopyright", "Dams Labs\0"
+            VALUE "OriginalFilename", "smlp.exe\0"
+            VALUE "ProductName", "smlp\0"
+            VALUE "ProductVersion", "1.2.1.0\0"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
