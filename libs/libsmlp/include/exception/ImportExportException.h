@@ -10,6 +10,7 @@ namespace smlp {
 class ImportExportException : public std::exception {
 public:
   ImportExportException() = default;
+  virtual ~ImportExportException() = default;
   explicit ImportExportException(const std::string &message)
       : message_(message) {}
   const char *what() const noexcept override { return message_.c_str(); }

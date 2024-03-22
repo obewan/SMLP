@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning].
 ## [unreleased]
 
 - fix version
+- some refactoring
 
 ## [1.2.0] - 2024-03-21
 

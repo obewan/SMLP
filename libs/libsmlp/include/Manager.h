@@ -12,7 +12,7 @@
 #include "Common.h"
 #include "CommonModes.h"
 #include "CommonResult.h"
-#include "NetworkImportExport.h"
+#include "NetworkImportExportFacade.h"
 #include "Predict.h"
 #include "RunnerFileVisitor.h"
 #include "RunnerSocketVisitor.h"
@@ -111,7 +111,7 @@ public:
   /**
    * @brief ImportExport tool.
    */
-  NetworkImportExport importExport;
+  NetworkImportExportFacade importExport;
 
   /**
    * @brief Create a Http Server object

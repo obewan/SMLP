@@ -1,7 +1,7 @@
 #include "Common.h"
 #include "Layer.h"
 #include "Manager.h"
-#include "NetworkImportExport.h"
+#include "NetworkImportExportFacade.h"
 #include "doctest.h"
 #include "exception/ImportExportException.h"
 #include <cstddef>
@@ -22,7 +22,7 @@ TEST_CASE("Testing the ImportExport") {
   std::string modelCsvFile = "testModel.csv";
 
   SUBCASE("Test exceptions") {
-    NetworkImportExport importExport;
+    NetworkImportExportFacade importExport;
     CHECK_THROWS_AS(
         importExport.importModel({.network_to_import = "wrongfile"}),
         ImportExportException);
@@ -39,7 +39,7 @@ TEST_CASE("Testing the ImportExport") {
     CHECK(std::filesystem::exists(modelCsvFile) == false);
     app_params.network_to_export = modelJsonFile;
 
-    NetworkImportExport importExport;
+    NetworkImportExportFacade importExport;
     auto network = std::make_unique<Network>();
     network->initializeLayers();
     CHECK_NOTHROW(importExport.exportModel(network, app_params));
@@ -52,7 +52,7 @@ TEST_CASE("Testing the ImportExport") {
     CHECK(std::filesystem::exists(modelJsonFile) == true);
     CHECK(std::filesystem::exists(modelCsvFile) == true);
 
-    NetworkImportExport importExport;
+    NetworkImportExportFacade importExport;
     app_params.network_to_import = modelJsonFile;
     std::unique_ptr<Network> network = nullptr;
     CHECK_NOTHROW(network = importExport.importModel(app_params));

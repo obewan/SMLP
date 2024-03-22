@@ -1,5 +1,5 @@
 /**
- * @file NetworkImportExport.h
+ * @file NetworkImportExportFacade.h
  * @author Damien Balima (www.dams-labs.net)
  * @brief Import/export of the neural network
  * @date 2024-02-20
@@ -9,12 +9,14 @@
  */
 #pragma once
 #include "Network.h"
-#include <memory.h>
+#include "NetworkImportExportCSV.h"
+#include "NetworkImportExportJSON.h"
+#include <memory>
 
 namespace smlp {
-class NetworkImportExport {
+class NetworkImportExportFacade {
 public:
-  virtual ~NetworkImportExport() = default;
+  virtual ~NetworkImportExportFacade() = default;
 
   /**
    * @brief Import a network model files (JSON meta data and CSV neurons data)
@@ -32,5 +34,9 @@ public:
    */
   virtual void exportModel(const std::unique_ptr<Network> &network,
                            const AppParameters &app_params) const;
+
+private:
+  NetworkImportExportCSV csvIE;
+  NetworkImportExportJSON jsonIE;
 };
 } // namespace smlp

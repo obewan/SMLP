@@ -1,6 +1,6 @@
 #include "CommonModes.h"
 #include "Manager.h"
-#include "NetworkImportExport.h"
+#include "NetworkImportExportFacade.h"
 #include "Predict.h"
 #include "PredictFile.h"
 #include "doctest.h"
@@ -24,7 +24,7 @@ TEST_CASE("Testing the Predict class") {
         .data_file = test_file,
         .output_at_end = false,
     };
-    NetworkImportExport importExport;
+    NetworkImportExportFacade importExport;
     CHECK(std::filesystem::exists(modelJsonFile) == true);
     CHECK(std::filesystem::exists(modelCsvFile) == true);
 
