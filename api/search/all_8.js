@@ -1,10 +1,10 @@
 var searchData=
 [
   ['import_5fnetwork_165',['import_network',['../classsmlp_1_1SimpleConfig.html#ae977d665c1f2350eecda36ad0d2b5b81',1,'smlp::SimpleConfig']]],
-  ['importexport_166',['importExport',['../classsmlp_1_1Manager.html#a00404962930877b01ee055979625297b',1,'smlp::Manager']]],
+  ['importexport_166',['importExport',['../classsmlp_1_1Manager.html#a59370d34cc29886427edd219d0c5739d',1,'smlp::Manager']]],
   ['importexportexception_167',['ImportExportException',['../classsmlp_1_1ImportExportException.html#a61e62c48327e7d32586bae7909c21122',1,'smlp::ImportExportException::ImportExportException()=default'],['../classsmlp_1_1ImportExportException.html#af66ba0959cfb657666c272829b1ab792',1,'smlp::ImportExportException::ImportExportException(const std::string &amp;message)'],['../classsmlp_1_1EmptyCellException.html#a61e62c48327e7d32586bae7909c21122',1,'smlp::EmptyCellException::ImportExportException()=default'],['../classsmlp_1_1EmptyCellException.html#af66ba0959cfb657666c272829b1ab792',1,'smlp::EmptyCellException::ImportExportException(const std::string &amp;message)'],['../classsmlp_1_1ImportExportException.html',1,'smlp::ImportExportException']]],
   ['importexportexception_2eh_168',['ImportExportException.h',['../ImportExportException_8h.html',1,'']]],
-  ['importmodel_169',['importModel',['../classsmlp_1_1NetworkImportExport.html#ab1cb2848ab9b927c4508fb081ba05d5e',1,'smlp::NetworkImportExport::importModel()'],['../classsmlp_1_1NetworkImportExportJSON.html#a1e056e91ec5807c8245ba5e37df8695f',1,'smlp::NetworkImportExportJSON::importModel()']]],
+  ['importmodel_169',['importModel',['../classsmlp_1_1NetworkImportExportFacade.html#affe225f9a6ffb3515c737ecc522e02a6',1,'smlp::NetworkImportExportFacade::importModel()'],['../classsmlp_1_1NetworkImportExportJSON.html#a1e056e91ec5807c8245ba5e37df8695f',1,'smlp::NetworkImportExportJSON::importModel()']]],
   ['importneuronsweights_170',['importNeuronsWeights',['../classsmlp_1_1NetworkImportExportCSV.html#a8d42b01fa8112ad16404cbdf37929430',1,'smlp::NetworkImportExportCSV']]],
   ['importorbuildnetwork_171',['importOrBuildNetwork',['../classsmlp_1_1Manager.html#a936616b7371d1334a07d7d3c1afb5724',1,'smlp::Manager']]],
   ['info_172',['INFO',['../namespacesmlp.html#a7949934ec3e31b905b534d2f93736812a551b723eafd6a31d444fcb2f5920fbd3',1,'smlp']]],

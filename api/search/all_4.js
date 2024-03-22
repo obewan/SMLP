@@ -27,7 +27,7 @@ var searchData=
   ['expecteds_106',['expecteds',['../structsmlp_1_1TestingResult_1_1TestResults.html#ab666a62a6ada69df3778f949bc3e0486',1,'smlp::TestingResult::TestResults']]],
   ['export_5fmodel_5fschedule_5fseconds_107',['EXPORT_MODEL_SCHEDULE_SECONDS',['../SimpleHTTPServer_8cpp.html#a97f4b592907120b63a63599e0ed1d32c',1,'SimpleHTTPServer.cpp']]],
   ['export_5fnetwork_108',['export_network',['../classsmlp_1_1SimpleConfig.html#a81e6a1ff54ffc71b691cf37034d89873',1,'smlp::SimpleConfig']]],
-  ['exportmodel_109',['exportModel',['../classsmlp_1_1NetworkImportExportJSON.html#ab4756db21fa53cd192a556d5de6a8b95',1,'smlp::NetworkImportExportJSON::exportModel()'],['../classsmlp_1_1NetworkImportExport.html#ac90b8d60c1f123c2e079038fc6ac4bf2',1,'smlp::NetworkImportExport::exportModel()']]],
+  ['exportmodel_109',['exportModel',['../classsmlp_1_1NetworkImportExportJSON.html#ab4756db21fa53cd192a556d5de6a8b95',1,'smlp::NetworkImportExportJSON::exportModel()'],['../classsmlp_1_1NetworkImportExportFacade.html#a9455848bdf5bdb243fb414815e4fecd2',1,'smlp::NetworkImportExportFacade::exportModel()']]],
   ['exportnetwork_110',['exportNetwork',['../classsmlp_1_1Manager.html#af14e95edfbdb2bbcbf5d5b4335178a95',1,'smlp::Manager']]],
   ['exportneuronsweights_111',['exportNeuronsWeights',['../classsmlp_1_1NetworkImportExportCSV.html#a3072fa4eaa7dfbfe733ab5719930f7eb',1,'smlp::NetworkImportExportCSV']]]
 ];
