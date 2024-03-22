@@ -55,10 +55,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(${PROJECT_NAME})
 
-if(WIN32)
-    target_sources(${PROJECT_NAME} PRIVATE version.rc)
-endif()
-
 add_executable(${PROJECT_NAME} ${SOURCE})
 
 foreach(LIBRARY ${LIBRARIES})
@@ -66,6 +62,9 @@ foreach(LIBRARY ${LIBRARIES})
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
+if(WIN32)
+    target_sources(${PROJECT_NAME} PRIVATE version.rc)
+endif()
 
 enable_testing()
 add_subdirectory(test)
