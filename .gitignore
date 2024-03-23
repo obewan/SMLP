@@ -38,6 +38,7 @@ doc/latex
 # build output
 build
 bin
+out
 monitor*.csv
 
 # CMake
@@ -47,6 +48,9 @@ CMakeCache.txt
 # VSCode
 .vscode
 .cache
+
+# VSStudio
+.vs
 
 # Others
 data/ai/

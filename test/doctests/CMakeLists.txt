@@ -3,6 +3,10 @@ option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -pthread")
 
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+endif()
+
 if(ENABLE_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")    
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")    

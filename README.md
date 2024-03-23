@@ -327,34 +327,30 @@ Note: If you have a service running on port 8080, you will need to choose a diff
 <details>
 <summary>On Linux</summary>
 
-Ensure that `make`, `cmake`, `g++` (v10 or v11), and `lcov` are installed. For example, on Debian, you can use the following commands:  
+1. Ensure that `make`, `cmake`, `g++` (v10 or v11), and `lcov` are installed. For example, on Debian, you can use the following commands:  
 `sudo apt-get update`  
 `sudo apt-get install -y make cmake g++-11 lcov`
-
-Next, configure CMake for the Release:  
+2. Clone the project with Git for Linux: `git clone https://github.com/obewan/SMLP.git`
+2. In the SMLP folder, configure CMake for the Release:  
 `mkdir build`  
 `CC=gcc-11 CXX=g++-11 cmake -B build -DCMAKE_BUILD_TYPE=Release`
+3. Finally, build the project: `cmake --build build --config Release -- -j 2`    
+If success, you should find the `smlp` program and its i18n folder under the `build` folder.
 
-Finally, build the project, you should find the `smlp` program under the `build` folder (don't forget to copy the `i18n` directory with it):  
-`cmake --build build --config Release -- -j 2`
 
 </details>
 
 <details>
 <summary>On Windows</summary>
 
-Ensure that `cmake` for Windows and `Visual Studio` (which include a C++ compiler) are installed.
-
-Then generate the build files:  
-`mkdir build`  
-`cd build`
-`cmake -G "Visual Studio 17 2022" -A x64 ..`  
-(Note: "Visual Studio 17 2022" refers to the 2022 community edition)
-
-Make sure that exceptions are enabled in the `tester` project. This is necessary because some unit tests check for exceptions. You can enable exceptions by navigating to `Properties > C/C++ > Code Generation > Enable C++ Exceptions`.
-
-Finally build the project, you should find the `smlp` program under the `build\Release` folder (don't forget to copy the `i18n` directory with it):  
-`cmake --build . --config Release`
+1. Ensure that `cmake` for Windows and `Visual Studio` (which include a C++ compiler) are installed.
+2. Then clone the project with Git for Windows:  `git clone https://github.com/obewan/SMLP.git`
+3. In the file explorer, right click on the SMLP folder and open it with Visual Studio.
+4. Then in Visual Studio, in the Solution Explorer, right click on SMLP and Switch to **CMake Targets View**.
+5. You can add a Release configuration by right click on **smlp Project** and select **CMake settings for smlp**. 
+6. Finally, on top bar, select your configuration (default is x64-Debug),    
+and on the **smlp Project**, right click and select **Build All**.    
+If success, the **smlp** executable and its i18n folder should be in the out/build/x64-Debug/ (or whatever your configuration) folder.
 
 </details>
 
