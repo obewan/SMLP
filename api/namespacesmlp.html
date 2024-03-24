@@ -182,6 +182,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1RunnerVisitor.html">RunnerVisitor</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1RunnerVisitorFactory.html">RunnerVisitorFactory</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleConfig.html">SimpleConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsmlp_1_1SimpleHTTPServer.html">SimpleHTTPServer</a></td></tr>
@@ -398,25 +400,25 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:acfefb0d57fb5929f1016e9e7dde27272"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">sigmoid</a> = [](auto x) { return 1.0f / (1.0f + exp(-x)); }</td></tr>
+<tr class="memitem:acfefb0d57fb5929f1016e9e7dde27272"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">sigmoid</a> = [](auto x) { return (float)(1.0f / (1.0f + exp(-x))); }</td></tr>
 <tr class="memdesc:acfefb0d57fb5929f1016e9e7dde27272"><td class="mdescLeft">&#160;</td><td class="mdescRight">the sigmoid function is commonly used as the activation function during the forward propagation step. The reason for this is that the sigmoid function maps any input value into a range between 0 and 1, which can be useful for outputting probabilities, among other things. The sigmoid derivative can be expressed in terms of the output of the sigmoid function itself: if σ(x) is the sigmoid function, then its derivative σ'(x) can be computed as σ(x) * (1 - σ(x)).  <a href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">More...</a><br /></td></tr>
 <tr class="separator:acfefb0d57fb5929f1016e9e7dde27272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2fc7989c9c78aeacb233301742663e15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a2fc7989c9c78aeacb233301742663e15">sigmoidDerivative</a></td></tr>
 <tr class="separator:a2fc7989c9c78aeacb233301742663e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3947e87343001268acddb73840417c44"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a3947e87343001268acddb73840417c44">tanhFunc</a> = [](auto x) { return tanh(x); }</td></tr>
+<tr class="memitem:a3947e87343001268acddb73840417c44"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a3947e87343001268acddb73840417c44">tanhFunc</a> = [](auto x) { return (float)tanh(x); }</td></tr>
 <tr class="memdesc:a3947e87343001268acddb73840417c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the input to a range between -1 and 1. It is often used in the hidden layers of a neural network.  <a href="namespacesmlp.html#a3947e87343001268acddb73840417c44">More...</a><br /></td></tr>
 <tr class="separator:a3947e87343001268acddb73840417c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af62ae3beaa17da55e2d5523e6095c0d7"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af62ae3beaa17da55e2d5523e6095c0d7">tanhDerivative</a></td></tr>
 <tr class="separator:af62ae3beaa17da55e2d5523e6095c0d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3bb08506b81f7b7f863a632f4b06b15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af3bb08506b81f7b7f863a632f4b06b15">relu</a> = [](auto x) { return std::max(0.0f, x); }</td></tr>
+<tr class="memitem:af3bb08506b81f7b7f863a632f4b06b15"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#af3bb08506b81f7b7f863a632f4b06b15">relu</a> = [](auto x) { return (float)std::max(0.0f, x); }</td></tr>
 <tr class="memdesc:af3bb08506b81f7b7f863a632f4b06b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">ReLU Function (Rectified Linear Unit): This function outputs the input directly if it’s positive; otherwise, it outputs zero. It has become very popular in recent years because it helps to alleviate the vanishing gradient problem.  <a href="namespacesmlp.html#af3bb08506b81f7b7f863a632f4b06b15">More...</a><br /></td></tr>
 <tr class="separator:af3bb08506b81f7b7f863a632f4b06b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a442df31244a306fc359abf23d84580e0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a442df31244a306fc359abf23d84580e0">reluDerivative</a> = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; }</td></tr>
+<tr class="memitem:a442df31244a306fc359abf23d84580e0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a442df31244a306fc359abf23d84580e0">reluDerivative</a> = [](auto x) { return (float)(x &gt; 0 ? 1.0f : 0.0f); }</td></tr>
 <tr class="separator:a442df31244a306fc359abf23d84580e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24d45f80e7880fbfc4d246e85a1b863a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a">leakyRelu</a> = [](auto x) { return std::max(0.01f * x, x); }</td></tr>
+<tr class="memitem:a24d45f80e7880fbfc4d246e85a1b863a"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a">leakyRelu</a> = [](auto x) { return (float)std::max(0.01f * x, x); }</td></tr>
 <tr class="memdesc:a24d45f80e7880fbfc4d246e85a1b863a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaky ReLU: This is a variant of ReLU that allows small negative values when the input is less than zero. It can help to alleviate the dying ReLU problem where neurons become inactive and only output zero.  <a href="namespacesmlp.html#a24d45f80e7880fbfc4d246e85a1b863a">More...</a><br /></td></tr>
 <tr class="separator:a24d45f80e7880fbfc4d246e85a1b863a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05fef3a79985b00dab2a7e0e7b4a259c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a05fef3a79985b00dab2a7e0e7b4a259c">leakyReluDerivative</a> = [](auto x) { return x &gt; 0 ? 1.0f : 0.01f; }</td></tr>
+<tr class="memitem:a05fef3a79985b00dab2a7e0e7b4a259c"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a05fef3a79985b00dab2a7e0e7b4a259c">leakyReluDerivative</a> = [](auto x) { return (float)(x &gt; 0 ? 1.0f : 0.01f); }</td></tr>
 <tr class="separator:a05fef3a79985b00dab2a7e0e7b4a259c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d57a311b1145ebfc5a2f605ce948de0"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesmlp.html#a1d57a311b1145ebfc5a2f605ce948de0">parametricRelu</a></td></tr>
 <tr class="memdesc:a1d57a311b1145ebfc5a2f605ce948de0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parametric ReLU (PReLU) is a type of leaky ReLU that, instead of having a predetermined slope like 0.01, learns the slope during training. This can give it a bit more flexibility and help it to learn more complex patterns.  <a href="namespacesmlp.html#a1d57a311b1145ebfc5a2f605ce948de0">More...</a><br /></td></tr>
@@ -1238,7 +1240,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
-<div class="line">  <span class="keywordflow">return</span> x &gt;= 0 ? x : alpha * (exp(x) - 1);</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(x &gt;= 0 ? x : alpha * (exp(x) - 1));</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 <p>the Exponential Linear Units (ELUs) are a great choice as they take on negative values when the input is less than zero, which allows them to push mean unit activations closer to zero like batch normalization. Unlike ReLUs, ELUs have a nonzero gradient for negative input, which avoids the “dead neuron” problem. </p>
@@ -1265,7 +1267,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
-<div class="line">  <span class="keywordflow">return</span> x &gt;= 0 ? 1 : alpha * exp(x);</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(x &gt;= 0 ? 1.0f : alpha * exp(x));</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -1352,7 +1354,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::leakyRelu = [](auto x) { return std::max(0.01f * x, x); }</td>
+          <td class="memname">auto smlp::leakyRelu = [](auto x) { return (float)std::max(0.01f * x, x); }</td>
         </tr>
       </table>
   </td>
@@ -1376,7 +1378,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::leakyReluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.01f; }</td>
+          <td class="memname">auto smlp::leakyReluDerivative = [](auto x) { return (float)(x &gt; 0 ? 1.0f : 0.01f); }</td>
         </tr>
       </table>
   </td>
@@ -1448,7 +1450,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
-<div class="line">  <span class="keywordflow">return</span> std::max(alpha * x, x);</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)std::max(alpha * x, x);</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 <p>Parametric ReLU (PReLU) is a type of leaky ReLU that, instead of having a predetermined slope like 0.01, learns the slope during training. This can give it a bit more flexibility and help it to learn more complex patterns. </p>
@@ -1475,7 +1477,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x, <span class="keyword">auto</span> alpha) {</div>
-<div class="line">  <span class="keywordflow">return</span> x &gt; 0 ? 1.0f : alpha;</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(x &gt; 0 ? 1.0f : alpha);</div>
 <div class="line">}</div>
 </div><!-- fragment -->
 </div>
@@ -1509,7 +1511,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::relu = [](auto x) { return std::max(0.0f, x); }</td>
+          <td class="memname">auto smlp::relu = [](auto x) { return (float)std::max(0.0f, x); }</td>
         </tr>
       </table>
   </td>
@@ -1540,7 +1542,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::reluDerivative = [](auto x) { return x &gt; 0 ? 1.0f : 0.0f; }</td>
+          <td class="memname">auto smlp::reluDerivative = [](auto x) { return (float)(x &gt; 0 ? 1.0f : 0.0f); }</td>
         </tr>
       </table>
   </td>
@@ -1562,7 +1564,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::sigmoid = [](auto x) { return 1.0f / (1.0f + exp(-x)); }</td>
+          <td class="memname">auto smlp::sigmoid = [](auto x) { return (float)(1.0f / (1.0f + exp(-x))); }</td>
         </tr>
       </table>
   </td>
@@ -1597,7 +1599,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x) {</div>
 <div class="line">  <span class="keywordtype">float</span> sigmoidValue = <a class="code" href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">sigmoid</a>(x);</div>
-<div class="line">  <span class="keywordflow">return</span> sigmoidValue * (1 - sigmoidValue);</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(sigmoidValue * (1 - sigmoidValue));</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacesmlp_html_acfefb0d57fb5929f1016e9e7dde27272"><div class="ttname"><a href="namespacesmlp.html#acfefb0d57fb5929f1016e9e7dde27272">smlp::sigmoid</a></div><div class="ttdeci">auto sigmoid</div><div class="ttdoc">the sigmoid function is commonly used as the activation function during the forward propagation step....</div><div class="ttdef"><b>Definition:</b> ActivationFunctions.h:30</div></div>
 </div><!-- fragment -->
@@ -1623,9 +1625,10 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">auto</span> x) {</div>
-<div class="line">  <span class="keywordtype">float</span> tanhValue = tanh(x);</div>
-<div class="line">  <span class="keywordflow">return</span> 1 - tanhValue * tanhValue;</div>
+<div class="line">  <span class="keywordtype">float</span> tanhValue = <a class="code" href="namespacesmlp.html#a3947e87343001268acddb73840417c44">tanhFunc</a>(x);</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(1 - tanhValue * tanhValue);</div>
 <div class="line">}</div>
+<div class="ttc" id="anamespacesmlp_html_a3947e87343001268acddb73840417c44"><div class="ttname"><a href="namespacesmlp.html#a3947e87343001268acddb73840417c44">smlp::tanhFunc</a></div><div class="ttdeci">auto tanhFunc</div><div class="ttdoc">Tanh Function (Hyperbolic Tangent): This function is similar to the sigmoid function but maps the inp...</div><div class="ttdef"><b>Definition:</b> ActivationFunctions.h:41</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1639,7 +1642,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto smlp::tanhFunc = [](auto x) { return tanh(x); }</td>
+          <td class="memname">auto smlp::tanhFunc = [](auto x) { return (float)tanh(x); }</td>
         </tr>
       </table>
   </td>

@@ -18,12 +18,15 @@ var searchData=
   ['getresultsdetailled_137',['getResultsDetailled',['../classsmlp_1_1TestingResult.html#a04a7487d0c6670db66b30854491c3b38',1,'smlp::TestingResult']]],
   ['getresultsjson_138',['getResultsJson',['../classsmlp_1_1TestingResult.html#a9e3f7709d1472163c8f9b4105a918355',1,'smlp::TestingResult']]],
   ['getresultsline_139',['getResultsLine',['../classsmlp_1_1TestingResult.html#a757e270806ff9a671e921196ea1803fa',1,'smlp::TestingResult']]],
-  ['getserverip_140',['getServerIp',['../classsmlp_1_1SimpleHTTPServer.html#a1688150be37f46e3b989b8af619c2c0d',1,'smlp::SimpleHTTPServer']]],
-  ['getserverport_141',['getServerPort',['../classsmlp_1_1SimpleHTTPServer.html#ae60601ca69a8debbbd92b14f35fb93bf',1,'smlp::SimpleHTTPServer']]],
-  ['getstats_142',['getStats',['../classsmlp_1_1TestingResult.html#a8d4f9a2d81c16d7e43e845685e0563dd',1,'smlp::TestingResult']]],
-  ['gettestingresults_143',['getTestingResults',['../classsmlp_1_1Testing.html#a46b631f84980e4d3acd5304b4d6aadf5',1,'smlp::Testing']]],
-  ['getversionheader_144',['getVersionHeader',['../classsmlp_1_1Manager.html#a8f0a586cb868c5acada30669428cd5c5',1,'smlp::Manager']]],
-  ['good_5fconvergence_145',['good_convergence',['../structsmlp_1_1TestingResult_1_1Stat.html#afa70190966b259ebfc8cadff3a164fe0',1,'smlp::TestingResult::Stat']]],
-  ['good_5fconvergence_5fone_146',['good_convergence_one',['../structsmlp_1_1TestingResult_1_1Stat.html#ac9f06f997ffc01d2778a86b66fba7eb5',1,'smlp::TestingResult::Stat']]],
-  ['good_5fconvergence_5fzero_147',['good_convergence_zero',['../structsmlp_1_1TestingResult_1_1Stat.html#a61d543dbae0f27e8a26a494c29e49978',1,'smlp::TestingResult::Stat']]]
+  ['getrunnerfilevisitor_140',['getRunnerFileVisitor',['../classsmlp_1_1RunnerVisitorFactory.html#afe2b9fed570b1c9d39475e1dc56ae164',1,'smlp::RunnerVisitorFactory']]],
+  ['getrunnersocketvisitor_141',['getRunnerSocketVisitor',['../classsmlp_1_1RunnerVisitorFactory.html#a59e931f801e19ae01906aef4e4a13fa5',1,'smlp::RunnerVisitorFactory']]],
+  ['getrunnerstdinvisitor_142',['getRunnerStdinVisitor',['../classsmlp_1_1RunnerVisitorFactory.html#af7941f58dd84118f29890a02d57a7223',1,'smlp::RunnerVisitorFactory']]],
+  ['getserverip_143',['getServerIp',['../classsmlp_1_1SimpleHTTPServer.html#a1688150be37f46e3b989b8af619c2c0d',1,'smlp::SimpleHTTPServer']]],
+  ['getserverport_144',['getServerPort',['../classsmlp_1_1SimpleHTTPServer.html#ae60601ca69a8debbbd92b14f35fb93bf',1,'smlp::SimpleHTTPServer']]],
+  ['getstats_145',['getStats',['../classsmlp_1_1TestingResult.html#a8d4f9a2d81c16d7e43e845685e0563dd',1,'smlp::TestingResult']]],
+  ['gettestingresults_146',['getTestingResults',['../classsmlp_1_1Testing.html#a46b631f84980e4d3acd5304b4d6aadf5',1,'smlp::Testing']]],
+  ['getversionheader_147',['getVersionHeader',['../classsmlp_1_1Manager.html#a8f0a586cb868c5acada30669428cd5c5',1,'smlp::Manager']]],
+  ['good_5fconvergence_148',['good_convergence',['../structsmlp_1_1TestingResult_1_1Stat.html#afa70190966b259ebfc8cadff3a164fe0',1,'smlp::TestingResult::Stat']]],
+  ['good_5fconvergence_5fone_149',['good_convergence_one',['../structsmlp_1_1TestingResult_1_1Stat.html#ac9f06f997ffc01d2778a86b66fba7eb5',1,'smlp::TestingResult::Stat']]],
+  ['good_5fconvergence_5fzero_150',['good_convergence_zero',['../structsmlp_1_1TestingResult_1_1Stat.html#a61d543dbae0f27e8a26a494c29e49978',1,'smlp::TestingResult::Stat']]]
 ];

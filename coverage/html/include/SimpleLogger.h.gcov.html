@@ -31,18 +31,18 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">73</td>
-            <td class="headerCovTableEntry">78</td>
-            <td class="headerCovTableEntryHi">93.6 %</td>
+            <td class="headerCovTableEntry">77</td>
+            <td class="headerCovTableEntry">82</td>
+            <td class="headerCovTableEntryHi">93.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2024-03-22 22:13:18</td>
+            <td class="headerValue">2024-03-24 14:57:32</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">67</td>
-            <td class="headerCovTableEntry">105</td>
-            <td class="headerCovTableEntryLo">63.8 %</td>
+            <td class="headerCovTableEntry">68</td>
+            <td class="headerCovTableEntry">106</td>
+            <td class="headerCovTableEntryLo">64.2 %</td>
           </tr>
           <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -116,294 +116,305 @@
 <a name="54"><span class="lineNum">      54 </span>            :   template &lt;typename... Args&gt;</a>
 <a name="55"><span class="lineNum">      55 </span><span class="lineCov">        109 :   const SimpleLogger &amp;log(LogLevel level, bool endl = true,</span></a>
 <a name="56"><span class="lineNum">      56 </span>            :                           Args &amp;&amp;...args) const {</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">        109 :     auto now = std::chrono::system_clock::now();</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">        109 :     std::time_t now_c = std::chrono::system_clock::to_time_t(now);</span></a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">        109 :     std::stringstream sst;</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">        109 :     sst &lt;&lt; &quot;[&quot; &lt;&lt; std::put_time(std::localtime(&amp;now_c), &quot;%F %T&quot;) &lt;&lt; &quot;] &quot;;</span></a>
-<a name="61"><span class="lineNum">      61 </span>            : </a>
-<a name="62"><span class="lineNum">      62 </span><span class="lineCov">        109 :     switch (level) {</span></a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">        100 :     case LogLevel::INFO:</span></a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">        100 :       std::cout &lt;&lt; sst.str() &lt;&lt; &quot;[INFO] &quot;;</span></a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">        100 :       break;</span></a>
-<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          5 :     case LogLevel::WARN:</span></a>
-<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          5 :       std::cerr &lt;&lt; sst.str() &lt;&lt; &quot;[WARN] &quot;;</span></a>
-<a name="68"><span class="lineNum">      68 </span><span class="lineCov">          5 :       break;</span></a>
-<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          2 :     case LogLevel::ERROR:</span></a>
-<a name="70"><span class="lineNum">      70 </span><span class="lineCov">          2 :       std::cerr &lt;&lt; sst.str() &lt;&lt; &quot;[ERROR] &quot;;</span></a>
-<a name="71"><span class="lineNum">      71 </span><span class="lineCov">          2 :       break;</span></a>
-<a name="72"><span class="lineNum">      72 </span><span class="lineCov">          2 :     case LogLevel::DEBUG:</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          2 :       std::cerr &lt;&lt; sst.str() &lt;&lt; &quot;[DEBUG] &quot;;</span></a>
-<a name="74"><span class="lineNum">      74 </span><span class="lineCov">          2 :       break;</span></a>
-<a name="75"><span class="lineNum">      75 </span><span class="lineNoCov">          0 :     default:</span></a>
-<a name="76"><span class="lineNum">      76 </span><span class="lineNoCov">          0 :       std::cerr &lt;&lt; sst.str() &lt;&lt; &quot;[UNKNOWN] &quot;;</span></a>
-<a name="77"><span class="lineNum">      77 </span><span class="lineNoCov">          0 :       break;</span></a>
-<a name="78"><span class="lineNum">      78 </span>            :     }</a>
-<a name="79"><span class="lineNum">      79 </span>            : </a>
-<a name="80"><span class="lineNum">      80 </span><span class="lineCov">        109 :     if (level == LogLevel::INFO) {</span></a>
-<a name="81"><span class="lineNum">      81 </span><span class="lineCov">        100 :       std::cout.precision(current_precision);</span></a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">        100 :       (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
-<a name="83"><span class="lineNum">      83 </span><span class="lineCov">        100 :       if (endl) {</span></a>
-<a name="84"><span class="lineNum">      84 </span><span class="lineCov">         87 :         std::cout &lt;&lt; std::endl;</span></a>
-<a name="85"><span class="lineNum">      85 </span>            :       }</a>
-<a name="86"><span class="lineNum">      86 </span>            :     } else {</a>
-<a name="87"><span class="lineNum">      87 </span><span class="lineCov">          9 :       std::cerr.precision(current_precision);</span></a>
-<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          9 :       (std::cerr &lt;&lt; ... &lt;&lt; args);</span></a>
-<a name="89"><span class="lineNum">      89 </span><span class="lineCov">          9 :       if (endl) {</span></a>
-<a name="90"><span class="lineNum">      90 </span><span class="lineCov">          9 :         std::cerr &lt;&lt; std::endl;</span></a>
-<a name="91"><span class="lineNum">      91 </span>            :       }</a>
-<a name="92"><span class="lineNum">      92 </span>            :     }</a>
-<a name="93"><span class="lineNum">      93 </span>            : </a>
-<a name="94"><span class="lineNum">      94 </span><span class="lineCov">        109 :     return *this;</span></a>
-<a name="95"><span class="lineNum">      95 </span><span class="lineCov">        109 :   }</span></a>
-<a name="96"><span class="lineNum">      96 </span>            : </a>
-<a name="97"><span class="lineNum">      97 </span>            :   /**</a>
-<a name="98"><span class="lineNum">      98 </span>            :    * @brief Appends messages to the standard output stream.</a>
-<a name="99"><span class="lineNum">      99 </span>            :    *</a>
-<a name="100"><span class="lineNum">     100 </span>            :    * This method appends messages to the standard output stream (std::cout) or</a>
-<a name="101"><span class="lineNum">     101 </span>            :    * the standard error stream (std::cerr) without adding a newline character at</a>
-<a name="102"><span class="lineNum">     102 </span>            :    * the end.</a>
-<a name="103"><span class="lineNum">     103 </span>            :    *</a>
-<a name="104"><span class="lineNum">     104 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="105"><span class="lineNum">     105 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
-<a name="106"><span class="lineNum">     106 </span>            :    * the output stream.</a>
-<a name="107"><span class="lineNum">     107 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="108"><span class="lineNum">     108 </span>            :    */</a>
-<a name="109"><span class="lineNum">     109 </span><span class="lineCov">          9 :   template &lt;typename... Args&gt; const SimpleLogger &amp;append(Args &amp;&amp;...args) const {</span></a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          9 :     std::cout.precision(current_precision);</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          9 :     (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
-<a name="112"><span class="lineNum">     112 </span><span class="lineCov">          9 :     return *this;</span></a>
-<a name="113"><span class="lineNum">     113 </span>            :   }</a>
-<a name="114"><span class="lineNum">     114 </span>            : </a>
-<a name="115"><span class="lineNum">     115 </span>            :   /**</a>
-<a name="116"><span class="lineNum">     116 </span>            :    * @brief Appends messages to the standard error stream.</a>
-<a name="117"><span class="lineNum">     117 </span>            :    *</a>
-<a name="118"><span class="lineNum">     118 </span>            :    * This method appends messages to the standard error stream (std::cerr)</a>
-<a name="119"><span class="lineNum">     119 </span>            :    * without adding a newline character at the end.</a>
-<a name="120"><span class="lineNum">     120 </span>            :    *</a>
-<a name="121"><span class="lineNum">     121 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="122"><span class="lineNum">     122 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
-<a name="123"><span class="lineNum">     123 </span>            :    * the error stream.</a>
-<a name="124"><span class="lineNum">     124 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="125"><span class="lineNum">     125 </span>            :    */</a>
-<a name="126"><span class="lineNum">     126 </span>            :   template &lt;typename... Args&gt;</a>
-<a name="127"><span class="lineNum">     127 </span>            :   const SimpleLogger &amp;appendError(Args &amp;&amp;...args) const {</a>
-<a name="128"><span class="lineNum">     128 </span>            :     std::cerr.precision(current_precision);</a>
-<a name="129"><span class="lineNum">     129 </span>            :     (std::cerr &lt;&lt; ... &lt;&lt; args);</a>
-<a name="130"><span class="lineNum">     130 </span>            :     return *this;</a>
-<a name="131"><span class="lineNum">     131 </span>            :   }</a>
-<a name="132"><span class="lineNum">     132 </span>            : </a>
-<a name="133"><span class="lineNum">     133 </span>            :   /**</a>
-<a name="134"><span class="lineNum">     134 </span>            :    * @brief Outputs messages to the standard output stream with a newline</a>
-<a name="135"><span class="lineNum">     135 </span>            :    * character at the end.</a>
-<a name="136"><span class="lineNum">     136 </span>            :    *</a>
-<a name="137"><span class="lineNum">     137 </span>            :    * This method outputs messages to the standard output stream (std::cout) and</a>
-<a name="138"><span class="lineNum">     138 </span>            :    * adds a newline character at the end.</a>
-<a name="139"><span class="lineNum">     139 </span>            :    *</a>
-<a name="140"><span class="lineNum">     140 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="141"><span class="lineNum">     141 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
-<a name="142"><span class="lineNum">     142 </span>            :    * the output stream.</a>
-<a name="143"><span class="lineNum">     143 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="144"><span class="lineNum">     144 </span>            :    */</a>
-<a name="145"><span class="lineNum">     145 </span><span class="lineCov">          7 :   template &lt;typename... Args&gt; const SimpleLogger &amp;out(Args &amp;&amp;...args) const {</span></a>
-<a name="146"><span class="lineNum">     146 </span><span class="lineCov">          7 :     std::cout.precision(current_precision);</span></a>
-<a name="147"><span class="lineNum">     147 </span><span class="lineCov">          7 :     (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
-<a name="148"><span class="lineNum">     148 </span><span class="lineCov">          7 :     std::cout &lt;&lt; std::endl;</span></a>
-<a name="149"><span class="lineNum">     149 </span><span class="lineCov">          7 :     return *this;</span></a>
-<a name="150"><span class="lineNum">     150 </span>            :   }</a>
-<a name="151"><span class="lineNum">     151 </span>            : </a>
-<a name="152"><span class="lineNum">     152 </span>            :   /**</a>
-<a name="153"><span class="lineNum">     153 </span>            :    * @brief Outputs messages to the standard error stream with a newline</a>
-<a name="154"><span class="lineNum">     154 </span>            :    * character at the end.</a>
-<a name="155"><span class="lineNum">     155 </span>            :    *</a>
-<a name="156"><span class="lineNum">     156 </span>            :    * This method outputs messages to the standard error stream (std::cerr) and</a>
-<a name="157"><span class="lineNum">     157 </span>            :    * adds a newline character at the end.</a>
-<a name="158"><span class="lineNum">     158 </span>            :    *</a>
-<a name="159"><span class="lineNum">     159 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="160"><span class="lineNum">     160 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
-<a name="161"><span class="lineNum">     161 </span>            :    * the error stream.</a>
-<a name="162"><span class="lineNum">     162 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="163"><span class="lineNum">     163 </span>            :    */</a>
-<a name="164"><span class="lineNum">     164 </span>            :   template &lt;typename... Args&gt; const SimpleLogger &amp;err(Args &amp;&amp;...args) const {</a>
-<a name="165"><span class="lineNum">     165 </span>            :     std::cerr.precision(current_precision);</a>
-<a name="166"><span class="lineNum">     166 </span>            :     (std::cerr &lt;&lt; ... &lt;&lt; args);</a>
-<a name="167"><span class="lineNum">     167 </span>            :     std::cerr &lt;&lt; std::endl;</a>
-<a name="168"><span class="lineNum">     168 </span>            :     return *this;</a>
-<a name="169"><span class="lineNum">     169 </span>            :   }</a>
-<a name="170"><span class="lineNum">     170 </span>            : </a>
-<a name="171"><span class="lineNum">     171 </span>            :   /**</a>
-<a name="172"><span class="lineNum">     172 </span>            :    * @brief Logs messages with the INFO log level.</a>
-<a name="173"><span class="lineNum">     173 </span>            :    *</a>
-<a name="174"><span class="lineNum">     174 </span>            :    * This method logs messages with the INFO log level. The messages are output</a>
-<a name="175"><span class="lineNum">     175 </span>            :    * to the standard output stream (std::cout) with a newline character at the</a>
-<a name="176"><span class="lineNum">     176 </span>            :    * end.</a>
-<a name="177"><span class="lineNum">     177 </span>            :    *</a>
-<a name="178"><span class="lineNum">     178 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="179"><span class="lineNum">     179 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
-<a name="180"><span class="lineNum">     180 </span>            :    * to the output stream.</a>
-<a name="181"><span class="lineNum">     181 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="182"><span class="lineNum">     182 </span>            :    */</a>
-<a name="183"><span class="lineNum">     183 </span><span class="lineCov">         87 :   template &lt;typename... Args&gt; const SimpleLogger &amp;info(Args &amp;&amp;...args) const {</span></a>
-<a name="184"><span class="lineNum">     184 </span><span class="lineCov">         87 :     return log(LogLevel::INFO, true, args...);</span></a>
-<a name="185"><span class="lineNum">     185 </span>            :   }</a>
-<a name="186"><span class="lineNum">     186 </span>            : </a>
-<a name="187"><span class="lineNum">     187 </span>            :   /**</a>
-<a name="188"><span class="lineNum">     188 </span>            :    * @brief Logs messages with the WARN log level.</a>
-<a name="189"><span class="lineNum">     189 </span>            :    *</a>
-<a name="190"><span class="lineNum">     190 </span>            :    * This method logs messages with the WARN log level. The messages are output</a>
-<a name="191"><span class="lineNum">     191 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
-<a name="192"><span class="lineNum">     192 </span>            :    * end.</a>
-<a name="193"><span class="lineNum">     193 </span>            :    *</a>
-<a name="194"><span class="lineNum">     194 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="195"><span class="lineNum">     195 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
-<a name="196"><span class="lineNum">     196 </span>            :    * to the error stream.</a>
-<a name="197"><span class="lineNum">     197 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="198"><span class="lineNum">     198 </span>            :    */</a>
-<a name="199"><span class="lineNum">     199 </span><span class="lineCov">          5 :   template &lt;typename... Args&gt; const SimpleLogger &amp;warn(Args &amp;&amp;...args) const {</span></a>
-<a name="200"><span class="lineNum">     200 </span><span class="lineCov">          5 :     return log(LogLevel::WARN, true, args...);</span></a>
-<a name="201"><span class="lineNum">     201 </span>            :   }</a>
-<a name="202"><span class="lineNum">     202 </span>            : </a>
-<a name="203"><span class="lineNum">     203 </span>            :   /**</a>
-<a name="204"><span class="lineNum">     204 </span>            :    * @brief Logs messages with the ERROR log level.</a>
-<a name="205"><span class="lineNum">     205 </span>            :    *</a>
-<a name="206"><span class="lineNum">     206 </span>            :    * This method logs messages with the ERROR log level. The messages are output</a>
-<a name="207"><span class="lineNum">     207 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
-<a name="208"><span class="lineNum">     208 </span>            :    * end.</a>
-<a name="209"><span class="lineNum">     209 </span>            :    *</a>
-<a name="210"><span class="lineNum">     210 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="211"><span class="lineNum">     211 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
-<a name="212"><span class="lineNum">     212 </span>            :    * to the error stream.</a>
-<a name="213"><span class="lineNum">     213 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="214"><span class="lineNum">     214 </span>            :    */</a>
-<a name="215"><span class="lineNum">     215 </span><span class="lineCov">          2 :   template &lt;typename... Args&gt; const SimpleLogger &amp;error(Args &amp;&amp;...args) const {</span></a>
-<a name="216"><span class="lineNum">     216 </span><span class="lineCov">          2 :     return log(LogLevel::ERROR, true, args...);</span></a>
-<a name="217"><span class="lineNum">     217 </span>            :   }</a>
-<a name="218"><span class="lineNum">     218 </span>            : </a>
-<a name="219"><span class="lineNum">     219 </span>            :   /**</a>
-<a name="220"><span class="lineNum">     220 </span>            :    * @brief Logs messages with the DEBUG log level.</a>
-<a name="221"><span class="lineNum">     221 </span>            :    *</a>
-<a name="222"><span class="lineNum">     222 </span>            :    * This method logs messages with the DEBUG log level. The messages are output</a>
-<a name="223"><span class="lineNum">     223 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
-<a name="224"><span class="lineNum">     224 </span>            :    * end.</a>
-<a name="225"><span class="lineNum">     225 </span>            :    *</a>
-<a name="226"><span class="lineNum">     226 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
-<a name="227"><span class="lineNum">     227 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
-<a name="228"><span class="lineNum">     228 </span>            :    * to the error stream.</a>
-<a name="229"><span class="lineNum">     229 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="230"><span class="lineNum">     230 </span>            :    */</a>
-<a name="231"><span class="lineNum">     231 </span><span class="lineCov">          2 :   template &lt;typename... Args&gt; const SimpleLogger &amp;debug(Args &amp;&amp;...args) const {</span></a>
-<a name="232"><span class="lineNum">     232 </span><span class="lineCov">          2 :     return log(LogLevel::DEBUG, true, args...);</span></a>
-<a name="233"><span class="lineNum">     233 </span>            :   }</a>
-<a name="234"><span class="lineNum">     234 </span>            : </a>
-<a name="235"><span class="lineNum">     235 </span>            :   /**</a>
-<a name="236"><span class="lineNum">     236 </span>            :    * @brief Outputs a newline character to the standard output or error stream</a>
-<a name="237"><span class="lineNum">     237 </span>            :    * and flushes the stream.</a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">        109 :     switch (level) {</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">        100 :     case LogLevel::INFO:</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">        100 :       std::cout &lt;&lt; get_timestamp() &lt;&lt; &quot;[INFO] &quot;;</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">        100 :       break;</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          5 :     case LogLevel::WARN:</span></a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">          5 :       std::cerr &lt;&lt; get_timestamp() &lt;&lt; &quot;[WARN] &quot;;</span></a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          5 :       break;</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :     case LogLevel::ERROR:</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">          2 :       std::cerr &lt;&lt; get_timestamp() &lt;&lt; &quot;[ERROR] &quot;;</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineCov">          2 :       break;</span></a>
+<a name="67"><span class="lineNum">      67 </span><span class="lineCov">          2 :     case LogLevel::DEBUG:</span></a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineCov">          2 :       std::cerr &lt;&lt; get_timestamp() &lt;&lt; &quot;[DEBUG] &quot;;</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineCov">          2 :       break;</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineNoCov">          0 :     default:</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :       std::cerr &lt;&lt; get_timestamp() &lt;&lt; &quot;[UNKNOWN] &quot;;</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineNoCov">          0 :       break;</span></a>
+<a name="73"><span class="lineNum">      73 </span>            :     }</a>
+<a name="74"><span class="lineNum">      74 </span>            : </a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">        109 :     if (level == LogLevel::INFO) {</span></a>
+<a name="76"><span class="lineNum">      76 </span><span class="lineCov">        100 :       std::cout.precision(current_precision);</span></a>
+<a name="77"><span class="lineNum">      77 </span><span class="lineCov">        100 :       (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
+<a name="78"><span class="lineNum">      78 </span><span class="lineCov">        100 :       if (endl) {</span></a>
+<a name="79"><span class="lineNum">      79 </span><span class="lineCov">         87 :         std::cout &lt;&lt; std::endl;</span></a>
+<a name="80"><span class="lineNum">      80 </span>            :       }</a>
+<a name="81"><span class="lineNum">      81 </span>            :     } else {</a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          9 :       std::cerr.precision(current_precision);</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineCov">          9 :       (std::cerr &lt;&lt; ... &lt;&lt; args);</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineCov">          9 :       if (endl) {</span></a>
+<a name="85"><span class="lineNum">      85 </span><span class="lineCov">          9 :         std::cerr &lt;&lt; std::endl;</span></a>
+<a name="86"><span class="lineNum">      86 </span>            :       }</a>
+<a name="87"><span class="lineNum">      87 </span>            :     }</a>
+<a name="88"><span class="lineNum">      88 </span>            : </a>
+<a name="89"><span class="lineNum">      89 </span><span class="lineCov">        109 :     return *this;</span></a>
+<a name="90"><span class="lineNum">      90 </span>            :   }</a>
+<a name="91"><span class="lineNum">      91 </span>            : </a>
+<a name="92"><span class="lineNum">      92 </span>            :   /**</a>
+<a name="93"><span class="lineNum">      93 </span>            :    * @brief Appends messages to the standard output stream.</a>
+<a name="94"><span class="lineNum">      94 </span>            :    *</a>
+<a name="95"><span class="lineNum">      95 </span>            :    * This method appends messages to the standard output stream (std::cout) or</a>
+<a name="96"><span class="lineNum">      96 </span>            :    * the standard error stream (std::cerr) without adding a newline character at</a>
+<a name="97"><span class="lineNum">      97 </span>            :    * the end.</a>
+<a name="98"><span class="lineNum">      98 </span>            :    *</a>
+<a name="99"><span class="lineNum">      99 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="100"><span class="lineNum">     100 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
+<a name="101"><span class="lineNum">     101 </span>            :    * the output stream.</a>
+<a name="102"><span class="lineNum">     102 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="103"><span class="lineNum">     103 </span>            :    */</a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">          9 :   template &lt;typename... Args&gt; const SimpleLogger &amp;append(Args &amp;&amp;...args) const {</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineCov">          9 :     std::cout.precision(current_precision);</span></a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineCov">          9 :     (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          9 :     return *this;</span></a>
+<a name="108"><span class="lineNum">     108 </span>            :   }</a>
+<a name="109"><span class="lineNum">     109 </span>            : </a>
+<a name="110"><span class="lineNum">     110 </span>            :   /**</a>
+<a name="111"><span class="lineNum">     111 </span>            :    * @brief Appends messages to the standard error stream.</a>
+<a name="112"><span class="lineNum">     112 </span>            :    *</a>
+<a name="113"><span class="lineNum">     113 </span>            :    * This method appends messages to the standard error stream (std::cerr)</a>
+<a name="114"><span class="lineNum">     114 </span>            :    * without adding a newline character at the end.</a>
+<a name="115"><span class="lineNum">     115 </span>            :    *</a>
+<a name="116"><span class="lineNum">     116 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="117"><span class="lineNum">     117 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
+<a name="118"><span class="lineNum">     118 </span>            :    * the error stream.</a>
+<a name="119"><span class="lineNum">     119 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="120"><span class="lineNum">     120 </span>            :    */</a>
+<a name="121"><span class="lineNum">     121 </span>            :   template &lt;typename... Args&gt;</a>
+<a name="122"><span class="lineNum">     122 </span>            :   const SimpleLogger &amp;appendError(Args &amp;&amp;...args) const {</a>
+<a name="123"><span class="lineNum">     123 </span>            :     std::cerr.precision(current_precision);</a>
+<a name="124"><span class="lineNum">     124 </span>            :     (std::cerr &lt;&lt; ... &lt;&lt; args);</a>
+<a name="125"><span class="lineNum">     125 </span>            :     return *this;</a>
+<a name="126"><span class="lineNum">     126 </span>            :   }</a>
+<a name="127"><span class="lineNum">     127 </span>            : </a>
+<a name="128"><span class="lineNum">     128 </span>            :   /**</a>
+<a name="129"><span class="lineNum">     129 </span>            :    * @brief Outputs messages to the standard output stream with a newline</a>
+<a name="130"><span class="lineNum">     130 </span>            :    * character at the end.</a>
+<a name="131"><span class="lineNum">     131 </span>            :    *</a>
+<a name="132"><span class="lineNum">     132 </span>            :    * This method outputs messages to the standard output stream (std::cout) and</a>
+<a name="133"><span class="lineNum">     133 </span>            :    * adds a newline character at the end.</a>
+<a name="134"><span class="lineNum">     134 </span>            :    *</a>
+<a name="135"><span class="lineNum">     135 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="136"><span class="lineNum">     136 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
+<a name="137"><span class="lineNum">     137 </span>            :    * the output stream.</a>
+<a name="138"><span class="lineNum">     138 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="139"><span class="lineNum">     139 </span>            :    */</a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">          7 :   template &lt;typename... Args&gt; const SimpleLogger &amp;out(Args &amp;&amp;...args) const {</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineCov">          7 :     std::cout.precision(current_precision);</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          7 :     (std::cout &lt;&lt; ... &lt;&lt; args);</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineCov">          7 :     std::cout &lt;&lt; std::endl;</span></a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineCov">          7 :     return *this;</span></a>
+<a name="145"><span class="lineNum">     145 </span>            :   }</a>
+<a name="146"><span class="lineNum">     146 </span>            : </a>
+<a name="147"><span class="lineNum">     147 </span>            :   /**</a>
+<a name="148"><span class="lineNum">     148 </span>            :    * @brief Outputs messages to the standard error stream with a newline</a>
+<a name="149"><span class="lineNum">     149 </span>            :    * character at the end.</a>
+<a name="150"><span class="lineNum">     150 </span>            :    *</a>
+<a name="151"><span class="lineNum">     151 </span>            :    * This method outputs messages to the standard error stream (std::cerr) and</a>
+<a name="152"><span class="lineNum">     152 </span>            :    * adds a newline character at the end.</a>
+<a name="153"><span class="lineNum">     153 </span>            :    *</a>
+<a name="154"><span class="lineNum">     154 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="155"><span class="lineNum">     155 </span>            :    * @param args The arguments that make up the message. These are forwarded to</a>
+<a name="156"><span class="lineNum">     156 </span>            :    * the error stream.</a>
+<a name="157"><span class="lineNum">     157 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="158"><span class="lineNum">     158 </span>            :    */</a>
+<a name="159"><span class="lineNum">     159 </span>            :   template &lt;typename... Args&gt; const SimpleLogger &amp;err(Args &amp;&amp;...args) const {</a>
+<a name="160"><span class="lineNum">     160 </span>            :     std::cerr.precision(current_precision);</a>
+<a name="161"><span class="lineNum">     161 </span>            :     (std::cerr &lt;&lt; ... &lt;&lt; args);</a>
+<a name="162"><span class="lineNum">     162 </span>            :     std::cerr &lt;&lt; std::endl;</a>
+<a name="163"><span class="lineNum">     163 </span>            :     return *this;</a>
+<a name="164"><span class="lineNum">     164 </span>            :   }</a>
+<a name="165"><span class="lineNum">     165 </span>            : </a>
+<a name="166"><span class="lineNum">     166 </span>            :   /**</a>
+<a name="167"><span class="lineNum">     167 </span>            :    * @brief Logs messages with the INFO log level.</a>
+<a name="168"><span class="lineNum">     168 </span>            :    *</a>
+<a name="169"><span class="lineNum">     169 </span>            :    * This method logs messages with the INFO log level. The messages are output</a>
+<a name="170"><span class="lineNum">     170 </span>            :    * to the standard output stream (std::cout) with a newline character at the</a>
+<a name="171"><span class="lineNum">     171 </span>            :    * end.</a>
+<a name="172"><span class="lineNum">     172 </span>            :    *</a>
+<a name="173"><span class="lineNum">     173 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="174"><span class="lineNum">     174 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
+<a name="175"><span class="lineNum">     175 </span>            :    * to the output stream.</a>
+<a name="176"><span class="lineNum">     176 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="177"><span class="lineNum">     177 </span>            :    */</a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineCov">         87 :   template &lt;typename... Args&gt; const SimpleLogger &amp;info(Args &amp;&amp;...args) const {</span></a>
+<a name="179"><span class="lineNum">     179 </span><span class="lineCov">         87 :     return log(LogLevel::INFO, true, args...);</span></a>
+<a name="180"><span class="lineNum">     180 </span>            :   }</a>
+<a name="181"><span class="lineNum">     181 </span>            : </a>
+<a name="182"><span class="lineNum">     182 </span>            :   /**</a>
+<a name="183"><span class="lineNum">     183 </span>            :    * @brief Logs messages with the WARN log level.</a>
+<a name="184"><span class="lineNum">     184 </span>            :    *</a>
+<a name="185"><span class="lineNum">     185 </span>            :    * This method logs messages with the WARN log level. The messages are output</a>
+<a name="186"><span class="lineNum">     186 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
+<a name="187"><span class="lineNum">     187 </span>            :    * end.</a>
+<a name="188"><span class="lineNum">     188 </span>            :    *</a>
+<a name="189"><span class="lineNum">     189 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="190"><span class="lineNum">     190 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
+<a name="191"><span class="lineNum">     191 </span>            :    * to the error stream.</a>
+<a name="192"><span class="lineNum">     192 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="193"><span class="lineNum">     193 </span>            :    */</a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineCov">          5 :   template &lt;typename... Args&gt; const SimpleLogger &amp;warn(Args &amp;&amp;...args) const {</span></a>
+<a name="195"><span class="lineNum">     195 </span><span class="lineCov">          5 :     return log(LogLevel::WARN, true, args...);</span></a>
+<a name="196"><span class="lineNum">     196 </span>            :   }</a>
+<a name="197"><span class="lineNum">     197 </span>            : </a>
+<a name="198"><span class="lineNum">     198 </span>            :   /**</a>
+<a name="199"><span class="lineNum">     199 </span>            :    * @brief Logs messages with the ERROR log level.</a>
+<a name="200"><span class="lineNum">     200 </span>            :    *</a>
+<a name="201"><span class="lineNum">     201 </span>            :    * This method logs messages with the ERROR log level. The messages are output</a>
+<a name="202"><span class="lineNum">     202 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
+<a name="203"><span class="lineNum">     203 </span>            :    * end.</a>
+<a name="204"><span class="lineNum">     204 </span>            :    *</a>
+<a name="205"><span class="lineNum">     205 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="206"><span class="lineNum">     206 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
+<a name="207"><span class="lineNum">     207 </span>            :    * to the error stream.</a>
+<a name="208"><span class="lineNum">     208 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="209"><span class="lineNum">     209 </span>            :    */</a>
+<a name="210"><span class="lineNum">     210 </span><span class="lineCov">          2 :   template &lt;typename... Args&gt; const SimpleLogger &amp;error(Args &amp;&amp;...args) const {</span></a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineCov">          2 :     return log(LogLevel::ERROR, true, args...);</span></a>
+<a name="212"><span class="lineNum">     212 </span>            :   }</a>
+<a name="213"><span class="lineNum">     213 </span>            : </a>
+<a name="214"><span class="lineNum">     214 </span>            :   /**</a>
+<a name="215"><span class="lineNum">     215 </span>            :    * @brief Logs messages with the DEBUG log level.</a>
+<a name="216"><span class="lineNum">     216 </span>            :    *</a>
+<a name="217"><span class="lineNum">     217 </span>            :    * This method logs messages with the DEBUG log level. The messages are output</a>
+<a name="218"><span class="lineNum">     218 </span>            :    * to the standard error stream (std::cerr) with a newline character at the</a>
+<a name="219"><span class="lineNum">     219 </span>            :    * end.</a>
+<a name="220"><span class="lineNum">     220 </span>            :    *</a>
+<a name="221"><span class="lineNum">     221 </span>            :    * @tparam Args The types of the arguments that are passed to the method.</a>
+<a name="222"><span class="lineNum">     222 </span>            :    * @param args The arguments that make up the log message. These are forwarded</a>
+<a name="223"><span class="lineNum">     223 </span>            :    * to the error stream.</a>
+<a name="224"><span class="lineNum">     224 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="225"><span class="lineNum">     225 </span>            :    */</a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineCov">          2 :   template &lt;typename... Args&gt; const SimpleLogger &amp;debug(Args &amp;&amp;...args) const {</span></a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineCov">          2 :     return log(LogLevel::DEBUG, true, args...);</span></a>
+<a name="228"><span class="lineNum">     228 </span>            :   }</a>
+<a name="229"><span class="lineNum">     229 </span>            : </a>
+<a name="230"><span class="lineNum">     230 </span>            :   /**</a>
+<a name="231"><span class="lineNum">     231 </span>            :    * @brief Outputs a newline character to the standard output or error stream</a>
+<a name="232"><span class="lineNum">     232 </span>            :    * and flushes the stream.</a>
+<a name="233"><span class="lineNum">     233 </span>            :    *</a>
+<a name="234"><span class="lineNum">     234 </span>            :    * This method outputs a newline character to either the standard output</a>
+<a name="235"><span class="lineNum">     235 </span>            :    * stream (std::cout) or the standard error stream (std::cerr), based on the</a>
+<a name="236"><span class="lineNum">     236 </span>            :    * provided argument. It then flushes the stream to ensure that the newline</a>
+<a name="237"><span class="lineNum">     237 </span>            :    * character is immediately visible.</a>
 <a name="238"><span class="lineNum">     238 </span>            :    *</a>
-<a name="239"><span class="lineNum">     239 </span>            :    * This method outputs a newline character to either the standard output</a>
-<a name="240"><span class="lineNum">     240 </span>            :    * stream (std::cout) or the standard error stream (std::cerr), based on the</a>
-<a name="241"><span class="lineNum">     241 </span>            :    * provided argument. It then flushes the stream to ensure that the newline</a>
-<a name="242"><span class="lineNum">     242 </span>            :    * character is immediately visible.</a>
-<a name="243"><span class="lineNum">     243 </span>            :    *</a>
-<a name="244"><span class="lineNum">     244 </span>            :    * @param onCerr A boolean value that determines whether the newline character</a>
-<a name="245"><span class="lineNum">     245 </span>            :    * is output to the standard error stream. If true, the newline character is</a>
-<a name="246"><span class="lineNum">     246 </span>            :    * output to std::cerr; otherwise, it is output to std::cout. The default</a>
-<a name="247"><span class="lineNum">     247 </span>            :    * value is false.</a>
-<a name="248"><span class="lineNum">     248 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
-<a name="249"><span class="lineNum">     249 </span>            :    */</a>
-<a name="250"><span class="lineNum">     250 </span><span class="lineCov">          6 :   const SimpleLogger &amp;endl(bool onCerr = false) const {</span></a>
-<a name="251"><span class="lineNum">     251 </span><span class="lineCov">          6 :     if (onCerr) {</span></a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineNoCov">          0 :       std::cerr &lt;&lt; std::endl;</span></a>
-<a name="253"><span class="lineNum">     253 </span><span class="lineNoCov">          0 :       std::cerr.flush();</span></a>
-<a name="254"><span class="lineNum">     254 </span>            :     } else {</a>
-<a name="255"><span class="lineNum">     255 </span><span class="lineCov">          6 :       std::cout &lt;&lt; std::endl;</span></a>
-<a name="256"><span class="lineNum">     256 </span><span class="lineCov">          6 :       std::cout.flush();</span></a>
-<a name="257"><span class="lineNum">     257 </span>            :     }</a>
-<a name="258"><span class="lineNum">     258 </span><span class="lineCov">          6 :     return *this;</span></a>
-<a name="259"><span class="lineNum">     259 </span>            :   }</a>
-<a name="260"><span class="lineNum">     260 </span>            : </a>
-<a name="261"><span class="lineNum">     261 </span>            :   /**</a>
-<a name="262"><span class="lineNum">     262 </span>            :    * @brief Set the floating precision</a>
-<a name="263"><span class="lineNum">     263 </span>            :    *</a>
-<a name="264"><span class="lineNum">     264 </span>            :    * @param precision</a>
-<a name="265"><span class="lineNum">     265 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="266"><span class="lineNum">     266 </span>            :    */</a>
-<a name="267"><span class="lineNum">     267 </span><span class="lineCov">          1 :   const SimpleLogger &amp;setPrecision(std::streamsize precision) const {</span></a>
-<a name="268"><span class="lineNum">     268 </span><span class="lineCov">          1 :     current_precision = precision;</span></a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          1 :     return *this;</span></a>
-<a name="270"><span class="lineNum">     270 </span>            :   }</a>
-<a name="271"><span class="lineNum">     271 </span>            : </a>
-<a name="272"><span class="lineNum">     272 </span>            :   /**</a>
-<a name="273"><span class="lineNum">     273 </span>            :    * @brief Reset the floating precision</a>
-<a name="274"><span class="lineNum">     274 </span>            :    *</a>
-<a name="275"><span class="lineNum">     275 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="276"><span class="lineNum">     276 </span>            :    */</a>
-<a name="277"><span class="lineNum">     277 </span>            :   const SimpleLogger &amp;resetPrecision() const {</a>
-<a name="278"><span class="lineNum">     278 </span>            :     current_precision = default_precision;</a>
-<a name="279"><span class="lineNum">     279 </span>            :     return *this;</a>
-<a name="280"><span class="lineNum">     280 </span>            :   }</a>
-<a name="281"><span class="lineNum">     281 </span>            : </a>
-<a name="282"><span class="lineNum">     282 </span>            :   /**</a>
-<a name="283"><span class="lineNum">     283 </span>            :    * @brief static shortcut for log info.</a>
-<a name="284"><span class="lineNum">     284 </span>            :    * @remark thread safe</a>
-<a name="285"><span class="lineNum">     285 </span>            :    * @tparam Args</a>
-<a name="286"><span class="lineNum">     286 </span>            :    * @param args</a>
-<a name="287"><span class="lineNum">     287 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="288"><span class="lineNum">     288 </span>            :    */</a>
-<a name="289"><span class="lineNum">     289 </span>            :   template &lt;typename... Args&gt;</a>
-<a name="290"><span class="lineNum">     290 </span><span class="lineCov">         76 :   static const SimpleLogger &amp;LOG_INFO(Args &amp;&amp;...args) {</span></a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">         76 :     auto &amp;instance = getInstance();</span></a>
-<a name="292"><span class="lineNum">     292 </span><span class="lineCov">         76 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
-<a name="293"><span class="lineNum">     293 </span><span class="lineCov">        152 :     return instance.info(args...);</span></a>
-<a name="294"><span class="lineNum">     294 </span><span class="lineCov">         76 :   }</span></a>
-<a name="295"><span class="lineNum">     295 </span>            : </a>
-<a name="296"><span class="lineNum">     296 </span>            :   /**</a>
-<a name="297"><span class="lineNum">     297 </span>            :    * @brief static shortcut for log warning.</a>
-<a name="298"><span class="lineNum">     298 </span>            :    * @remark thread safe</a>
-<a name="299"><span class="lineNum">     299 </span>            :    * @tparam Args</a>
-<a name="300"><span class="lineNum">     300 </span>            :    * @param args</a>
-<a name="301"><span class="lineNum">     301 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="302"><span class="lineNum">     302 </span>            :    */</a>
-<a name="303"><span class="lineNum">     303 </span>            :   template &lt;typename... Args&gt;</a>
-<a name="304"><span class="lineNum">     304 </span>            :   static const SimpleLogger &amp;LOG_WARN(Args &amp;&amp;...args) {</a>
-<a name="305"><span class="lineNum">     305 </span>            :     auto &amp;instance = getInstance();</a>
-<a name="306"><span class="lineNum">     306 </span>            :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</a>
-<a name="307"><span class="lineNum">     307 </span>            :     return instance.warn(args...);</a>
-<a name="308"><span class="lineNum">     308 </span>            :   }</a>
-<a name="309"><span class="lineNum">     309 </span>            : </a>
-<a name="310"><span class="lineNum">     310 </span>            :   /**</a>
-<a name="311"><span class="lineNum">     311 </span>            :    * @brief static shortcut for log error.</a>
-<a name="312"><span class="lineNum">     312 </span>            :    * @remark thread safe</a>
-<a name="313"><span class="lineNum">     313 </span>            :    * @tparam Args</a>
-<a name="314"><span class="lineNum">     314 </span>            :    * @param args</a>
-<a name="315"><span class="lineNum">     315 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="316"><span class="lineNum">     316 </span>            :    */</a>
-<a name="317"><span class="lineNum">     317 </span>            :   template &lt;typename... Args&gt;</a>
-<a name="318"><span class="lineNum">     318 </span><span class="lineCov">          2 :   static const SimpleLogger &amp;LOG_ERROR(Args &amp;&amp;...args) {</span></a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          2 :     auto &amp;instance = getInstance();</span></a>
-<a name="320"><span class="lineNum">     320 </span><span class="lineCov">          2 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
-<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          4 :     return instance.error(args...);</span></a>
-<a name="322"><span class="lineNum">     322 </span><span class="lineCov">          2 :   }</span></a>
-<a name="323"><span class="lineNum">     323 </span>            : </a>
-<a name="324"><span class="lineNum">     324 </span>            :   /**</a>
-<a name="325"><span class="lineNum">     325 </span>            :    * @brief static shortcut for log debug.</a>
-<a name="326"><span class="lineNum">     326 </span>            :    * @remark thread safe</a>
-<a name="327"><span class="lineNum">     327 </span>            :    * @tparam Args</a>
-<a name="328"><span class="lineNum">     328 </span>            :    * @param args</a>
-<a name="329"><span class="lineNum">     329 </span>            :    * @return const SimpleLogger&amp;</a>
-<a name="330"><span class="lineNum">     330 </span>            :    */</a>
-<a name="331"><span class="lineNum">     331 </span>            :   template &lt;typename... Args&gt;</a>
-<a name="332"><span class="lineNum">     332 </span><span class="lineCov">          2 :   static const SimpleLogger &amp;LOG_DEBUG(Args &amp;&amp;...args) {</span></a>
-<a name="333"><span class="lineNum">     333 </span><span class="lineCov">          2 :     auto &amp;instance = getInstance();</span></a>
-<a name="334"><span class="lineNum">     334 </span><span class="lineCov">          2 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
-<a name="335"><span class="lineNum">     335 </span><span class="lineCov">          4 :     return instance.debug(args...);</span></a>
-<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          2 :   }</span></a>
-<a name="337"><span class="lineNum">     337 </span>            : </a>
-<a name="338"><span class="lineNum">     338 </span>            : private:</a>
-<a name="339"><span class="lineNum">     339 </span><span class="lineCov">          1 :   SimpleLogger() = default;</span></a>
-<a name="340"><span class="lineNum">     340 </span>            :   std::streamsize default_precision = std::cout.precision();</a>
-<a name="341"><span class="lineNum">     341 </span>            :   mutable std::streamsize current_precision = std::cout.precision();</a>
-<a name="342"><span class="lineNum">     342 </span>            :   mutable std::mutex threadMutex_;</a>
-<a name="343"><span class="lineNum">     343 </span>            : };</a>
-<a name="344"><span class="lineNum">     344 </span>            : } // namespace smlp</a>
+<a name="239"><span class="lineNum">     239 </span>            :    * @param onCerr A boolean value that determines whether the newline character</a>
+<a name="240"><span class="lineNum">     240 </span>            :    * is output to the standard error stream. If true, the newline character is</a>
+<a name="241"><span class="lineNum">     241 </span>            :    * output to std::cerr; otherwise, it is output to std::cout. The default</a>
+<a name="242"><span class="lineNum">     242 </span>            :    * value is false.</a>
+<a name="243"><span class="lineNum">     243 </span>            :    * @return const SimpleLogger&amp; A reference to the SimpleLogger instance.</a>
+<a name="244"><span class="lineNum">     244 </span>            :    */</a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">          6 :   const SimpleLogger &amp;endl(bool onCerr = false) const {</span></a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">          6 :     if (onCerr) {</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineNoCov">          0 :       std::cerr &lt;&lt; std::endl;</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :       std::cerr.flush();</span></a>
+<a name="249"><span class="lineNum">     249 </span>            :     } else {</a>
+<a name="250"><span class="lineNum">     250 </span><span class="lineCov">          6 :       std::cout &lt;&lt; std::endl;</span></a>
+<a name="251"><span class="lineNum">     251 </span><span class="lineCov">          6 :       std::cout.flush();</span></a>
+<a name="252"><span class="lineNum">     252 </span>            :     }</a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineCov">          6 :     return *this;</span></a>
+<a name="254"><span class="lineNum">     254 </span>            :   }</a>
+<a name="255"><span class="lineNum">     255 </span>            : </a>
+<a name="256"><span class="lineNum">     256 </span>            :   /**</a>
+<a name="257"><span class="lineNum">     257 </span>            :    * @brief Set the floating precision</a>
+<a name="258"><span class="lineNum">     258 </span>            :    *</a>
+<a name="259"><span class="lineNum">     259 </span>            :    * @param precision</a>
+<a name="260"><span class="lineNum">     260 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="261"><span class="lineNum">     261 </span>            :    */</a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineCov">          1 :   const SimpleLogger &amp;setPrecision(std::streamsize precision) const {</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineCov">          1 :     current_precision = precision;</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineCov">          1 :     return *this;</span></a>
+<a name="265"><span class="lineNum">     265 </span>            :   }</a>
+<a name="266"><span class="lineNum">     266 </span>            : </a>
+<a name="267"><span class="lineNum">     267 </span>            :   /**</a>
+<a name="268"><span class="lineNum">     268 </span>            :    * @brief Reset the floating precision</a>
+<a name="269"><span class="lineNum">     269 </span>            :    *</a>
+<a name="270"><span class="lineNum">     270 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="271"><span class="lineNum">     271 </span>            :    */</a>
+<a name="272"><span class="lineNum">     272 </span>            :   const SimpleLogger &amp;resetPrecision() const {</a>
+<a name="273"><span class="lineNum">     273 </span>            :     current_precision = default_precision;</a>
+<a name="274"><span class="lineNum">     274 </span>            :     return *this;</a>
+<a name="275"><span class="lineNum">     275 </span>            :   }</a>
+<a name="276"><span class="lineNum">     276 </span>            : </a>
+<a name="277"><span class="lineNum">     277 </span>            :   /**</a>
+<a name="278"><span class="lineNum">     278 </span>            :    * @brief static shortcut for log info.</a>
+<a name="279"><span class="lineNum">     279 </span>            :    * @remark thread safe</a>
+<a name="280"><span class="lineNum">     280 </span>            :    * @tparam Args</a>
+<a name="281"><span class="lineNum">     281 </span>            :    * @param args</a>
+<a name="282"><span class="lineNum">     282 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="283"><span class="lineNum">     283 </span>            :    */</a>
+<a name="284"><span class="lineNum">     284 </span>            :   template &lt;typename... Args&gt;</a>
+<a name="285"><span class="lineNum">     285 </span><span class="lineCov">         76 :   static const SimpleLogger &amp;LOG_INFO(Args &amp;&amp;...args) {</span></a>
+<a name="286"><span class="lineNum">     286 </span><span class="lineCov">         76 :     auto &amp;instance = getInstance();</span></a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineCov">         76 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineCov">        152 :     return instance.info(args...);</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineCov">         76 :   }</span></a>
+<a name="290"><span class="lineNum">     290 </span>            : </a>
+<a name="291"><span class="lineNum">     291 </span>            :   /**</a>
+<a name="292"><span class="lineNum">     292 </span>            :    * @brief static shortcut for log warning.</a>
+<a name="293"><span class="lineNum">     293 </span>            :    * @remark thread safe</a>
+<a name="294"><span class="lineNum">     294 </span>            :    * @tparam Args</a>
+<a name="295"><span class="lineNum">     295 </span>            :    * @param args</a>
+<a name="296"><span class="lineNum">     296 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="297"><span class="lineNum">     297 </span>            :    */</a>
+<a name="298"><span class="lineNum">     298 </span>            :   template &lt;typename... Args&gt;</a>
+<a name="299"><span class="lineNum">     299 </span>            :   static const SimpleLogger &amp;LOG_WARN(Args &amp;&amp;...args) {</a>
+<a name="300"><span class="lineNum">     300 </span>            :     auto &amp;instance = getInstance();</a>
+<a name="301"><span class="lineNum">     301 </span>            :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</a>
+<a name="302"><span class="lineNum">     302 </span>            :     return instance.warn(args...);</a>
+<a name="303"><span class="lineNum">     303 </span>            :   }</a>
+<a name="304"><span class="lineNum">     304 </span>            : </a>
+<a name="305"><span class="lineNum">     305 </span>            :   /**</a>
+<a name="306"><span class="lineNum">     306 </span>            :    * @brief static shortcut for log error.</a>
+<a name="307"><span class="lineNum">     307 </span>            :    * @remark thread safe</a>
+<a name="308"><span class="lineNum">     308 </span>            :    * @tparam Args</a>
+<a name="309"><span class="lineNum">     309 </span>            :    * @param args</a>
+<a name="310"><span class="lineNum">     310 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="311"><span class="lineNum">     311 </span>            :    */</a>
+<a name="312"><span class="lineNum">     312 </span>            :   template &lt;typename... Args&gt;</a>
+<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          2 :   static const SimpleLogger &amp;LOG_ERROR(Args &amp;&amp;...args) {</span></a>
+<a name="314"><span class="lineNum">     314 </span><span class="lineCov">          2 :     auto &amp;instance = getInstance();</span></a>
+<a name="315"><span class="lineNum">     315 </span><span class="lineCov">          2 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          4 :     return instance.error(args...);</span></a>
+<a name="317"><span class="lineNum">     317 </span><span class="lineCov">          2 :   }</span></a>
+<a name="318"><span class="lineNum">     318 </span>            : </a>
+<a name="319"><span class="lineNum">     319 </span>            :   /**</a>
+<a name="320"><span class="lineNum">     320 </span>            :    * @brief static shortcut for log debug.</a>
+<a name="321"><span class="lineNum">     321 </span>            :    * @remark thread safe</a>
+<a name="322"><span class="lineNum">     322 </span>            :    * @tparam Args</a>
+<a name="323"><span class="lineNum">     323 </span>            :    * @param args</a>
+<a name="324"><span class="lineNum">     324 </span>            :    * @return const SimpleLogger&amp;</a>
+<a name="325"><span class="lineNum">     325 </span>            :    */</a>
+<a name="326"><span class="lineNum">     326 </span>            :   template &lt;typename... Args&gt;</a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          2 :   static const SimpleLogger &amp;LOG_DEBUG(Args &amp;&amp;...args) {</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">          2 :     auto &amp;instance = getInstance();</span></a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          2 :     std::scoped_lock&lt;std::mutex&gt; lock(instance.threadMutex_);</span></a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineCov">          4 :     return instance.debug(args...);</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">          2 :   }</span></a>
+<a name="332"><span class="lineNum">     332 </span>            : </a>
+<a name="333"><span class="lineNum">     333 </span>            : private:</a>
+<a name="334"><span class="lineNum">     334 </span><span class="lineCov">          1 :   SimpleLogger() = default;</span></a>
+<a name="335"><span class="lineNum">     335 </span>            :   std::streamsize default_precision = std::cout.precision();</a>
+<a name="336"><span class="lineNum">     336 </span>            :   mutable std::streamsize current_precision = std::cout.precision();</a>
+<a name="337"><span class="lineNum">     337 </span>            :   mutable std::mutex threadMutex_;</a>
+<a name="338"><span class="lineNum">     338 </span>            : </a>
+<a name="339"><span class="lineNum">     339 </span><span class="lineCov">        109 :   std::string get_timestamp() const {</span></a>
+<a name="340"><span class="lineNum">     340 </span><span class="lineCov">        109 :       auto now = std::chrono::system_clock::now();</span></a>
+<a name="341"><span class="lineNum">     341 </span><span class="lineCov">        109 :       auto now_c = std::chrono::system_clock::to_time_t(now);</span></a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">        109 :       std::tm now_tm{};</span></a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineCov">        109 :       std::stringstream sst;</span></a>
+<a name="344"><span class="lineNum">     344 </span>            : </a>
+<a name="345"><span class="lineNum">     345 </span>            : #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) &amp;&amp; !defined(__CYGWIN__)</a>
+<a name="346"><span class="lineNum">     346 </span>            :       localtime_s(&amp;now_tm, &amp;now_c);</a>
+<a name="347"><span class="lineNum">     347 </span>            : #else</a>
+<a name="348"><span class="lineNum">     348 </span><span class="lineCov">        109 :       localtime_r(&amp;now_c, &amp;now_tm);</span></a>
+<a name="349"><span class="lineNum">     349 </span>            : #endif</a>
+<a name="350"><span class="lineNum">     350 </span>            : </a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">        109 :       sst &lt;&lt; &quot;[&quot; &lt;&lt; std::put_time(&amp;now_tm, &quot;%F %T&quot;) &lt;&lt; &quot;] &quot;;</span></a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">        218 :       return sst.str();</span></a>
+<a name="353"><span class="lineNum">     353 </span><span class="lineCov">        109 :   }</span></a>
+<a name="354"><span class="lineNum">     354 </span>            : };</a>
+<a name="355"><span class="lineNum">     355 </span>            : } // namespace smlp</a>
 </pre>
       </td>
     </tr>

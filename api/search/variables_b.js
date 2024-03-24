@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['network_926',['network',['../classsmlp_1_1Manager.html#a4ad2406d919a726402bc0180b173beb2',1,'smlp::Manager']]],
-  ['network_5fparams_927',['network_params',['../classsmlp_1_1Manager.html#a55df22a5a8f1c563a327192531f0d8af',1,'smlp::Manager']]],
-  ['network_5fto_5fexport_928',['network_to_export',['../structsmlp_1_1AppParameters.html#aa4680c4dcb31b8ad59a6723588607be1',1,'smlp::AppParameters']]],
-  ['network_5fto_5fimport_929',['network_to_import',['../structsmlp_1_1AppParameters.html#a4d7b2ebc12349171950ba98e8b27b20d',1,'smlp::AppParameters']]],
-  ['neurons_930',['neurons',['../classsmlp_1_1Layer.html#a6edfe47699869b3cec7a0dff807e9e79',1,'smlp::Layer']]],
-  ['nextlayer_931',['nextLayer',['../classsmlp_1_1Layer.html#afb0a23c737f1974a93fb52f364ab9368',1,'smlp::Layer']]],
-  ['num_5fepochs_932',['num_epochs',['../structsmlp_1_1AppParameters.html#ad125f61b841b3e06d7aa705095b8fe3e',1,'smlp::AppParameters']]]
+  ['network_935',['network',['../classsmlp_1_1Manager.html#a4ad2406d919a726402bc0180b173beb2',1,'smlp::Manager']]],
+  ['network_5fparams_936',['network_params',['../classsmlp_1_1Manager.html#a55df22a5a8f1c563a327192531f0d8af',1,'smlp::Manager']]],
+  ['network_5fto_5fexport_937',['network_to_export',['../structsmlp_1_1AppParameters.html#aa4680c4dcb31b8ad59a6723588607be1',1,'smlp::AppParameters']]],
+  ['network_5fto_5fimport_938',['network_to_import',['../structsmlp_1_1AppParameters.html#a4d7b2ebc12349171950ba98e8b27b20d',1,'smlp::AppParameters']]],
+  ['neurons_939',['neurons',['../classsmlp_1_1Layer.html#a6edfe47699869b3cec7a0dff807e9e79',1,'smlp::Layer']]],
+  ['nextlayer_940',['nextLayer',['../classsmlp_1_1Layer.html#afb0a23c737f1974a93fb52f364ab9368',1,'smlp::Layer']]],
+  ['num_5fepochs_941',['num_epochs',['../structsmlp_1_1AppParameters.html#ad125f61b841b3e06d7aa705095b8fe3e',1,'smlp::AppParameters']]]
 ];
