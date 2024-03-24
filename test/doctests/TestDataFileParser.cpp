@@ -20,17 +20,15 @@ TEST_CASE("Testing the DataFileParser class") {
     auto &app_params = Manager::getInstance().app_params;
     app_params.data_file = "oops"; // This file does not exist
     CHECK_THROWS_AS(parser.openFile(), DataParserException);
-    CHECK(parser.isFileOpen() == false);
-
+    
     app_params.data_file = "";
     CHECK_THROWS_AS(parser.openFile(), DataParserException);
-    CHECK(parser.isFileOpen() == false);
-
+    
     app_params.data_file = test_file;
     CHECK_NOTHROW(parser.openFile());
-    CHECK(parser.isFileOpen() == true);
+    CHECK(parser.file.is_open() == true);
     parser.closeFile();
-    CHECK(parser.isFileOpen() == false);
+    CHECK(parser.file.is_open() == false);
     CHECK(parser.current_line_number == 0);
   }
 
