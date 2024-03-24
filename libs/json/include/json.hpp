@@ -14,6 +14,7 @@
  * removed, but marked deprecated. See "Generate documentation" section in  *
  * file docs/README.md.                                                     *
 \****************************************************************************/
+#pragma warning( disable : 4083 4365 4623 4625 4626 4514 4820 5027 5045 )
 
 #ifndef INCLUDE_NLOHMANN_JSON_HPP_
 #define INCLUDE_NLOHMANN_JSON_HPP_

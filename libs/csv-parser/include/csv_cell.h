@@ -2,7 +2,7 @@
 Copyright: (C) 2021 - 2023 Alexander Shaduri
 License: Zlib
 ***************************************************************************/
-
+#pragma warning( disable : 4514 )
 #ifndef CSV_CELL_H
 #define CSV_CELL_H
 
