@@ -14,10 +14,7 @@
 #include "CommonResult.h"
 #include "NetworkImportExportFacade.h"
 #include "Predict.h"
-#include "RunnerFileVisitor.h"
-#include "RunnerSocketVisitor.h"
-#include "RunnerStdinVisitor.h"
-#include "RunnerVisitor.h"
+#include "RunnerVisitorFactory.h"
 #include "SimpleHTTPServer.h"
 #include "SimpleLang.h"
 #include "SimpleLogger.h"
@@ -46,7 +43,7 @@ public:
    *
    * @param line
    */
-  smlp::Result processTCPClient(const std::string &line) const;
+  smlp::Result processTCPClient(const std::string &line);
 
   /**
    * @brief run the selected mode.
@@ -98,12 +95,12 @@ public:
   NetworkParameters network_params;
 
   /**
-   * @brief The neural network
+   * @brief The neural network.
    */
   std::unique_ptr<Network> network = nullptr;
 
   /**
-   * @brief Http server
+   * @brief Http server.
    *
    */
   std::unique_ptr<SimpleHTTPServer> http_server = nullptr;
@@ -114,7 +111,12 @@ public:
   NetworkImportExportFacade importExport;
 
   /**
-   * @brief Create a Http Server object
+   * @brief RunnerVisitorFactory.
+   */
+  RunnerVisitorFactory runnerVisitorFactory;
+
+  /**
+   * @brief Create a Http Server object.
    *
    */
   void createHttpServer() {
@@ -152,9 +154,6 @@ public:
   std::string getInlineHeader() const;
 
 private:
-  Manager() = default;
-  mutable std::unique_ptr<RunnerFileVisitor> runnerFileVisitor_ = nullptr;
-  mutable std::unique_ptr<RunnerSocketVisitor> runnerSocketVisitor_ = nullptr;
-  mutable std::unique_ptr<RunnerStdinVisitor> runnerStdinVisitor_ = nullptr;
+  Manager() = default;  
 };
 } // namespace smlp

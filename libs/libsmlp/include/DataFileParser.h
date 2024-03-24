@@ -31,14 +31,6 @@ public:
   void openFile();
 
   /**
-   * @brief Return true if file is open.
-   *
-   * @return true
-   * @return false
-   */
-  bool isFileOpen() { return file && file.is_open(); }
-
-  /**
    * @brief Closes the file.
    */
   void closeFile();
@@ -74,7 +66,7 @@ public:
   std::size_t countLine() {
     openFile();
     total_lines =
-        std::count(std::istreambuf_iterator<char>((std::istream &)file),
+        (size_t)std::count(std::istreambuf_iterator<char>((std::istream &)file),
                    std::istreambuf_iterator<char>(), '\n');
     closeFile();
     return total_lines;

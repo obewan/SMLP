@@ -1,9 +1,14 @@
 #### DOCTEST - UNIT TESTS
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -pthread")
 
-if(ENABLE_COVERAGE)
+if(WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -pthread")
+endif()
+
+if(ENABLE_COVERAGE AND NOT WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")    
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")    
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov")

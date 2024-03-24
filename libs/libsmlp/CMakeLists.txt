@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5.0)
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" TRUE)
 
-if(ENABLE_COVERAGE)
+if(ENABLE_COVERAGE AND NOT WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")    
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")    
     set(CMAKE_EXE_LINKER_FLAGS "-lgcov") 

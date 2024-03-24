@@ -70,17 +70,11 @@ std::string Manager::getInlineHeader() const {
 
 void Manager::runMode() {
   switch (app_params.input) {
-  case EInput::File:
-    if (!runnerFileVisitor_) {
-      runnerFileVisitor_ = std::make_unique<RunnerFileVisitor>();
-    }
-    runWithVisitor(*runnerFileVisitor_);
+  case EInput::File:    
+    runWithVisitor(runnerVisitorFactory.getRunnerFileVisitor());
     break;
-  case EInput::Stdin:
-    if (!runnerStdinVisitor_) {
-      runnerStdinVisitor_ = std::make_unique<RunnerStdinVisitor>();
-    }
-    runWithVisitor(*runnerStdinVisitor_);
+  case EInput::Stdin:    
+    runWithVisitor(runnerVisitorFactory.getRunnerStdinVisitor());
     break;
   case EInput::Socket:
     if (app_params.enable_http) {
@@ -149,12 +143,9 @@ void Manager::exportNetwork() const {
   importExport.exportModel(network, app_params);
 }
 
-smlp::Result Manager::processTCPClient(const std::string &line) const {
+smlp::Result Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
-  if (!runnerSocketVisitor_) {
-    runnerSocketVisitor_ = std::make_unique<RunnerSocketVisitor>();
-  }
-  return runWithLineVisitor(*runnerSocketVisitor_, line);
+  return runWithLineVisitor(runnerVisitorFactory.getRunnerSocketVisitor(), line);
 }
