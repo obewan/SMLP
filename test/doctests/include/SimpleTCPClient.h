@@ -32,6 +32,12 @@ public:
   virtual void disconnect();
 
 protected:
-  int client_socket = -1;
+#ifdef _WIN32
+    // Sockets are unsigned long long on Windows
+    unsigned long long client_socket = 0;
+#else
+    // Sockets are int on Linux
+    int client_socket = -1;
+#endif
 };
 } // namespace smlp
