@@ -227,22 +227,21 @@ $(function() {
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="keyword">mutable</span> std::mutex threadMutex_;</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  std::string get_timestamp()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      <span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keyword">auto</span> now_c = std::chrono::system_clock::to_time_t(now);</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      std::tm now_tm{};</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      std::stringstream sst;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160; </div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) &amp;&amp; !defined(__CYGWIN__)</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      localtime_s(&amp;now_tm, &amp;now_c);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keyword">auto</span> now_c = std::chrono::system_clock::to_time_t(now);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    std::tm now_tm{};</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    std::stringstream sst;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="preprocessor">#if defined(WIN32) || defined(_WIN32) ||                                       \</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="preprocessor">    defined(__WIN32) &amp;&amp; !defined(__CYGWIN__)</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    localtime_s(&amp;now_tm, &amp;now_c);</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      localtime_r(&amp;now_c, &amp;now_tm);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    localtime_r(&amp;now_c, &amp;now_tm);</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      sst &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; std::put_time(&amp;now_tm, <span class="stringliteral">&quot;%F %T&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;] &quot;</span>;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      <span class="keywordflow">return</span> sst.str();</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  }</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;};</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;} <span class="comment">// namespace smlp</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    sst &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; std::put_time(&amp;now_tm, <span class="stringliteral">&quot;%F %T&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;] &quot;</span>;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">return</span> sst.str();</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  }</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;};</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;} <span class="comment">// namespace smlp</span></div>
 <div class="ttc" id="aclasssmlp_1_1SimpleLogger_html"><div class="ttname"><a href="classsmlp_1_1SimpleLogger.html">smlp::SimpleLogger</a></div><div class="ttdoc">SimpleLogger class.</div><div class="ttdef"><b>Definition:</b> SimpleLogger.h:25</div></div>
 <div class="ttc" id="aclasssmlp_1_1SimpleLogger_html_a2159b2485ba36b94331a197c312d91cc"><div class="ttname"><a href="classsmlp_1_1SimpleLogger.html#a2159b2485ba36b94331a197c312d91cc">smlp::SimpleLogger::operator=</a></div><div class="ttdeci">void operator=(SimpleLogger const &amp;)=delete</div></div>
 <div class="ttc" id="aclasssmlp_1_1SimpleLogger_html_a286a6899d4bf4593c4e29b017220d95b"><div class="ttname"><a href="classsmlp_1_1SimpleLogger.html#a286a6899d4bf4593c4e29b017220d95b">smlp::SimpleLogger::LOG_INFO</a></div><div class="ttdeci">static const SimpleLogger &amp; LOG_INFO(Args &amp;&amp;...args)</div><div class="ttdoc">static shortcut for log info.</div><div class="ttdef"><b>Definition:</b> SimpleLogger.h:285</div></div>

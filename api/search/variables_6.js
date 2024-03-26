@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['getfloatvalue_889',['getFloatValue',['../classsmlp_1_1DataParser.html#afb2d73b2ec9764ed61cd99a798798097',1,'smlp::DataParser']]],
-  ['good_5fconvergence_890',['good_convergence',['../structsmlp_1_1TestingResult_1_1Stat.html#afa70190966b259ebfc8cadff3a164fe0',1,'smlp::TestingResult::Stat']]],
-  ['good_5fconvergence_5fone_891',['good_convergence_one',['../structsmlp_1_1TestingResult_1_1Stat.html#ac9f06f997ffc01d2778a86b66fba7eb5',1,'smlp::TestingResult::Stat']]],
-  ['good_5fconvergence_5fzero_892',['good_convergence_zero',['../structsmlp_1_1TestingResult_1_1Stat.html#a61d543dbae0f27e8a26a494c29e49978',1,'smlp::TestingResult::Stat']]]
+  ['getfloatvalue_895',['getFloatValue',['../classsmlp_1_1DataParser.html#afb2d73b2ec9764ed61cd99a798798097',1,'smlp::DataParser']]],
+  ['good_5fconvergence_896',['good_convergence',['../structsmlp_1_1TestingResult_1_1Stat.html#afa70190966b259ebfc8cadff3a164fe0',1,'smlp::TestingResult::Stat']]],
+  ['good_5fconvergence_5fone_897',['good_convergence_one',['../structsmlp_1_1TestingResult_1_1Stat.html#ac9f06f997ffc01d2778a86b66fba7eb5',1,'smlp::TestingResult::Stat']]],
+  ['good_5fconvergence_5fzero_898',['good_convergence_zero',['../structsmlp_1_1TestingResult_1_1Stat.html#a61d543dbae0f27e8a26a494c29e49978',1,'smlp::TestingResult::Stat']]]
 ];
