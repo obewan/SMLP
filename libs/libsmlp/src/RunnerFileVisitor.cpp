@@ -1,6 +1,7 @@
 #include "RunnerFileVisitor.h"
 #include "Manager.h"
 #include "PredictFile.h"
+#include "SimpleLang.h"
 #include "SimpleLogger.h"
 
 using namespace smlp;
@@ -33,7 +34,7 @@ Result RunnerFileVisitor::visit(const std::string &line) const {
     trainThenTest();
     break;
   default:
-    throw ManagerException("Unimplemented mode.");
+    throw ManagerException(SimpleLang::Error(Error::InternalError));
   }
 
   if (manager.shouldExportNetwork()) {
@@ -54,7 +55,8 @@ void RunnerFileVisitor::predict() const {
 void RunnerFileVisitor::trainOnly() const {
   const auto &manager = Manager::getInstance();
   const auto &app_params = manager.app_params;
-  SimpleLogger::LOG_INFO("Training, using file ", app_params.data_file);
+  SimpleLogger::LOG_INFO(SimpleLang::Message(
+      Message::UsingTrainingFile, {{"data_file", app_params.data_file}}));
   SimpleLogger::LOG_INFO(manager.getInlineHeader());
   if (!trainingFile_) {
     trainingFile_ = std::make_unique<TrainingFile>();
@@ -66,7 +68,8 @@ void RunnerFileVisitor::trainOnly() const {
 void RunnerFileVisitor::testOnly() const {
   const auto &manager = Manager::getInstance();
   const auto &app_params = manager.app_params;
-  SimpleLogger::LOG_INFO("Testing, using file ", app_params.data_file);
+  SimpleLogger::LOG_INFO(SimpleLang::Message(
+      Message::UsingTestingFile, {{"data_file", app_params.data_file}}));
   if (!testingFile_) {
     testingFile_ = std::make_unique<TestingFile>();
   }
@@ -80,8 +83,9 @@ void RunnerFileVisitor::testOnly() const {
 void RunnerFileVisitor::trainTestMonitored() const {
   const auto &manager = Manager::getInstance();
   const auto &app_params = manager.app_params;
-  SimpleLogger::LOG_INFO("Training and testing monitored, using file ",
-                         app_params.data_file);
+  SimpleLogger::LOG_INFO(
+      SimpleLang::Message(Message::UsingTrainingMonitoredFile,
+                          {{"data_file", app_params.data_file}}));
   SimpleLogger::LOG_INFO(
       "OutputIndexToMonitor:", app_params.output_index_to_monitor, " ",
       manager.getInlineHeader());
