@@ -1,8 +1,8 @@
 #include "winver.h"
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     1,2,1,0
-PRODUCTVERSION  1,2,1,0
+FILEVERSION     1,2,2,0
+PRODUCTVERSION  1,2,2,0
 FILEFLAGSMASK   VS_FF_DEBUG
 #ifdef _DEBUG
 FILEFLAGS       VS_FF_DEBUG
@@ -19,12 +19,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Dams Labs\0"
             VALUE "FileDescription", "SMLP\0"
-            VALUE "FileVersion", "1.2.1.0\0"
+            VALUE "FileVersion", "1.2.2.0\0"
             VALUE "InternalName", "SMLP\0"
             VALUE "LegalCopyright", "Damien Balima (https://dams-labs.net)\0"
             VALUE "OriginalFilename", "smlp.exe\0"
             VALUE "ProductName", "smlp\0"
-            VALUE "ProductVersion", "1.2.1.0\0"
+            VALUE "ProductVersion", "1.2.2.0\0"
         END
     END
 

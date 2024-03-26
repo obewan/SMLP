@@ -1,5 +1,6 @@
 #include "Manager.h"
 #include "Common.h"
+#include "CommonMessages.h"
 #include "CommonModes.h"
 #include "CommonParameters.h"
 #include "CommonResult.h"
@@ -70,10 +71,10 @@ std::string Manager::getInlineHeader() const {
 
 void Manager::runMode() {
   switch (app_params.input) {
-  case EInput::File:    
+  case EInput::File:
     runWithVisitor(runnerVisitorFactory.getRunnerFileVisitor());
     break;
-  case EInput::Stdin:    
+  case EInput::Stdin:
     runWithVisitor(runnerVisitorFactory.getRunnerStdinVisitor());
     break;
   case EInput::Socket:
@@ -104,15 +105,17 @@ void Manager::importOrBuildNetwork() {
   // pipes
   auto logNetworkImport = [this]() {
     if (app_params.mode != EMode::Predict) {
-      SimpleLogger::LOG_INFO("Importing network model from ",
-                             app_params.network_to_import, "...");
+      SimpleLogger::LOG_INFO(SimpleLang::Message(
+          Message::NetworkModelImport,
+          {{"network_to_import", app_params.network_to_import}}));
     }
   };
   auto logNetworkCreation = [this]() {
     if (!app_params.network_to_import.empty() &&
         app_params.mode != EMode::Predict) {
-      SimpleLogger::LOG_INFO("Network model ", app_params.network_to_import,
-                             " not found, creating a new one...");
+      SimpleLogger::LOG_INFO(SimpleLang::Message(
+          Message::NetworkModelCreate,
+          {{"network_to_import", app_params.network_to_import}}));
     }
   };
 
@@ -138,8 +141,9 @@ void Manager::exportNetwork() const {
   if (app_params.network_to_export.empty()) {
     throw ManagerException(SimpleLang::Error(Error::MissingExportFileParam));
   }
-  SimpleLogger::LOG_INFO("Exporting network model to ",
-                         app_params.network_to_export, "...");
+  SimpleLogger::LOG_INFO(SimpleLang::Message(
+      Message::NetworkModelExport,
+      {{"network_to_export", app_params.network_to_export}}));
   importExport.exportModel(network, app_params);
 }
 
@@ -147,5 +151,6 @@ smlp::Result Manager::processTCPClient(const std::string &line) {
   if (app_params.input != EInput::Socket) {
     throw ManagerException(SimpleLang::Error(Error::TCPSocketNotSet));
   }
-  return runWithLineVisitor(runnerVisitorFactory.getRunnerSocketVisitor(), line);
+  return runWithLineVisitor(runnerVisitorFactory.getRunnerSocketVisitor(),
+                            line);
 }

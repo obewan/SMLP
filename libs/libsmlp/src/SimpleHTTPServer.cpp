@@ -26,6 +26,7 @@
 #include <ws2tcpip.h> // for inet_ntop
 #pragma comment(lib, "ws2_32.lib")
 #define CLOSE_SOCKET closesocket
+#pragma warning( disable : 4267 )
 #else
 #include <arpa/inet.h> // for inet_ntop
 #include <bits/ranges_algo.h>

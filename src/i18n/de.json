@@ -23,7 +23,7 @@
     "-x,--disable_stdin": "Deaktivieren Sie die stdin-Eingabe wie Befehlsrohre (pipes) und interaktives Testen",
     "-v,--version": "Aktuelle Version anzeigen",
     "-V,--verbose": "Ausführliche Logs",
-
+    
     "CSVParsingError": "CSV-Parsing-Fehler in Zeile %%line_number%%",
     "CSVParsingErrorEmptyLine": "CSV-Parsing-Fehler in Zeile %%line_number%%: leere Zeile.",
     "CSVParsingErrorColumnsBadFormat": "CSV-Parsing-Fehler in Zeile %%line_number%%: schlechtes Format.",
@@ -42,6 +42,9 @@
     "LayerTypeInvalidOutput": "Ungültiger LayerType für die letzte Schicht: keine Ausgabeschicht",
     "LayerTypeNotRecognized": "LayerType wird nicht erkannt",
     "MissingImportFile": "Fehlende Datei zum Importieren",
+    "NetworkModelCreate": "%%network_to_import%% nicht gefunden. Erstellung eines neuen neuronalen Netzwerkmodells...",
+    "NetworkModelExport": "Exportieren des neuronalen Netzwerkmodells nach %%network_to_export%%...",
+    "NetworkModelImport": "Importieren des neuronalen Netzwerkmodells von %%network_to_import%%...",
     "TCPClientConnection": "Client verbunden.",
     "TCPClientDisconnection": "Client getrennt.",
     "TCPServerAcceptError": "TCP-Serverfehler bei der Annahme des Clients.",
@@ -51,5 +54,9 @@
     "TCPSocketListenError": "TCP-Fehler: Hören auf dem Server-Socket fehlgeschlagen.",
     "UnimplementedActivationFunction": "Nicht implementierte Aktivierungsfunktion",
     "UnimplementedPredictMode": "Nicht implementierter Vorhersagemodus",
-    "UnknownKey": "Unbekannter Schlüssel"
+    "UnknownKey": "Unbekannter Schlüssel",
+    "UsingConfigFile": "Verwenden der Konfigurationsdatei %%config_file%%...",
+    "UsingTestingFile": "Testen, Verwendung der Datei %%data_file%%...",
+    "UsingTrainingFile": "Training, Verwendung der Datei %%data_file%%...",
+    "UsingTrainingMonitoredFile": "Überwachtes Training, Verwendung der Datei %%data_file%%..."
 }

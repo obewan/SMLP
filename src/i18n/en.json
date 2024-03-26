@@ -24,7 +24,6 @@
     "-v,--version": "Show current version",
     "-V,--verbose": "Verbose logs",
 
-
     "CSVParsingError": "CSV parsing error at line %%line_number%%",
     "CSVParsingErrorEmptyLine": "CSV parsing error at line %%line_number%%: empty line.",
     "CSVParsingErrorColumnsBadFormat": "CSV parsing error at line %%line_number%%: bad format.",
@@ -43,6 +42,9 @@
     "LayerTypeInvalidOutput": "Invalid LayerType for last layer: not an OutputLayer",
     "LayerTypeNotRecognized": "LayerType is not recognized",
     "MissingImportFile": "Missing file to import",
+    "NetworkModelCreate": "%%network_to_import%% not found. Creating a new neuronal network model...",
+    "NetworkModelExport": "Exporting neuronal network model to %%network_to_export%%...",
+    "NetworkModelImport": "Importing neuronal network model from %%network_to_import%%...",
     "TCPClientConnection": "Client connection.",
     "TCPClientDisconnection": "Client disconnection.",
     "TCPServerAcceptError": "TCP server error during client accept.",
@@ -52,5 +54,9 @@
     "TCPSocketListenError": "TCP error: failed to listen on server socket.",
     "UnimplementedActivationFunction": "Unimplemented Activation Function",
     "UnimplementedPredictMode": "Unimplemented predict mode",
-    "UnknownKey": "Unknown key"
+    "UnknownKey": "Unknown key",
+    "UsingConfigFile": "Using config file %%config_file%%...",
+    "UsingTestingFile": "Testing, using file %%data_file%%...",
+    "UsingTrainingFile":"Training, using file %%data_file%%...",
+    "UsingTrainingMonitoredFile": "Training monitored, using file %%data_file%%..."
 }

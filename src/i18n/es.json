@@ -42,6 +42,9 @@
     "LayerTypeInvalidOutput": "LayerType no válido para la última capa: no es una capa de salida",
     "LayerTypeNotRecognized": "LayerType no reconocido",
     "MissingImportFile": "Archivo faltante para importar",
+    "NetworkModelCreate": "%%network_to_import%% no encontrado. Creando un nuevo modelo de red neuronal...",
+    "NetworkModelExport": "Exportando modelo de red neuronal a %%network_to_export%%...",
+    "NetworkModelImport": "Importando modelo de red neuronal de %%network_to_import%%...",
     "TCPClientConnection": "Cliente conectado.",
     "TCPClientDisconnection": "Cliente desconectado.",
     "TCPServerAcceptError": "Error del servidor TCP durante la aceptación del cliente.",
@@ -51,5 +54,9 @@
     "TCPSocketListenError": "Error TCP: falló al escuchar en el socket del servidor.",
     "UnimplementedActivationFunction": "Función de activación no implementada",
     "UnimplementedPredictMode": "Modo predictivo no implementado",
-    "UnknownKey": "Clave desconocida"
+    "UnknownKey": "Clave desconocida",
+    "UsingConfigFile": "Usando el archivo de configuración %%config_file%%...",
+    "UsingTestingFile": "Probando, usando el archivo %%data_file%%...",
+    "UsingTrainingFile": "Entrenando, usando el archivo %%data_file%%...",
+    "UsingTrainingMonitoredFile": "Entrenamiento monitoreado, usando el archivo %%data_file%%..."
 }

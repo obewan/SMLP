@@ -337,19 +337,18 @@ private:
   mutable std::mutex threadMutex_;
 
   std::string get_timestamp() const {
-      auto now = std::chrono::system_clock::now();
-      auto now_c = std::chrono::system_clock::to_time_t(now);
-      std::tm now_tm{};
-      std::stringstream sst;
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-      localtime_s(&now_tm, &now_c);
+    auto now = std::chrono::system_clock::now();
+    auto now_c = std::chrono::system_clock::to_time_t(now);
+    std::tm now_tm{};
+    std::stringstream sst;
+#if defined(WIN32) || defined(_WIN32) ||                                       \
+    defined(__WIN32) && !defined(__CYGWIN__)
+    localtime_s(&now_tm, &now_c);
 #else
-      localtime_r(&now_c, &now_tm);
+    localtime_r(&now_c, &now_tm);
 #endif
-
-      sst << "[" << std::put_time(&now_tm, "%F %T") << "] ";
-      return sst.str();
+    sst << "[" << std::put_time(&now_tm, "%F %T") << "] ";
+    return sst.str();
   }
 };
 } // namespace smlp

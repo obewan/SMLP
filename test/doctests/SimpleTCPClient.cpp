@@ -4,6 +4,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
+#pragma warning( disable : 4267 )
 #else
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -12,6 +13,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#define INVALID_SOCKET -1
 #endif
 
 #include <cstring>
@@ -39,7 +41,7 @@ void SimpleTCPClient::connect(const std::string &host, unsigned short port) {
   timeout.tv_usec = 0;
 
   client_socket = socket(AF_INET, SOCK_STREAM, 0);
-  if (client_socket == -1) {
+  if (client_socket == INVALID_SOCKET) {
     throw std::runtime_error("Client failed to create socket");
   }
 
@@ -131,7 +133,7 @@ std::string SimpleTCPClient::getHttpBody(const std::string &httpResponse) {
 }
 
 void SimpleTCPClient::disconnect() {
-  if (client_socket != -1) {
+  if (client_socket != INVALID_SOCKET) {
 #ifdef _WIN32
     closesocket(client_socket);
     WSACleanup();
@@ -139,5 +141,5 @@ void SimpleTCPClient::disconnect() {
     close(client_socket);
 #endif
   }
-  client_socket = -1;
+  client_socket = INVALID_SOCKET;
 }
